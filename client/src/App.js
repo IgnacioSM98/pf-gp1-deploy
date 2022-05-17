@@ -1,4 +1,4 @@
-import "./App.css";=
+import "./App.css";
 import Landing from "./Components/index";
 import Home from "./components/Home/Home";
 
