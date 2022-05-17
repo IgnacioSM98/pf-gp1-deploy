@@ -1,4 +1,5 @@
 import "./App.css";
+import { Nav, Landing } from "./Components/index.js";
 
 function App() {
   return (
