@@ -1,5 +1,5 @@
 import Landing from "./Landing/Landing";
 
-export{
+export({
   Landing,
-};
+});
