@@ -6,6 +6,7 @@ import {
   Blog,
   Cuenta,
   Carrito,
+  CrearProducto,
 } from "./Components/index";
 import { Routes, Route } from "react-router-dom";
 
@@ -21,7 +22,7 @@ function App() {
         <Route exact path="/blog" element={<Blog />} />
         <Route exact path="/usuario" element={<Cuenta />} />
         <Route exact path="/admin" element={"admin"} />
-        <Route exact path="/admin/crear" element={"form de crear producto"} />
+        <Route exact path="/admin/crear" element={<CrearProducto />} />
         {/*<Route exact path="/user/reviews" element={"user reviews"} />
         <Route exact path="/admin/cambiar/:id" element={"change something"} />*/}
       </Routes>
