@@ -1,0 +1,458 @@
+[
+  {
+    "id": 1,
+    "nombre": "Starbucks - House Blend",
+    "precio": "1120",
+    "descripcion": "texto",
+    "imagen": "https://http2.mlstatic.com/D_NQ_NP_2X_762505-MLA46627701602_072021-F.jpg",
+    "stock": 4
+  },
+  {
+    "id": 2,
+    "nombre": "Starbucks - Colombia",
+    "precio": "1299",
+    "descripcion": "texto",
+    "imagen": "https://http2.mlstatic.com/D_NQ_NP_2X_948342-MLA46691023949_072021-F.jpg",
+    "stock": 6
+  },
+  {
+    "id": 3,
+    "nombre": "Starbucks - Espresso",
+    "precio": "1820",
+    "descripcion": "texto",
+    "imagen": "https://http2.mlstatic.com/D_NQ_NP_2X_936817-MLA46981324145_082021-F.jpg",
+    "stock": 73
+  },
+  {
+    "id": 4,
+    "nombre": "Starbucks - Pike Place",
+    "precio": "1399",
+    "descripcion": "texto",
+    "imagen": "https://http2.mlstatic.com/D_NQ_NP_2X_871876-MLA46691114630_072021-F.jpg",
+    "stock": 27
+  },
+  {
+    "id": 5,
+    "nombre": "Starbucks - Verona",
+    "precio": "800",
+    "descripcion": "texto",
+    "imagen": "https://http2.mlstatic.com/D_NQ_NP_2X_939046-MLA46978334484_082021-F.jpg",
+    "stock": 29
+  },
+  {
+    "id": 6,
+    "nombre": "Cafetera Moka Bialetti Italiana",
+    "precio": "30070",
+    "descripcion": "texto",
+    "imagen": "https://http2.mlstatic.com/D_NQ_NP_2X_963644-MLA43333591096_092020-F.jpg",
+    "stock": 1
+  },
+  {
+    "id": 7,
+    "nombre": "Cafetera Class Bialetti Italiana",
+    "precio": "24552",
+    "descripcion": "texto",
+    "imagen": "https://http2.mlstatic.com/D_NQ_NP_2X_629813-MLA40477889154_012020-F.jpg",
+    "stock": 2
+  },
+  {
+    "id": 8,
+    "nombre": "Cafetera Bodum Chambord Francesa",
+    "precio": "23000",
+    "descripcion": "texto",
+    "imagen": "https://http2.mlstatic.com/D_NQ_NP_2X_637369-MLA42002637277_052020-F.jpg",
+    "stock": 4
+  },
+  {
+    "id": 9,
+    "nombre": "Molinillo De Café Peabody",
+    "precio": "19920",
+    "descripcion": "texto",
+    "imagen": "https://http2.mlstatic.com/D_NQ_NP_2X_603036-MLA45807059144_052021-F.jpg",
+    "stock": 32
+  },
+  {
+    "id": 10,
+    "nombre": "Café De Especialidad - Colombia",
+    "precio": "1500",
+    "descripcion": "texto",
+    "imagen": "https://http2.mlstatic.com/D_NQ_NP_2X_983632-MLA46667186783_072021-F.jpg",
+    "stock": 6
+  },
+  {
+    "id": 11,
+    "nombre": "Cafe En Grano Lavazza Crema E Aroma",
+    "precio": "4600",
+    "descripcion": "texto",
+    "imagen": "https://www.youtube.com/embed/_Ve67YJyJI4?enablejsapi=1&controls=1&rel=0&showinfo=0&fs=0&autoplay=1&mute=1",
+    "stock": 62
+  },
+  {
+    "id": 12,
+    "nombre": "Café De Especialidad - Guatemala",
+    "precio": "1850",
+    "descripcion": "texto",
+    "imagen": "https://http2.mlstatic.com/D_NQ_NP_2X_811565-MLA47245827809_082021-F.jpg",
+    "stock": 7
+  },
+  {
+    "id": 500,
+    "nombre": "Cuenco Delhi",
+    "precio": "1000",
+    "descripcion": "Cuenco Para Té Delhi Tea - 4 Elementos",
+    "imagen": "https://http2.mlstatic.com/D_NQ_NP_913242-MLA49614103141_042022-V.webp",
+    "stock": 10
+  },
+  {
+    "id": 501,
+    "nombre": "Te en hebras Sencha",
+    "precio": "2500",
+    "descripcion": "Te En Hebras - Sencha X 250g",
+    "imagen": "https://http2.mlstatic.com/D_NQ_NP_879672-MLA48809705555_012022-V.webp",
+    "stock": 10
+  },
+  {
+    "id": 502,
+    "nombre": "Lata Delhi Tea Origen ",
+    "precio": "1600",
+    "descripcion": "Lata Delhi Tea Origen X 15 G. - 3 X 2 - Linea Completa",
+    "imagen": "https://http2.mlstatic.com/D_NQ_NP_721956-MLA46166610564_052021-V.webp",
+    "stock": 10
+  },
+  {
+    "id": 503,
+    "nombre": "Te verde Argentino - Lata ",
+    "precio": "600",
+    "descripcion": "Lata Delhi Tea Origen X 15 G. - Té Verde Argentino",
+    "imagen": "https://http2.mlstatic.com/D_NQ_NP_790521-MLA46166507318_052021-V.webp",
+    "stock": 10
+  },
+  {
+    "id": 504,
+    "nombre": "Té Negro Ceylon - Lata",
+    "precio": "600",
+    "descripcion": "Lata Delhi Tea Origen X 15 G. - Té Negro Ceylon",
+    "imagen": "https://http2.mlstatic.com/D_NQ_NP_620683-MLA46166370845_052021-V.webp",
+    "stock": 10
+  },
+  {
+    "id": 505,
+    "nombre": "Assam en hebras",
+    "precio": "1900",
+    "descripcion": "Te En Hebras - Assam X 250g",
+    "imagen": "https://http2.mlstatic.com/D_NQ_NP_674757-MLA48809842780_012022-V.webp",
+    "stock": 10
+  },
+  {
+    "id": 506,
+    "nombre": "Pack Té Hebras Delhi ",
+    "precio": "5000",
+    "descripcion": "Pack Té Hebras Delhi Tea Premium Doypack - X 8 Un.",
+    "imagen": "https://http2.mlstatic.com/D_NQ_NP_616731-MLA49192523588_022022-V.webp",
+    "stock": 10
+  },
+  {
+    "id": 507,
+    "nombre": "Frasco Chocolate Temptation",
+    "precio": "530",
+    "descripcion": "Te Hebras Delhi Tea Premium Frasco Chocolate Temptation",
+    "imagen": "https://http2.mlstatic.com/D_NQ_NP_878272-MLA47917085671_102021-V.webp",
+    "stock": 10
+  },
+  {
+    "id": 508,
+    "nombre": "Earl Grey saquitos",
+    "precio": "370",
+    "descripcion": "Te Premium Delhi Tea X 20 Saq. Earl Grey",
+    "imagen": "https://http2.mlstatic.com/D_NQ_NP_733324-MLA49725355325_042022-V.webp",
+    "stock": 10
+  },
+  {
+    "id": 509,
+    "nombre": "Lata Té Blanco Pai Mutan",
+    "precio": "690",
+    "descripcion": "Lata Delhi Tea Origen X 15 G. - Té Blanco Pai Mutan",
+    "imagen": "https://http2.mlstatic.com/D_NQ_NP_687430-MLA46166470552_052021-V.webp",
+    "stock": 10
+  },
+  {
+    "id": 510,
+    "nombre": "Amazonian Green Saquitos",
+    "precio": "430",
+    "descripcion": "Te Premium Delhi Tea X 20 Saq. Amazonian Green",
+    "imagen": "https://http2.mlstatic.com/D_NQ_NP_734539-MLA43654178183_102020-V.webp",
+    "stock": 10
+  },
+  {
+    "id": 30,
+    "nombre": "Mate Eevee",
+    "precio": "850",
+    "descripcion": "Mate Impreso en 3D pintado a mano.El diseño exterior de nuestros mates son realizados en plástico PLA, es un material bio degradable y apto para consumo. En su interior tiene un vaso de polímero plástico que soporta altas temperaturas.",
+    "imagen": "https://d2r9epyceweg5n.cloudfront.net/stores/002/096/341/products/eevee1-6c0ff96b522fa274b216486733313384-1024-1024.jpg",
+    "stock": 15
+  },
+  {
+    "id": 31,
+    "nombre": "Mate Gastly",
+    "precio": "700",
+    "descripcion": "Mate Impreso en 3D pintado a mano.El diseño exterior de nuestros mates son realizados en plástico PLA, es un material bio degradable y apto para consumo. En su interior tiene un vaso de polímero plástico que soporta altas temperaturas.",
+    "imagen": "https://d2r9epyceweg5n.cloudfront.net/stores/002/096/341/products/gastly1-fc553749de57ac955b16486736580238-1024-1024.jpg",
+    "stock": 10
+  },
+  {
+    "id": 32,
+    "nombre": "Mate Charmander",
+    "precio": "1000",
+    "descripcion": "Mate Impreso en 3D pintado a mano.El diseño exterior de nuestros mates son realizados en plástico PLA, es un material bio degradable y apto para consumo. En su interior tiene un vaso de polímero plástico que soporta altas temperaturas.",
+    "imagen": "https://d2r9epyceweg5n.cloudfront.net/stores/002/096/341/products/charmander1-7e681d4f86d89ac84916486731018577-1024-1024.jpg",
+    "stock": 1
+  },
+  {
+    "id": 33,
+    "nombre": "Mate Bulbasaur",
+    "precio": "1000",
+    "descripcion": "Mate Impreso en 3D pintado a mano.El diseño exterior de nuestros mates son realizados en plástico PLA, es un material bio degradable y apto para consumo. En su interior tiene un vaso de polímero plástico que soporta altas temperaturas.",
+    "imagen": "https://d2r9epyceweg5n.cloudfront.net/stores/002/096/341/products/bulbasaur1-57080f3a897f4bd0e516486728438596-1024-1024.jpg",
+    "stock": 20
+  },
+  {
+    "id": 34,
+    "nombre": "Mate Gengar",
+    "precio": "850",
+    "descripcion": "Mate Impreso en 3D pintado a mano.El diseño exterior de nuestros mates son realizados en plástico PLA, es un material bio degradable y apto para consumo. En su interior tiene un vaso de polímero plástico que soporta altas temperaturas.",
+    "imagen": "https://d2r9epyceweg5n.cloudfront.net/stores/002/096/341/products/gengar1-505069fda909b0c01616486212742992-1024-1024.jpg",
+    "stock": 7
+  },
+  {
+    "id": 35,
+    "nombre": "Mate Chimuelo con cuerpo",
+    "precio": "1000",
+    "descripcion": "Mate Impreso en 3D pintado a mano.El diseño exterior de nuestros mates son realizados en plástico PLA, es un material bio degradable y apto para consumo. En su interior tiene un vaso de polímero plástico que soporta altas temperaturas.",
+    "imagen": "https://d2r9epyceweg5n.cloudfront.net/stores/002/096/341/products/chimuelos11-f503c3e39c1a11994c16485301043974-1024-1024.jpg",
+    "stock": 9
+  },
+  {
+    "id": 36,
+    "nombre": "Mate Stitch con cuerpo",
+    "precio": "850",
+    "descripcion": "Mate Impreso en 3D pintado a mano.El diseño exterior de nuestros mates son realizados en plástico PLA, es un material bio degradable y apto para consumo. En su interior tiene un vaso de polímero plástico que soporta altas temperaturas.",
+    "imagen": "https://d2r9epyceweg5n.cloudfront.net/stores/002/096/341/products/stitch-con-cuerpo1-b779c7f474d0796d0416485314194256-1024-1024.jpg",
+    "stock": 1
+  },
+  {
+    "id": 37,
+    "nombre": "Mate Bob Esponja",
+    "precio": "850",
+    "descripcion": "Mate Impreso en 3D pintado a mano.El diseño exterior de nuestros mates son realizados en plástico PLA, es un material bio degradable y apto para consumo. En su interior tiene un vaso de polímero plástico que soporta altas temperaturas.",
+    "imagen": "https://d2r9epyceweg5n.cloudfront.net/stores/002/096/341/products/bob-esponja1-72bf979ee0007411d916486727509839-1024-1024.jpg",
+    "stock": 4
+  },
+  {
+    "id": 38,
+    "nombre": "Mate Darth Vader",
+    "precio": "400",
+    "descripcion": "Mate Impreso en 3D pintado a mano.El diseño exterior de nuestros mates son realizados en plástico PLA, es un material bio degradable y apto para consumo. En su interior tiene un vaso de polímero plástico que soporta altas temperaturas.",
+    "imagen": "https://d2r9epyceweg5n.cloudfront.net/stores/002/096/341/products/darth-vader1-a31d4407014b5b66b016486731788926-1024-1024.jpg",
+    "stock": 3
+  },
+  {
+    "id": 39,
+    "nombre": "Mate Harry Potter",
+    "precio": "900",
+    "descripcion": "Mate Impreso en 3D pintado a mano.El diseño exterior de nuestros mates son realizados en plástico PLA, es un material bio degradable y apto para consumo. En su interior tiene un vaso de polímero plástico que soporta altas temperaturas.",
+    "imagen": "https://d2r9epyceweg5n.cloudfront.net/stores/002/096/341/products/harry1-f6807cfca89cb1e83f16486737252795-1024-1024.jpg",
+    "stock": 2
+  },
+  {
+    "id": 40,
+    "nombre": "Mate Meatboy",
+    "precio": "500",
+    "descripcion": "Mate Impreso en 3D pintado a mano.El diseño exterior de nuestros mates son realizados en plástico PLA, es un material bio degradable y apto para consumo. En su interior tiene un vaso de polímero plástico que soporta altas temperaturas.",
+    "imagen": "https://d2r9epyceweg5n.cloudfront.net/stores/002/096/341/products/meatboy1-f5b7cdc68ac980370616486743912728-1024-1024.jpg",
+    "stock": 0
+  },
+  {
+    "id": 41,
+    "nombre": "Yerba Mate Cachamate Tradicional Boca 500gr",
+    "precio": "900",
+    "descripcion": "BOOOKEEE BOOOKEEE. El mate es una pasión que compartimos todos los Argentinos, y el Fútbol también. Por eso, decidimos combinarlas y presentar la nueva Yerba Mate 100% clásica de Boca.",
+    "imagen": "https://http2.mlstatic.com/D_NQ_NP_631388-MLA43755967028_102020-O.webp",
+    "stock": 12
+  },
+  {
+    "id": 42,
+    "nombre": "Yerba par Nerviosos",
+    "precio": "700",
+    "descripcion": "La Yerba Mate Para Nerviosos de La Selva combina en una fórmula exclusiva Tilo y Mburucuyá, hierbas con propiedades sedantes, ansiolíticas y antiespasmódicas, que disminuyen el efecto de la cafeína mientras disfrutas de todo el sabor de la Yerba Mate.",
+    "imagen": "https://www.laselva.com.uy/repo/img/nerviosos.jpg",
+    "stock": 13
+  },
+  {
+    "id": 43,
+    "nombre": "Yerba Mate Sabor Pomelo",
+    "precio": "200",
+    "descripcion": "Esta variedad ofrece la combinación de la yerba tradicional con un aroma a pomelo rosado, que al probarlo permite sentir el sabor de esta fruta combinada con la yerba mate. Ideal para probar un sabor distinto.",
+    "imagen": "https://www.laselva.com.uy/repo/img/pomelo.jpg",
+    "stock": 10
+  },
+  {
+    "id": 44,
+    "nombre": "Yerba Para Hepáticos",
+    "precio": "1000",
+    "descripcion": "La Yerba Mate Para Hepáticos de La Selva contiene Carnicera y Congorosa, hierbas con reconocidas propiedades antiulcerosas y hepatoprotectoras que te ofrecen el mejor sabor en una combinación única.",
+    "imagen": "https://www.laselva.com.uy/repo/img/hepaticos.jpg",
+    "stock": 5
+  },
+  {
+    "id": 45,
+    "nombre": "Yerba Activa",
+    "precio": "700",
+    "descripcion": "La Yerba Mate Activa de La Selva contiene Ginseng, Ginkgo Biloba, Té Verde y Cola de Caballo, hierbas con propiedades energizantes, inmunoestimulantes, antioxidantes, depurativas y remineralizante",
+    "imagen": "https://www.laselva.com.uy/repo/img/activa.jpg",
+    "stock": 0
+  },
+  {
+    "id": 46,
+    "nombre": "Yerba Especial Con Hierbas",
+    "precio": "600",
+    "descripcion": "Especial con Hierbas de La Selva es una yerba mate compuesta con un sutil sabor a hierbas y propiedades digestivas, antioxidantes y hepatoprotectoras. Por sus componentes ligeramente sedantes contrarresta la sensación de nervios que generan otras yerbas. Contiene: Menta, Manzanilla, Cedrón, Tilo, Ginkgo, Hinojo, Carnicera, Congorosa y Verónica.",
+    "imagen": "https://www.laselva.com.uy/repo/img/hierbas.jpg",
+    "stock": 7
+  },
+  {
+    "id": 47,
+    "nombre": "Yerba Con Jengibre",
+    "precio": "100",
+    "descripcion": "Es una yerba con un agregado de raíz de Jengibre 100% natural. Destaca por su sabor y por las propiedades inherentes al Jengibre, principalmente por su efecto antiinflamatorio y su poder digestivo. Además, mejora del flujo sanguíneo y aumenta las defensas, por lo que destaca como una de las plantas más populares de la medicina oriental.",
+    "imagen": "https://www.laselva.com.uy/repo/img/jengibre_0.jpg",
+    "stock": 10
+  },
+  {
+    "id": 48,
+    "nombre": "Yerba Colestel",
+    "precio": "600",
+    "descripcion": "La Yerba Mate Colestel de La Selva contiene Alcaucil, Alfalfa y Menta, hierbas con reconocidas propiedades hipocolesterolemiantes, en una fórmula exclusiva que te permite cuidarte mientras disfrutas del mejor sabor.",
+    "imagen": "https://www.laselva.com.uy/repo/img/yerbacolestel.jpg",
+    "stock": 20
+  },
+  {
+    "id": 49,
+    "nombre": "Yerba Mate Tradicional",
+    "precio": "300",
+    "descripcion": "La Yerba Mate Tradicional de La Selva se obtiene a través de un cuidadoso proceso de selección, secado, procesado y envasado, para lograr el sabor único del mate tradicional uruguayo en un producto de calidad insuperable.",
+    "imagen": "https://www.laselva.com.uy/repo/img/tradicional.jpg",
+    "stock": 15
+  },
+  {
+    "id": 50,
+    "nombre": "Yerba Mate Sabor Naranja",
+    "precio": "900",
+    "descripcion": "Esta variedad ofrece la combinación de la yerba tradicional con el perfume y sabor de la naranja. Al abrir el paquete se puede sentir un aroma a naranja y al probarla, se aprecia la mezcla de yerba mate con naranjas. Ideal para quienes buscan un sabor diferente a la hora de tomar mate.",
+    "imagen": "https://www.laselva.com.uy/repo/img/naranja.jpg",
+    "stock": 14
+  },
+  {
+    "id": 150,
+    "nombre": "Set de Mate blanco + Mate Negro",
+    "precio": "10800",
+    "Descripcion": "Mate doble capa acero con bombilla con sistema de limpieza.",
+    "imagen": "https://i.ibb.co/qDZwYWQ/150.jpg",
+    "stock": 8
+  },
+  {
+    "id": 151,
+    "nombre": "Set Matero Negro",
+    "precio": "36000",
+    "Descripcion": "Termo Acero 1 litro + Mate de acero doble capa + Bombilla de acero con sistema de limpieza + Yerbera y azucarera de acero con cucharas. ",
+    "imagen": "https://i.ibb.co/W3M5RJm/151.jpg",
+    "stock": 12
+  },
+  {
+    "id": 152,
+    "nombre": "Kit Home Oficce Negro",
+    "precio": "18500",
+    "Descripcion": "Mate con bombilla de acero inoxidable + Botella Térmica 500ml + Mug Térmico de café + libreta A5 lisa + Lapicera de aluminio. ",
+    "imagen": "https://i.ibb.co/vLgFWWd/img-73601-36037657cc57d04a7316370777749725-640-0.jpg",
+    "stock": 9
+  },
+  {
+    "id": 153,
+    "nombre": "Set Matero Free Negro",
+    "precio": "21000",
+    "Descripcion": "Termo de 1 litro de acero inoxidable + yerbera  con cuchara +azucarera con cuchara + mate y bombilla de acero inoxidable.",
+    "imagen": "https://i.ibb.co/4TYfLXJ/img-6120-byn1-b4cfcebcd3c9b7eaff16472910819681-640-0.jpg",
+    "stock": 6
+  },
+  {
+    "id": 154,
+    "nombre": "Yerbera - Azucarera Negro",
+    "precio": "6500",
+    "Descripcion": "Yerbera y Azucarera acero inoxidable(10 cm de diámetro x 12 cm de altura) + cuchara acero inoxidable",
+    "imagen": "https://i.ibb.co/2vW9Rnr/img-6561-yeberaazucarera1-1c63e7b18ae87ef4d416472916961405-640-0.jpg",
+    "stock": 14
+  },
+  {
+    "id": 155,
+    "nombre": "Mate + bombilla de acero - Negro",
+    "precio": "5500",
+    "Descripcion": "Mate doble capa acero con bombilla con sistema de limpieza.",
+    "imagen": "https://i.ibb.co/T88vqmX/img-4122-negroweb-0a19ccae3da5477d1916237046985859-640-0.jpg",
+    "stock": 10
+  },
+  {
+    "id": 156,
+    "nombre": "Termo 500 Negro",
+    "precio": "5100",
+    "Descripcion": "TERMO 500 ML Negro, TAPA a Rosca con agarre de silicona, Tapón con doble orificio que permite utilizarlo para cebar o como MUG de infusiones-500ml -Fabricado en Acero inoxidable 304 doble capa.",
+    "imagen": "https://i.ibb.co/NtL4v65/img-65721-955cead2b18974acb116372658276391-640-0.jpg",
+    "stock": 19
+  },
+  {
+    "id": 157,
+    "nombre": "Cafetera Chemex",
+    "precio": "20768",
+    "Descripcion": "Chemex es una cafetera manual para preparar café filtrado. Excelente diseño y por ello se encuentra en las colecciones permanentes del museo MOMA de Nueva York.",
+    "imagen": "https://i.ibb.co/tXbKM6t/chemex-3-cups-web-20999-zoom.jpg",
+    "stock": 6
+  },
+  {
+    "id": 158,
+    "nombre": "Taza Oslo",
+    "precio": "3628",
+    "Descripcion": "Linea Oslo, vajilla de especialidad - 180 ml",
+    "imagen": "https://i.ibb.co/wsDTbwY/oslo-28777-zoom.jpg",
+    "stock": 20
+  },
+  {
+    "id": 159,
+    "nombre": "Aeropress Go",
+    "precio": "15843",
+    "Descripcion": "AeroPress Go brinda un gran sabor y prepara café estilo americano, espresso y café frío que se puede disfrutar tal cual o usarse en una amplia gama de bebidas energizantes y refrescantes.",
+    "imagen": "https://i.ibb.co/PTjK206/Whats-App-Image-2022-05-05-at-12-59-10-PM-1-81425-zoom.jpg",
+    "stock": 7
+  },
+  {
+    "id": 160,
+    "nombre": "Cafetera Italiana Bialetti",
+    "precio": "18403",
+    "Descripcion": "La cafetera Italiana es fácil de utilizar y produce un café con cuerpo y rico en aromas.",
+    "imagen": "https://i.ibb.co/tKRQtKP/cafetera-mokka-negra-88809-zoom.png",
+    "stock": 11
+  },
+  {
+    "id": 161,
+    "nombre": "Pitcher 20 Oz",
+    "precio": "4380",
+    "Descripcion": "Milk Pitcher Basic - No te puede faltar esta jarra para emulsionar y servir la leche en tus preparaciones.",
+    "imagen": "https://i.ibb.co/kJfFk4x/pitcher-basic-31180-zoom.png",
+    "stock": 16
+  },
+  {
+    "id": 162,
+    "nombre": "Balanza Electronic Scale Silicona",
+    "precio": "14000",
+    "Descripcion": "Balanza Digital ideal para baristas o para complemento de Cocina.",
+    "imagen": "https://i.ibb.co/9hWLvSQ/VK1803090-Scale-1-85661-zoom.png",
+    "stock": 4
+  }
+]
