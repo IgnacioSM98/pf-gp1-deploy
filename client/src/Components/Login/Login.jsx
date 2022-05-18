@@ -1,8 +1,23 @@
 import { useState } from "react";
 import { app } from "../../Firebase/firebase";
+import GoogleButton from "react-google-button";
+import { authentincation } from "../../Firebase/firebase";
+import { signInWithPopup, GoogleAuthProvider } from "firebase/auth";
 
-export default function Login({ setUser }) {
+export default function Login({ setUser, setIsGoogle }) {
   const [isSignUp, setIsSignUp] = useState(false);
+
+  const googleSignIn = () => {
+    const provider = new GoogleAuthProvider();
+
+    signInWithPopup(authentincation, provider)
+      .then((result) => {
+        setIsGoogle(true);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
 
   const createUser = (mail, pass) => {
     app
@@ -32,6 +47,7 @@ export default function Login({ setUser }) {
   };
   return (
     <div>
+      <GoogleButton type="light" onClick={googleSignIn} />
       <h1>{isSignUp ? "Registrate" : "Inicia Sesion"}</h1>
 
       <form onSubmit={handleSubmit}>

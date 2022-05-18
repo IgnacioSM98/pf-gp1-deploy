@@ -1,5 +1,6 @@
 import firebase from "firebase/compat/app";
 import "firebase/compat/auth";
+import { getAuth } from "firebase/auth";
 
 export const app = firebase.initializeApp({
   projectId: "pf-gp1",
@@ -10,3 +11,5 @@ export const app = firebase.initializeApp({
   authDomain: "pf-gp1.firebaseapp.com",
   messagingSenderId: "927317925312",
 });
+
+export const authentincation = getAuth(app);
