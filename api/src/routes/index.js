@@ -1,13 +1,11 @@
 const { Router } = require("express");
 // Importar todos los routers;
 // Ejemplo: const authRouter = require('./auth.js');
+const productosDB = require("../../Assests/productos.json");
 
 const router = Router();
-var app = express()
 // Configurar los routers
 // Ejemplo: router.use('/auth', authRouter);
-
-app.use('/', routes);
 
 router.get("/", (req, res) => {
   res.send("arranca o no arranca?");
@@ -36,7 +34,7 @@ router.get("/productos", async (req, res) => {
   }
 });
 
-roter.get("/producto/:id", async (req, res) => {
+router.get("/producto/:id", async (req, res) => {
   const { id } = req.params;
   try {
     const producto = await Producto.findByPk(id);
@@ -102,6 +100,10 @@ router.post("/crear", async (req, res) => {
 });
 
 router.post("/admin/crear", async (req, res) => {
+  console.log(productosDB);
+  if (Producto.findAll().length === 0) {
+    await Producto.createBulk(productosDB);
+  }
   const categorias = await Categoria.findAll({
     include: [{ model: Producto }],
   });
@@ -119,8 +121,8 @@ router.post("/admin/crear", async (req, res) => {
       const filtroId = categorias.filter((c) => c.nombre === elemento);
       auxiliar.push(filtroId[0].id);
     });
-    auxiliar.map((id) => {
-        await Categoria.findByPk(id).then((esaCategoria) => {
+    auxiliar.map(async (id) => {
+      await Categoria.findByPk(id).then((esaCategoria) => {
         Producto.findByPk(producto.id) //aca va el id del producto creado
           .then((productoNuevo) => {
             esaCategoria.addProducto(productoNuevo);
