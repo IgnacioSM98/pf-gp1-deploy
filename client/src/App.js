@@ -1,6 +1,5 @@
 import "./App.css";
-import { Landing } from "./Components/index";
-import Home from "./components/Home/Home";
+import { Landing, Home } from "./Components/index.js";
 
 function App() {
   return (
