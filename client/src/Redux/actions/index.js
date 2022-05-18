@@ -41,3 +41,22 @@ export function searchProduct(name) {
     });
   };
 }
+export function filtrarCategorias(payload) {
+  return {
+    type: "FILTRAR_CATEGORIAS",
+    payload,
+  };
+}
+
+export function ordenarPorNombre(payload) {
+  return {
+    type: "ORDENAR_POR_NOMBRE",
+    payload,
+  };
+}
+export function ordenarPorPrecio(payload) {
+  return {
+    type: "ORDENAR_POR_PRECIO",
+    payload,
+  };
+}
