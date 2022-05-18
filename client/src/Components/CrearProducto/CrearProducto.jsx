@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
-// import { useDispatch, useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { getCategorias } from "../../Redux/actions";
 import NavBar from "../NavBar/NavBar";
 
 function validate(post) {
@@ -23,16 +24,13 @@ function validate(post) {
 }
 
 function CrearProducto() {
-  {
-    /*const dispatch = useDispatch();*/
-  }
+  const dispatch = useDispatch();
+  const categorías = useSelector((state) => state.categorias);
   const [errors, setErrors] = useState({});
-  {
-    /*useEffect(() => {
-      dispatch de una action que traeria las categorias para hacer un drop down abajo ?
-    dispatch();
-  }, []);*/
-  }
+  useEffect(() => {
+    dispatch(getCategorias());
+  }, [dispatch]);
+
   const [post, setPost] = useState({
     nombre: "",
     descripción: "",
@@ -113,7 +111,12 @@ function CrearProducto() {
               <option value="default" disabled>
                 Elegir categoría
               </option>
-              {/*Codigo de categorias // un map ? dunno */}
+              {categorías &&
+                categorías.map((d) => (
+                  <option value={d.name} key={d.id}>
+                    {d.name}
+                  </option>
+                ))}
             </select>
             {errors.categoría && <p>{errors.categoría}</p>}
           </div>
