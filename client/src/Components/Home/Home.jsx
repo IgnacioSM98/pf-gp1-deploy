@@ -1,5 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import Producto from "../Producto/Producto";
 
 export default function Home() {
   return (

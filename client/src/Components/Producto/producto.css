@@ -1,0 +1,22 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,200;0,300;0,400;0,600;1,400;1,500&display=swap");
+
+.container-producto {
+  display: flex;
+  flex-direction: column;
+  background-color: #222;
+  color: white;
+  width: 25%;
+  height: fit-content;
+}
+
+.boton-agregar {
+  color: #222;
+  border-radius: 5px;
+  height: 45%;
+  background-color: white;
+  font-family: Poppins;
+  font-size: 13px;
+  box-shadow: 0 2px 2px 0 grey, 0 2px 2px 0 grey;
+  border: none;
+  outline: none;
+}
