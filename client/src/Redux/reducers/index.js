@@ -15,6 +15,11 @@ export default function rootReducer(state = initialState, action) {
         ...state,
         categorias: action.payload,
       };
+     case "SEARCH_PRODUCTS" :
+       return{
+         ...state,
+         productos: action.payload
+       }
     default:
       return state;
   }
