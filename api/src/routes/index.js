@@ -3,9 +3,11 @@ const { Router } = require("express");
 // Ejemplo: const authRouter = require('./auth.js');
 
 const router = Router();
-
+var app = express()
 // Configurar los routers
 // Ejemplo: router.use('/auth', authRouter);
+
+app.use('/', routes);
 
 router.get("/", (req, res) => {
   res.send("arranca o no arranca?");
@@ -58,7 +60,7 @@ router.get("/categorias/:nombre", async (req, res) => {
   try {
     const productos = await Productos.findAll({
       where: {
-        categorias: categoriaas.filter(
+        categorias: categorias.filter(
           (categoria) => categoria.name === nombreCategoria
         ),
       },
@@ -79,7 +81,7 @@ router.get("/usuario/:id", async (req, res) => {
   }
 });
 
-router.post("/adim/crear", async (req, res) => {
+router.post("/crear", async (req, res) => {
   try {
     const { id, nombre, apellido, dni, direccion, contraseña, telefono, mail } =
       req.body;
@@ -94,6 +96,41 @@ router.post("/adim/crear", async (req, res) => {
       mail: mail,
     });
     res.status(200).send(console.log(usuario));
+  } catch (error) {
+    res.status(200).send(error);
+  }
+});
+
+router.post("/admin/crear", async (req, res) => {
+  const categorias = await Categoria.findAll({
+    include: [{ model: Producto }],
+  });
+  try {
+    const { nombre, descripcion, precio, stock, imagen, categoria } = req.body;
+    const producto = await Producto.create({
+      nombre: nombre,
+      descripcion: descripcion,
+      precio: precio,
+      stock: stock,
+      imagen: imagen,
+    });
+    let auxiliar = [];
+    categoria.forEach((elemento) => {
+      const filtroId = categorias.filter((c) => c.nombre === elemento);
+      auxiliar.push(filtroId[0].id);
+    });
+    auxiliar.map((id) => {
+        await Categoria.findByPk(id).then((esaCategoria) => {
+        Producto.findByPk(producto.id) //aca va el id del producto creado
+          .then((productoNuevo) => {
+            esaCategoria.addProducto(productoNuevo);
+          })
+          .catch((error) => {
+            return res.status(400).json(console.log(error));
+          });
+      });
+    });
+    res.status(200).send(producto);
   } catch (error) {
     res.status(200).send(error);
   }
