@@ -1,6 +1,7 @@
 const initialState = {
   productos: [],
   categorias: [],
+  productosCopiados: [],
 };
 
 export default function rootReducer(state = initialState, action) {
@@ -15,11 +16,58 @@ export default function rootReducer(state = initialState, action) {
         ...state,
         categorias: action.payload,
       };
-     case "SEARCH_PRODUCTS" :
-       return{
-         ...state,
-         productos: action.payload
-       }
+    case "SEARCH_PRODUCTS":
+      return {
+        ...state,
+        productos: action.payload,
+      };
+    case "FILTRAR_CATEGORIAS":
+      const productos = state.productosCopiados;
+      const productosConCategoria =
+        action.payload === "all"
+          ? productos
+          : productos.filter((e) => {
+              let names = e.categorias.map((c) => c.name);
+              if (names.includes(action.payload)) return e;
+            });
+      return {
+        ...state,
+        productos: productosConCategoria,
+      };
+    case "ORDENAR_POR_NOMBRE":
+      const productosSorted =
+        action.payload === "asc"
+          ? state.productos.sort((a, b) => {
+              if (a.nombre > b.nombre) return 1;
+              if (b.nombre > a.nombre) return -1;
+              return 0;
+            })
+          : state.productos.sort((a, b) => {
+              if (a.nombre > b.nombre) return -1;
+              if (b.nombre > a.nombre) return 1;
+              return 0;
+            });
+      return {
+        ...state,
+        productos: productosSorted,
+      };
+    case "ORDENAR_POR_PRECIO":
+      const productosPrecio =
+        action.payload === "asc"
+          ? state.productos.sort((a, b) => {
+              if (a.precio > b.precio) return 1;
+              if (b.precio > a.precio) return -1;
+              return 0;
+            })
+          : state.productos.sort((a, b) => {
+              if (a.precio > b.precio) return -1;
+              if (b.precio > a.precio) return 1;
+              return 0;
+            });
+      return {
+        ...state,
+        productos: productosPrecio,
+      };
     default:
       return state;
   }
