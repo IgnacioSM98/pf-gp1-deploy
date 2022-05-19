@@ -9,22 +9,39 @@ const router = Router();
 // Configurar los routers
 // Ejemplo: router.use('/auth', authRouter);
 
-router.get("/", (req, res) => {
-  res.send("arranca o no arranca?");
+router.get("/", async (req, res) => {
+  const productos = await Producto.findAll();
+
+  res.send(productos);
+
+  // console.log(productos);
+
+  // if (productos.length === 0) {
+  //   const productoJSON = await Producto.bulkCreate(productosDB);
+  //   res.send(productoJSON);
+  // } else {
+  // res.send("Ya hay datos pa");
+  // }
 });
 
 router.get("/productos", async (req, res) => {
   // para que busque tiene que llegar "/productos?name=(loquetraeelbuscador)"
   const productos = await Producto.findAll();
+
   let { name } = req.query;
-  name = name.toLowerCase();
-  console.log(name, "esto aparece");
-  console.log(productos[0].nombre, "y esto?");
+
+  // console.log(name, "esto aparece");
+  // console.log(productos[0].nombre, "y esto?");
+
   if (name) {
     try {
       res
         .status(200)
-        .send(productos.filter((p) => p.nombre.toLowerCase().includes(name)));
+        .send(
+          productos.filter((p) =>
+            p.nombre.toLowerCase().includes(name.toLowerCase())
+          )
+        );
     } catch (error) {
       res.status(400).send(error);
     }
@@ -38,15 +55,23 @@ router.get("/productos", async (req, res) => {
 });
 router.get("/productos", async (req, res) => {
   const productos = await Producto.findAll();
+
   let { name } = req.query;
-  name = name.toLowerCase();
-  console.log(name, "esto aparece");
-  console.log(productos[0].nombre, "y esto?");
+
+  // name = name.toLowerCase();
+
+  // console.log(name, "esto aparece");
+  // console.log(productos[0].nombre, "y esto?");
+
   if (name) {
     try {
       res
         .status(200)
-        .send(productos.filter((p) => p.nombre.toLowerCase().includes(name)));
+        .send(
+          productos.filter((p) =>
+            p.nombre.toLowerCase().includes(name.toLowerCase())
+          )
+        );
     } catch (error) {
       res.status(400).send(error);
     }
@@ -61,8 +86,10 @@ router.get("/productos", async (req, res) => {
 
 router.get("/producto/:id", async (req, res) => {
   const { id } = req.params;
+
   try {
     const producto = await Producto.findByPk(id);
+
     res.status(200).send(producto);
   } catch (error) {
     res.status(400).send(error);
@@ -77,6 +104,7 @@ router.get("/categorias", async (req, res) => {
     res.status(400).send(error);
   }
 });
+
 router.get("/ratings", async (req, res) => {
   try {
     const rating = await Rating.findAll();
@@ -85,8 +113,10 @@ router.get("/ratings", async (req, res) => {
     res.status(400).send(error);
   }
 });
+
 router.get("/ratings/:productoid", async (req, res) => {
   const { productoId } = req.params;
+
   try {
     const rating = await Rating.findAll({ where: { productoId: productoId } });
     res.status(200).send(rating);
@@ -106,6 +136,7 @@ router.post("categorias/crear", async (req, res) => {
     res.status(200).send(error);
   }
 });
+
 router.post("ratings/crear", async (req, res) => {
   try {
     const { puntaje, comentario, productoid } = req.body;
@@ -138,6 +169,7 @@ router.post("ratings/crear", async (req, res) => {
 
 router.get("/usuario/:id", async (req, res) => {
   const idUsuario = req.params;
+
   try {
     const usuario = await Usuarios.findByPk(idUsuario);
     res.status(200).send(usuario);
@@ -166,11 +198,20 @@ router.post("/crear", async (req, res) => {
   }
 });
 
+<<<<<<< HEAD
 // router.post("/admin/crearorigen", async (req, res) => {
 //   const producto = await Producto.bulkCreate(productosDB);
 //   console.log(productosDB, "que onda esto");
 //   res.status(200).send(producto);
 // });
+=======
+router.post("/admin/crearorigen", async (req, res) => {
+  const producto = await Producto.bulkCreate(productosDB);
+  console.log(productosDB, "que onda esto");
+
+  res.status(200).send(producto);
+});
+>>>>>>> 8c3c1e9884ed8b79dbd6ebeaad30592489036c95
 
 router.post("/admin/crear", async (req, res) => {
   const categorias = await Categoria.findAll({
