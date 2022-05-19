@@ -2,6 +2,7 @@ const { Router } = require("express");
 // Importar todos los routers;
 // Ejemplo: const authRouter = require('./auth.js');
 const productosDB = require("../../Assests/productos.json");
+const { Productos, Categorias, Usuarios } = require("../db");
 
 const router = Router();
 // Configurar los routers
@@ -11,10 +12,8 @@ router.get("/", (req, res) => {
   res.send("arranca o no arranca?");
 });
 
-module.exports = router;
-
 router.get("/productos", async (req, res) => {
-  const productos = await Producto.findAll();
+  const productos = await productosDB.findAll();
   const { name } = req.query;
 
   if (name) {
@@ -37,7 +36,7 @@ router.get("/productos", async (req, res) => {
 router.get("/producto/:id", async (req, res) => {
   const { id } = req.params;
   try {
-    const producto = await Producto.findByPk(id);
+    const producto = await Productos.findByPk(id);
     res.status(200).send(producto);
   } catch (error) {
     res.status(400).send(error);
@@ -53,26 +52,26 @@ router.get("/categorias", async (req, res) => {
   }
 });
 
-router.get("/categorias/:nombre", async (req, res) => {
-  const nombreCategoria = req.params;
-  try {
-    const productos = await Productos.findAll({
-      where: {
-        categorias: categorias.filter(
-          (categoria) => categoria.name === nombreCategoria
-        ),
-      },
-    });
-    res.status(200).send(productos);
-  } catch (error) {
-    res.status(400).send(error);
-  }
-});
+// router.get("/categorias/:nombre", async (req, res) => {
+//   const nombreCategoria = req.params;
+//   try {
+//     const productos = await Productos.findAll({
+//       where: {
+//         categorias: categorias.filter(
+//           (categoria) => categoria.name === nombreCategoria
+//         ),
+//       },
+//     });
+//     res.status(200).send(productos);
+//   } catch (error) {
+//     res.status(400).send(error);
+//   }
+// });
 
 router.get("/usuario/:id", async (req, res) => {
   const idUsuario = req.params;
   try {
-    const usuario = await Usuario.findByPk(idUsuario);
+    const usuario = await Usuarios.findByPk(idUsuario);
     res.status(200).send(usuario);
   } catch (error) {
     res.status(400).send(error);
@@ -83,7 +82,7 @@ router.post("/crear", async (req, res) => {
   try {
     const { id, nombre, apellido, dni, direccion, contraseña, telefono, mail } =
       req.body;
-    const usuario = await Usuario.create({
+    const usuario = await Usuarios.create({
       id: id,
       nombre: nombre,
       apellido: apellido,
@@ -100,30 +99,34 @@ router.post("/crear", async (req, res) => {
 });
 
 router.post("/admin/crear", async (req, res) => {
-  console.log(productosDB);
-  if (Producto.findAll().length === 0) {
-    await Producto.createBulk(productosDB);
+  if (Productos.findAll().length === 0) {
+    await Productos.createBulk(productosDB);
   }
-  const categorias = await Categoria.findAll({
-    include: [{ model: Producto }],
+
+  const categorias = await Categorias.findAll({
+    include: [{ model: Productos }],
   });
+
   try {
     const { nombre, descripcion, precio, stock, imagen, categoria } = req.body;
-    const producto = await Producto.create({
+    const producto = await Productos.create({
       nombre: nombre,
       descripcion: descripcion,
       precio: precio,
       stock: stock,
       imagen: imagen,
     });
+
     let auxiliar = [];
+
     categoria.forEach((elemento) => {
       const filtroId = categorias.filter((c) => c.nombre === elemento);
       auxiliar.push(filtroId[0].id);
     });
+
     auxiliar.map(async (id) => {
-      await Categoria.findByPk(id).then((esaCategoria) => {
-        Producto.findByPk(producto.id) //aca va el id del producto creado
+      await Categorias.findByPk(id).then((esaCategoria) => {
+        Productos.findByPk(producto.id) //aca va el id del producto creado
           .then((productoNuevo) => {
             esaCategoria.addProducto(productoNuevo);
           })
@@ -137,3 +140,5 @@ router.post("/admin/crear", async (req, res) => {
     res.status(200).send(error);
   }
 });
+
+module.exports = router;
