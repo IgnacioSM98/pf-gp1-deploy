@@ -9,6 +9,7 @@ import {
 } from "../../Redux/actions/index";
 import Producto from "../Producto/Producto";
 import Paginado from "../Paginado/Paginado";
+import "./Tienda.css";
 
 function Shop() {
   const dispatch = useDispatch();
@@ -50,6 +51,9 @@ function Shop() {
   return (
     <div>
       <div>
+        <h1 className="h1-tienda">Productos</h1>
+      </div>
+      <div className="filtros-tienda">
         <select onChange={(e) => handleOrderByName(e)} defaultValue="default">
           <option value="default" disabled>
             Orden Alfabético
@@ -86,7 +90,7 @@ function Shop() {
           paginate={paginate}
           currentPage={currentPage}
         />
-        <div>
+        <div className="productos-tienda">
           {currentProductos &&
             currentProductos.map((el) => {
               return (
