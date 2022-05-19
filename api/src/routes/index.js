@@ -217,4 +217,35 @@ router.post("/admin/crear", async (req, res) => {
   }
 });
 
+router.put("/admin/:id", async (req, res) => {
+  try {
+    const id = req.params;
+    const producto = await Producto.findByPk(id);
+    const { nombre, precio, descripcion, imagen, stock } = req.body;
+    if (nombre) {
+      producto.nombre = nombre;
+      producto.save();
+    }
+    if (precio) {
+      producto.precio = precio;
+      producto.save();
+    }
+    if (descripcion) {
+      producto.descripcion = descripcion;
+      producto.save();
+    }
+    if (imagen) {
+      producto.imagen = imagen;
+      producto.save();
+    }
+    if (nombre) {
+      producto.stock = stock;
+      producto.save();
+    }
+    res.status(200).send({ msg: "cambios guardados!" });
+  } catch (error) {
+    res.status(400).send(error);
+  }
+});
+
 module.exports = router;
