@@ -1,0 +1,35 @@
+#pageNum {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-content: center;
+    margin-right: 4em;
+  }
+  #pageLi {
+    list-style: none;
+    text-decoration: none;
+    border: 1px solid black;
+    text-align: center;
+    margin-left: 1em;
+    padding: 0em 0.3em;
+    width: 24px;
+    height: 24px;
+    border-radius: 4px;
+    font-weight: bolder;
+  }
+  
+  #pageNum li:hover {
+    background-color: rgb(195, 195, 195);
+  }
+  
+  #pageLi a {
+    cursor: pointer;
+    text-decoration: none;
+    color: black;
+    text-align: center;
+  }
+  
+  .active {
+    background-color: rgb(140, 140, 140);
+  }
