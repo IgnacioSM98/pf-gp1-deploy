@@ -1,0 +1,26 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,200;0,300;0,400;0,600;1,400;1,500&display=swap");
+
+.boton-mas {
+  background-color: white;
+  font-family: Poppins;
+  font-size: 20px;
+  color: black;
+  border-radius: 20px;
+  padding: 10px;
+  border: 2px solid black;
+  font-weight: 800;
+  box-shadow: 0 2px 2px 0 #222, 0 2px 2px 0 darkgray;
+  -webkit-transition-duration: 0.3s;
+  transition-duration: 0.3s;
+}
+
+.boton-mas:hover {
+  background-color: #222;
+  color: white;
+}
+
+.boton-mas:active {
+  background-color: #222;
+  box-shadow: 0 5px darkgray;
+  transform: translateY(5px);
+}
