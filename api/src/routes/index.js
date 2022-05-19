@@ -1,7 +1,7 @@
 const { Router } = require("express");
 // Importar todos los routers;
 // Ejemplo: const authRouter = require('./auth.js');
-const productosDB = require("../../assets/products.json");
+// const productosDB = require("../../assets/products.json");
 const { Producto, Categoria, Usuario } = require("../db");
 const Rating = require("../models/Rating");
 
@@ -166,19 +166,13 @@ router.post("/crear", async (req, res) => {
   }
 });
 
-router.post("/admin/crearorigen", async (req, res) => {
-  const producto = await Producto.bulkCreate(productosDB);
-  console.log(productosDB, "que onda esto");
-  res.status(200).send(producto);
-});
+// router.post("/admin/crearorigen", async (req, res) => {
+//   const producto = await Producto.bulkCreate(productosDB);
+//   console.log(productosDB, "que onda esto");
+//   res.status(200).send(producto);
+// });
 
 router.post("/admin/crear", async (req, res) => {
-  const aux = await Producto.findAll();
-  if (aux.length === 0) {
-    const producto = await Producto.bulkCreate(productosDB);
-    return res.status(200).send(producto);
-  }
-
   const categorias = await Categoria.findAll({
     include: [{ model: Producto }],
   });
