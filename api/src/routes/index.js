@@ -1,8 +1,8 @@
 const { Router } = require("express");
 // Importar todos los routers;
 // Ejemplo: const authRouter = require('./auth.js');
-const productosDB = require("../../Assests/productos.json");
-const { Productos, Categorias, Usuarios } = require("../db");
+const productosDB = require("../../assets/products.json");
+const { Producto, Categoria, Usuario } = require("../db");
 
 const router = Router();
 // Configurar los routers
@@ -13,14 +13,39 @@ router.get("/", (req, res) => {
 });
 
 router.get("/productos", async (req, res) => {
-  const productos = await productosDB.findAll();
-  const { name } = req.query;
-
+  // para que busque tiene que llegar "/productos?name=(loquetraeelbuscador)"
+  const productos = await Producto.findAll();
+  let { name } = req.query;
+  name = name.toLowerCase();
+  console.log(name, "esto aparece");
+  console.log(productos[0].nombre, "y esto?");
   if (name) {
     try {
       res
         .status(200)
-        .send(productos.filter((producto) => producto.name.contains(name)));
+        .send(productos.filter((p) => p.nombre.toLowerCase().includes(name)));
+    } catch (error) {
+      res.status(400).send(error);
+    }
+  } else {
+    try {
+      res.status(200).send(productos);
+    } catch (error) {
+      res.status(400).send(error);
+    }
+  }
+});
+router.get("/productos", async (req, res) => {
+  const productos = await Producto.findAll();
+  let { name } = req.query;
+  name = name.toLowerCase();
+  console.log(name, "esto aparece");
+  console.log(productos[0].nombre, "y esto?");
+  if (name) {
+    try {
+      res
+        .status(200)
+        .send(productos.filter((p) => p.nombre.toLowerCase().includes(name)));
     } catch (error) {
       res.status(400).send(error);
     }
@@ -36,7 +61,7 @@ router.get("/productos", async (req, res) => {
 router.get("/producto/:id", async (req, res) => {
   const { id } = req.params;
   try {
-    const producto = await Productos.findByPk(id);
+    const producto = await Producto.findByPk(id);
     res.status(200).send(producto);
   } catch (error) {
     res.status(400).send(error);
@@ -45,7 +70,7 @@ router.get("/producto/:id", async (req, res) => {
 
 router.get("/categorias", async (req, res) => {
   try {
-    const categorias = await Categorias.findAll();
+    const categorias = await Categoria.findAll();
     res.status(200).send(categorias);
   } catch (error) {
     res.status(400).send(error);
@@ -98,18 +123,26 @@ router.post("/crear", async (req, res) => {
   }
 });
 
+router.post("/admin/crearorigen", async (req, res) => {
+  const producto = await Producto.bulkCreate(productosDB);
+  console.log(productosDB, "que onda esto");
+  res.status(200).send(producto);
+});
+
 router.post("/admin/crear", async (req, res) => {
-  if (Productos.findAll().length === 0) {
-    await Productos.createBulk(productosDB);
+  const aux = await Producto.findAll();
+  if (aux.length === 0) {
+    const producto = await Producto.bulkCreate(productosDB);
+    return res.status(200).send(producto);
   }
 
-  const categorias = await Categorias.findAll({
-    include: [{ model: Productos }],
+  const categorias = await Categoria.findAll({
+    include: [{ model: Producto }],
   });
 
   try {
     const { nombre, descripcion, precio, stock, imagen, categoria } = req.body;
-    const producto = await Productos.create({
+    const producto = await Producto.create({
       nombre: nombre,
       descripcion: descripcion,
       precio: precio,
@@ -125,8 +158,8 @@ router.post("/admin/crear", async (req, res) => {
     });
 
     auxiliar.map(async (id) => {
-      await Categorias.findByPk(id).then((esaCategoria) => {
-        Productos.findByPk(producto.id) //aca va el id del producto creado
+      Categoria.findByPk(id).then((esaCategoria) => {
+        Producto.findByPk(producto.id) //aca va el id del producto creado
           .then((productoNuevo) => {
             esaCategoria.addProducto(productoNuevo);
           })
