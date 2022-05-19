@@ -8,6 +8,7 @@ import {
   ordenarPorPrecio,
 } from "../../Redux/actions/index";
 import Producto from "../Producto/Producto";
+import Paginado from "../Paginado/Paginado";
 
 function Shop() {
   const dispatch = useDispatch();
@@ -21,6 +22,16 @@ function Shop() {
   useEffect(() => {
     dispatch(getCategorias());
   }, [dispatch]);
+
+  const [currentPage, setCurrentPage] = useState(1);
+  const productosPerPage = 9;
+  const ultimoProducto = productosPerPage * currentPage;
+  const primerProducto = ultimoProducto - productosPerPage;
+  const currentProductos = product.slice(primerProducto, ultimoProducto);
+
+  const paginate = (number) => {
+    setCurrentPage(number);
+  };
 
   function handleFilterByCategories(e) {
     dispatch(filtrarCategorias(e.target.value));
@@ -69,7 +80,24 @@ function Shop() {
         </select>
       </div>
       <div>
-        {/*<Producto imagen={imagen} nombre={nombre} precio={precio} />*/}
+        <Paginado
+          ProdPerPage={productosPerPage}
+          totalProd={product?.length}
+          paginate={paginate}
+          currentPage={currentPage}
+        />
+        <div>
+          {currentProductos &&
+            currentProductos.map((el) => {
+              return (
+                <Producto
+                  imagen={el.imagen}
+                  nombre={el.nombre}
+                  precio={el.precio}
+                />
+              );
+            })}
+        </div>
       </div>
     </div>
   );
