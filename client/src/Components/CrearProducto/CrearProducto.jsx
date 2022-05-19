@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getCategorias } from "../../Redux/actions";
 import NavBar from "../NavBar/NavBar";
+import "./CrearProducto.css";
 
 function validate(post) {
   let errors = {};
@@ -63,30 +64,32 @@ function CrearProducto() {
   return (
     <div>
       <NavBar />
-      <div>
-        <h1>Completar todos los campos</h1>
+      <div className="contenedor-form">
         <form onSubmit={(e) => handleSubmit(e)}>
-          <div>
-            <label>Nombre</label>
+          <h1 className="titulo-form">Completar todos los campos</h1>
+          <div className="grupo">
             <input
               type="text"
               value={post.nombre}
               name="nombre"
               onChange={(e) => handleInputChange(e)}
             />
+            <span className="barra"></span>
+            <label className="label">Nombre</label>
             {errors.nombre && <p>{errors.nombre}</p>}
           </div>
-          <div>
-            <label>Descripción</label>
+          <div className="grupo">
             <textarea
               value={post.descripción}
               name="descripción"
+              rows="3"
               onChange={(e) => handleInputChange(e)}
             />
+            <span className="barra"></span>
+            <label className="label">Descripción</label>
             {errors.descripción && <p>{errors.descripción}</p>}
           </div>
-          <div>
-            <label>Precio</label>
+          <div className="grupo">
             <input
               type="number"
               min="0"
@@ -94,20 +97,23 @@ function CrearProducto() {
               name="precio"
               onChange={(e) => handleInputChange(e)}
             />
+            <span className="barra"></span>
+            <label className="label">Precio</label>
             {errors.precio && <p>{errors.precio}</p>}
           </div>
-          <div>
-            <label>Imagen</label>
+          <div className="grupo">
             <input
               type="text"
               value={post.imagen}
               name="imagen"
               onChange={(e) => handleInputChange(e)}
             />
+            <span className="barra"></span>
+            <label className="label">Imagen</label>
             {errors.imagen && <p>{errors.imagen}</p>}
           </div>
-          <div>
-            <select defaultValue="default">
+          <div className="grupo">
+            <select className="barra" defaultValue="default">
               <option value="default" disabled>
                 Elegir categoría
               </option>
