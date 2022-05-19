@@ -3,6 +3,7 @@ const { Router } = require("express");
 // Ejemplo: const authRouter = require('./auth.js');
 const productosDB = require("../../assets/products.json");
 const { Producto, Categoria, Usuario } = require("../db");
+const Rating = require("../models/Rating");
 
 const router = Router();
 // Configurar los routers
@@ -74,6 +75,48 @@ router.get("/categorias", async (req, res) => {
     res.status(200).send(categorias);
   } catch (error) {
     res.status(400).send(error);
+  }
+});
+router.get("/ratings", async (req, res) => {
+  try {
+    const rating = await Rating.findAll();
+    res.status(200).send(rating);
+  } catch (error) {
+    res.status(400).send(error);
+  }
+});
+router.get("/ratings/:productoid", async (req, res) => {
+  const { productoId } = req.params;
+  try {
+    const rating = await Rating.findAll({ where: { productoId: productoId } });
+    res.status(200).send(rating);
+  } catch (error) {
+    res.status(400).send(error);
+  }
+});
+
+router.post("categorias/crear", async (req, res) => {
+  try {
+    const { nombre } = req.body;
+    const categoria = await Categoria.create({
+      nombre: nombre,
+    });
+    res.status(200).send(categoria);
+  } catch (error) {
+    res.status(200).send(error);
+  }
+});
+router.post("ratings/crear", async (req, res) => {
+  try {
+    const { puntaje, comentario, productoid } = req.body;
+    const rating = await Categoria.create({
+      puntaje: puntaje,
+      comentario: comentario,
+      productoid: productoid,
+    });
+    res.status(200).send(rating);
+  } catch (error) {
+    res.status(200).send(error);
   }
 });
 
