@@ -49,8 +49,8 @@ const { Pedido } = sequelize.models;
 // Product.hasMany(Reviews);
 Producto.belongsToMany(Categoria, { through: "CatPro" });
 Categoria.belongsToMany(Producto, { through: "CatPro" });
-Producto.belongsToMany(Rating, { through: "Reputacion" });
-Rating.belongsToMany(Producto, { through: "Reputacion" });
+Rating.belongsTo(Producto);
+Producto.hasMany(Rating);
 
 Pedido.belongsTo(Usuario);
 Usuario.hasMany(Pedido);
