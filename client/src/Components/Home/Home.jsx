@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import Producto from "../Producto/Producto";
+import Boton from "../Boton/Boton";
 
 export default function Home() {
   return (
@@ -29,6 +29,18 @@ export default function Home() {
 
       <h1>Infusion Store</h1>
       <h4>Empezá tu día con una buena infusión</h4>
+
+      <div>
+        <Link to="/tienda">
+          <Boton texto="Mas productos" />
+        </Link>
+      </div>
+
+      <div>
+        <Link to="/blog">
+          <Boton texto="Mas notas" />
+        </Link>
+      </div>
     </>
   );
 }
