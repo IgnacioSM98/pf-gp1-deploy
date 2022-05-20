@@ -46,7 +46,14 @@ const Button = styled.button`
   text-shadow: 1px 1px black;
 `;
 
-export default function NavBar() {
+export default function NavBar({ contacto }) {
+  const scrollToSection = (elementRef) => {
+    window.scrollTo({
+      top: elementRef.current.offsetTop,
+      behavior: "smooth",
+    });
+  };
+
   return (
     <Container>
       <NavLink to="/">
@@ -61,7 +68,7 @@ export default function NavBar() {
         <Span>Tienda</Span>
       </NavLink>
 
-      <Span>Contacto</Span>
+      <Span onClick={() => scrollToSection(contacto)}>Contacto</Span>
 
       <NavLink to="/blog">
         <Span>Blog</Span>
