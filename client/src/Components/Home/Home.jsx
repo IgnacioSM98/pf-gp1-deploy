@@ -96,6 +96,7 @@ export default function Home() {
             return (
               <Producto
                 key={producto.id}
+                id={producto.id}
                 imagen={producto.imagen}
                 nombre={producto.nombre}
                 precio={producto.precio}

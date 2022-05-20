@@ -10,6 +10,7 @@ import {
   CrearProducto,
   NavBar,
   Login,
+  DetalleProducto,
 } from "./Components/index";
 import { Routes, Route } from "react-router-dom";
 import { useDispatch } from "react-redux";
@@ -32,7 +33,7 @@ function App() {
         <Routes>
           <Route exact path="/" element={<Home />} />
           <Route exact path="/tienda" element={<Tienda />} />
-          <Route exact path="/tienda/:id" element={"Detalles"} />
+          <Route exact path="/productos/:id" element={<DetalleProducto />} />
           <Route exact path="/carrito" element={<Carrito />} />
           <Route exact path="/blog" element={<Blog />} />
           <Route exact path="/usuario" element={<Cuenta />} />
