@@ -9,12 +9,14 @@ import {
 } from "../../Redux/actions/index";
 import Producto from "../Producto/Producto";
 import Paginado from "../Paginado/Paginado";
+import { getFilterProds } from "../../Redux/actions/index";
 import "./Tienda.css";
 
 function Shop() {
   const dispatch = useDispatch();
   const product = useSelector((state) => state.productos);
   const catego = useSelector((state) => state.categorias);
+  const filteredProds = useSelector((state) => state.filteredProds);
   const [cambio, setCambio] = useState(true);
 
   // useEffect(() => {
@@ -29,7 +31,7 @@ function Shop() {
   const productosPerPage = 12;
   const ultimoProducto = productosPerPage * currentPage;
   const primerProducto = ultimoProducto - productosPerPage;
-  const currentProductos = product.slice(primerProducto, ultimoProducto);
+  let currentProductos = product.slice(primerProducto, ultimoProducto);
 
   const paginate = (number) => {
     setCurrentPage(number);
@@ -49,11 +51,40 @@ function Shop() {
     cambio ? setCambio(false) : setCambio(true);
   }
 
+  function onChangeHandle(e) {
+    const value = e.target.value;
+
+    const arrayAux = product.filter((prod) => {
+      const name = prod.nombre.toLowerCase();
+      const isVisible = name.includes(value.toLowerCase());
+
+      if (isVisible) {
+        return prod;
+      }
+    });
+
+    console.log(currentProductos);
+    currentProductos = [...arrayAux];
+  }
+
   return (
     <div>
       <div>
         <h1 className="h1-tienda">Productos</h1>
       </div>
+
+      <div className="search">
+        <form>
+          <input
+            type="text"
+            placeholder="Busca productos"
+            onChange={(e) => {
+              onChangeHandle(e);
+            }}
+          />
+        </form>
+      </div>
+
       <div className="filtros-tienda">
         <select onChange={(e) => handleOrderByName(e)} defaultValue="default">
           <option value="default" disabled>
@@ -97,6 +128,7 @@ function Shop() {
               return (
                 <Producto
                   key={el.id}
+                  id={el.id}
                   imagen={el.imagen}
                   nombre={el.nombre}
                   precio={el.precio}

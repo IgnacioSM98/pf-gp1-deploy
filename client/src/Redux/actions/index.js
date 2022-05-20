@@ -1,15 +1,13 @@
 import axios from "axios";
 
-const urlBase = "https://proyecto-final-gp1.herokuapp.com/"
-const productos = "productos"
-const categorias = "categorias"
+const urlBase = "https://proyecto-final-gp1.herokuapp.com/";
+const productos = "productos";
+const categorias = "categorias";
 
 export function getProductos() {
   return async function (dispatch) {
     try {
-      const resp = await axios.get(
-        `${urlBase}${productos}`
-      );
+      const resp = await axios.get(`${urlBase}${productos}`);
 
       if (resp) {
         dispatch({ type: "GET_PRODUCTOS", payload: resp.data });
@@ -20,12 +18,25 @@ export function getProductos() {
   };
 }
 
+export function getDetail(id) {
+  return function (dispatch) {
+    console.log(urlBase + "producto" + "/" + id);
+    axios(`${urlBase}producto/${id}`).then((res) =>
+      dispatch({ type: "GET_DETAIL", payload: res.data })
+    );
+  };
+}
+
+export function getFilterProds(filteredProds) {
+  return function (dispatch) {
+    dispatch({ type: "GET_FILTERED_PRODS", payload: filteredProds });
+  };
+}
+
 export function getCategorias() {
   return async function (dispatch) {
     try {
-      const resp = await axios.get(
-        `${urlBase}${categorias}`
-      );
+      const resp = await axios.get(`${urlBase}${categorias}`);
 
       if (resp) {
         dispatch({ type: "GET_CATEGORIAS", payload: resp.data });
@@ -38,7 +49,7 @@ export function getCategorias() {
 
 export function searchProduct(name) {
   return async function (dispatch) {
-    let json = await axios.get( `${urlBase}${productos}+?name=${name}`);
+    let json = await axios.get(`${urlBase}${productos}+?name=${name}`);
     return dispatch({
       type: "SEARCH_PRODUCTS",
       payload: json.data,

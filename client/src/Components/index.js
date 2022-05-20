@@ -1,4 +1,3 @@
-import Landing from "./Landing/Landing";
 import Home from "./Home/Home";
 import Blog from "./Blog/Blog";
 import Carrito from "./Carrito/Carrito";
@@ -10,9 +9,9 @@ import NavBar from "./NavBar/NavBar";
 import Login from "./Login/Login";
 import Boton from "./Boton/Boton";
 import Producto from "./Producto/Producto";
+import DetalleProducto from "./DetalleProducto/DetalleProducto";
 
 export {
-  Landing,
   Home,
   Blog,
   Carrito,
@@ -24,4 +23,5 @@ export {
   Login,
   Boton,
   Producto,
+  DetalleProducto,
 };
