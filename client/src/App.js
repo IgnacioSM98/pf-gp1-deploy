@@ -13,19 +13,26 @@ import {
   DetalleProducto,
 } from "./Components/index";
 import { Routes, Route } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 function App() {
   const dispatch = useDispatch();
+  const productos = useSelector((state) => state.productos);
   const contacto = useRef(null);
 
   useEffect(() => {
+    localStorage.removeItem("productos");
     dispatch(getProductos());
   }, [dispatch]);
 
   useEffect(() => {
     dispatch(getCategorias());
   }, [dispatch]);
+
+  useEffect(() => {
+    console.log(productos);
+    localStorage.setItem("productos", JSON.stringify(productos));
+  }, [productos]);
 
   return (
     <div>

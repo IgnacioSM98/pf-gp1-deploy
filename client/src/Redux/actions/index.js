@@ -6,14 +6,20 @@ const categorias = "categorias";
 
 export function getProductos() {
   return async function (dispatch) {
-    try {
-      const resp = await axios.get(`${urlBase}${productos}`);
+    const data = JSON.parse(localStorage.getItem("productos"));
 
-      if (resp) {
-        dispatch({ type: "GET_PRODUCTOS", payload: resp.data });
+    if (data) {
+      dispatch({ type: "GET_PRODUCTOS", payload: data });
+    } else {
+      try {
+        const resp = await axios.get(`${urlBase}${productos}`);
+
+        if (resp) {
+          dispatch({ type: "GET_PRODUCTOS", payload: resp.data });
+        }
+      } catch (err) {
+        console.log(err, "error productos");
       }
-    } catch (err) {
-      console.log(err, "error productos");
     }
   };
 }

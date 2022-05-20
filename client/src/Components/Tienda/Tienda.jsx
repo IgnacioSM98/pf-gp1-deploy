@@ -9,7 +9,7 @@ import {
 } from "../../Redux/actions/index";
 import Producto from "../Producto/Producto";
 import Paginado from "../Paginado/Paginado";
-import { getFilterProds } from "../../Redux/actions/index";
+import { getProductos } from "../../Redux/actions/index";
 import "./Tienda.css";
 
 function Shop() {
@@ -18,13 +18,9 @@ function Shop() {
   const catego = useSelector((state) => state.categorias);
   const [cambio, setCambio] = useState(true);
 
-  // useEffect(() => {
-  //   dispatch(getProductos());
-  // }, [dispatch]);
-
-  // useEffect(() => {
-  //   dispatch(getCategorias());
-  // }, [dispatch]);
+  useEffect(() => {
+    if (product.length === 0) dispatch(getProductos());
+  }, []);
 
   const [currentPage, setCurrentPage] = useState(1);
   const productosPerPage = 12;
@@ -36,7 +32,7 @@ function Shop() {
 
   useEffect(() => {
     setCurrentProductos(product.slice(primerProducto, ultimoProducto));
-  }, [primerProducto, ultimoProducto]);
+  }, [product, primerProducto, ultimoProducto]);
 
   const paginate = (number) => {
     setCurrentPage(number);
