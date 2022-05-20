@@ -21,9 +21,16 @@ export function getProductos() {
 export function getDetail(id) {
   return function (dispatch) {
     console.log(urlBase + "producto" + "/" + id);
+
     axios(`${urlBase}producto/${id}`).then((res) =>
       dispatch({ type: "GET_DETAIL", payload: res.data })
     );
+  };
+}
+
+export function clearDetail() {
+  return function (dispatch) {
+    dispatch({ type: "GET_DETAIL" });
   };
 }
 
