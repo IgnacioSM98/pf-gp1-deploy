@@ -1,7 +1,19 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
-import { getDetail } from "../../Redux/actions";
+import { clearDetail, getDetail } from "../../Redux/actions";
+import styled from "styled-components";
+
+const Container = styled.div`
+  height: 100vh;
+`;
+
+const Image = styled.img`
+  height: 300px;
+  width: 400px;
+  object-fit: contain;
+  margin-top: 40px;
+`;
 
 export default function DetalleProducto() {
   const { id } = useParams();
@@ -10,13 +22,17 @@ export default function DetalleProducto() {
 
   useEffect(() => {
     dispatch(getDetail(id));
+
+    return () => {
+      dispatch(clearDetail());
+    };
   }, []);
 
   return (
-    <div className="detail">
+    <Container>
       {detalle !== undefined ? (
         <>
-          <img src={detalle.imagen} alt="" />
+          <Image src={detalle.imagen} alt={`Imagen ${detalle.nombre}`} />
           <p>{detalle.nombre}</p>
           <p>{detalle.descripcion}</p>
           <p>{detalle.precio}</p>
@@ -24,6 +40,6 @@ export default function DetalleProducto() {
       ) : (
         <></>
       )}
-    </div>
+    </Container>
   );
 }
