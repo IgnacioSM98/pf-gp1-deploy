@@ -8,23 +8,24 @@
     box-sizing: border-box;
 }
 
-body {
+.background-form{
     background: #870000;  
     /* fallback for old browsers */
     background: -webkit-linear-gradient(to left, #190A05, #870000);  
     /* Chrome 10-25, Safari 5.1-6 */
     background: linear-gradient(to left, #190A05, #870000); 
     /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
-    font-family: 'Poppins', sans-serif;
-    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.contenedor-form {
+    width: 40%;
     height: 100vh;
     display: flex;
     justify-content: center;
     align-items: center;
-}
-
-.contenedor-form{
-    margin-top: 80px;
+    margin-top: 30px;
 }
 
 .titulo-form {
