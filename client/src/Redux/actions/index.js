@@ -27,12 +27,6 @@ export function getDetail(id) {
   };
 }
 
-export function getFilterProds(filteredProds) {
-  return function (dispatch) {
-    dispatch({ type: "GET_FILTERED_PRODS", payload: filteredProds });
-  };
-}
-
 export function getCategorias() {
   return async function (dispatch) {
     try {

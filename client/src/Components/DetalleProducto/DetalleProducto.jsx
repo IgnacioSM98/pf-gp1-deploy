@@ -14,8 +14,16 @@ export default function DetalleProducto() {
 
   return (
     <div className="detail">
-      {console.log(detalle)}
-      {detalle !== undefined ? <p>{detalle.nombre}</p> : <></>}
+      {detalle !== undefined ? (
+        <>
+          <img src={detalle.imagen} alt="" />
+          <p>{detalle.nombre}</p>
+          <p>{detalle.descripcion}</p>
+          <p>{detalle.precio}</p>
+        </>
+      ) : (
+        <></>
+      )}
     </div>
   );
 }

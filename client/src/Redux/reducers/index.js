@@ -3,7 +3,6 @@ const initialState = {
   categorias: [],
   productosCopiados: [],
   detalle: {},
-  filteredProds: [],
 };
 
 export default function rootReducer(state = initialState, action) {
@@ -22,11 +21,6 @@ export default function rootReducer(state = initialState, action) {
       return {
         ...state,
         detalle: action.payload,
-      };
-    case "GET_FILTERED_PRODS":
-      return {
-        ...state,
-        filteredProds: action.payload,
       };
     case "SEARCH_PRODUCTS":
       return {

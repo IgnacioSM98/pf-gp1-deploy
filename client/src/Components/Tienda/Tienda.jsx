@@ -16,7 +16,6 @@ function Shop() {
   const dispatch = useDispatch();
   const product = useSelector((state) => state.productos);
   const catego = useSelector((state) => state.categorias);
-  const filteredProds = useSelector((state) => state.filteredProds);
   const [cambio, setCambio] = useState(true);
 
   // useEffect(() => {
@@ -31,7 +30,13 @@ function Shop() {
   const productosPerPage = 12;
   const ultimoProducto = productosPerPage * currentPage;
   const primerProducto = ultimoProducto - productosPerPage;
-  let currentProductos = product.slice(primerProducto, ultimoProducto);
+  // const currentProductos = product.slice(primerProducto, ultimoProducto);
+
+  const [currentProductos, setCurrentProductos] = useState([]);
+
+  useEffect(() => {
+    setCurrentProductos(product.slice(primerProducto, ultimoProducto));
+  }, [primerProducto, ultimoProducto]);
 
   const paginate = (number) => {
     setCurrentPage(number);
@@ -63,8 +68,7 @@ function Shop() {
       }
     });
 
-    console.log(currentProductos);
-    currentProductos = [...arrayAux];
+    setCurrentProductos(arrayAux);
   }
 
   return (
