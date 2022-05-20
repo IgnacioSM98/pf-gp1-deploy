@@ -1,7 +1,7 @@
 const { Router } = require("express");
 // Importar todos los routers;
 // Ejemplo: const authRouter = require('./auth.js');
-const productosDB = require("../../assets/products.json");
+// const productosDB = require("../../assets/products.json");
 const { Producto, Categoria, Usuario } = require("../db");
 const Rating = require("../models/Rating");
 
@@ -198,20 +198,22 @@ router.post("/crear", async (req, res) => {
   }
 });
 
+<<<<<<< HEAD
+// router.post("/admin/crearorigen", async (req, res) => {
+//   const producto = await Producto.bulkCreate(productosDB);
+//   console.log(productosDB, "que onda esto");
+//   res.status(200).send(producto);
+// });
+=======
 router.post("/admin/crearorigen", async (req, res) => {
   const producto = await Producto.bulkCreate(productosDB);
   console.log(productosDB, "que onda esto");
 
   res.status(200).send(producto);
 });
+>>>>>>> 8c3c1e9884ed8b79dbd6ebeaad30592489036c95
 
 router.post("/admin/crear", async (req, res) => {
-  const aux = await Producto.findAll();
-  if (aux.length === 0) {
-    const producto = await Producto.bulkCreate(productosDB);
-    return res.status(200).send(producto);
-  }
-
   const categorias = await Categoria.findAll({
     include: [{ model: Producto }],
   });
@@ -247,6 +249,37 @@ router.post("/admin/crear", async (req, res) => {
     res.status(200).send(producto);
   } catch (error) {
     res.status(200).send(error);
+  }
+});
+
+router.put("/admin/:id", async (req, res) => {
+  try {
+    const id = req.params;
+    const producto = await Producto.findByPk(id);
+    const { nombre, precio, descripcion, imagen, stock } = req.body;
+    if (nombre) {
+      producto.nombre = nombre;
+      producto.save();
+    }
+    if (precio) {
+      producto.precio = precio;
+      producto.save();
+    }
+    if (descripcion) {
+      producto.descripcion = descripcion;
+      producto.save();
+    }
+    if (imagen) {
+      producto.imagen = imagen;
+      producto.save();
+    }
+    if (nombre) {
+      producto.stock = stock;
+      producto.save();
+    }
+    res.status(200).send({ msg: "cambios guardados!" });
+  } catch (error) {
+    res.status(400).send(error);
   }
 });
 

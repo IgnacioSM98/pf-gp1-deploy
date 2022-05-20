@@ -7,5 +7,17 @@ import Tienda from "./Tienda/Tienda";
 import Stars from "./Stars/Stars";
 import CrearProducto from "./CrearProducto/CrearProducto";
 import NavBar from "./NavBar/NavBar";
+import Login from "./Login/Login";
 
-export { Landing, Home, Blog, Carrito, Cuenta, Tienda, CrearProducto, NavBar, Stars };
+export {
+  Landing,
+  Home,
+  Blog,
+  Carrito,
+  Cuenta,
+  Tienda,
+  CrearProducto,
+  NavBar,
+  Stars,
+  Login,
+};

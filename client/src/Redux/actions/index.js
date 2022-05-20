@@ -1,10 +1,14 @@
 import axios from "axios";
 
+const urlBase = "https://proyecto-final-gp1.herokuapp.com/"
+const productos = "productos"
+const categorias = "categorias"
+
 export function getProductos() {
   return async function (dispatch) {
     try {
       const resp = await axios.get(
-        `https://henry-game.herokuapp.com/productos`
+        `${urlBase}${productos}`
       );
 
       if (resp) {
@@ -20,7 +24,7 @@ export function getCategorias() {
   return async function (dispatch) {
     try {
       const resp = await axios.get(
-        `https://henry-game.herokuapp.com/categorias`
+        `${urlBase}${categorias}`
       );
 
       if (resp) {
@@ -34,7 +38,7 @@ export function getCategorias() {
 
 export function searchProduct(name) {
   return async function (dispatch) {
-    let json = await axios.get("http://localhost:3001/dogs?name=" + name);
+    let json = await axios.get( `${urlBase}${productos}+?name=${name}`);
     return dispatch({
       type: "SEARCH_PRODUCTS",
       payload: json.data,

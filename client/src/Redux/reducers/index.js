@@ -53,7 +53,7 @@ export default function rootReducer(state = initialState, action) {
       };
     case "ORDENAR_POR_PRECIO":
       const productosPrecio =
-        action.payload === "asc"
+        action.payload === "desc"
           ? state.productos.sort((a, b) => {
               if (a.precio > b.precio) return 1;
               if (b.precio > a.precio) return -1;

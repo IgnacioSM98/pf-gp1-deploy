@@ -2,6 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import Boton from "../Boton/Boton";
 import styled from "styled-components";
+import "./Home.css";
 
 const Container = styled.div`
   height: 100vh;
@@ -11,8 +12,11 @@ const Container = styled.div`
 export default function Home() {
   return (
     <Container>
-      <h1>Infusion Store</h1>
-      <h4>Empezá tu día con una buena infusión</h4>
+
+      <div className="Banner">
+        <h1>Infusion Store</h1>
+        <h4>Empezá tu día con una buena infusión</h4>
+      </div>
 
       <div>
         <Link to="/tienda">
