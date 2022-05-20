@@ -198,20 +198,12 @@ router.post("/crear", async (req, res) => {
   }
 });
 
-<<<<<<< HEAD
-// router.post("/admin/crearorigen", async (req, res) => {
-//   const producto = await Producto.bulkCreate(productosDB);
-//   console.log(productosDB, "que onda esto");
-//   res.status(200).send(producto);
-// });
-=======
 router.post("/admin/crearorigen", async (req, res) => {
   const producto = await Producto.bulkCreate(productosDB);
   console.log(productosDB, "que onda esto");
 
   res.status(200).send(producto);
 });
->>>>>>> 8c3c1e9884ed8b79dbd6ebeaad30592489036c95
 
 router.post("/admin/crear", async (req, res) => {
   const categorias = await Categoria.findAll({
