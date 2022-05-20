@@ -62,7 +62,7 @@ function CrearProducto() {
   }
 
   return (
-    <div>
+    <div className="background-form">
       <NavBar />
       <div className="contenedor-form">
         <form onSubmit={(e) => handleSubmit(e)}>
