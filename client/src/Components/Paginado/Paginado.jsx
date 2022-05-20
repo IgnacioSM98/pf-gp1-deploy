@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import s from "./Paginado.modules.css"
 
 export default function Paginado(props) {
   let [currentNum, setCurrentNum] = useState(1);
