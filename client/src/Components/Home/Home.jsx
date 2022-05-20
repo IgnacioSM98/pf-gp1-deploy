@@ -4,6 +4,7 @@ import { useSelector } from "react-redux";
 import { Boton, Producto } from "../index";
 import styled from "styled-components";
 import { SocialIcon } from "react-social-icons";
+import ScrollToTop from "../ScrollToTop/ScrollToTop";
 
 const Container = styled.div`
   height: 100vh;
@@ -180,6 +181,8 @@ export default function Home({ contacto }) {
           </div>
         </CambiameElNombrePls>
       </Contacto>
+
+      <ScrollToTop />
     </Container>
   );
 }
