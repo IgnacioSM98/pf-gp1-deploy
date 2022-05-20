@@ -16,9 +16,17 @@
   flex-direction: column;
   padding: 10px;
 }
+
 .productos-tienda {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  justify-content: space-around;
+  /* display: flex; */
+  /* flex-direction: row; */
+  /* flex-wrap: wrap; */
+  /* justify-content: space-around; */
+
+  display: grid;
+  /* width: 100%; */
+  grid-template-columns: repeat(4, 1fr);
+  margin: 20px;
+  /* // grid-auto-flow: dense; */
+  grid-gap: 15px 10px;
 }

@@ -8,6 +8,8 @@ import Stars from "./Stars/Stars";
 import CrearProducto from "./CrearProducto/CrearProducto";
 import NavBar from "./NavBar/NavBar";
 import Login from "./Login/Login";
+import Boton from "./Boton/Boton";
+import Producto from "./Producto/Producto";
 
 export {
   Landing,
@@ -20,4 +22,6 @@ export {
   NavBar,
   Stars,
   Login,
+  Boton,
+  Producto,
 };

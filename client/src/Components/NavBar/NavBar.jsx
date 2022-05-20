@@ -9,16 +9,20 @@ const Container = styled.div`
   position: fixed;
   width: 100%;
   top: 20px;
+  z-index: 20;
 `;
 
 const NavLink = styled(Link)`
   text-decoration: none;
-  color: black;
+  color: white;
 `;
 
 const Span = styled.span`
   margin: 0px 40px;
   font-weight: bold;
+  color: white;
+  font-size: 13px;
+  text-shadow: 1px 1px black;
 `;
 
 const Login = styled.div`
@@ -37,6 +41,9 @@ const Button = styled.button`
   background-color: transparent;
   margin: 0px 10px;
   padding: 8px 20px;
+  color: white;
+  font-size: 13px;
+  text-shadow: 1px 1px black;
 `;
 
 export default function NavBar() {

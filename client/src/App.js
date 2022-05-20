@@ -1,4 +1,6 @@
 import "./App.css";
+import { useEffect } from "react";
+import { getProductos, getCategorias } from "./Redux/actions/index";
 import {
   Home,
   Tienda,
@@ -10,8 +12,19 @@ import {
   Login,
 } from "./Components/index";
 import { Routes, Route } from "react-router-dom";
+import { useDispatch } from "react-redux";
 
 function App() {
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(getProductos());
+  }, [dispatch]);
+
+  useEffect(() => {
+    dispatch(getCategorias());
+  }, [dispatch]);
+
   return (
     <div>
       <NavBar />
