@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { Boton, Producto } from "../index";
 import styled from "styled-components";
+import { SocialIcon } from "react-social-icons";
 
 const Container = styled.div`
   height: 100vh;
@@ -72,7 +73,17 @@ const Header = styled.div`
   background-color: Black;
 `;
 
-export default function Home() {
+const Contacto = styled.div`
+  background-color: black;
+  color: white;
+`;
+
+const CambiameElNombrePls = styled.div`
+  display: flex;
+  justify-content: space-evenly;
+`;
+
+export default function Home({ contacto }) {
   const productos = useSelector((state) => state.productos).slice(20, 24);
 
   return (
@@ -117,6 +128,58 @@ export default function Home() {
           <Boton texto="Mas notas" />
         </Link>
       </Categoria>
+
+      <Contacto>
+        <h1 ref={contacto}>Contactanos</h1>
+        <CambiameElNombrePls>
+          <div>
+            <h2>Mercancia</h2>
+            <h4>Remeras</h4>
+            <h4>Gorras</h4>
+            <h4>Mascaras</h4>
+          </div>
+          <div>
+            <h2>Franquicia</h2>
+            <h4>Coffee Outlet</h4>
+            <h4>Coffee Vending Machine</h4>
+            <h4>Contact us</h4>
+          </div>
+          <div>
+            <h2>Sobre nosotros</h2>
+            <h4>Promotions</h4>
+            <h4>Customer care</h4>
+            <h4>Legal information</h4>
+            <h4>Achievements</h4>
+            <h4>Careers</h4>
+          </div>
+          <div>
+            <h2>Seguinos</h2>
+            <SocialIcon
+              url="https://instagram.com/infusion.store.pf"
+              fgColor="black"
+              bgColor="white"
+            />
+
+            <SocialIcon
+              url="https://facebook.com/jaketrent"
+              fgColor="black"
+              bgColor="white"
+            />
+
+            <SocialIcon
+              url="https://twitter.com/jaketrent"
+              fgColor="black"
+              bgColor="white"
+            />
+
+            <SocialIcon
+              url="https://pinterest.com/jaketrent"
+              fgColor="black"
+              bgColor="white"
+            />
+          </div>
+        </CambiameElNombrePls>
+      </Contacto>
     </Container>
   );
 }

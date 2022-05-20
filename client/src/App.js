@@ -1,5 +1,5 @@
 import "./App.css";
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { getProductos, getCategorias } from "./Redux/actions/index";
 import {
   Home,
@@ -17,6 +17,7 @@ import { useDispatch } from "react-redux";
 
 function App() {
   const dispatch = useDispatch();
+  const contacto = useRef(null);
 
   useEffect(() => {
     dispatch(getProductos());
@@ -28,10 +29,10 @@ function App() {
 
   return (
     <div>
-      <NavBar />
+      <NavBar contacto={contacto} />
       <div className="App">
         <Routes>
-          <Route exact path="/" element={<Home />} />
+          <Route exact path="/" element={<Home contacto={contacto} />} />
           <Route exact path="/tienda" element={<Tienda />} />
           <Route exact path="/productos/:id" element={<DetalleProducto />} />
           <Route exact path="/carrito" element={<Carrito />} />
