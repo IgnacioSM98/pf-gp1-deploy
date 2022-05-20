@@ -1,12 +1,10 @@
 @import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,200;0,300;0,400;0,600;1,400;1,500&display=swap");
 
 .container-producto {
-  display: flex;
-  flex-direction: column;
   background-color: #222;
   color: white;
-  width: 25%;
-  height: fit-content;
+  width: 20%;
+  margin: 10px;
 }
 
 .boton-agregar {
@@ -19,4 +17,10 @@
   box-shadow: 0 2px 2px 0 grey, 0 2px 2px 0 grey;
   border: none;
   outline: none;
+}
+.img-producto {
+  align-items: center;
+  margin: 1em;
+  width: 40%;
+  border-radius: 40px;
 }
