@@ -25,7 +25,7 @@ function Shop() {
   }, [dispatch]);
 
   const [currentPage, setCurrentPage] = useState(1);
-  const productosPerPage = 9;
+  const productosPerPage = 12;
   const ultimoProducto = productosPerPage * currentPage;
   const primerProducto = ultimoProducto - productosPerPage;
   const currentProductos = product.slice(primerProducto, ultimoProducto);
@@ -98,6 +98,7 @@ function Shop() {
                   imagen={el.imagen}
                   nombre={el.nombre}
                   precio={el.precio}
+                  descripcion={el.descripcion}
                 />
               );
             })}

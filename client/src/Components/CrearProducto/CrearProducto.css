@@ -1,148 +1,155 @@
 :root {
-    --colorTextos: #49454567;
+  --colorTextos: #49454567;
 }
 
-*,::before,::after{
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+*,
+::before,
+::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
-.background-form{
-    background: #870000;  
-    /* fallback for old browsers */
-    background: -webkit-linear-gradient(to left, #190A05, #870000);  
-    /* Chrome 10-25, Safari 5.1-6 */
-    background: linear-gradient(to left, #190A05, #870000); 
-    /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
-    display: flex;
-    justify-content: center;
+.form-backgr {
+  background-color: #870000;
+  /* fallback for old browsers */
+  background: -webkit-linear-gradient(to left, #190a05, #870000);
+  /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(to left, #190a05, #870000);
+  /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+  display: flex;
+  justify-content: center;
+  background-size: cover;
 }
 
 .contenedor-form {
-    width: 40%;
-    height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-top: 30px;
+  width: 40%;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 30px;
 }
 
 .titulo-form {
-    text-align: center;
-    font-size: 25px;
-    margin: 5px 15px;
-    font-weight: 800;
+  text-align: center;
+  font-size: 25px;
+  margin: 5px 15px;
+  font-weight: 800;
 }
 
-form {
-    background-color: white;
-    width: 100%;
-    padding: 10px 0;
-    border-radius: 10px;
-    box-shadow: 0 0 6px 0 rgba(255, 255, 255, 0.8);
-    margin: auto;
+.form-create {
+  background-color: white;
+  width: 100%;
+  padding: 10px 0;
+  border-radius: 10px;
+  box-shadow: 0 0 6px 0 rgba(255, 255, 255, 0.8);
+  margin: auto;
 }
 
-.grupo{
-    position: relative;
-    margin: 45px;
+.grupo {
+  position: relative;
+  margin: 45px;
 }
 
-input, textarea {
-    background: none;
-    color: #c6c6c6;
-    font-size: 18px;
-    padding: 10px 10px 10px 5px;
-    display: block;
-    width: 100%;
-    border: none;
-    border-bottom: 1px solid var(--colorTextos);
-    resize: none;
+.input-create,
+.textarea-create {
+  background: none;
+  color: #c6c6c6;
+  font-size: 18px;
+  padding: 10px 10px 10px 5px;
+  display: block;
+  width: 100%;
+  border: none;
+  border-bottom: 1px solid var(--colorTextos);
+  resize: none;
 }
 
-input:focus,textarea:focus{
-    outline: none;
-    color: rgb(94, 93, 93);
+.input-create:focus,
+.textarea-create:focus {
+  outline: none;
+  color: rgb(94, 93, 93);
 }
 
-input:focus~label, textarea:focus~label{
-    position: absolute;
-    top: -14px;
-    font-size: 12px;
-    color: #870000;
+.input-create:focus ~ label,
+.textarea-create:focus ~ label {
+  position: absolute;
+  top: -14px;
+  font-size: 12px;
+  color: #870000;
 }
 
-.label{
-    color: --colorTextos;
-    font-size: 16px;
-    position: absolute;
-    left: 5px;
-    top: 10px;
-    transition: 0.3s ease all;
-    pointer-events: none;
+.label {
+  color: --colorTextos;
+  font-size: 16px;
+  position: absolute;
+  left: 5px;
+  top: 10px;
+  transition: 0.3s ease all;
+  pointer-events: none;
 }
 
-.barra{
-    position: relative;
-    display: block;
-    width: 100%;
+.barra {
+  position: relative;
+  display: block;
+  width: 100%;
 }
 
-input:focus~.barra::before, textarea:focus~.barra::before{
-    width: 100%;
+.input-create:focus ~ .barra::before,
+.textarea-create:focus ~ .barra::before {
+  width: 100%;
 }
 
-.barra::before{
-    content: "";
-    height: 2px;
-    width: 0;
-    bottom: 0;
-    position: absolute;
-    background: linear-gradient(to left, #190A05, #870000); 
-    transition: 0.3s ease all;
-    left: 0%;
+.barra::before {
+  content: "";
+  height: 2px;
+  width: 0;
+  bottom: 0;
+  position: absolute;
+  background: linear-gradient(to left, #190a05, #870000);
+  transition: 0.3s ease all;
+  left: 0%;
 }
 
-button {
-    background: #870000;  
-    /* fallback for old browsers */
-    background: -webkit-linear-gradient(to left, #190A05, #870000);  
-    /* Chrome 10-25, Safari 5.1-6 */
-    background: linear-gradient(to left, #190A05, #870000); 
-    /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
-    display: block;
-    width: 100px;
-    height: 40px;
-    border: none;
-    color: white;
-    border-radius: 4px;
-    font-size: 16px;
-    margin: 10px 0px;
-    margin: auto;
-    cursor: pointer;
+.button-create {
+  background: #870000;
+  /* fallback for old browsers */
+  background: -webkit-linear-gradient(to left, #190a05, #870000);
+  /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(to left, #190a05, #870000);
+  /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+  display: block;
+  width: 100px;
+  height: 40px;
+  border: none;
+  color: white;
+  border-radius: 4px;
+  font-size: 16px;
+  margin: 10px 0px;
+  margin: auto;
+  cursor: pointer;
 }
 
-@media screen and (max-width:1100px) {
-    form{
-        width: 50%
-    }
+@media screen and (max-width: 1100px) {
+  form {
+    width: 50%;
+  }
 }
 
-@media screen and (max-width:600px) {
-    form{
-        width: 60%
-    }
+@media screen and (max-width: 600px) {
+  form {
+    width: 60%;
+  }
 }
 
-@media screen and (max-width:450%) {
-    form{
-        width: 80%
-    }
+@media screen and (max-width: 450%) {
+  form {
+    width: 80%;
+  }
 }
 
-@media screen and (max-width:300px) {
-    form{
-        width: 90%
-    }
+@media screen and (max-width: 300px) {
+  form {
+    width: 90%;
+  }
 }

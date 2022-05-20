@@ -62,13 +62,14 @@ function CrearProducto() {
   }
 
   return (
-    <div className="background-form">
+    <div className="form-backgr">
       <NavBar />
       <div className="contenedor-form">
-        <form onSubmit={(e) => handleSubmit(e)}>
+        <form onSubmit={(e) => handleSubmit(e)} className="form-create">
           <h1 className="titulo-form">Completar todos los campos</h1>
           <div className="grupo">
             <input
+              className="input-create"
               type="text"
               value={post.nombre}
               name="nombre"
@@ -80,6 +81,7 @@ function CrearProducto() {
           </div>
           <div className="grupo">
             <textarea
+              className="textarea-create"
               value={post.descripción}
               name="descripción"
               rows="3"
@@ -91,6 +93,7 @@ function CrearProducto() {
           </div>
           <div className="grupo">
             <input
+              className="input-create"
               type="number"
               min="0"
               value={post.precio}
@@ -103,6 +106,7 @@ function CrearProducto() {
           </div>
           <div className="grupo">
             <input
+              className="input-create"
               type="text"
               value={post.imagen}
               name="imagen"
@@ -126,7 +130,9 @@ function CrearProducto() {
             </select>
             {errors.categoría && <p>{errors.categoría}</p>}
           </div>
-          <button type="submit">¡Crear!</button>
+          <button className="button-create" type="submit">
+            ¡Crear!
+          </button>
         </form>
       </div>
     </div>
