@@ -10,7 +10,9 @@ export default function Home({ user }) {
       <h1>que haces perro malvado </h1>
       <p>{user.email}</p>
 
-      <button onClick={logOut}>Sign Out</button>
+      <button className="boton-logedin" onClick={logOut}>
+        Sign Out
+      </button>
     </div>
   );
 }

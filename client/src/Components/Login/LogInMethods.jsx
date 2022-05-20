@@ -2,6 +2,7 @@ import { useState } from "react";
 import GoogleButton from "react-google-button";
 import { app, authentication } from "../../firebase";
 import { signInWithPopup, GoogleAuthProvider } from "firebase/auth";
+import "./LogInMethods.css";
 
 export default function Login({ setUser }) {
   const [isSignUp, setIsSignUp] = useState(false);
@@ -47,24 +48,35 @@ export default function Login({ setUser }) {
   return (
     <div>
       <GoogleButton type="light" onClick={googleSignIn} />
-      <h1>{isSignUp ? "Registrate" : "Inicia Sesion"}</h1>
+      <h1 className="titulo-login">
+        {isSignUp ? "Registrate" : "Inicia Sesion"}
+      </h1>
 
-      <form onSubmit={handleSubmit}>
-        <label htmlFor="emailField">Mail</label>
-        <input type="email" id="emailField" />
-
-        <label htmlFor="passwordField">Pass</label>
-        <input type="password" id="passwordField" />
-
-        <button type="submit">
-          {isSignUp ? "Registrate" : "Inicia Sesion"}
+      <form className="form-login" onSubmit={handleSubmit}>
+        <div className="grupo-login">
+          <input className="input-login" type="email" id="emailField" />
+          <span className="barra-login"></span>
+          <label className="label-login" htmlFor="emailField">
+            Mail
+          </label>
+        </div>
+        <div className="grupo-login">
+          <input className="input-login" type="password" id="passwordField" />
+          <span className="barra-login"></span>
+          <label className="label-login" htmlFor="passwordField">
+            Pass
+          </label>
+        </div>
+        <button className="boton-logedinmethods" type="submit">
+          {isSignUp ? "Registrarse" : "Iniciar Sesion"}
         </button>
       </form>
 
-      <button onClick={() => setIsSignUp(!isSignUp)}>
-        {isSignUp
-          ? "Ya tenes cuenta? Inicia pa"
-          : "Te falta calle? Registra perri"}
+      <button
+        className="boton-logedinmethods"
+        onClick={() => setIsSignUp(!isSignUp)}
+      >
+        {isSignUp ? "Iniciar Sesion" : "Registrarse"}
       </button>
     </div>
   );

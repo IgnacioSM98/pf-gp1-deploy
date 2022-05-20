@@ -1,0 +1,13 @@
+.boton-logedin{
+        background-color: rgb(8, 206, 114) ;
+        display: block;
+        width: 100px;
+        height: 40px;
+        border: none;
+        color: white;
+        border-radius: 4px;
+        font-size: 16px;
+        margin: 10px 0px;
+        margin: auto;
+        cursor: pointer;
+}
