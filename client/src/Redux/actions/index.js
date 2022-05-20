@@ -30,7 +30,7 @@ export function getDetail(id) {
 
 export function clearDetail() {
   return function (dispatch) {
-    dispatch({ type: "GET_DETAIL" });
+    dispatch({ type: "CLEAR_DETAIL" });
   };
 }
 
