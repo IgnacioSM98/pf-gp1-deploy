@@ -71,8 +71,8 @@
   color: rgb(94, 93, 93);
 }
 
-.input-create:focus ~ label,
-.textarea-create:focus ~ label {
+.input-create:focus~.label,
+.textarea-create:focus~.label {
   position: absolute;
   top: -14px;
   font-size: 12px;

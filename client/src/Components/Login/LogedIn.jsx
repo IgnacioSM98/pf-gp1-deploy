@@ -6,11 +6,15 @@ export default function Home({ user }) {
   };
 
   return (
-    <div>
-      <h1>que haces perro malvado </h1>
-      <p>{user.email}</p>
+    <div className="contenedor-bienenido">
+      <div className="bienvenido">
+        <h1 className="h1-logout">Bienvenido</h1>
+        <p className="p-logout">{user.email}</p>
+      </div>
 
-      <button onClick={logOut}>Sign Out</button>
+      <button className="boton-logout" onClick={logOut}>
+        Log Out
+      </button>
     </div>
   );
 }
