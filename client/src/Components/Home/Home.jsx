@@ -5,6 +5,7 @@ import { Boton, Producto } from "../index";
 import styled from "styled-components";
 import { SocialIcon } from "react-social-icons";
 import ScrollToTop from "../ScrollToTop/ScrollToTop";
+import { getProductos } from "../../Redux/actions";
 
 const Container = styled.div`
   height: 100vh;
