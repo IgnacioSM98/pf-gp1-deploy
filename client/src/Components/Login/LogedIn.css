@@ -1,4 +1,30 @@
-.boton-logedin{
+.contenedor-bienvenido{
+        width: 40%;
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-top: 30px;
+}
+
+.bienvenido{
+        background-color: white;
+        width: 30%;
+        padding: 10px 0;
+        margin: auto;
+}
+
+.h1-logout{
+        outline: none;
+        color: rgb(94, 93, 93);
+}
+
+.p-logout{
+        outline: none;
+        color: rgb(94, 93, 93);
+}
+
+.boton-logout{
         background-color: rgb(8, 206, 114) ;
         display: block;
         width: 100px;
