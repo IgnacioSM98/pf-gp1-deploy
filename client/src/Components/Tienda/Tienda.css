@@ -1,0 +1,20 @@
+.h1-tienda {
+  color: black;
+  font-size: 2rem;
+}
+
+.filtros-tienda {
+  flex: 1 1;
+  flex-wrap: wrap;
+  box-sizing: border-box;
+  margin-top: 50px;
+  max-width: 295px;
+  min-width: 210px;
+  padding-right: 14px;
+  width: 100%;
+}
+.productos-tienda {
+  display: flex;
+  flex-direction: column;
+  width: 850px;
+}
