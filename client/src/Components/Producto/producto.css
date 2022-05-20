@@ -1,22 +1,66 @@
 @import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,200;0,300;0,400;0,600;1,400;1,500&display=swap");
 
 .container-producto {
-  background-color: #222;
+  display: flex;
+  flex-direction: column;
+  background-color: #37563de0;
   color: white;
   width: 20%;
-  margin: 10px;
+  height: fit-content;
+  border-radius: 15px;
+}
+
+.foto {
+  width: 50%;
+  border-radius: 15px;
+  height: fit-content;
+}
+
+.container-foto {
+  margin-top: 10px;
+}
+
+.nombre {
+  font-size: 20px;
+  font-family: Poppins;
+  font-weight: 550;
+}
+
+.descripcion {
+  font-size: 18px;
+  font-family: Poppins;
+  font-weight: 400;
+}
+
+.precio-boton {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+}
+
+.precio {
+  font-size: 20px;
+  font-family: Poppins;
+  font-weight: 550;
 }
 
 .boton-agregar {
   color: #222;
   border-radius: 5px;
-  height: 45%;
+  height: 5vh;
   background-color: white;
   font-family: Poppins;
   font-size: 13px;
-  box-shadow: 0 2px 2px 0 grey, 0 2px 2px 0 grey;
+  box-shadow: 0 2px 2px 0 #222, 0 2px 2px 0 #222;
   border: none;
   outline: none;
+  padding: 5px 10px 5px 10px;
+  margin-top: 15px;
+}
+
+.boton-agregar:hover {
+  background-color: #37563de0;
+  color: white;
 }
 .img-producto {
   align-items: center;
