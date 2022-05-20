@@ -15,7 +15,7 @@ export default function Paginado(props) {
   return (
     <nav>
       <ul id={s.pageNum}>
-        {pageNumbers.map((num) => (
+        {pageNum.map((num) => (
           <li
             id={s.pageLi}
             className={currentNum === num ? s.active : ""}
