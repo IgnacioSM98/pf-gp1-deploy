@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
-  getProductos,
-  getCategorias,
+  // getProductos,
+  // getCategorias,
   filtrarCategorias,
   ordenarPorNombre,
   ordenarPorPrecio,
@@ -16,13 +16,14 @@ function Shop() {
   const product = useSelector((state) => state.productos);
   const catego = useSelector((state) => state.categorias);
   const [cambio, setCambio] = useState(true);
-  useEffect(() => {
-    dispatch(getProductos());
-  }, [dispatch]);
 
-  useEffect(() => {
-    dispatch(getCategorias());
-  }, [dispatch]);
+  // useEffect(() => {
+  //   dispatch(getProductos());
+  // }, [dispatch]);
+
+  // useEffect(() => {
+  //   dispatch(getCategorias());
+  // }, [dispatch]);
 
   const [currentPage, setCurrentPage] = useState(1);
   const productosPerPage = 12;
@@ -95,6 +96,7 @@ function Shop() {
             currentProductos.map((el) => {
               return (
                 <Producto
+                  key={el.id}
                   imagen={el.imagen}
                   nombre={el.nombre}
                   precio={el.precio}
