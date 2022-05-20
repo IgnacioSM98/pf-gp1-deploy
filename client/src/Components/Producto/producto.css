@@ -3,20 +3,62 @@
 .container-producto {
   display: flex;
   flex-direction: column;
-  background-color: #222;
+  background-color: #37563de0;
   color: white;
-  width: 25%;
+  width: 20%;
   height: fit-content;
+  border-radius: 15px;
+}
+
+.foto {
+  width: 50%;
+  border-radius: 15px;
+  height: fit-content;
+}
+
+.container-foto {
+  margin-top: 10px;
+}
+
+.nombre {
+  font-size: 20px;
+  font-family: Poppins;
+  font-weight: 550;
+}
+
+.descripcion {
+  font-size: 18px;
+  font-family: Poppins;
+  font-weight: 400;
+}
+
+.precio-boton {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+}
+
+.precio {
+  font-size: 20px;
+  font-family: Poppins;
+  font-weight: 550;
 }
 
 .boton-agregar {
   color: #222;
   border-radius: 5px;
-  height: 45%;
+  height: 5vh;
   background-color: white;
   font-family: Poppins;
   font-size: 13px;
-  box-shadow: 0 2px 2px 0 grey, 0 2px 2px 0 grey;
+  box-shadow: 0 2px 2px 0 #222, 0 2px 2px 0 #222;
   border: none;
   outline: none;
+  padding: 5px 10px 5px 10px;
+  margin-top: 15px;
+}
+
+.boton-agregar:hover {
+  background-color: #37563de0;
+  color: white;
 }

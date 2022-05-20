@@ -1,28 +1,23 @@
 import React from "react";
 import "./producto.css";
 
-function Producto({ imagen, nombre, precio }) {
+function Producto({ imagen, nombre, precio, descripcion }) {
   return (
     <div className="container-producto">
-      <div>
-        <img src={imagen} />
+      <div className="container-foto">
+        <img src={imagen} className="foto" />
       </div>
 
-      <div>
+      <div className="nombre">
         <p>{nombre}</p>
       </div>
 
-      <div>
-        <p>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Illo non
-          obcaecati porro sint quis quas id quisquam, consequatur animi dolores
-          repudiandae ipsa nam, maiores vitae nulla ad consequuntur iusto
-          officiis!
-        </p>
+      <div className="descripcion">
+        <p>{descripcion}</p>
       </div>
 
-      <div>
-        <p>{precio}</p>
+      <div className="precio-boton">
+        <p className="precio">${precio}</p>
 
         <button className="boton-agregar">AGREGAR</button>
       </div>
