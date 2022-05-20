@@ -3,6 +3,8 @@ import axios from "axios";
 const urlBase = "https://proyecto-final-gp1.herokuapp.com/";
 const productos = "productos";
 const categorias = "categorias";
+const crear = "crear";
+const admin = "admin/";
 
 export function getProductos() {
   return async function (dispatch) {
@@ -80,5 +82,18 @@ export function ordenarPorPrecio(payload) {
   return {
     type: "ORDENAR_POR_PRECIO",
     payload,
+  };
+}
+
+export function postProducto(payload) {
+  return async function () {
+    let json = await axios.post(`${urlBase}${admin}${crear}`, payload);
+    return json;
+  };
+}
+export function postCategoria(payload) {
+  return async function () {
+    let json = await axios.post(`${urlBase}${categorias}/${crear}`, payload);
+    return json;
   };
 }

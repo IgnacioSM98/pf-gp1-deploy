@@ -1,6 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getCategorias } from "../../Redux/actions";
+import {
+  getCategorias,
+  postProducto,
+  postCategoria,
+} from "../../Redux/actions";
 import NavBar from "../NavBar/NavBar";
 import "./CrearProducto.css";
 
@@ -17,6 +21,9 @@ function validate(post) {
   }
   if (!post.imagen) {
     errors.imagen = "Ingresar URL de alguna imagen representativa";
+  }
+  if (!post.stock || typeof post.stock !== "number") {
+    errors.stock = "Ingresa un stock, que sea un numero";
   }
   if (!post.categoría) {
     errors.categoría = "Ingresar al menos 1 categoría";
@@ -37,8 +44,26 @@ function CrearProducto() {
     descripción: "",
     precio: 0,
     imagen: "",
-    categoría: [],
+    stock: 0,
+    categorías: [],
   });
+  const [cate, setCate] = useState({ categoría: "" });
+  const [cambio, setCambio] = useState(false);
+  function handleOpenCategoria() {
+    cambio ? setCambio(false) : setCambio(true);
+  }
+  function handleInputCambio(e) {
+    setCate({
+      ...cate,
+      [e.target.name]: e.target.value,
+    });
+  }
+  function handleSub(e) {
+    e.preventDefault();
+    dispatch(postCategoria(cate));
+    alert("¡Categoría creado con éxito!");
+  }
+
   function handleInputChange(e) {
     setPost({
       ...post,
@@ -51,12 +76,25 @@ function CrearProducto() {
       })
     );
   }
+  function handleSelectCategorias(e) {
+    if (!post.categorías.includes(e.target.value))
+      setPost({
+        ...post,
+        categorías: [...post.categorías, e.target.value],
+      });
+    setErrors(
+      validate({
+        ...post,
+        categorías: [...post.categorías, e.target.value],
+      })
+    );
+  }
   function handleSubmit(e) {
     e.preventDefault();
     if (Object.values(errors).length > 0)
       alert("Por favor rellenar todos los campos");
     else {
-      // agregar la action que tendria el dispatch
+      dispatch(postProducto(post));
       alert("¡Producto creado con éxito!");
     }
   }
@@ -117,9 +155,26 @@ function CrearProducto() {
             {errors.imagen && <p>{errors.imagen}</p>}
           </div>
           <div className="grupo">
-            <select className="barra" defaultValue="default">
+            <input
+              className="input-create"
+              type="number"
+              min="0"
+              value={post.stock}
+              name="stock"
+              onChange={(e) => handleInputChange(e)}
+            />
+            <span className="barra"></span>
+            <label className="label">Stock</label>
+            {errors.stock && <p>{errors.stock}</p>}
+          </div>
+          <div className="grupo">
+            <select
+              onChange={(e) => handleSelectCategorias(e)}
+              className="barra"
+              defaultValue="default"
+            >
               <option value="default" disabled>
-                Elegir categoría
+                Elegir categorías
               </option>
               {categorías &&
                 categorías.map((d) => (
@@ -128,12 +183,22 @@ function CrearProducto() {
                   </option>
                 ))}
             </select>
-            {errors.categoría && <p>{errors.categoría}</p>}
+            {errors.categorías && <p>{errors.categorías}</p>}
           </div>
           <button className="button-create" type="submit">
             ¡Crear!
           </button>
         </form>
+        <div>
+          <button onClick={handleOpenCategoria}>Crear Categoría</button>
+          {cambio && (
+            <form onSubmit={(e) => handleSub(e)} className="form-create">
+              <label>Nueva Categoría</label>
+              <input type="text" onChange={(e) => handleInputCambio(e)} />
+              <button type="submit">Crear</button>
+            </form>
+          )}
+        </div>
       </div>
     </div>
   );
