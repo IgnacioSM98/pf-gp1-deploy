@@ -95,3 +95,27 @@
     transition: 0.3s ease all;
     left: 0%;
 }
+
+@media screen and (max-width: 1100px) {
+  .form-login {
+    width: 50%;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .form-login {
+    width: 60%;
+  }
+}
+
+@media screen and (max-width: 450%) {
+  .form-login {
+    width: 80%;
+  }
+}
+
+@media screen and (max-width: 300px) {
+  .form-login {
+    width: 90%;
+  }
+}
