@@ -89,7 +89,9 @@ export function getReviews(id) {
   return async function (dispatch) {
     let json = await axios
       .get(`${urlBase}ratings/${id}`)
-      .then((res) => dispatch({ type: "GET_REVIEWS", payload: json }));
+      .then((res) => dispatch({ type: "GET_REVIEWS", payload: json }))
+    };
+}
     
 export function postProducto(payload) {
   return async function () {
