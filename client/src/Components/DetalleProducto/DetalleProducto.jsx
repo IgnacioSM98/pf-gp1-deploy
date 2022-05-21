@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
-import { getDetail } from "../../Redux/actions";
 import Reviews from "../Reviews/Reviews";
 import { clearDetail, getDetail } from "../../Redux/actions";
 import styled from "styled-components";
