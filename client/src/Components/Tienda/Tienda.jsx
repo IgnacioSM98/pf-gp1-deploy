@@ -16,23 +16,29 @@ import image from "./cuchara-cafe3.jpg";
 import Footer from "./../Footer/Footer";
 import ScrollToTop from "./../ScrollToTop/ScrollToTop";
 
-// const TiendaContainer = styled.div`
-//   background-color: darkgrey;
-// `;
+const Container = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  flex-direction: column;
+  align-items: center;
+`;
 
 const ContenedorFiltrosPro = styled.div`
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
+  justify-content: space-evenly;
   margin-left: 2rem;
   margin-right: 2rem;
   margin-bottom: 2rem;
+  max-width: 1300px;
 `;
 
 const Filtros = styled.div`
   background-color: rgba(55, 86, 61, 0.6);
-  width: 25%;
-  height: 110vh;
+  width: 300px;
+  height: 600px;
   padding: 1.5rem;
   border-radius: 15px;
   margin-top: 2rem;
@@ -42,7 +48,7 @@ const Filtros = styled.div`
 const CuadradoFiltro = styled.div`
   background: rgba(55, 86, 61, 0.4);
   width: 100%;
-  height: 100vh;
+  height: 550px;
   display: flex;
   float: left;
   flex-direction: column;
@@ -61,8 +67,7 @@ const ProductosTienda = styled.div`
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   grid-gap: 20px 60px;
-  margin-top: 2rem;
-  margin-bottom: 2rem;
+  margin: 2rem;
 `;
 
 const Linea = styled.hr`
@@ -79,6 +84,9 @@ const Titulo = styled.p`
 
 const TextoLinea = styled.div`
   display: flex;
+  width: 80%;
+  max-width: 1433px;
+  min-width: 1200px;
   flex-direction: row;
   justify-content: space-evenly;
   margin-top: 3rem;
@@ -93,7 +101,8 @@ const Imagen = styled.img`
 
 const Header = styled.div`
   width: 70%;
-  height: 24vh;
+  max-width: 1255px;
+  height: 225px;
   border-radius: 8px;
   margin-top: 2rem;
   position: relative;
@@ -104,7 +113,7 @@ const Header = styled.div`
 const Marco = styled.div`
   width: 95%;
   height: 20vh;
-  z-index: 999;
+  z-index: 3;
   border: 1px solid black;
   position: absolute;
   top: 10px;
@@ -129,11 +138,12 @@ const Buscador = styled.input`
   border-radius: 8px;
   width: 500px;
   height: 40px;
-  font-size: 18px;
+  font-size: 15px;
   color: #222;
   box-shadow: 0 2px 2px 0 grey, 0 2px 2px 0 grey;
   border: none;
   outline: none;
+  padding: 10px;
   &::-webkit-input-placeholder {
     font-size: 18px;
   }
@@ -204,33 +214,34 @@ function Shop({ contacto }) {
   }
 
   return (
-    <div>
-      <div>
-        <Tienda>Tienda</Tienda>
-      </div>
+    <Container>
+      {/* <div> */}
+      <Tienda>Tienda</Tienda>
+      {/* </div> */}
 
-      <div className="search">
-        <form>
-          <Buscador
-            type="text"
-            placeholder="Buscar productos..."
-            onChange={(e) => {
-              onChangeHandle(e);
-            }}
-          />
-        </form>
-      </div>
+      {/* <div className="search"> */}
+      {/* <form> */}
+      <Buscador
+        type="text"
+        placeholder="Buscar productos..."
+        onChange={(e) => {
+          onChangeHandle(e);
+        }}
+      />
+      {/* </form> */}
+      {/* </div> */}
 
       <Header>
         <Imagen src={image} />
-        <Marco></Marco>
+        <Marco />
         <TextoInfusion>INFUSION STORE</TextoInfusion>
       </Header>
 
       <TextoLinea>
-        <Titulo>Nuestros Productos </Titulo>
-        <Linea></Linea>
+        <Titulo>Nuestros Productos</Titulo>
+        <Linea />
       </TextoLinea>
+
       <ContenedorFiltrosPro>
         <Filtros>
           <CuadradoFiltro>
@@ -245,6 +256,7 @@ function Shop({ contacto }) {
               <option value="asc">A-Z</option>
               <option value="desc">Z-A</option>
             </select>
+
             <select
               onChange={(e) => handleOrderByPrice(e)}
               defaultValue="default"
@@ -255,6 +267,7 @@ function Shop({ contacto }) {
               <option value="asc">Higher</option>
               <option value="desc">Lower</option>
             </select>
+
             <select
               onChange={(e) => handleFilterByCategories(e)}
               defaultValue="default"
@@ -295,11 +308,10 @@ function Shop({ contacto }) {
           />
         </div>
       </ContenedorFiltrosPro>
-
       <Footer contacto={contacto} />
 
       <ScrollToTop />
-    </div>
+    </Container>
   );
 }
 
