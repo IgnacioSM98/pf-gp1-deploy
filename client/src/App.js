@@ -31,7 +31,7 @@ function App() {
   }, [dispatch]);
 
   useEffect(() => {
-    console.log(productos);
+    // console.log(productos);
     localStorage.setItem("productos", JSON.stringify(productos));
   }, [productos]);
 
