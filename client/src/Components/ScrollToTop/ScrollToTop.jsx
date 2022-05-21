@@ -27,6 +27,7 @@ export default function ScrollToTop() {
 
   useEffect(() => {
     window.addEventListener("scroll", () => {
+      console.log(window.height, "xd?");
       const scroll = window.innerHeight - 80;
 
       if (window.scrollY > scroll) {
