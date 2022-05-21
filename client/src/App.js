@@ -11,6 +11,7 @@ import {
   NavBar,
   Login,
   DetalleProducto,
+  Footer,
 } from "./Components/index";
 import { Routes, Route } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
