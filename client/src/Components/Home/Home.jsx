@@ -1,8 +1,9 @@
-import React from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { Boton, Producto, Footer } from "../index";
 import styled from "styled-components";
+import "./Home.css";
 import ScrollToTop from "../ScrollToTop/ScrollToTop";
 import { getProductos } from "../../Redux/actions";
 
@@ -18,16 +19,11 @@ const Categoria = styled.div`
   align-items: start;
   justify-content: space-between;
   width: 100%;
-  padding: 30px;
 `;
 
 const Productos = styled.div`
-  display: grid;
   width: 100%;
-  grid-template-columns: repeat(4, 1fr);
   margin-bottom: 20px;
-  // grid-auto-flow: dense;
-  // grid-gap: 0px 15px;
 `;
 
 const Image = styled.img`
@@ -75,7 +71,22 @@ const Header = styled.div`
 `;
 
 export default function Home({ contacto }) {
-  const productos = useSelector((state) => state.productos).slice(20, 24);
+  const productos = useSelector((state) => state.productos);
+
+  const [destacados, setDestacados] = useState();
+
+  const [width, setWidth] = useState(window.innerWidth);
+
+  useEffect(() => {
+    const handleResize = () => setWidth(window.innerWidth);
+    window.addEventListener("resize", handleResize);
+
+    setDestacados(Math.floor(width / 250));
+
+    // return () => {
+    //   window.removeEventListener("resize", handleResize);
+    // };
+  });
 
   return (
     <Container>
@@ -93,20 +104,23 @@ export default function Home({ contacto }) {
       <Categoria>
         <P>NUESTROS PRODUCTOS</P>
 
-        <Productos>
-          {productos.map((producto) => {
-            return (
-              <Producto
-                key={producto.id}
-                id={producto.id}
-                imagen={producto.imagen}
-                nombre={producto.nombre}
-                precio={producto.precio}
-                descripcion={producto.descripcion}
-              />
-            );
-          })}
-        </Productos>
+        <div className="div-productos">
+          <Productos className="contenedor-productos">
+            {productos.slice(0, destacados)?.map((producto) => {
+              return (
+                <Producto
+                  className="box-producto"
+                  key={producto.id}
+                  id={producto.id}
+                  imagen={producto.imagen}
+                  nombre={producto.nombre}
+                  precio={producto.precio}
+                  descripcion={producto.descripcion}
+                />
+              );
+            })}
+          </Productos>
+        </div>
 
         <Link to="/tienda">
           <Boton texto="Mas productos" />
