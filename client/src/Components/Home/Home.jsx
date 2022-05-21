@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useCallback } from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { Boton, Producto, Footer } from "../index";
@@ -82,7 +82,7 @@ export default function Home({ contacto }) {
     const handleResize = () => setWidth(window.innerWidth);
     window.addEventListener("resize", handleResize);
 
-    setDestacados(Math.floor(width / 260));
+    setDestacados(Math.floor(width / 250));
   });
 
   return (

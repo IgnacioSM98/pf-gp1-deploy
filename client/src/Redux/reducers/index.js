@@ -2,7 +2,9 @@ const initialState = {
   productos: [],
   categorias: [],
   productosCopiados: [],
-  // detalle: {},
+  detalle: {},
+  filteredProds: [],
+  reviews: [],
 };
 
 export default function rootReducer(state = initialState, action) {
@@ -86,6 +88,12 @@ export default function rootReducer(state = initialState, action) {
       return {
         ...state,
         productos: productosPrecio,
+      };
+      
+    case "GET_REVIEWS":
+      return {
+        ...state,
+        reviews: action.payload,
       };
 
     default:

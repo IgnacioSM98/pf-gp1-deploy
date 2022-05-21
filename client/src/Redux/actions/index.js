@@ -85,12 +85,21 @@ export function ordenarPorPrecio(payload) {
   };
 }
 
+export function getReviews(id) {
+  return async function (dispatch) {
+    let json = await axios
+      .get(`${urlBase}ratings/${id}`)
+      .then((res) => dispatch({ type: "GET_REVIEWS", payload: json }))
+    };
+}
+    
 export function postProducto(payload) {
   return async function () {
     let json = await axios.post(`${urlBase}${admin}${crear}`, payload);
     return json;
   };
 }
+    
 export function postCategoria(payload) {
   return async function () {
     let json = await axios.post(`${urlBase}${categorias}/${crear}`, payload);
