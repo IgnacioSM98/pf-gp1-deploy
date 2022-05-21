@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
+import Reviews from "../Reviews/Reviews";
 import { clearDetail, getDetail } from "../../Redux/actions";
 import CrearReview from "../CrearReviews/CrearReview";
 import styled from "styled-components";
@@ -268,6 +269,5 @@ export default function DetalleProducto() {
       )}
       <CrearReview id={id} state={formReview} setFormReview={setFormReview}/>
     </Container>
-   
   );
 }

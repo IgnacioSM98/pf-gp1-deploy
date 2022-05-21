@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useCallback } from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { Boton, Producto, Footer } from "../index";
@@ -19,6 +19,7 @@ const Categoria = styled.div`
   align-items: start;
   justify-content: space-between;
   width: 100%;
+  padding: 30px;
 `;
 
 const Productos = styled.div`
@@ -82,10 +83,6 @@ export default function Home({ contacto }) {
     window.addEventListener("resize", handleResize);
 
     setDestacados(Math.floor(width / 250));
-
-    // return () => {
-    //   window.removeEventListener("resize", handleResize);
-    // };
   });
 
   return (
