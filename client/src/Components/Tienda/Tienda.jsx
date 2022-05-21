@@ -1,20 +1,16 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
-  // getProductos,
-  // getCategorias,
+  getProductos,
   filtrarCategorias,
   ordenarPorNombre,
   ordenarPorPrecio,
 } from "../../Redux/actions/index";
-import Producto from "../Producto/Producto";
-import Paginado from "../Paginado/Paginado";
-import { getProductos } from "../../Redux/actions/index";
+import { Producto, Paginado, Footer } from "../index";
 import "./Tienda.css";
 import styled from "styled-components";
 import image from "./cuchara-cafe3.jpg";
-import Footer from "../Footer/Footer";
-import ScrollToTop from "../ScrollToTop/ScrollToTop";
+import ScrollToTop from "./../ScrollToTop/ScrollToTop";
 
 const Container = styled.div`
   display: flex;

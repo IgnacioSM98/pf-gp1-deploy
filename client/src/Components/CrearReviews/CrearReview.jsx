@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { postReviews } from "../../Redux/actions";
-import Stars  from "../Stars/Stars";
+import Stars from "../Stars/Stars";
 import styled from "styled-components";
 
 const ModalBack = styled.div`
@@ -36,19 +36,18 @@ const Formulario = styled.form`
 `;
 
 const Titulo = styled.p`
-font-size: 20px;
-font-weight: 800;
-margin: 10px 0px;
-
-`
+  font-size: 20px;
+  font-weight: 800;
+  margin: 10px 0px;
+`;
 
 const Coment = styled.textarea`
-margin: 1em 0em;
-padding: 0.8em 0.8em;
-text-align: justify;
-border-radius: 10px;
-border: 2px solid black;
-`
+  margin: 1em 0em;
+  padding: 0.8em 0.8em;
+  text-align: justify;
+  border-radius: 10px;
+  border: 2px solid black;
+`;
 const Boton = styled.button`
   color: ${(props) => (props.color ? props.color : "white")};
   font-weight: bold;
@@ -61,6 +60,7 @@ const Boton = styled.button`
   padding: 2%;
   cursor: pointer;
 `;
+
 export default function CrearReview({ state, id, setFormReview }) {
   let dispatch = useDispatch();
   let [input, setInput] = useState({
@@ -75,12 +75,12 @@ export default function CrearReview({ state, id, setFormReview }) {
     });
   };
 
-  console.log(input)
+  console.log(input);
 
   let handleSubmit = (e) => {
     e.preventDefault();
     dispatch(postReviews(id, input));
-    alert("opinion enviada")
+    alert("opinion enviada");
     setFormReview(!state);
   };
 
@@ -91,13 +91,8 @@ export default function CrearReview({ state, id, setFormReview }) {
           <Modal>
             <Titulo>Opina sobre este producto</Titulo>
             <Formulario onSubmit={handleSubmit}>
-                <Stars inputs={input} setInputs={setInput} ></Stars>
-              {/* <input
-                type="number"
-                name="puntaje"
-                onChange={handleInputChange}
-                value={input.puntaje}
-              /> */}
+              <Stars inputs={input} setInputs={setInput}></Stars>
+
               <Coment
                 name="comentario"
                 onChange={handleInputChange}

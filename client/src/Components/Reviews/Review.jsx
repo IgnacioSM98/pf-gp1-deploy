@@ -1,6 +1,6 @@
 import React from "react";
 import "./Review.css";
-import StarRating from "../Stars/Stars";
+import { StarRating } from "../index";
 
 export default function Review({ puntaje, comentario }) {
   return (
