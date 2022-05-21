@@ -19,6 +19,7 @@ const Categoria = styled.div`
   align-items: start;
   justify-content: space-between;
   width: 100%;
+  padding: 30px;
 `;
 
 const Productos = styled.div`
@@ -81,11 +82,7 @@ export default function Home({ contacto }) {
     const handleResize = () => setWidth(window.innerWidth);
     window.addEventListener("resize", handleResize);
 
-    setDestacados(Math.floor(width / 250));
-
-    // return () => {
-    //   window.removeEventListener("resize", handleResize);
-    // };
+    setDestacados(Math.floor(width / 260));
   });
 
   return (
