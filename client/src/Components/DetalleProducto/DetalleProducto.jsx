@@ -178,76 +178,78 @@ export default function DetalleProducto() {
   console.log(cards);
 
   return (
-    <div className="detail">
-      {console.log(detalle)}
-      {detalle !== undefined ? <p>{detalle.nombre}</p> : <></>}
-      <Reviews />
-    </div>
-    <Container>
-      {detalle && Object.keys(detalle)[0] ? (
-        <Details>
-          <Image src={detalle.imagen} alt={`Imagen ${detalle.nombre}`} />
-          <Body>
-            <Nombre>{detalle.nombre}</Nombre>
+    <>
+      <div className="detail">
+        {console.log(detalle)}
+        {detalle !== undefined ? <p>{detalle.nombre}</p> : <></>}
+        <Reviews />
+      </div>
+      <Container>
+        {detalle && Object.keys(detalle)[0] ? (
+          <Details>
+            <Image src={detalle.imagen} alt={`Imagen ${detalle.nombre}`} />
+            <Body>
+              <Nombre>{detalle.nombre}</Nombre>
 
-            <Stars>
-              {[...Array(5)].map((star, index) => (
-                <span style={{ textShadow: "1px 1px black" }} key={index}>
-                  &#9733;
-                </span>
-              ))}
-            </Stars>
+              <Stars>
+                {[...Array(5)].map((star, index) => (
+                  <span style={{ textShadow: "1px 1px black" }} key={index}>
+                    &#9733;
+                  </span>
+                ))}
+              </Stars>
 
-            <DescripcionText>Descripción</DescripcionText>
-            <Descripcion>{detalle.descripcion}</Descripcion>
+              <DescripcionText>Descripción</DescripcionText>
+              <Descripcion>{detalle.descripcion}</Descripcion>
 
-            <Pagos>
-              <p style={{ marginTop: "3px" }}>$</p>
-              <Precio>{detalle.precio}</Precio>
-              <Cuotas>
-                en 12x sin interes con tarjetas de crédito seleccionadas
-              </Cuotas>
-            </Pagos>
+              <Pagos>
+                <p style={{ marginTop: "3px" }}>$</p>
+                <Precio>{detalle.precio}</Precio>
+                <Cuotas>
+                  en 12x sin interes con tarjetas de crédito seleccionadas
+                </Cuotas>
+              </Pagos>
 
-            <Cards>
-              {cards.map((card, index) => {
-                return <Card src={card} key={index} />;
-              })}
-            </Cards>
+              <Cards>
+                {cards.map((card, index) => {
+                  return <Card src={card} key={index} />;
+                })}
+              </Cards>
 
-            <Bottom>
-              <Unidades>Unidades</Unidades>
-              <Bar />
-              <Botones>
-                {detalle.stock ? (
-                  <div>
-                    <Cantidad>-</Cantidad>
-                    <Stock>{detalle.stock}</Stock>
-                    <Cantidad>+</Cantidad>
-                  </div>
-                ) : (
-                  <Boton>Sin stock</Boton>
-                )}
-                <Boton>Editar</Boton>
+              <Bottom>
+                <Unidades>Unidades</Unidades>
+                <Bar />
+                <Botones>
+                  {detalle.stock ? (
+                    <div>
+                      <Cantidad>-</Cantidad>
+                      <Stock>{detalle.stock}</Stock>
+                      <Cantidad>+</Cantidad>
+                    </div>
+                  ) : (
+                    <Boton>Sin stock</Boton>
+                  )}
+                  <Boton>Editar</Boton>
 
-                {detalle.stock ? (
-                  <Boton
-                    onClick={onClick}
-                    color={carrito ? "white" : "black"}
-                    backcolor={carrito ? "black" : "#00000045"}
-                    // borders={carrito ? "none" : null}
-                  >
-                    {carrito ? "Agregar" : "Eliminar"}
-                  </Boton>
-                ) : null}
-              </Botones>
-              <Bar />
-            </Bottom>
-          </Body>
-        </Details>
-      ) : (
-        <></>
-      )}
-    </Container>
+                  {detalle.stock ? (
+                    <Boton
+                      onClick={onClick}
+                      color={carrito ? "white" : "black"}
+                      backcolor={carrito ? "black" : "#00000045"}
+                      // borders={carrito ? "none" : null}
+                    >
+                      {carrito ? "Agregar" : "Eliminar"}
+                    </Boton>
+                  ) : null}
+                </Botones>
+                <Bar />
+              </Bottom>
+            </Body>
+          </Details>
+        ) : (
+          <></>
+        )}
+      </Container>
+    </>
   );
 }
