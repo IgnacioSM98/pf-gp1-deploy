@@ -1,7 +1,20 @@
 import { useState, useEffect } from "react";
 import { FaAngleDoubleUp } from "react-icons/fa";
-import "./index.css";
+import styled from "styled-components";
 
+const Button = styled(FaAngleDoubleUp)`
+  position: fixed;
+  bottom: 15px;
+  right: 20px;
+
+  height: 40px;
+  width: 40px;
+  border-radius: 50%;
+  border: 2px solid #333;
+  background-color: #fff;
+  color: #333;
+  cursor: pointer;
+`;
 export default function ScrollToTop() {
   const [scrollTopBtn, setSrollTopBtn] = useState(false);
 
@@ -24,11 +37,5 @@ export default function ScrollToTop() {
     });
   }, []);
 
-  return (
-    <div>
-      {scrollTopBtn && (
-        <FaAngleDoubleUp onClick={scrollTop} className="top-btn" />
-      )}
-    </div>
-  );
+  return <div>{scrollTopBtn && <Button onClick={scrollTop} />}</div>;
 }
