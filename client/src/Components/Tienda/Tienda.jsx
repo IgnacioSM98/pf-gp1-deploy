@@ -308,11 +308,10 @@ function Shop({ contacto }) {
           />
         </div>
       </ContenedorFiltrosPro>
-    </Container>
-
       <Footer contacto={contacto} />
 
       <ScrollToTop />
+    </Container>
   );
 }
 
