@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { clearDetail, getDetail } from "../../Redux/actions";
+import CrearReview from "../CrearReviews/CrearReview";
 import styled from "styled-components";
 import cards from "../../Images/Cards/index";
 
@@ -153,9 +154,30 @@ const Botones = styled.div`
   align-items: center;
   justify-content: space-between;
 `;
+ const Valoracion = styled.div`
+  display: flex;
+  gap:0.5em;
+ `
+ const FormRev = styled.button`
+ color: ${(props) => (props.color ? props.color : "white")};
+  font-weight: bold;
+  background-color: ${(props) => (props.backcolor ? props.backcolor : "black")};
+  border: none;
+  border-radius: 8px;
+  margin: 5px;
+  width: 200px;
+  padding: 2%;
+  cursor:pointer;
+ `
 
 export default function DetalleProducto() {
   const { id } = useParams();
+
+  let [formReview , setFormReview] = useState(false)
+
+  const reviewOnclick = () => {
+    setFormReview(!formReview)
+  }
 
   const dispatch = useDispatch();
   const detalle = useSelector((state) => state.detalle);
@@ -183,7 +205,7 @@ export default function DetalleProducto() {
           <Image src={detalle.imagen} alt={`Imagen ${detalle.nombre}`} />
           <Body>
             <Nombre>{detalle.nombre}</Nombre>
-
+          <Valoracion>
             <Stars>
               {[...Array(5)].map((star, index) => (
                 <span style={{ textShadow: "1px 1px black" }} key={index}>
@@ -191,6 +213,8 @@ export default function DetalleProducto() {
                 </span>
               ))}
             </Stars>
+            <FormRev onClick={reviewOnclick}>Opina sobre este producto</FormRev>
+            </Valoracion>
 
             <DescripcionText>Descripción</DescripcionText>
             <Descripcion>{detalle.descripcion}</Descripcion>
@@ -242,6 +266,8 @@ export default function DetalleProducto() {
       ) : (
         <></>
       )}
+      <CrearReview id={id} state={formReview} setFormReview={setFormReview}/>
     </Container>
+   
   );
 }
