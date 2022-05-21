@@ -304,8 +304,8 @@ function Shop({ contacto }) {
           />
         </div>
       </ContenedorFiltrosPro>
-      <Footer contacto={contacto} />
 
+      <Footer contacto={contacto} />
       <ScrollToTop />
     </Container>
   );

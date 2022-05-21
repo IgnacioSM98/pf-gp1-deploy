@@ -15,6 +15,7 @@ import CrearReview from "./CrearReviews/CrearReview";
 import Paginado from "./Paginado/Paginado";
 import Review from "./Reviews/Review";
 import Reviews from "./Reviews/Reviews";
+import ScrollToTop from "./ScrollToTop/ScrollToTop";
 
 export {
   Home,
@@ -34,4 +35,5 @@ export {
   Paginado,
   Review,
   Reviews,
+  ScrollToTop,
 };
