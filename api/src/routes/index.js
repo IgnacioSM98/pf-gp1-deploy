@@ -2,8 +2,7 @@ const { Router } = require("express");
 // Importar todos los routers;
 // Ejemplo: const authRouter = require('./auth.js');
 // const productosDB = require("../../assets/products.json");
-const { Producto, Categoria, Usuario } = require("../db");
-const Rating = require("../models/Rating");
+const { Producto, Categoria, Usuario, Rating } = require("../db");
 
 const router = Router();
 // Configurar los routers
@@ -83,12 +82,48 @@ router.get("/productos", async (req, res) => {
     }
   }
 });
+router.get("/stock", async (req, res) => {
+  try {
+    const productos = await Producto.findAll();
+    let result;
+    if (productos.length) {
+      result = productos.map((e) => {
+        return { id: e.id, nombre: e.nombre, stock: e.stock };
+      });
+    }
+    res.send(result);
+  } catch (error) {
+    res.status(400).send(error);
+  }
+});
+
+//Ruta para detectar stocks menores a la cifra que se indique en params
+router.get("/stock/:alerta", async (req, res) => {
+  const alerta = req.params.alerta;
+  try {
+    const productos = await Producto.findAll();
+    let result;
+    if (productos.length) {
+      result = productos.map((e) => {
+        return { id: e.id, nombre: e.nombre, stock: e.stock };
+      });
+    }
+    if (alerta.length) {
+      const filtrado = result.filter((e) => e.stock <= alerta);
+      return res.send(filtrado);
+    }
+  } catch (error) {
+    res.status(400).send(error);
+  }
+});
 
 router.get("/producto/:id", async (req, res) => {
   const { id } = req.params;
 
   try {
-    const producto = await Producto.findByPk(id);
+    const producto = await Producto.findByPk(id, {
+      include: [{ model: Categoria }],
+    });
 
     res.status(200).send(producto);
   } catch (error) {
@@ -115,10 +150,10 @@ router.get("/ratings", async (req, res) => {
 });
 
 router.get("/ratings/:productoid", async (req, res) => {
-  const { productoId } = req.params;
-
   try {
-    const rating = await Rating.findAll({ where: { productoId: productoId } });
+    const rating = await Rating.findAll({
+      where: { productoId: req.params.productoid },
+    });
     res.status(200).send(rating);
   } catch (error) {
     res.status(400).send(error);
@@ -128,7 +163,6 @@ router.get("/ratings/:productoid", async (req, res) => {
 router.post("/categorias/crear", async (req, res) => {
   try {
     const { nombre } = req.body;
-    console.log("entra?");
     const categoria = await Categoria.create({
       nombre: nombre,
     });
@@ -138,17 +172,19 @@ router.post("/categorias/crear", async (req, res) => {
   }
 });
 
-router.post("/ratings/crear", async (req, res) => {
+router.post("/ratings/crear/:productoid", async (req, res) => {
   try {
-    const { puntaje, comentario, productoid } = req.body;
-    const rating = await Categoria.create({
+    const { puntaje, comentario } = req.body;
+    const rating = await Rating.create({
       puntaje: puntaje,
       comentario: comentario,
-      productoid: productoid,
     });
+    rating.productoId = req.params.productoid;
+    rating.save();
+
     res.status(200).send(rating);
   } catch (error) {
-    res.status(200).send(error);
+    res.status(400).send(error);
   }
 });
 
@@ -169,7 +205,7 @@ router.post("/ratings/crear", async (req, res) => {
 // });
 
 router.get("/usuario/:id", async (req, res) => {
-  const idUsuario = req.params;
+  const idUsuario = req.params.id;
 
   try {
     const usuario = await Usuarios.findByPk(idUsuario);
@@ -201,7 +237,6 @@ router.post("/crear", async (req, res) => {
 
 router.post("/admin/crearorigen", async (req, res) => {
   const producto = await Producto.bulkCreate(productosDB);
-  console.log(productosDB, "que onda esto");
 
   res.status(200).send(producto);
 });
@@ -248,7 +283,6 @@ router.post("/admin/crear", async (req, res) => {
 router.put("/admin/:id", async (req, res) => {
   try {
     const id = req.params.id;
-    console.log(id, typeof id, "aver");
     const producto = await Producto.findByPk(id);
     const { nombre, precio, descripcion, imagen, stock } = req.body;
     if (nombre) {
@@ -273,7 +307,6 @@ router.put("/admin/:id", async (req, res) => {
     }
     res.status(200).send({ msg: "cambios guardados!" });
   } catch (error) {
-    console.log(error);
     res.status(400).send(error);
   }
 });
