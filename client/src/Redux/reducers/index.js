@@ -4,6 +4,7 @@ const initialState = {
   productosCopiados: [],
   detalle: {},
   filteredProds: [],
+  reviews: [],
 };
 
 export default function rootReducer(state = initialState, action) {
@@ -79,6 +80,11 @@ export default function rootReducer(state = initialState, action) {
       return {
         ...state,
         productos: productosPrecio,
+      };
+    case "GET_PRODUCTOS":
+      return {
+        ...state,
+        reviews: action.payload,
       };
     default:
       return state;

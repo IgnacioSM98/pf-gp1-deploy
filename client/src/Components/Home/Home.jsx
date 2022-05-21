@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useCallback } from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { Boton, Producto } from "../index";
@@ -80,13 +80,7 @@ export default function Home() {
     window.addEventListener("resize", handleResize);
 
     setDestacados(Math.floor(width / 250));
-
-    // return () => {
-    //   window.removeEventListener("resize", handleResize);
-    // };
   });
-
-  console.log(destacados);
 
   return (
     <Container>
