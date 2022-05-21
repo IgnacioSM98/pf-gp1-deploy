@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import s from "./Paginado.module.css"
+import s from "./Paginado.module.css";
 
 export default function Paginado(props) {
   let [currentNum, setCurrentNum] = useState(1);
@@ -17,15 +17,15 @@ export default function Paginado(props) {
     <nav>
       <ul id={s.pageNum}>
         {pageNum.map((num) => (
-          <li
-            id={s.pageLi}
-            className={currentNum === num ? s.active : ""}
-            key={num}
-          >
-            <a value={num} onClick={() => handleActualNum(num)}>
+          <a value={num} onClick={() => handleActualNum(num)}>
+            <li
+              id={s.pageLi}
+              className={currentNum === num ? s.active : ""}
+              key={num}
+            >
               {num}
-            </a>
-          </li>
+            </li>
+          </a>
         ))}
       </ul>
     </nav>

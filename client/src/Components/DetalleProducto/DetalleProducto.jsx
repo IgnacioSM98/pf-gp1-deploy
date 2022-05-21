@@ -10,15 +10,17 @@ const Container = styled.div`
 `;
 
 const Details = styled.div`
-  // height: 100vh;
   display: flex;
   margin: 40px;
   height: 100%;
+  justify-content: center;
 `;
 
 const Image = styled.img`
   height: 65%;
+  max-height: 650px;
   width: 50%;
+  max-width: 650px;
   margin: 50px;
   object-fit: contain;
   margin-top: 40px;
@@ -32,6 +34,7 @@ const Body = styled.div`
   align-items: flex-start;
   height: 600px;
   width: 50%;
+  max-width: 666px;
   margin: 50px 20px 0px 20px;
 `;
 
@@ -91,7 +94,7 @@ const Boton = styled.button`
   margin: 5px;
   height: 40px;
   width: 100px;
-  padding: 2%;
+  // padding: 2%;
 `;
 
 const Cantidad = styled.button`
@@ -174,8 +177,6 @@ export default function DetalleProducto() {
     };
   }, []);
 
-  console.log(cards);
-
   return (
     <Container>
       {detalle && Object.keys(detalle)[0] ? (
@@ -205,7 +206,7 @@ export default function DetalleProducto() {
 
             <Cards>
               {cards.map((card, index) => {
-                return <Card src={card} key={index} />;
+                return <Card src={card.image} key={index} title={card.name} />;
               })}
             </Cards>
 

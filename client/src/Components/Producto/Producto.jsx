@@ -27,7 +27,9 @@ function Producto({ id, imagen, nombre, precio, descripcion }) {
         <div className="precio-boton">
           <p className="precio">${precio}</p>
 
-          <button className="boton-agregar">AGREGAR</button>
+          <button className="boton-agregar" onClick={(e) => e.preventDefault()}>
+            AGREGAR
+          </button>
         </div>
       </div>
     </LinkProduct>
