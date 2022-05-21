@@ -11,6 +11,7 @@ import Login from "./Login/Login";
 import Boton from "./Boton/Boton";
 import Producto from "./Producto/Producto";
 import DetalleProducto from "./DetalleProducto/DetalleProducto";
+import CrearReviews from "./CrearReviews/CrearReview";
 
 export {
   Home,
@@ -26,4 +27,5 @@ export {
   Boton,
   Producto,
   DetalleProducto,
+  CrearReviews,
 };

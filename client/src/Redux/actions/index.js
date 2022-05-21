@@ -5,6 +5,8 @@ const productos = "productos";
 const categorias = "categorias";
 const crear = "crear";
 const admin = "admin/";
+const ratings = "ratings/"
+
 
 export function getProductos() {
   return async function (dispatch) {
@@ -58,7 +60,7 @@ export function getCategorias() {
 
 export function searchProduct(name) {
   return async function (dispatch) {
-    let json = await axios.get(`${urlBase}${productos}+?name=${name}`);
+    let json = await axios.get(`${urlBase}${productos}?name=${name}`);
     return dispatch({
       type: "SEARCH_PRODUCTS",
       payload: json.data,
@@ -105,4 +107,13 @@ export function postCategoria(payload) {
     let json = await axios.post(`${urlBase}${categorias}/${crear}`, payload);
     return json;
   };
+}
+
+export function postReviews (id, payload){
+  return async function(dispatch){
+    await axios.post(`${urlBase}${ratings}${crear}/${id}`, payload)
+    return dispatch({
+      type: "CREAR_REVIEW"
+    })
+  }
 }
