@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
-import { Boton, Producto, Footer } from "../index";
+import { Boton, Producto } from "../index";
 import styled from "styled-components";
 import "./Home.css";
+import Footer from "../Footer/Footer";
 import ScrollToTop from "../ScrollToTop/ScrollToTop";
-import { getProductos } from "../../Redux/actions";
 
 const Container = styled.div`
   height: 100vh;
@@ -83,6 +83,35 @@ export default function Home({ contacto }) {
     window.addEventListener("resize", handleResize);
 
     setDestacados(Math.floor(width / 250));
+
+    console.log("window inner height: ", window.innerHeight);
+
+    console.log(
+      "document Element client hieght: ",
+      document.documentElement.clientHeight
+    );
+
+    console.log(
+      "document Element scroll hieght: ",
+      document.documentElement.scrollHeight
+    );
+
+    console.log(
+      "document Element offset height: ",
+      document.documentElement.offsetHeight
+    );
+
+    console.log(
+      "document element scrolltop: ",
+      document.documentElement.scrollTop
+    );
+
+    console.log("window page Y Offset: ", window.pageYOffset);
+
+    console.log(
+      "window document body offsetheight: ",
+      window.document.body.offsetHeight
+    );
   });
 
   return (
@@ -132,7 +161,6 @@ export default function Home({ contacto }) {
       </Categoria>
 
       <Footer contacto={contacto} />
-
       <ScrollToTop />
     </Container>
   );

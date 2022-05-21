@@ -11,7 +11,6 @@ import {
   NavBar,
   Login,
   DetalleProducto,
-  Footer,
 } from "./Components/index";
 import { Routes, Route } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
@@ -48,7 +47,7 @@ function App() {
           />
           <Route exact path="/productos/:id" element={<DetalleProducto />} />
           <Route exact path="/carrito" element={<Carrito />} />
-          <Route exact path="/blog" element={<Blog />} />
+          <Route exact path="/blog" element={<Blog contacto={contacto} />} />
           <Route exact path="/usuario" element={<Cuenta />} />
           <Route exact path="/admin" element={"admin"} />
           <Route exact path="/admin/crear" element={<CrearProducto />} />
