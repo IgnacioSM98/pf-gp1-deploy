@@ -10,7 +10,9 @@ const router = Router();
 // Ejemplo: router.use('/auth', authRouter);
 
 router.get("/", async (req, res) => {
-  const productos = await Producto.findAll();
+  const productos = await Producto.findAll({
+    include: [{ model: Categoria }],
+  });
 
   res.send(productos);
 
@@ -26,7 +28,9 @@ router.get("/", async (req, res) => {
 
 router.get("/productos", async (req, res) => {
   // para que busque tiene que llegar "/productos?name=(loquetraeelbuscador)"
-  const productos = await Producto.findAll();
+  const productos = await Producto.findAll({
+    include: [{ model: Categoria }],
+  });
 
   let { name } = req.query;
 
@@ -54,7 +58,9 @@ router.get("/productos", async (req, res) => {
   }
 });
 router.get("/productos", async (req, res) => {
-  const productos = await Producto.findAll();
+  const productos = await Producto.findAll({
+    include: [{ model: Categoria }],
+  });
 
   let { name } = req.query;
 

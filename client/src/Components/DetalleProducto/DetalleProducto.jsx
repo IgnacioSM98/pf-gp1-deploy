@@ -1,9 +1,8 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
-import Reviews from "../Reviews/Reviews";
-import { clearDetail, getDetail } from "../../Redux/actions";
-import CrearReview from "../CrearReviews/CrearReview";
+import { clearDetail, getDetail, getReviews } from "../../Redux/actions";
+import { CrearReview, Reviews } from "../index";
 import styled from "styled-components";
 import cards from "../../Images/Cards/index";
 
@@ -158,12 +157,12 @@ const Botones = styled.div`
   align-items: center;
   justify-content: space-between;
 `;
- const Valoracion = styled.div`
+const Valoracion = styled.div`
   display: flex;
-  gap:0.5em;
- `
- const FormRev = styled.button`
- color: ${(props) => (props.color ? props.color : "white")};
+  gap: 0.5em;
+`;
+const FormRev = styled.button`
+  color: ${(props) => (props.color ? props.color : "white")};
   font-weight: bold;
   background-color: ${(props) => (props.backcolor ? props.backcolor : "black")};
   border: none;
@@ -171,17 +170,17 @@ const Botones = styled.div`
   margin: 5px;
   width: 200px;
   padding: 2%;
-  cursor:pointer;
- `
+  cursor: pointer;
+`;
 
 export default function DetalleProducto() {
   const { id } = useParams();
 
-  let [formReview , setFormReview] = useState(false)
+  let [formReview, setFormReview] = useState(false);
 
   const reviewOnclick = () => {
-    setFormReview(!formReview)
-  }
+    setFormReview(!formReview);
+  };
 
   const dispatch = useDispatch();
   const detalle = useSelector((state) => state.detalle);
@@ -194,19 +193,19 @@ export default function DetalleProducto() {
 
   useEffect(() => {
     dispatch(getDetail(id));
+    // dispatch(getReviews(id));
 
     return () => {
       dispatch(clearDetail());
     };
   }, []);
 
-  return (
+  return detalle && Object.keys(detalle)[0] ? (
     <Container>
-      {detalle && Object.keys(detalle)[0] ? (
-        <Details>
-          <Image src={detalle.imagen} alt={`Imagen ${detalle.nombre}`} />
-          <Body>
-            <Nombre>{detalle.nombre}</Nombre>
+      <Details>
+        <Image src={detalle.imagen} alt={`Imagen ${detalle.nombre}`} />
+        <Body>
+          <Nombre>{detalle.nombre}</Nombre>
           <Valoracion>
             <Stars>
               {[...Array(5)].map((star, index) => (
@@ -215,60 +214,60 @@ export default function DetalleProducto() {
                 </span>
               ))}
             </Stars>
-            <FormRev onClick={reviewOnclick}>Opina sobre este producto</FormRev>
-            </Valoracion>
+          </Valoracion>
 
-            <DescripcionText>Descripción</DescripcionText>
-            <Descripcion>{detalle.descripcion}</Descripcion>
+          <DescripcionText>Descripción</DescripcionText>
+          <Descripcion>{detalle.descripcion}</Descripcion>
 
-            <Pagos>
-              <p style={{ marginTop: "3px" }}>$</p>
-              <Precio>{detalle.precio}</Precio>
-              <Cuotas>
-                en 12x sin interes con tarjetas de crédito seleccionadas
-              </Cuotas>
-            </Pagos>
+          <Pagos>
+            <p style={{ marginTop: "3px" }}>$</p>
+            <Precio>{detalle.precio}</Precio>
+            <Cuotas>
+              en 12x sin interes con tarjetas de crédito seleccionadas
+            </Cuotas>
+          </Pagos>
 
-            <Cards>
-              {cards.map((card, index) => {
-                return <Card src={card.image} key={index} title={card.name} />;
-              })}
-            </Cards>
+          <Cards>
+            {cards.map((card, index) => {
+              return <Card src={card.image} key={index} title={card.name} />;
+            })}
+          </Cards>
 
-            <Bottom>
-              <Unidades>Unidades</Unidades>
-              <Bar />
-              <Botones>
-                {detalle.stock ? (
-                  <div>
-                    <Cantidad>-</Cantidad>
-                    <Stock>{detalle.stock}</Stock>
-                    <Cantidad>+</Cantidad>
-                  </div>
-                ) : (
-                  <Boton>Sin stock</Boton>
-                )}
-                <Boton>Editar</Boton>
+          <Bottom>
+            <Unidades>Unidades</Unidades>
+            <Bar />
+            <Botones>
+              {detalle.stock ? (
+                <div>
+                  <Cantidad>-</Cantidad>
+                  <Stock>{detalle.stock}</Stock>
+                  <Cantidad>+</Cantidad>
+                </div>
+              ) : (
+                <Boton>Sin stock</Boton>
+              )}
+              <Boton>Editar</Boton>
 
-                {detalle.stock ? (
-                  <Boton
-                    onClick={onClick}
-                    color={carrito ? "white" : "black"}
-                    backcolor={carrito ? "black" : "#00000045"}
-                    // borders={carrito ? "none" : null}
-                  >
-                    {carrito ? "Agregar" : "Eliminar"}
-                  </Boton>
-                ) : null}
-              </Botones>
-              <Bar />
-            </Bottom>
-          </Body>
-        </Details>
-      ) : (
-        <></>
-      )}
-      <CrearReview id={id} state={formReview} setFormReview={setFormReview}/>
+              {detalle.stock ? (
+                <Boton
+                  onClick={onClick}
+                  color={carrito ? "white" : "black"}
+                  backcolor={carrito ? "black" : "#00000045"}
+                  // borders={carrito ? "none" : null}
+                >
+                  {carrito ? "Agregar" : "Eliminar"}
+                </Boton>
+              ) : null}
+            </Botones>
+            <Bar />
+          </Bottom>
+        </Body>
+      </Details>
+      <FormRev onClick={reviewOnclick}>Opina sobre este producto</FormRev>
+      <CrearReview id={id} state={formReview} setFormReview={setFormReview} />
+      <Reviews />
     </Container>
+  ) : (
+    <></>
   );
 }
