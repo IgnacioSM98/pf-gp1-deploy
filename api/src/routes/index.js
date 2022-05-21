@@ -125,9 +125,10 @@ router.get("/ratings/:productoid", async (req, res) => {
   }
 });
 
-router.post("categorias/crear", async (req, res) => {
+router.post("/categorias/crear", async (req, res) => {
   try {
     const { nombre } = req.body;
+    console.log("entra?");
     const categoria = await Categoria.create({
       nombre: nombre,
     });
@@ -137,7 +138,7 @@ router.post("categorias/crear", async (req, res) => {
   }
 });
 
-router.post("ratings/crear", async (req, res) => {
+router.post("/ratings/crear", async (req, res) => {
   try {
     const { puntaje, comentario, productoid } = req.body;
     const rating = await Categoria.create({
@@ -227,7 +228,7 @@ router.post("/admin/crear", async (req, res) => {
       auxiliar.push(filtroId[0].id);
     });
 
-    auxiliar.map(async (id) => {
+    auxiliar.map((id) => {
       Categoria.findByPk(id).then((esaCategoria) => {
         Producto.findByPk(producto.id) //aca va el id del producto creado
           .then((productoNuevo) => {
@@ -246,7 +247,8 @@ router.post("/admin/crear", async (req, res) => {
 
 router.put("/admin/:id", async (req, res) => {
   try {
-    const id = req.params;
+    const id = req.params.id;
+    console.log(id, typeof id, "aver");
     const producto = await Producto.findByPk(id);
     const { nombre, precio, descripcion, imagen, stock } = req.body;
     if (nombre) {
@@ -265,13 +267,92 @@ router.put("/admin/:id", async (req, res) => {
       producto.imagen = imagen;
       producto.save();
     }
-    if (nombre) {
+    if (stock) {
       producto.stock = stock;
       producto.save();
     }
     res.status(200).send({ msg: "cambios guardados!" });
   } catch (error) {
+    console.log(error);
     res.status(400).send(error);
+  }
+});
+router.put("/categorias/:id", async (req, res) => {
+  try {
+    const id = req.params.id;
+    const producto = await Categoria.findByPk(id);
+    const { nombre } = req.body;
+    if (nombre) {
+      producto.nombre = nombre;
+      producto.save();
+    }
+    res.status(200).send({ msg: "cambios guardados!" });
+  } catch (error) {
+    res.status(400).send(error);
+  }
+});
+router.post("/categorias/producto", async (req, res) => {
+  const { idProducto, idCategoria } = req.body;
+
+  Categoria.findByPk(idCategoria).then((oneCategoria) => {
+    Producto.findByPk(idProducto)
+      .then((newProducto) => {
+        oneCategoria.addProducto(newProducto);
+
+        return res.json({ msg: "Listo" });
+      })
+      .catch((error) => {
+        return res.status(400).json(console.log(error));
+      });
+  });
+});
+
+router.post("/categorias/producto/all", async (req, res) => {
+  let { idProducto, idCategoria } = req.body;
+  idProducto.map((p) => {
+    Categoria.findByPk(idCategoria).then((oneCategoria) => {
+      Producto.findByPk(p)
+        .then((newProducto) => {
+          oneCategoria.addProducto(newProducto);
+        })
+        .catch((error) => {
+          return res.status(400).json(console.log(error));
+        });
+    });
+  });
+  return res.json({ msg: "Listo" });
+});
+
+//Deletes varios
+
+router.delete("/producto/:id", async (req, res, next) => {
+  try {
+    const id = req.params.id;
+    const productoABorrar = await Producto.findByPk(id);
+    await productoABorrar.destroy();
+    res.json({ msg: "borrado" });
+  } catch (error) {
+    next(error);
+  }
+});
+router.delete("/categorias/:id", async (req, res, next) => {
+  try {
+    const id = req.params.id;
+    const catABorrar = await Categoria.findByPk(id);
+    await catABorrar.destroy();
+    res.json({ msg: "borrado" });
+  } catch (error) {
+    next(error);
+  }
+});
+router.delete("/ratings/:id", async (req, res, next) => {
+  try {
+    const id = req.params.id;
+    const ratingABorrar = await Rating.findByPk(id);
+    await ratingABorrar.destroy();
+    res.json({ msg: "borrado" });
+  } catch (error) {
+    next(error);
   }
 });
 
