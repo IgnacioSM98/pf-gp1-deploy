@@ -1,10 +1,16 @@
 import React from "react";
 import "./producto.css";
 import { Link } from "react-router-dom";
+import styled from "styled-components";
+
+const LinkProduct = styled(Link)`
+  text-decoration: none;
+  width: 240px;
+`;
 
 function Producto({ id, imagen, nombre, precio, descripcion }) {
   return (
-    <Link to={`/productos/${id}`}>
+    <LinkProduct to={`/productos/${id}`}>
       <div className="container-producto">
         <div className="container-foto">
           <img src={imagen} className="foto" />
@@ -24,7 +30,7 @@ function Producto({ id, imagen, nombre, precio, descripcion }) {
           <button className="boton-agregar">AGREGAR</button>
         </div>
       </div>
-    </Link>
+    </LinkProduct>
   );
 }
 

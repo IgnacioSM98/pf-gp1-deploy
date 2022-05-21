@@ -9,6 +9,7 @@
   height: 400px;
   border-radius: 15px;
   position: relative;
+  box-shadow: 0 2px 2px 0 black, 2px 2px 2px 2px darkgray;
 }
 
 .foto {

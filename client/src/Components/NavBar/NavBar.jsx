@@ -23,6 +23,7 @@ const Span = styled.span`
   color: white;
   font-size: 13px;
   text-shadow: 1px 1px black;
+  cursor: pointer;
 `;
 
 const Login = styled.div`
@@ -44,9 +45,17 @@ const Button = styled.button`
   color: white;
   font-size: 13px;
   text-shadow: 1px 1px black;
+  cursor: pointer;
 `;
 
-export default function NavBar() {
+export default function NavBar({ contacto }) {
+  const scrollToSection = (elementRef) => {
+    window.scrollTo({
+      top: elementRef.current.offsetTop,
+      behavior: "smooth",
+    });
+  };
+
   return (
     <Container>
       <NavLink to="/">
@@ -61,7 +70,7 @@ export default function NavBar() {
         <Span>Tienda</Span>
       </NavLink>
 
-      <Span>Contacto</Span>
+      <Span onClick={() => scrollToSection(contacto)}>Contacto</Span>
 
       <NavLink to="/blog">
         <Span>Blog</Span>
