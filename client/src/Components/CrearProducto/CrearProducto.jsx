@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from "react";
+import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
+import { Image } from "cloudinary-react";
 import {
   getCategorias,
   postProducto,
@@ -7,6 +9,7 @@ import {
 } from "../../Redux/actions";
 import NavBar from "../NavBar/NavBar";
 import "./CrearProducto.css";
+import styled from "styled-components";
 
 function validate(post) {
   let errors = {};
@@ -30,6 +33,11 @@ function validate(post) {
   }
   return errors;
 }
+const Imagen = styled.img`
+  height: 300px;
+  width: 300px;
+  object-fit: contain;
+`;
 
 function CrearProducto() {
   const dispatch = useDispatch();
@@ -49,6 +57,7 @@ function CrearProducto() {
   });
   const [cate, setCate] = useState({ categoría: "" });
   const [cambio, setCambio] = useState(false);
+  const [imageSelected, setImageSelected] = useState();
   function handleOpenCategoria() {
     cambio ? setCambio(false) : setCambio(true);
   }
@@ -75,6 +84,21 @@ function CrearProducto() {
         [e.target.name]: e.target.value,
       })
     );
+  }
+  function handleImageChange(changeEvent) {
+    const reader = new FileReader();
+    reader.onload = function (onLoadEvent) {
+      setImageSelected(onLoadEvent.target.result);
+    };
+    reader.readAsDataURL(changeEvent.target.files[0]);
+  }
+  function uploadImagen() {
+    const formData = new FormData();
+    formData.append("file", imageSelected);
+    formData.append("upload_preset", "upvzhism");
+    axios
+      .post("http://api.cloudinary.com/v1_1/henrypfinal/image/upload", formData)
+      .then((res) => (post.imagen = res.data.secure_url));
   }
   function handleSelectCategorias(e) {
     if (!post.categorías.includes(e.target.value))
@@ -150,8 +174,18 @@ function CrearProducto() {
               name="imagen"
               onChange={(e) => handleInputChange(e)}
             />
+            <input
+              className="input-create"
+              type="file"
+              name="imagen"
+              onChange={handleImageChange}
+            />
+            <button className="button-create" onClick={uploadImagen}>
+              Upload
+            </button>
+            <Imagen src={imageSelected} />
             <span className="barra"></span>
-            <label className="label">Imagen</label>
+            <label className="label">Imagen desde URL o archivo local</label>
             {errors.imagen && <p>{errors.imagen}</p>}
           </div>
           <div className="grupo">
