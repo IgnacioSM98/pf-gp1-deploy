@@ -13,6 +13,8 @@ import { getProductos } from "../../Redux/actions/index";
 import "./Tienda.css";
 import styled from "styled-components";
 import image from "./cuchara-cafe3.jpg";
+import Footer from "./../Footer/Footer";
+import ScrollToTop from "./../ScrollToTop/ScrollToTop";
 
 const Container = styled.div`
   display: flex;
@@ -156,7 +158,7 @@ const Tienda = styled.h1`
   text-shadow: 0px 1px 1px #222, 1px -1px 0 darkgrey;
 `;
 
-function Shop() {
+function Shop({ contacto }) {
   const dispatch = useDispatch();
   const product = useSelector((state) => state.productos);
   const catego = useSelector((state) => state.categorias);
@@ -307,6 +309,10 @@ function Shop() {
         </div>
       </ContenedorFiltrosPro>
     </Container>
+
+      <Footer contacto={contacto} />
+
+      <ScrollToTop />
   );
 }
 

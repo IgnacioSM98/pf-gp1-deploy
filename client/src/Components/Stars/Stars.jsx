@@ -24,18 +24,18 @@ const Button = styled.button`
 
 export default function StarRating({ inputs, setInputs }) {
   // const [inputs, setInputs] = useState(props);
-  const [rating, setRating] = useState(0);
+  const [puntaje, setPuntaje] = useState(0);
   const [hover, setHover] = useState(0);
 
   useEffect(() => {
-    setRating(3);
+    setPuntaje(1);
     // eslint-disable-next-line
   }, []);
 
-  //   useEffect(() => {
-  //     setInputs({ ...inputs, rating });
-  //     // eslint-disable-next-line
-  //   }, [rating]);
+    useEffect(() => {
+      setInputs({ ...inputs, puntaje });
+      // eslint-disable-next-line
+    }, [puntaje]);
 
   return (
     <Container>
@@ -46,13 +46,13 @@ export default function StarRating({ inputs, setInputs }) {
             type="button"
             key={index}
             style={
-              index <= (hover || rating)
+              index <= (hover || puntaje)
                 ? { color: "yellow" }
                 : { color: "lightgrey" }
             }
-            onClick={() => setRating(index)}
+            onClick={() => setPuntaje(index)}
             onMouseEnter={() => setHover(index)}
-            onMouseLeave={() => setHover(rating)}
+            onMouseLeave={() => setHover(puntaje)}
           >
             <Star>&#9733;</Star>
           </Button>
