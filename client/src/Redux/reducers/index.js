@@ -81,7 +81,7 @@ export default function rootReducer(state = initialState, action) {
         ...state,
         productos: productosPrecio,
       };
-    case "GET_PRODUCTOS":
+    case "GET_REVIEWS":
       return {
         ...state,
         reviews: action.payload,

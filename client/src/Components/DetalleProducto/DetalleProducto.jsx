@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { getDetail } from "../../Redux/actions";
+import Reviews from "../Reviews/Reviews";
 
 export default function DetalleProducto() {
   const { id } = useParams();
@@ -16,6 +17,7 @@ export default function DetalleProducto() {
     <div className="detail">
       {console.log(detalle)}
       {detalle !== undefined ? <p>{detalle.nombre}</p> : <></>}
+      <Reviews />
     </div>
   );
 }
