@@ -12,6 +12,7 @@ import Boton from "./Boton/Boton";
 import Producto from "./Producto/Producto";
 import DetalleProducto from "./DetalleProducto/DetalleProducto";
 import CrearReviews from "./CrearReviews/CrearReview";
+import ScrollToTop from "./ScrollToTop/ScrollToTop";
 
 export {
   Home,
@@ -28,4 +29,5 @@ export {
   Producto,
   DetalleProducto,
   CrearReviews,
+  ScrollToTop,
 };

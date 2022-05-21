@@ -13,8 +13,8 @@ import { getProductos } from "../../Redux/actions/index";
 import "./Tienda.css";
 import styled from "styled-components";
 import image from "./cuchara-cafe3.jpg";
-import Footer from "./../Footer/Footer";
-import ScrollToTop from "./../ScrollToTop/ScrollToTop";
+import Footer from "../Footer/Footer";
+import ScrollToTop from "../ScrollToTop/ScrollToTop";
 
 const Container = styled.div`
   display: flex;
@@ -308,8 +308,8 @@ function Shop({ contacto }) {
           />
         </div>
       </ContenedorFiltrosPro>
-      <Footer contacto={contacto} />
 
+      <Footer contacto={contacto} />
       <ScrollToTop />
     </Container>
   );
