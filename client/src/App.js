@@ -1,5 +1,5 @@
 import "./App.css";
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { getProductos, getCategorias } from "./Redux/actions/index";
 import {
   Home,
@@ -11,14 +11,18 @@ import {
   NavBar,
   Login,
   DetalleProducto,
+  Footer,
 } from "./Components/index";
 import { Routes, Route } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 function App() {
   const dispatch = useDispatch();
+  const productos = useSelector((state) => state.productos);
+  const contacto = useRef(null);
 
   useEffect(() => {
+    localStorage.removeItem("productos");
     dispatch(getProductos());
   }, [dispatch]);
 
@@ -26,12 +30,17 @@ function App() {
     dispatch(getCategorias());
   }, [dispatch]);
 
+  useEffect(() => {
+    // console.log(productos);
+    localStorage.setItem("productos", JSON.stringify(productos));
+  }, [productos]);
+
   return (
     <div>
-      <NavBar />
+      <NavBar contacto={contacto} />
       <div className="App">
         <Routes>
-          <Route exact path="/" element={<Home />} />
+          <Route exact path="/" element={<Home contacto={contacto} />} />
           <Route exact path="/tienda" element={<Tienda />} />
           <Route exact path="/productos/:id" element={<DetalleProducto />} />
           <Route exact path="/carrito" element={<Carrito />} />

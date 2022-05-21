@@ -2,8 +2,7 @@ const initialState = {
   productos: [],
   categorias: [],
   productosCopiados: [],
-  detalle: {},
-  filteredProds: [],
+  // detalle: {},
 };
 
 export default function rootReducer(state = initialState, action) {
@@ -13,26 +12,31 @@ export default function rootReducer(state = initialState, action) {
         ...state,
         productos: action.payload,
       };
+
     case "GET_CATEGORIAS":
       return {
         ...state,
         categorias: action.payload,
       };
+
     case "GET_DETAIL":
       return {
         ...state,
         detalle: action.payload,
       };
-    case "GET_FILTERED_PRODS":
+
+    case "CLEAR_DETAIL":
       return {
         ...state,
-        filteredProds: action.payload,
+        detalle: {},
       };
+
     case "SEARCH_PRODUCTS":
       return {
         ...state,
         productos: action.payload,
       };
+
     case "FILTRAR_CATEGORIAS":
       const productos = state.productosCopiados;
       const productosConCategoria =
@@ -46,6 +50,7 @@ export default function rootReducer(state = initialState, action) {
         ...state,
         productos: productosConCategoria,
       };
+
     case "ORDENAR_POR_NOMBRE":
       const productosSorted =
         action.payload === "asc"
@@ -63,6 +68,7 @@ export default function rootReducer(state = initialState, action) {
         ...state,
         productos: productosSorted,
       };
+
     case "ORDENAR_POR_PRECIO":
       const productosPrecio =
         action.payload === "desc"
@@ -76,10 +82,12 @@ export default function rootReducer(state = initialState, action) {
               if (b.precio > a.precio) return 1;
               return 0;
             });
+
       return {
         ...state,
         productos: productosPrecio,
       };
+
     default:
       return state;
   }

@@ -3,33 +3,42 @@ import axios from "axios";
 const urlBase = "https://proyecto-final-gp1.herokuapp.com/";
 const productos = "productos";
 const categorias = "categorias";
+const crear = "crear";
+const admin = "admin/";
 
 export function getProductos() {
   return async function (dispatch) {
-    try {
-      const resp = await axios.get(`${urlBase}${productos}`);
+    const data = JSON.parse(localStorage.getItem("productos"));
 
-      if (resp) {
-        dispatch({ type: "GET_PRODUCTOS", payload: resp.data });
+    if (data) {
+      dispatch({ type: "GET_PRODUCTOS", payload: data });
+    } else {
+      try {
+        const resp = await axios.get(`${urlBase}${productos}`);
+
+        if (resp) {
+          dispatch({ type: "GET_PRODUCTOS", payload: resp.data });
+        }
+      } catch (err) {
+        console.log(err, "error productos");
       }
-    } catch (err) {
-      console.log(err, "error productos");
     }
   };
 }
 
 export function getDetail(id) {
   return function (dispatch) {
-    console.log(urlBase + "producto" + "/" + id);
+    // console.log(urlBase + "producto" + "/" + id);
+
     axios(`${urlBase}producto/${id}`).then((res) =>
       dispatch({ type: "GET_DETAIL", payload: res.data })
     );
   };
 }
 
-export function getFilterProds(filteredProds) {
+export function clearDetail() {
   return function (dispatch) {
-    dispatch({ type: "GET_FILTERED_PRODS", payload: filteredProds });
+    dispatch({ type: "CLEAR_DETAIL" });
   };
 }
 
@@ -73,5 +82,18 @@ export function ordenarPorPrecio(payload) {
   return {
     type: "ORDENAR_POR_PRECIO",
     payload,
+  };
+}
+
+export function postProducto(payload) {
+  return async function () {
+    let json = await axios.post(`${urlBase}${admin}${crear}`, payload);
+    return json;
+  };
+}
+export function postCategoria(payload) {
+  return async function () {
+    let json = await axios.post(`${urlBase}${categorias}/${crear}`, payload);
+    return json;
   };
 }

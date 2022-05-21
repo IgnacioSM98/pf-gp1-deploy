@@ -9,29 +9,30 @@ import {
 } from "../../Redux/actions/index";
 import Producto from "../Producto/Producto";
 import Paginado from "../Paginado/Paginado";
-import { getFilterProds } from "../../Redux/actions/index";
+import { getProductos } from "../../Redux/actions/index";
 import "./Tienda.css";
 
 function Shop() {
   const dispatch = useDispatch();
   const product = useSelector((state) => state.productos);
   const catego = useSelector((state) => state.categorias);
-  const filteredProds = useSelector((state) => state.filteredProds);
   const [cambio, setCambio] = useState(true);
 
-  // useEffect(() => {
-  //   dispatch(getProductos());
-  // }, [dispatch]);
-
-  // useEffect(() => {
-  //   dispatch(getCategorias());
-  // }, [dispatch]);
+  useEffect(() => {
+    if (product.length === 0) dispatch(getProductos());
+  }, []);
 
   const [currentPage, setCurrentPage] = useState(1);
   const productosPerPage = 12;
   const ultimoProducto = productosPerPage * currentPage;
   const primerProducto = ultimoProducto - productosPerPage;
-  let currentProductos = product.slice(primerProducto, ultimoProducto);
+  // const currentProductos = product.slice(primerProducto, ultimoProducto);
+
+  const [currentProductos, setCurrentProductos] = useState([]);
+
+  useEffect(() => {
+    setCurrentProductos(product.slice(primerProducto, ultimoProducto));
+  }, [product, primerProducto, ultimoProducto]);
 
   const paginate = (number) => {
     setCurrentPage(number);
@@ -63,8 +64,7 @@ function Shop() {
       }
     });
 
-    console.log(currentProductos);
-    currentProductos = [...arrayAux];
+    setCurrentProductos(arrayAux);
   }
 
   return (

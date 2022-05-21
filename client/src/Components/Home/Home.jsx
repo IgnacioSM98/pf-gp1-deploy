@@ -1,9 +1,11 @@
 import React, { useEffect, useState, useCallback } from "react";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
-import { Boton, Producto } from "../index";
+import { Boton, Producto, Footer } from "../index";
 import styled from "styled-components";
 import "./Home.css";
+import ScrollToTop from "../ScrollToTop/ScrollToTop";
+import { getProductos } from "../../Redux/actions";
 
 const Container = styled.div`
   height: 100vh;
@@ -68,7 +70,7 @@ const Header = styled.div`
   background-color: Black;
 `;
 
-export default function Home() {
+export default function Home({ contacto }) {
   const productos = useSelector((state) => state.productos);
 
   const [destacados, setDestacados] = useState();
@@ -85,8 +87,6 @@ export default function Home() {
     //   window.removeEventListener("resize", handleResize);
     // };
   });
-
-  console.log(destacados);
 
   return (
     <Container>
@@ -133,6 +133,10 @@ export default function Home() {
           <Boton texto="Mas notas" />
         </Link>
       </Categoria>
+
+      <Footer contacto={contacto} />
+
+      <ScrollToTop />
     </Container>
   );
 }
