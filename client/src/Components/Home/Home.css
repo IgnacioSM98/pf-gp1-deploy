@@ -5,12 +5,11 @@
   align-items: center;
 }
 
-.contenedor-productos{
+.contenedor-productos {
   display: flex;
   flex-direction: row;
   flex-wrap: nowrap;
   justify-content: space-around;
   width: auto;
   height: 420px;
-
 }

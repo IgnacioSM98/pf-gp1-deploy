@@ -17,7 +17,7 @@ const Container = styled.div`
 
 const Details = styled.div`
   display: flex;
-  margin: 40px;
+  margin: 0px 40px 40px 40px;
   height: 100%;
   justify-content: center;
 `;
@@ -29,7 +29,7 @@ const Image = styled.img`
   max-width: 650px;
   margin: 50px;
   object-fit: contain;
-  margin-top: 40px;
+  margin-top: 90px;
 `;
 
 const Body = styled.div`
@@ -41,7 +41,7 @@ const Body = styled.div`
   height: 600px;
   width: 50%;
   max-width: 666px;
-  margin: 50px 20px 0px 20px;
+  margin: 90px 20px 0px 20px;
 `;
 
 const Nombre = styled.p`
@@ -202,6 +202,7 @@ export default function DetalleProducto() {
   useEffect(() => {
     dispatch(getDetail(id));
     // dispatch(getReviews(id));
+    window.scrollTo(0, 0);
 
     return () => {
       dispatch(clearDetail());
