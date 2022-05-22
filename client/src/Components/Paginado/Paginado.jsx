@@ -17,12 +17,8 @@ export default function Paginado(props) {
     <nav>
       <ul id={s.pageNum}>
         {pageNum.map((num) => (
-          <a value={num} onClick={() => handleActualNum(num)}>
-            <li
-              id={s.pageLi}
-              className={currentNum === num ? s.active : ""}
-              key={num}
-            >
+          <a key={num} value={num} onClick={() => handleActualNum(num)}>
+            <li id={s.pageLi} className={currentNum === num ? s.active : ""}>
               {num}
             </li>
           </a>

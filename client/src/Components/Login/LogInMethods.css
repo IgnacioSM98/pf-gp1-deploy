@@ -17,27 +17,8 @@
 
 .grupo-login {
   position: relative;
-  margin: 45px;
-}
-
-/* .titulo-login {
-  color: rgb(8, 206, 114);
-  text-align: center;
-  font-size: 25px;
-  font-weight: 800;
-} */
-
-.boton-logedinmethods {
-  background-color: rgb(8, 206, 114);
-  width: 100px;
-  height: 40px;
-  border: none;
-  color: white;
-  border-radius: 4px;
-  font-size: 16px;
-  margin: 10px 0px;
-  /* margin: auto; */
-  cursor: pointer;
+  margin: 45px 0px 0px 0px;
+  width: 320px;
 }
 
 .label-login {
@@ -90,7 +71,7 @@
   width: 0;
   bottom: 0;
   position: absolute;
-  background: linear-gradient(to left, #000000, rgb(8, 206, 114));
+  background: linear-gradient(to left, white, rgb(8, 206, 114));
   transition: 0.3s ease all;
   left: 0%;
 }

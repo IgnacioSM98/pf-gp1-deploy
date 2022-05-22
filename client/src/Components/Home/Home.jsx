@@ -75,7 +75,6 @@ export default function Home({ contacto }) {
   const productos = useSelector((state) => state.productos);
 
   const [destacados, setDestacados] = useState();
-
   const [width, setWidth] = useState(window.innerWidth);
 
   useEffect(() => {
@@ -84,34 +83,34 @@ export default function Home({ contacto }) {
 
     setDestacados(Math.floor(width / 250));
 
-    console.log("window inner height: ", window.innerHeight);
+    // console.log("window inner height: ", window.innerHeight);
 
-    console.log(
-      "document Element client hieght: ",
-      document.documentElement.clientHeight
-    );
+    // console.log(
+    //   "document Element client hieght: ",
+    //   document.documentElement.clientHeight
+    // );
 
-    console.log(
-      "document Element scroll hieght: ",
-      document.documentElement.scrollHeight
-    );
+    // console.log(
+    //   "document Element scroll hieght: ",
+    //   document.documentElement.scrollHeight
+    // );
 
-    console.log(
-      "document Element offset height: ",
-      document.documentElement.offsetHeight
-    );
+    // console.log(
+    //   "document Element offset height: ",
+    //   document.documentElement.offsetHeight
+    // );
 
-    console.log(
-      "document element scrolltop: ",
-      document.documentElement.scrollTop
-    );
+    // console.log(
+    //   "document element scrolltop: ",
+    //   document.documentElement.scrollTop
+    // );
 
-    console.log("window page Y Offset: ", window.pageYOffset);
+    // console.log("window page Y Offset: ", window.pageYOffset);
 
-    console.log(
-      "window document body offsetheight: ",
-      window.document.body.offsetHeight
-    );
+    // console.log(
+    //   "window document body offsetheight: ",
+    //   window.document.body.offsetHeight
+    // );
   });
 
   return (
