@@ -9,33 +9,22 @@ const LinkProduct = styled(Link)`
   text-decoration: none;
   width: 240px;
 `;
-
-function Producto({
-  id,
-  imagen,
-  nombre,
-  precio,
-  descripcion,
-  producto,
-  stock,
-}) {
-  const dispatch = useDispatch();
-
-  function agregarAlCarrito(e) {
-    e.preventDefault();
-    if (stock > 1) {
-      dispatch(agregarCarrito(id));
-    }
-  }
-
+ 
 const Button = styled.button`
   height: 30px;
 `;
 
-export default function Producto({ id, imagen, nombre, precio, descripcion }) {
+export default function Producto({ id, imagen, nombre, precio, descripcion, producto, stock }) {
+  const dispatch = useDispatch();
   const [showOptions, setOptions] = useState(false);
-
-
+  
+  function agregarAlCarrito(e) {
+   e.preventDefault();
+   if (stock > 1) {
+     dispatch(agregarCarrito(id));
+   }
+  }
+  
   return (
     <LinkProduct to={`/productos/${id}`}>
       <div className="container-producto">
