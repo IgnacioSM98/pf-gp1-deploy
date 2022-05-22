@@ -157,7 +157,7 @@ const Tienda = styled.h1`
 function Shop({ contacto }) {
   const dispatch = useDispatch();
   const product = useSelector((state) => state.productos);
-  const catego = useSelector((state) => state.categorias);
+  const categorias = useSelector((state) => state.categorias);
   const [cambio, setCambio] = useState(true);
 
   useEffect(() => {
@@ -271,10 +271,10 @@ function Shop({ contacto }) {
               <option value="default" disabled>
                 Categorías
               </option>
-              {catego &&
-                catego.map((d) => (
-                  <option value={d.name} key={d.id}>
-                    {d.name}
+              {categorias &&
+                categorias.map((d) => (
+                  <option value={d.nombre} key={d.id}>
+                    {d.nombre}
                   </option>
                 ))}
             </select>
