@@ -32,7 +32,7 @@ const Button = styled.button`
   height: 30px;
 `;
 
-function Producto({ id, imagen, nombre, precio, descripcion }) {
+export default function Producto({ id, imagen, nombre, precio, descripcion }) {
   const [showOptions, setOptions] = useState(false);
 
 
@@ -108,5 +108,3 @@ function Producto({ id, imagen, nombre, precio, descripcion }) {
     </LinkProduct>
   );
 }
-
-export default Producto;
