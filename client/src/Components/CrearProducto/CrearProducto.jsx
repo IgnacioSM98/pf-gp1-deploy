@@ -1,118 +1,206 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
-import { Image } from "cloudinary-react";
 import {
   getCategorias,
   postProducto,
   postCategoria,
 } from "../../Redux/actions";
-import NavBar from "../NavBar/NavBar";
 import "./CrearProducto.css";
 import styled from "styled-components";
+import validate from "./validaciones.js";
 
-function validate(post) {
-  let errors = {};
-  if (!post.nombre) {
-    errors.nombre = "Ingresar nombre del producto";
-  }
-  if (!post.descripción) {
-    errors.descripción = "Escribe una breve descripción";
-  }
-  if (!post.precio || typeof post.precio !== "number") {
-    errors.precio = "Ingresa un precio, que sea un numero";
-  }
-  if (!post.imagen) {
-    errors.imagen = "Ingresar URL de alguna imagen representativa";
-  }
-  if (!post.stock || typeof post.stock !== "number") {
-    errors.stock = "Ingresa un stock, que sea un numero";
-  }
-  if (!post.categoría) {
-    errors.categoría = "Ingresar al menos 1 categoría";
-  }
-  return errors;
-}
+const Container = styled.div`
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+`;
+
+const Form = styled.form`
+  display: flex;
+  position: relative;
+  justify-content: center;
+  align-items: center;
+  background-color: white;
+  width: 100%;
+  padding: 10px 0;
+  border-radius: 10px;
+  box-shadow: 0 0 6px 0 rgba(255, 255, 255, 0.8);
+`;
+
+const Left = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 40%;
+  height: 90vh;
+  justify-content: center;
+  align-items: center;
+  margin-top: 30px;
+`;
+
+const Right = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 40%;
+  height: 90vh;
+  justify-content: center;
+  align-items: center;
+  margin-top: 30px;
+`;
+
+const Input = styled.div`
+  position: relative;
+  margin: 45px;
+  width: 80%;
+`;
+
 const Imagen = styled.img`
   height: 300px;
   width: 300px;
   object-fit: contain;
 `;
 
-function CrearProducto() {
+const Button = styled.button`
+  position: absolute;
+  bottom: 0;
+  background: #870000;
+  /* fallback for old browsers */
+  background: -webkit-linear-gradient(to left, #190a05, #870000);
+  /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(to left, #190a05, #870000);
+  /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+  display: block;
+  width: 100px;
+  height: 40px;
+  border: none;
+  color: white;
+  border-radius: 4px;
+  font-size: 16px;
+  margin: 10px 0px;
+  margin: auto;
+  cursor: pointer;
+`;
+
+export default function CrearProducto() {
   const dispatch = useDispatch();
   const categorías = useSelector((state) => state.categorias);
-  const [errors, setErrors] = useState({});
+
+  const [categorias, setCategorias] = useState([]),
+    [errors, setErrors] = useState({}),
+    [post, setPost] = useState({
+      nombre: "",
+      descripcion: "",
+      precio: 0,
+      imagen: "",
+      stock: 0,
+      categorias: [],
+    }),
+    [categoria, setCategoria] = useState({ nombre: "" }),
+    [cambio, setCambio] = useState(false),
+    [imageSelected, setImageSelected] = useState();
+
   useEffect(() => {
     dispatch(getCategorias());
   }, [dispatch]);
 
-  const [post, setPost] = useState({
-    nombre: "",
-    descripción: "",
-    precio: 0,
-    imagen: "",
-    stock: 0,
-    categorías: [],
-  });
-  const [cate, setCate] = useState({ categoría: "" });
-  const [cambio, setCambio] = useState(false);
-  const [imageSelected, setImageSelected] = useState();
-  function handleOpenCategoria() {
+  useEffect(() => {
+    setCategorias(categorías);
+  }, [categorías]);
+
+  function handleOpenCategoria(e) {
+    e.preventDefault();
     cambio ? setCambio(false) : setCambio(true);
   }
+
   function handleInputCambio(e) {
-    setCate({
-      ...cate,
-      [e.target.name]: e.target.value,
+    setCategoria({
+      id: categorias.length + 1,
+      nombre: e.target.value,
     });
   }
+
   function handleSub(e) {
     e.preventDefault();
-    dispatch(postCategoria(cate));
-    alert("¡Categoría creado con éxito!");
+    setCategorias([...categorias, categoria]);
+    dispatch(postCategoria(categoria));
+    alert("¡Categoría creada con éxito!");
   }
 
   function handleInputChange(e) {
-    setPost({
-      ...post,
-      [e.target.name]: e.target.value,
-    });
-    setErrors(
-      validate({
+    if (e.target.name === "precio" || e.target.name === "stock") {
+      setPost({
+        ...post,
+        [e.target.name]: Number(e.target.value),
+      });
+
+      setErrors(
+        validate({
+          ...post,
+          [e.target.name]: Number(e.target.value),
+        })
+      );
+    } else {
+      setPost({
         ...post,
         [e.target.name]: e.target.value,
-      })
-    );
+      });
+
+      setErrors(
+        validate({
+          ...post,
+          [e.target.name]: e.target.value,
+        })
+      );
+    }
   }
+
   function handleImageChange(changeEvent) {
     const reader = new FileReader();
+
     reader.onload = function (onLoadEvent) {
       setImageSelected(onLoadEvent.target.result);
     };
+
     reader.readAsDataURL(changeEvent.target.files[0]);
   }
+
+  useEffect(() => {
+    if (imageSelected) {
+      uploadImagen();
+    }
+  }, [imageSelected]);
+
   function uploadImagen() {
     const formData = new FormData();
+
     formData.append("file", imageSelected);
     formData.append("upload_preset", "upvzhism");
+
     axios
       .post("http://api.cloudinary.com/v1_1/henrypfinal/image/upload", formData)
-      .then((res) => (post.imagen = res.data.secure_url));
+      .then((res) => setPost({ ...post, imagen: res.data.secure_url }));
   }
+
+  useEffect(() => {
+    setErrors({ ...errors, imagen: null });
+  }, [post.imagen]);
+
   function handleSelectCategorias(e) {
-    if (!post.categorías.includes(e.target.value))
+    if (!post.categorias.includes(e.target.value))
       setPost({
         ...post,
-        categorías: [...post.categorías, e.target.value],
+        categorias: [...post.categorias, e.target.value],
       });
+
     setErrors(
       validate({
         ...post,
-        categorías: [...post.categorías, e.target.value],
+        categorias: [...post.categorias, e.target.value],
       })
     );
   }
+
   function handleSubmit(e) {
     e.preventDefault();
     if (Object.values(errors).length > 0)
@@ -124,12 +212,11 @@ function CrearProducto() {
   }
 
   return (
-    <div className="form-backgr">
-      <NavBar />
-      <div className="contenedor-form">
-        <form onSubmit={(e) => handleSubmit(e)} className="form-create">
-          <h1 className="titulo-form">Completar todos los campos</h1>
-          <div className="grupo">
+    <Container>
+      <Form onSubmit={(e) => handleSubmit(e)}>
+        <h1 className="titulo-form">Completar todos los campos</h1>
+        <Left>
+          <Input>
             <input
               className="input-create"
               type="text"
@@ -140,20 +227,22 @@ function CrearProducto() {
             <span className="barra"></span>
             <label className="label">Nombre</label>
             {errors.nombre && <p>{errors.nombre}</p>}
-          </div>
-          <div className="grupo">
+          </Input>
+
+          <Input>
             <textarea
               className="textarea-create"
-              value={post.descripción}
-              name="descripción"
+              value={post.descripcion}
+              name="descripcion"
               rows="3"
               onChange={(e) => handleInputChange(e)}
             />
             <span className="barra"></span>
             <label className="label">Descripción</label>
             {errors.descripción && <p>{errors.descripción}</p>}
-          </div>
-          <div className="grupo">
+          </Input>
+
+          <Input>
             <input
               className="input-create"
               type="number"
@@ -165,30 +254,9 @@ function CrearProducto() {
             <span className="barra"></span>
             <label className="label">Precio</label>
             {errors.precio && <p>{errors.precio}</p>}
-          </div>
-          <div className="grupo">
-            <input
-              className="input-create"
-              type="text"
-              value={post.imagen}
-              name="imagen"
-              onChange={(e) => handleInputChange(e)}
-            />
-            <input
-              className="input-create"
-              type="file"
-              name="imagen"
-              onChange={handleImageChange}
-            />
-            <button className="button-create" onClick={uploadImagen}>
-              Upload
-            </button>
-            <Imagen src={imageSelected} />
-            <span className="barra"></span>
-            <label className="label">Imagen desde URL o archivo local</label>
-            {errors.imagen && <p>{errors.imagen}</p>}
-          </div>
-          <div className="grupo">
+          </Input>
+
+          <Input>
             <input
               className="input-create"
               type="number"
@@ -200,8 +268,40 @@ function CrearProducto() {
             <span className="barra"></span>
             <label className="label">Stock</label>
             {errors.stock && <p>{errors.stock}</p>}
-          </div>
-          <div className="grupo">
+          </Input>
+        </Left>
+
+        <Right>
+          <Input>
+            <input
+              className="input-create"
+              type="text"
+              value={post.imagen}
+              name="imagen"
+              onChange={(e) => {
+                handleInputChange(e);
+                setImageSelected(e.target.value);
+              }}
+            />
+
+            <input
+              className="input-create"
+              type="file"
+              name="imagen"
+              onChange={(e) => {
+                handleImageChange(e);
+              }}
+            />
+
+            <Imagen src={imageSelected} />
+
+            <label className="label">Imagen desde URL o archivo local</label>
+            {/* <span className="barra"></span> */}
+
+            {errors.imagen && <p>{errors.imagen}</p>}
+          </Input>
+
+          <Input>
             <select
               onChange={(e) => handleSelectCategorias(e)}
               className="barra"
@@ -210,32 +310,31 @@ function CrearProducto() {
               <option value="default" disabled>
                 Elegir categorías
               </option>
-              {categorías &&
-                categorías.map((d) => (
-                  <option value={d.name} key={d.id}>
-                    {d.name}
+
+              {categorias &&
+                categorias.map((d) => (
+                  <option value={d.nombre} key={d.id}>
+                    {d.nombre}
                   </option>
                 ))}
             </select>
             {errors.categorías && <p>{errors.categorías}</p>}
+          </Input>
+
+          <div>
+            <button onClick={handleOpenCategoria}>Crear Categoría</button>
+
+            {cambio && (
+              <form onSubmit={(e) => handleSub(e)} className="form-create">
+                <label>Nueva Categoría</label>
+                <input type="text" onChange={(e) => handleInputCambio(e)} />
+                <button type="submit">Crear</button>
+              </form>
+            )}
           </div>
-          <button className="button-create" type="submit">
-            ¡Crear!
-          </button>
-        </form>
-        <div>
-          <button onClick={handleOpenCategoria}>Crear Categoría</button>
-          {cambio && (
-            <form onSubmit={(e) => handleSub(e)} className="form-create">
-              <label>Nueva Categoría</label>
-              <input type="text" onChange={(e) => handleInputCambio(e)} />
-              <button type="submit">Crear</button>
-            </form>
-          )}
-        </div>
-      </div>
-    </div>
+        </Right>
+        <Button type="submit">¡Crear!</Button>
+      </Form>
+    </Container>
   );
 }
-
-export default CrearProducto;
