@@ -4,46 +4,91 @@ import { app, authentication } from "../../firebase";
 import { signInWithPopup, GoogleAuthProvider } from "firebase/auth";
 import "./LogInMethods.css";
 import styled from "styled-components";
+import google from "./Google.png";
 
-const Contenedor = styled.div`
+const Container = styled.div`
   background-image: url("https://i.blogs.es/b92620/cafe-cafeina/840_560.jpg");
-  height: 85vh;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  font-family: Poppins;
+
+  height: 90vh;
   display: flex;
   flex-direction: row;
-  justify-content: flex-end;
-  margin-top: 5rem;
+  justify-content: center;
+  align-items: center;
   background: cover;
 `;
 
-const Formulario = styled.div`
+const SignIn = styled.div`
   display: flex;
-  flex-wrap: nowrap;
   flex-direction: column;
   align-items: center;
-  background-color: white;
-  width: 40%;
-  height: 90vh;
-  box-shadow: 0 0 6px 0 rgba(255, 255, 255, 0.8);
+  justify-content: center;
+  position: relative;
+
+  background-color: #08ce72d1;
+  border-radius: 20px 0px 0px 20px;
+  width: 35%;
+  height: 75vh;
 `;
 
-// const Imagen = styled.img`
-//   height: 90vh;
-//   width: 60%;
-//   object-fit: cover;
-// `;
+const SignUp = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+
+  background-color: white;
+  border-radius: 0px 20px 20px 0px;
+  width: 45%;
+  height: 75vh;
+`;
 
 const Titulo = styled.h1`
+  position: absolute;
+  top: 10px;
+
   text-align: center;
   font-size: 30px;
   font-family: Poppins;
-  color: #222;
+  font-weight: bold;
+  color: ${(props) => props.color};
   margin: 2rem;
 `;
 
-const BotonGoogle = styled(GoogleButton)`
-  display: flex;
-  margin-left: 3rem;
-  margin-bottom: 1rem;
+const Apps = styled.div`
+  // display: flex;
+  // margin-left: 3rem;
+  // margin-bottom: 1rem;
+  width: 50%;
+  margin: 20px;
+`;
+
+const BotonGoogle = styled.img`
+  // display: flex;
+  // margin-left: 3rem;
+  // margin-bottom: 1rem;
+  width: 30px;
+  cursor: pointer;
+`;
+
+const Boton = styled.button`
+  background-color: ${(props) => props.backgroundColor};
+  width: 140px;
+  height: 40px;
+  border: none;
+  position: absolute;
+  bottom: 40px;
+
+  color: ${(props) => props.color};
+  border-radius: 6px;
+  font-size: 16px;
+  margin: 10px 0px;
+  cursor: pointer;
+  font-family: Poppins;
 `;
 
 export default function Login({ setUser }) {
@@ -87,43 +132,80 @@ export default function Login({ setUser }) {
       logIn(mail, pass);
     }
   };
+
   return (
-    <Contenedor>
-      {/* <Imagen src="https://i.blogs.es/b92620/cafe-cafeina/840_560.jpg" /> */}
-      <Formulario>
-        <Titulo className="titulo-login">
-          {isSignUp ? "Registrate" : "Inicia Sesion"}
+    <Container>
+      <SignIn>
+        <Titulo color="white" className="titulo-login">
+          Bienvenido!
         </Titulo>
 
-        <form onSubmit={handleSubmit}>
+        {/* <form onSubmit={handleSubmit}> */}
+        <p style={{ margin: "20px" }}>
+          Para continuar conectado con nosotros ingresá con tu cuenta
+        </p>
+
+        <Boton color="black" backgroundColor="white" type="submit">
+          Iniciar Sesion
+        </Boton>
+        {/* </form> */}
+      </SignIn>
+      <SignUp>
+        <Titulo color="#08ce72" className="titulo-login">
+          Crear Cuenta
+        </Titulo>
+
+        <Apps>
+          <BotonGoogle src={google} onClick={googleSignIn} />
+        </Apps>
+        <p style={{ margin: "10px" }}>O registrate con tu correo</p>
+
+        <form style={{ margin: "0px 0px 40px 0px" }} onSubmit={handleSubmit}>
+          <div style={{ display: "flex", justifyContent: "space-between" }}>
+            <div className="grupo-login" style={{ width: "150px" }}>
+              <input className="input-login" type="email" id="emailField" />
+              <span className="barra-login"></span>
+              <label className="label-login" htmlFor="emailField">
+                Nombre
+              </label>
+            </div>
+
+            <div className="grupo-login" style={{ width: "150px" }}>
+              <input className="input-login" type="email" id="emailField" />
+              <span className="barra-login"></span>
+              <label className="label-login" htmlFor="emailField">
+                Apellido
+              </label>
+            </div>
+          </div>
+
           <div className="grupo-login">
             <input className="input-login" type="email" id="emailField" />
             <span className="barra-login"></span>
             <label className="label-login" htmlFor="emailField">
-              Mail
+              Correo
             </label>
           </div>
+
           <div className="grupo-login">
             <input className="input-login" type="password" id="passwordField" />
             <span className="barra-login"></span>
             <label className="label-login" htmlFor="passwordField">
-              Pass
+              Contraseña
             </label>
           </div>
-
-          <BotonGoogle type="light" onClick={googleSignIn} />
-          <button className="boton-logedinmethods" type="submit">
-            {isSignUp ? "Registrarse" : "Iniciar Sesion"}
-          </button>
         </form>
 
-        <button
+        <Boton
+          color="white"
+          backgroundColor="rgb(8, 206, 114)"
           className="boton-logedinmethods"
-          onClick={() => setIsSignUp(!isSignUp)}
+          // onClick={() => setIsSignUp(!isSignUp)}
         >
-          {isSignUp ? "Iniciar Sesion" : "Registrarse"}
-        </button>
-      </Formulario>
-    </Contenedor>
+          {/* {isSignUp ? "Iniciar Sesion" : "Registrarse"} */}
+          Registrarse
+        </Boton>
+      </SignUp>
+    </Container>
   );
 }
