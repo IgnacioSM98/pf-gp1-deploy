@@ -81,7 +81,7 @@ const TextoLinea = styled.div`
   min-width: 1200px;
   flex-direction: row;
   justify-content: space-evenly;
-  margin-top: 3rem;
+  margin-top: 2rem;
 `;
 
 const Imagen = styled.img`
@@ -99,7 +99,7 @@ const Header = styled.div`
   margin-top: 2rem;
   position: relative;
   margin: auto;
-  margin-top: 2rem;
+  margin-top: 4rem;
 `;
 
 const Marco = styled.div`
@@ -139,6 +139,7 @@ const Buscador = styled.input`
   &::-webkit-input-placeholder {
     font-size: 18px;
   }
+  margin-top: 2em;
 `;
 
 const Tienda = styled.h1`
@@ -162,6 +163,7 @@ function Shop({ contacto }) {
 
   useEffect(() => {
     if (productos.length === 0) dispatch(getProductos());
+    window.scrollTo(0, 0);
   }, []);
 
   useEffect(() => {
@@ -218,7 +220,13 @@ function Shop({ contacto }) {
 
   return (
     <Container>
-      <Tienda>Tienda</Tienda>
+      <Header>
+        <Imagen src={image} />
+        <Marco />
+        <TextoInfusion>INFUSION STORE</TextoInfusion>
+      </Header>
+
+      {/* <Tienda>Tienda</Tienda> */}
 
       <Buscador
         type="text"
@@ -227,12 +235,6 @@ function Shop({ contacto }) {
           onChangeHandle(e);
         }}
       />
-
-      <Header>
-        <Imagen src={image} />
-        <Marco />
-        <TextoInfusion>INFUSION STORE</TextoInfusion>
-      </Header>
 
       <TextoLinea>
         <Titulo>Nuestros Productos</Titulo>
