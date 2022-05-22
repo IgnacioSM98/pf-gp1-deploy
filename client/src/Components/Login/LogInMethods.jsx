@@ -94,7 +94,15 @@ const Boton = styled.button`
 
 export default function Login({ setUser }) {
   const [isSignUp, setIsSignUp] = useState(false);
+  const [flag, setFlag] = useState({});
   const navigate = useNavigate();
+  
+  const handleChange = (e) => {
+    setFlag({
+      ...flag,
+      [e.target.name]: e.target.value,
+    });
+  };
 
   const googleSignIn = () => {
     const provider = new GoogleAuthProvider();
@@ -165,24 +173,50 @@ export default function Login({ setUser }) {
         <form style={{ margin: "0px 0px 40px 0px" }} onSubmit={handleSubmit}>
           <div style={{ display: "flex", justifyContent: "space-between" }}>
             <div className="grupo-login" style={{ width: "150px" }}>
-              <input className="input-login" type="email" id="emailField" />
+              <input
+                className="input-login"
+                type="email"
+                id="emailField"
+                name="nombre"
+                onChange={handleChange}
+              />
               <span className="barra-login"></span>
-              <label className="label-login" htmlFor="emailField">
+              <label
+                className="label-login"
+                htmlFor="emailField"
+                hidden={flag.nombre}
+              >
                 Nombre
               </label>
             </div>
 
             <div className="grupo-login" style={{ width: "150px" }}>
-              <input className="input-login" type="email" id="emailField" />
+              <input
+                className="input-login"
+                type="email"
+                id="emailField"
+                name="apellido"
+                onChange={handleChange}
+              />
               <span className="barra-login"></span>
-              <label className="label-login" htmlFor="emailField">
+              <label
+                className="label-login"
+                htmlFor="emailField"
+                hidden={flag.apellido}
+              >
                 Apellido
               </label>
             </div>
           </div>
 
           <div className="grupo-login">
-            <input className="input-login" type="email" id="emailField" />
+            <input
+              className="input-login"
+              type="email"
+              id="emailField"
+              name="correo"
+              onChange={handleChange}
+            />
             <span className="barra-login"></span>
             <label className="label-login" htmlFor="emailField">
               Correo
@@ -190,7 +224,13 @@ export default function Login({ setUser }) {
           </div>
 
           <div className="grupo-login">
-            <input className="input-login" type="password" id="passwordField" />
+            <input
+              className="input-login"
+              type="password"
+              id="passwordField"
+              name="contraseña"
+              onChange={handleChange}
+            />
             <span className="barra-login"></span>
             <label className="label-login" htmlFor="passwordField">
               Contraseña
