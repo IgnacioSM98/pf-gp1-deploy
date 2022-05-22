@@ -1,9 +1,9 @@
 const initialState = {
   productos: [],
+  productosFiltrados: [],
   categorias: [],
   productosCopiados: [],
   detalle: {},
-  filteredProds: [],
   reviews: [],
 };
 
@@ -13,6 +13,48 @@ export default function rootReducer(state = initialState, action) {
       return {
         ...state,
         productos: action.payload,
+        productosFiltrados: action.payload,
+      };
+
+    case "GET_PRODUCTOS_FILTRADOS":
+      return {
+        ...state,
+        productosFiltrados: action.payload,
+      };
+
+    case "SET_SORT":
+      if (action.payload !== "DEFAULT") {
+        const filteredAux = [...state.productosFiltrados];
+
+        filteredAux.sort((a, b) => {
+          if (action.payload === "A-Z")
+            return a.nombre > b.nombre ? 1 : b.nombre > a.nombre ? -1 : 0;
+          if (action.payload === "Z-A")
+            return a.nombre < b.nombre ? 1 : b.nombre < a.nombre ? -1 : 0;
+          if (action.payload === "Highest SpoonScore") {
+            return Number(a.precio) < Number(b.precio)
+              ? 1
+              : Number(b.precio) < Number(a.precio)
+              ? -1
+              : 0;
+          }
+          if (action.payload === "Lowest SpoonScore")
+            return Number(a.precio) > Number(b.precio)
+              ? 1
+              : Number(b.precio) > Number(a.precio)
+              ? -1
+              : 0;
+        });
+
+        return {
+          ...state,
+          productosFiltrados: filteredAux,
+        };
+      }
+
+      return {
+        ...state,
+        productosFiltrados: [...state.productos],
       };
 
     case "GET_CATEGORIAS":
@@ -89,9 +131,9 @@ export default function rootReducer(state = initialState, action) {
         ...state,
         productos: productosPrecio,
       };
-      case "CREAR_REVIEW" :
-        return[...state]
-      
+    case "CREAR_REVIEW":
+      return [...state];
+
     case "GET_REVIEWS":
       return {
         ...state,
