@@ -1,5 +1,5 @@
 import "./App.css";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { getProductos, getCategorias } from "./Redux/actions/index";
 import {
   Home,
@@ -19,6 +19,7 @@ function App() {
   const dispatch = useDispatch();
   const productos = useSelector((state) => state.productos);
   const contacto = useRef(null);
+  const [user, setUser] = useState();
 
   useEffect(() => {
     localStorage.removeItem("productos");
@@ -30,13 +31,18 @@ function App() {
   }, [dispatch]);
 
   useEffect(() => {
-    // console.log(productos);
     localStorage.setItem("productos", JSON.stringify(productos));
   }, [productos]);
 
+  useEffect(() => {
+    if (user) {
+      localStorage.setItem("user", JSON.stringify(user));
+    }
+  }, [user]);
+
   return (
     <div>
-      <NavBar contacto={contacto} />
+      <NavBar contacto={contacto} user={user} setUser={setUser} />
       <div className="App">
         <Routes>
           <Route exact path="/" element={<Home contacto={contacto} />} />
@@ -51,7 +57,11 @@ function App() {
           <Route exact path="/usuario" element={<Cuenta />} />
           <Route exact path="/admin" element={"admin"} />
           <Route exact path="/admin/crear" element={<CrearProducto />} />
-          <Route exact path="/login" element={<Login />} />
+          <Route
+            exact
+            path="/login"
+            element={<Login user={user} setUser={setUser} />}
+          />
           {/*<Route exact path="/user/reviews" element={"user reviews"} />
         <Route exact path="/admin/cambiar/:id" element={"change something"} />*/}
         </Routes>
