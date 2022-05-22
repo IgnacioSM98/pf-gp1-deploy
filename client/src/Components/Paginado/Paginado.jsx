@@ -1,33 +1,38 @@
-import React, { useState } from "react";
-import s from "./Paginado.module.css";
+import React from "react";
+import styled from "styled-components";
 
-export default function Paginado(props) {
-  let [currentNum, setCurrentNum] = useState(1);
-  let pageNum = [];
-  for (let i = 1; i <= Math.ceil(props.totalProd / props.ProdPerPage); i++) {
-    pageNum.push(i);
-  }
+const Pages = styled.div`
+  margin-top: 30px;
+`;
 
-  let handleActualNum = (number) => {
-    props.paginate(number);
-    setCurrentNum(number);
+export default function Paginado({ pages, setPageSelected }) {
+  const handleOnClick = (e) => {
+    e.preventDefault();
+
+    setPageSelected(e.target.value);
+
+    window.scrollTo(0, 0);
+  };
+  const getArray = (pages) => {
+    let i = 0;
+    let arrayAux = [];
+
+    do {
+      i = i + 1;
+
+      arrayAux.push(i);
+    } while (i < pages);
+
+    return arrayAux;
   };
 
   return (
-    <nav>
-      <ul id={s.pageNum}>
-        {pageNum.map((num) => (
-          <a value={num} onClick={() => handleActualNum(num)}>
-            <li
-              id={s.pageLi}
-              className={currentNum === num ? s.active : ""}
-              key={num}
-            >
-              {num}
-            </li>
-          </a>
-        ))}
-      </ul>
-    </nav>
+    <Pages>
+      {getArray(pages).map((page) => (
+        <button key={page} onClick={(e) => handleOnClick(e)} value={page}>
+          {page}
+        </button>
+      ))}
+    </Pages>
   );
 }
