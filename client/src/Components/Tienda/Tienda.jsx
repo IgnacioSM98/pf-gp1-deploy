@@ -94,7 +94,7 @@ const Imagen = styled.img`
 const Header = styled.div`
   width: 70%;
   max-width: 1255px;
-  height: 225px;
+  height: 208px;
   border-radius: 8px;
   margin-top: 2rem;
   position: relative;
@@ -142,7 +142,7 @@ const Buscador = styled.input`
 `;
 
 const Tienda = styled.h1`
-  margin-top: 100px;
+  margin-top: 29px;
   padding: 30px;
   color: #222;
   font-size: 50px;

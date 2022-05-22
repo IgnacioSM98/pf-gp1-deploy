@@ -72,11 +72,15 @@ export default function Filtros({ setSelected }) {
         >
           <option value="DEFAULT">Categorias</option>
           {categorias.length > 0 ? (
-            categorias?.map((categoria) => (
-              <option key={categoria.id} value={categoria.nombre}>
-                {categorias.nombre}
-              </option>
-            ))
+            categorias
+              // Filtramos las categorías que tengan nombre
+              .filter((categoria) => categoria.nombre)
+              // Mostramos todas las filtradas previamente
+              .map((categoria) => (
+                <option key={categoria.id} value={categoria.nombre}>
+                  {categoria.nombre}
+                </option>
+              ))
           ) : (
             <option>Loading....</option>
           )}
