@@ -108,7 +108,8 @@ export default function CrearProducto() {
     setCategorias(categorías);
   }, [categorías]);
 
-  function handleOpenCategoria() {
+  function handleOpenCategoria(e) {
+    e.preventDefault();
     cambio ? setCambio(false) : setCambio(true);
   }
 
