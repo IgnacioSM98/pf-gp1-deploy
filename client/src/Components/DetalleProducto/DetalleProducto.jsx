@@ -1,7 +1,12 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
-import { clearDetail, getDetail, getReviews } from "../../Redux/actions";
+import {
+  clearDetail,
+  getDetail,
+  getReviews,
+  agregarCarrito,
+} from "../../Redux/actions";
 import { CrearReview, Reviews } from "../index";
 import styled from "styled-components";
 import cards from "../../Images/Cards/index";
@@ -189,6 +194,9 @@ export default function DetalleProducto() {
 
   const onClick = (e) => {
     setCarrito(!carrito);
+    if (detalle.stock > 1) {
+      dispatch(agregarCarrito(id));
+    }
   };
 
   useEffect(() => {

@@ -140,6 +140,7 @@ export default function Home({ contacto }) {
                   imagen={producto.imagen}
                   nombre={producto.nombre}
                   precio={producto.precio}
+                  stock={producto.stock}
                   descripcion={producto.descripcion}
                 />
               );
