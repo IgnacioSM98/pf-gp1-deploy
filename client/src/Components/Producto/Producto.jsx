@@ -2,13 +2,32 @@ import React from "react";
 import "./producto.css";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
+import { useDispatch } from "react-redux";
+import { agregarCarrito } from "../../Redux/actions";
 
 const LinkProduct = styled(Link)`
   text-decoration: none;
   width: 240px;
 `;
 
-function Producto({ id, imagen, nombre, precio, descripcion }) {
+function Producto({
+  id,
+  imagen,
+  nombre,
+  precio,
+  descripcion,
+  producto,
+  stock,
+}) {
+  const dispatch = useDispatch();
+
+  function agregarAlCarrito(e) {
+    e.preventDefault();
+    if (stock > 1) {
+      dispatch(agregarCarrito(id));
+    }
+  }
+
   return (
     <LinkProduct to={`/productos/${id}`}>
       <div className="container-producto">
@@ -27,7 +46,10 @@ function Producto({ id, imagen, nombre, precio, descripcion }) {
         <div className="precio-boton">
           <p className="precio">${precio}</p>
 
-          <button className="boton-agregar" onClick={(e) => e.preventDefault()}>
+          <button
+            className="boton-agregar"
+            onClick={(e) => agregarAlCarrito(e)}
+          >
             AGREGAR
           </button>
         </div>

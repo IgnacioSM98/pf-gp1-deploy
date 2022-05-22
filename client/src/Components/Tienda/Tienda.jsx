@@ -264,6 +264,7 @@ function Shop({ contacto }) {
                     imagen={el.imagen}
                     nombre={el.nombre}
                     precio={el.precio}
+                    stock={el.stock}
                     descripcion={el.descripcion}
                   />
                 );
