@@ -5,6 +5,7 @@ import { signInWithPopup, GoogleAuthProvider } from "firebase/auth";
 import "./LogInMethods.css";
 import styled from "styled-components";
 import google from "./Google.png";
+import { useNavigate } from "react-router-dom";
 
 const Container = styled.div`
   background-image: url("https://i.blogs.es/b92620/cafe-cafeina/840_560.jpg");
@@ -94,10 +95,9 @@ const Boton = styled.button`
 export default function Login({ setUser }) {
   const [isSignUp, setIsSignUp] = useState(false);
   const [flag, setFlag] = useState({});
-
+  const navigate = useNavigate();
+  
   const handleChange = (e) => {
-    console.log(e.target.value, e.target.name);
-
     setFlag({
       ...flag,
       [e.target.name]: e.target.value,
@@ -109,7 +109,7 @@ export default function Login({ setUser }) {
 
     signInWithPopup(authentication, provider)
       .then((result) => {
-        console.log(result);
+        navigate(-1);
       })
       .catch((error) => {
         console.log(error);

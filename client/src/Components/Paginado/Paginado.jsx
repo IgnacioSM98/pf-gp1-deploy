@@ -11,8 +11,9 @@ export default function Paginado({ pages, setPageSelected }) {
 
     setPageSelected(e.target.value);
 
-    window.scrollTo(0, 0);
+    // window.scrollTo(0, 0);
   };
+
   const getArray = (pages) => {
     let i = 0;
     let arrayAux = [];

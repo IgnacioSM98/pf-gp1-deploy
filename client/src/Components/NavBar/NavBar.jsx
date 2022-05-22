@@ -1,7 +1,8 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { useLocation } from "react-router-dom";
+import Usuario from "../Usuario/Usuario";
 
 const Container = styled.div`
   display: flex;
@@ -49,7 +50,7 @@ const Button = styled.button`
   cursor: pointer;
 `;
 
-export default function NavBar({ contacto }) {
+export default function NavBar({ contacto, user, setUser }) {
   const scrollToSection = (elementRef) => {
     window.scrollTo({
       top: elementRef.current.offsetTop,
@@ -58,6 +59,14 @@ export default function NavBar({ contacto }) {
   };
 
   const location = useLocation().pathname;
+
+  useEffect(() => {
+    if (!user) {
+      const userAux = JSON.parse(localStorage.getItem("user"));
+
+      setUser(userAux);
+    }
+  }, []);
 
   return (
     <Container>
@@ -94,9 +103,19 @@ export default function NavBar({ contacto }) {
             </svg>
           </NavLink>
 
-          <NavLink to="/login">
-            <Button>Login</Button>
-          </NavLink>
+          {console.log(
+            user && user,
+            "xd?",
+            user && Object.entries(user).length === 0
+          )}
+
+          {user && Object.entries(user).length !== 0 ? (
+            <Usuario user={user} setUser={setUser} />
+          ) : (
+            <NavLink to="/login">
+              <Button>Login</Button>
+            </NavLink>
+          )}
         </Login>
       ) : null}
     </Container>
