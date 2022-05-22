@@ -312,11 +312,13 @@ export default function CrearProducto() {
               </option>
 
               {categorias &&
-                categorias.map((d) => (
-                  <option value={d.nombre} key={d.id}>
-                    {d.nombre}
-                  </option>
-                ))}
+                categorias
+                  .filter((categoria) => categoria.nombre)
+                  .map((d) => (
+                    <option value={d.nombre} key={d.id}>
+                      {d.nombre}
+                    </option>
+                  ))}
             </select>
             {errors.categorías && <p>{errors.categorías}</p>}
           </Input>
