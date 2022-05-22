@@ -114,3 +114,9 @@ export function postReviews(id, payload) {
 export const setSort = (value) => (dispatch) => {
   dispatch({ type: "SET_SORT", payload: value });
 };
+
+export function agregarCarrito(idProducto) {
+  return function (dispatch) {
+    dispatch({ type: "AGREGAR_CARRITO", payload: idProducto });
+  };
+}

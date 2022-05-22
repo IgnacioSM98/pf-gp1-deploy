@@ -74,9 +74,10 @@ export default function Footer({ contacto }) {
       <Contacto>
         <Categoria>
           <SubTitle>Mercancia</SubTitle>
-          <Item>Remeras</Item>
-          <Item>Gorras</Item>
-          <Item>Mascaras</Item>
+          {/* <Item>Remeras</Item>
+          <Item>Gorras</Item> */}
+          <Item>Proximamente</Item>
+          {/* <Item>Mascaras</Item> */}
         </Categoria>
 
         {/* <Categoria>
@@ -88,11 +89,12 @@ export default function Footer({ contacto }) {
 
         <Categoria>
           <SubTitle>Sobre Nosotros</SubTitle>
-          <Item>Promotions</Item>
-          <Item>Customer care</Item>
-          <Item>Legal information</Item>
-          <Item>Achievements</Item>
-          <Item>Careers</Item>
+          {/* <Item>Promociones</Item> */}
+          <Item>Proximamente</Item>
+          {/* <Item>Customer care</Item> */}
+          {/* <Item>Legal information</Item> */}
+          {/* <Item>Achievements</Item> */}
+          {/* <Item>Careers</Item> */}
         </Categoria>
 
         <Categoria>
@@ -119,12 +121,12 @@ export default function Footer({ contacto }) {
               style={{ height: 25, width: 25, margin: 5 }}
             />
 
-            <Icon
+            {/* <Icon
               url="https://pinterest.com/jaketrent"
               fgColor="black"
               bgColor="white"
               style={{ height: 25, width: 25, margin: 5 }}
-            />
+            /> */}
           </div>
         </Categoria>
       </Contacto>

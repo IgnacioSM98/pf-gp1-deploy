@@ -10,8 +10,10 @@ const Container = styled.div`
   align-items: center;
   position: fixed;
   width: 100%;
-  top: 20px;
+  // top: 20px;
   z-index: 20;
+  height: 50px;
+  background-color: #000000f0;
 `;
 
 const NavLink = styled(Link)`
@@ -74,9 +76,9 @@ export default function NavBar({ contacto, user, setUser }) {
         <Span>Home</Span>
       </NavLink>
 
-      <NavLink to="/">
+      {/* <NavLink to="/">
         <Span>About</Span>
-      </NavLink>
+      </NavLink> */}
 
       <NavLink to="/tienda">
         <Span>Tienda</Span>
@@ -84,9 +86,9 @@ export default function NavBar({ contacto, user, setUser }) {
 
       <Span onClick={() => scrollToSection(contacto)}>Contacto</Span>
 
-      <NavLink to="/blog">
+      {/* <NavLink to="/blog">
         <Span>Blog</Span>
-      </NavLink>
+      </NavLink> */}
 
       {location !== "/login" ? (
         <Login>
