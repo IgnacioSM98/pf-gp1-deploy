@@ -5,8 +5,7 @@ const productos = "productos";
 const categorias = "categorias";
 const crear = "crear";
 const admin = "admin/";
-const ratings = "ratings/"
-
+const ratings = "ratings/";
 
 export function getProductos() {
   return async function (dispatch) {
@@ -25,6 +24,12 @@ export function getProductos() {
         console.log(err, "error productos");
       }
     }
+  };
+}
+
+export function getProductosFiltrados(productosFiltrados) {
+  return function (dispatch) {
+    dispatch({ type: "GET_PRODUCTOS_FILTRADOS", payload: productosFiltrados });
   };
 }
 
@@ -67,22 +72,10 @@ export function searchProduct(name) {
     });
   };
 }
+
 export function filtrarCategorias(payload) {
   return {
     type: "FILTRAR_CATEGORIAS",
-    payload,
-  };
-}
-
-export function ordenarPorNombre(payload) {
-  return {
-    type: "ORDENAR_POR_NOMBRE",
-    payload,
-  };
-}
-export function ordenarPorPrecio(payload) {
-  return {
-    type: "ORDENAR_POR_PRECIO",
     payload,
   };
 }
@@ -91,17 +84,17 @@ export function getReviews(id) {
   return async function (dispatch) {
     let json = await axios
       .get(`${urlBase}ratings/${id}`)
-      .then((res) => dispatch({ type: "GET_REVIEWS", payload: json }))
-    };
+      .then((res) => dispatch({ type: "GET_REVIEWS", payload: json }));
+  };
 }
-    
+
 export function postProducto(payload) {
   return async function () {
     let json = await axios.post(`${urlBase}${admin}${crear}`, payload);
     return json;
   };
 }
-    
+
 export function postCategoria(payload) {
   return async function () {
     let json = await axios.post(`${urlBase}${categorias}/${crear}`, payload);
@@ -109,11 +102,15 @@ export function postCategoria(payload) {
   };
 }
 
-export function postReviews (id, payload){
-  return async function(dispatch){
-    await axios.post(`${urlBase}${ratings}${crear}/${id}`, payload)
+export function postReviews(id, payload) {
+  return async function (dispatch) {
+    await axios.post(`${urlBase}${ratings}${crear}/${id}`, payload);
     return dispatch({
-      type: "CREAR_REVIEW"
-    })
-  }
+      type: "CREAR_REVIEW",
+    });
+  };
 }
+
+export const setSort = (value) => (dispatch) => {
+  dispatch({ type: "SET_SORT", payload: value });
+};

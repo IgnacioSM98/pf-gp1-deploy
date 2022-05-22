@@ -1,16 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  getProductos,
-  filtrarCategorias,
-  ordenarPorNombre,
-  ordenarPorPrecio,
-} from "../../Redux/actions/index";
+import { getProductos, getProductosFiltrados } from "../../Redux/actions/index";
 import { Producto, Paginado, Footer } from "../index";
 import "./Tienda.css";
 import styled from "styled-components";
 import image from "./cuchara-cafe3.jpg";
 import ScrollToTop from "./../ScrollToTop/ScrollToTop";
+import Filtros from "../Filtros/Filtros";
 
 const Container = styled.div`
   display: flex;
@@ -31,7 +27,7 @@ const ContenedorFiltrosPro = styled.div`
   max-width: 1300px;
 `;
 
-const Filtros = styled.div`
+const FiltrosCont = styled.div`
   background-color: rgba(55, 86, 61, 0.6);
   width: 300px;
   height: 600px;
@@ -156,67 +152,74 @@ const Tienda = styled.h1`
 
 function Shop({ contacto }) {
   const dispatch = useDispatch();
-  const product = useSelector((state) => state.productos);
-  const categorias = useSelector((state) => state.categorias);
-  const [cambio, setCambio] = useState(true);
+  const productos = useSelector((state) => state.productos);
+  const productosFiltrados = useSelector((state) => state.productosFiltrados);
+  const [selected, setSelected] = useState("");
+  const [pages, setPages] = useState(4);
+  const [pageSelected, setPageSelected] = useState(1);
+  const [resVis, setResVis] = useState(0);
+  const [flag, setFlag] = useState(false);
 
   useEffect(() => {
-    if (product.length === 0) dispatch(getProductos());
+    if (productos.length === 0) dispatch(getProductos());
   }, []);
 
-  const [currentPage, setCurrentPage] = useState(1);
-  const productosPerPage = 12;
-  const ultimoProducto = productosPerPage * currentPage;
-  const primerProducto = ultimoProducto - productosPerPage;
-  // const currentProductos = product.slice(primerProducto, ultimoProducto);
-
-  const [currentProductos, setCurrentProductos] = useState([]);
+  useEffect(() => {
+    setPages(Math.ceil(resVis / 9));
+  }, [resVis]);
 
   useEffect(() => {
-    setCurrentProductos(product.slice(primerProducto, ultimoProducto));
-  }, [product, primerProducto, ultimoProducto]);
+    setPages(Math.ceil(productos.length / 9));
+  }, [productos]);
 
-  const paginate = (number) => {
-    setCurrentPage(number);
+  // useEffect(() => {
+  //   setPages(Math.ceil(productosFiltrados.filter(filterDropdown).length / 9));
+  // }, [selected]);
+
+  const filterPerPages = (food, i) => {
+    if (i >= 9 * (pageSelected - 1) && i <= 9 * pageSelected - 1) {
+      return food;
+    }
   };
-
-  function handleFilterByCategories(e) {
-    dispatch(filtrarCategorias(e.target.value));
-  }
-
-  function handleOrderByName(e) {
-    dispatch(ordenarPorNombre(e.target.value));
-    cambio ? setCambio(false) : setCambio(true);
-  }
-
-  function handleOrderByPrice(e) {
-    dispatch(ordenarPorPrecio(e.target.value));
-    cambio ? setCambio(false) : setCambio(true);
-  }
 
   function onChangeHandle(e) {
     const value = e.target.value;
 
-    const arrayAux = product.filter((prod) => {
-      const name = prod.nombre.toLowerCase();
+    setResVis(0);
+
+    setFlag(true);
+
+    if (!value) {
+      setFlag(false);
+    }
+
+    const arrayAux = productos.filter((producto) => {
+      const name = producto.nombre.toLowerCase();
       const isVisible = name.includes(value.toLowerCase());
 
+      isVisible && setResVis((prev) => prev + 1);
+
       if (isVisible) {
-        return prod;
+        return producto;
       }
     });
-
-    setCurrentProductos(arrayAux);
+    dispatch(getProductosFiltrados(arrayAux));
   }
+
+  // const filterDropdown = (food) => {
+  //   if (!selected || food.diets?.includes(selected.toLowerCase())) {
+  //     return food;
+  //   }
+
+  //   if (selected === "DEFAULT") {
+  //     return food;
+  //   }
+  // };
 
   return (
     <Container>
-      {/* <div> */}
       <Tienda>Tienda</Tienda>
-      {/* </div> */}
 
-      {/* <div className="search"> */}
-      {/* <form> */}
       <Buscador
         type="text"
         placeholder="Buscar productos..."
@@ -224,8 +227,6 @@ function Shop({ contacto }) {
           onChangeHandle(e);
         }}
       />
-      {/* </form> */}
-      {/* </div> */}
 
       <Header>
         <Imagen src={image} />
@@ -239,51 +240,23 @@ function Shop({ contacto }) {
       </TextoLinea>
 
       <ContenedorFiltrosPro>
-        <Filtros>
+        <FiltrosCont>
           <CuadradoFiltro>
             <LetraFiltro>Filtros</LetraFiltro>
-            <select
-              onChange={(e) => handleOrderByName(e)}
-              defaultValue="default"
-            >
-              <option value="default" disabled>
-                Orden Alfabético
-              </option>
-              <option value="asc">A-Z</option>
-              <option value="desc">Z-A</option>
-            </select>
-
-            <select
-              onChange={(e) => handleOrderByPrice(e)}
-              defaultValue="default"
-            >
-              <option value="default" disabled>
-                Orden Por Precio
-              </option>
-              <option value="asc">Higher</option>
-              <option value="desc">Lower</option>
-            </select>
-
-            <select
-              onChange={(e) => handleFilterByCategories(e)}
-              defaultValue="default"
-            >
-              <option value="default" disabled>
-                Categorías
-              </option>
-              {categorias &&
-                categorias.map((d) => (
-                  <option value={d.nombre} key={d.id}>
-                    {d.nombre}
-                  </option>
-                ))}
-            </select>
+            <Filtros setSelected={setSelected} />
           </CuadradoFiltro>
-        </Filtros>
+        </FiltrosCont>
         <div>
           <ProductosTienda>
-            {currentProductos &&
-              currentProductos.map((el) => {
+            {flag && productosFiltrados.length === 0 ? (
+              //poner foto 404
+              <p>tuki</p>
+            ) : (
+              <></>
+            )}
+
+            {productosFiltrados &&
+              productosFiltrados.filter(filterPerPages).map((el) => {
                 return (
                   <Producto
                     key={el.id}
@@ -296,12 +269,11 @@ function Shop({ contacto }) {
                 );
               })}
           </ProductosTienda>
-          <Paginado
-            ProdPerPage={productosPerPage}
-            totalProd={product?.length}
-            paginate={paginate}
-            currentPage={currentPage}
-          />
+          {pages > 0 ? (
+            <Paginado pages={pages} setPageSelected={setPageSelected} />
+          ) : (
+            <></>
+          )}
         </div>
       </ContenedorFiltrosPro>
 
