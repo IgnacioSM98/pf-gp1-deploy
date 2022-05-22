@@ -13,7 +13,7 @@ const Container = styled.div`
 `;
 
 const Categoria = styled.div`
-  height: 560px;
+  height: 600px;
   display: flex;
   flex-direction: column;
   align-items: start;
@@ -29,7 +29,7 @@ const Productos = styled.div`
 
 const Image = styled.img`
   width: 100%;
-  height: 600px;
+  height: 500px;
   object-fit: cover;
   opacity: 0.5;
 
@@ -39,7 +39,7 @@ const Image = styled.img`
 const Text = styled.div`
   position: absolute;
   bottom: 50%;
-  top: 50%;
+  top: 45%;
   left: 30%;
   right: 30%;
   width: 40%;
@@ -65,7 +65,7 @@ const P = styled.p`
 
 const Header = styled.div`
   width: 100%;
-  height: 600px;
+  height: 500px;
   position: relative;
   z-index: 1;
   background-color: Black;
@@ -152,12 +152,12 @@ export default function Home({ contacto }) {
         </Link>
       </Categoria>
 
-      <Categoria>
+      {/* <Categoria>
         <P>BLOG</P>
         <Link to="/blog">
           <Boton texto="Mas notas" />
         </Link>
-      </Categoria>
+      </Categoria> */}
 
       <Footer contacto={contacto} />
       <ScrollToTop />
