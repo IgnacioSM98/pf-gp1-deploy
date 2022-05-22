@@ -16,6 +16,7 @@ import Paginado from "./Paginado/Paginado";
 import Review from "./Reviews/Review";
 import Reviews from "./Reviews/Reviews";
 import ScrollToTop from "./ScrollToTop/ScrollToTop";
+import Modal from "./Modal/Modal";
 
 export {
   Home,
@@ -36,4 +37,5 @@ export {
   Review,
   Reviews,
   ScrollToTop,
+  Modal,
 };

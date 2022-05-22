@@ -1,13 +1,13 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
+import { CrearReview, Reviews} from "../index";
 import {
   clearDetail,
   getDetail,
   getReviews,
   agregarCarrito,
 } from "../../Redux/actions";
-import { CrearReview, Reviews } from "../index";
 import styled from "styled-components";
 import cards from "../../Images/Cards/index";
 
@@ -182,6 +182,7 @@ export default function DetalleProducto() {
   const { id } = useParams();
 
   let [formReview, setFormReview] = useState(false);
+  
 
   const reviewOnclick = () => {
     setFormReview(!formReview);
