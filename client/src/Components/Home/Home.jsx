@@ -82,36 +82,7 @@ export default function Home({ contacto }) {
     window.addEventListener("resize", handleResize);
 
     setDestacados(Math.floor(width / 250));
-
-    // console.log("window inner height: ", window.innerHeight);
-
-    // console.log(
-    //   "document Element client hieght: ",
-    //   document.documentElement.clientHeight
-    // );
-
-    // console.log(
-    //   "document Element scroll hieght: ",
-    //   document.documentElement.scrollHeight
-    // );
-
-    // console.log(
-    //   "document Element offset height: ",
-    //   document.documentElement.offsetHeight
-    // );
-
-    // console.log(
-    //   "document element scrolltop: ",
-    //   document.documentElement.scrollTop
-    // );
-
-    // console.log("window page Y Offset: ", window.pageYOffset);
-
-    // console.log(
-    //   "window document body offsetheight: ",
-    //   window.document.body.offsetHeight
-    // );
-  });
+  }, [width]);
 
   return (
     <Container>
@@ -140,6 +111,7 @@ export default function Home({ contacto }) {
                   imagen={producto.imagen}
                   nombre={producto.nombre}
                   precio={producto.precio}
+                  stock={producto.stock}
                   descripcion={producto.descripcion}
                   location={location}
                 />

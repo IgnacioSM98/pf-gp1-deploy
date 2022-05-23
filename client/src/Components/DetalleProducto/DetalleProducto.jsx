@@ -1,28 +1,48 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
-import { clearDetail, getDetail, getReviews } from "../../Redux/actions";
-import { CrearReview, Reviews } from "../index";
+import {
+  clearDetail,
+  getDetail,
+  getReviews,
+  agregarCarrito,
+} from "../../Redux/actions";
+import { CrearReview, Reviews as ProductReviews } from "../index";
 import styled from "styled-components";
 import cards from "../../Images/Cards/index";
 
 const Container = styled.div`
   height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 `;
 
 const Details = styled.div`
   display: flex;
-  margin: 0px 40px 40px 40px;
-  height: 100%;
+  width: 100%;
+  margin: 0px 40px 0px 40px;
+  height: 650px;
   justify-content: center;
 `;
 
+const Reviews = styled.div`
+  display: flex;
+  width: 100%;
+  height: 144px;
+`;
+
+const Relacionados = styled.div`
+  display: flex;
+  width: 100%;
+`;
+
 const Image = styled.img`
-  height: 65%;
+  height: 80%;
   max-height: 650px;
   width: 50%;
   max-width: 650px;
-  margin: 50px;
+  // margin: 50px;
   object-fit: contain;
   margin-top: 90px;
 `;
@@ -34,9 +54,9 @@ const Body = styled.div`
   text-align: start;
   align-items: flex-start;
   height: 600px;
-  width: 50%;
+  width: 40%;
   max-width: 666px;
-  margin: 90px 20px 0px 20px;
+  margin: 90px 10% 0px 20px;
 `;
 
 const Nombre = styled.p`
@@ -101,7 +121,7 @@ const Boton = styled.button`
 const Cantidad = styled.button`
   color: black;
   font-weight: bold;
-  background-color: white;
+  background-color: ${(props) => (props.disabled ? "#d3d3d370" : "white")};
   border-radius: 8px;
   border-width: 1.5px;
   border-color: black;
@@ -157,10 +177,19 @@ const Botones = styled.div`
   align-items: center;
   justify-content: space-between;
 `;
+
 const Valoracion = styled.div`
   display: flex;
   gap: 0.5em;
+  align-items: center;
 `;
+
+const Span = styled.span`
+  font-size: 13px;
+  font-weight: 600;
+  text-decoration: underline;
+`;
+
 const FormRev = styled.button`
   color: ${(props) => (props.color ? props.color : "white")};
   font-weight: bold;
@@ -175,25 +204,51 @@ const FormRev = styled.button`
 
 export default function DetalleProducto() {
   const { id } = useParams();
+  const dispatch = useDispatch();
 
-  let [formReview, setFormReview] = useState(false);
+  const [formReview, setFormReview] = useState(false),
+    [carrito, setCarrito] = useState(true),
+    [cantidad, setCantidad] = useState(1),
+    [boton, setBoton] = useState({ suma: false, resta: true });
+
+  const detalle = useSelector((state) => state.detalle);
+  const reviews = useSelector((state) => state.reviews);
+
+  const cambiarCantidad = (e) => {
+    console.log(e.target.name);
+
+    if (e.target.name === "suma") {
+      if (cantidad < detalle.stock) {
+        setCantidad(cantidad + 1);
+        setBoton({ resta: false });
+      } else {
+        setBoton({ suma: true });
+      }
+    } else {
+      if (cantidad > 1) {
+        setCantidad(cantidad - 1);
+        setBoton({ suma: false });
+      } else {
+        setBoton({ resta: true });
+      }
+    }
+  };
 
   const reviewOnclick = () => {
     setFormReview(!formReview);
   };
 
-  const dispatch = useDispatch();
-  const detalle = useSelector((state) => state.detalle);
-
-  const [carrito, setCarrito] = useState(true);
-
   const onClick = (e) => {
     setCarrito(!carrito);
+    if (detalle.stock > 1) {
+      dispatch(agregarCarrito(id));
+    }
   };
 
   useEffect(() => {
     dispatch(getDetail(id));
-    // dispatch(getReviews(id));
+    dispatch(getReviews(id));
+
     window.scrollTo(0, 0);
 
     return () => {
@@ -210,11 +265,35 @@ export default function DetalleProducto() {
           <Valoracion>
             <Stars>
               {[...Array(5)].map((star, index) => (
-                <span style={{ textShadow: "1px 1px black" }} key={index}>
-                  &#9733;
-                </span>
+                <div
+                  style={{
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    fontFamily: "initial",
+                  }}
+                >
+                  <span
+                    style={{
+                      position: "absolute",
+                      color: "white",
+                      fontSize: "10px",
+                    }}
+                    key={index}
+                  >
+                    &#9733;
+                  </span>
+
+                  <span
+                    style={{ color: "black", fontSize: "18px" }}
+                    key={index}
+                  >
+                    &#9733;
+                  </span>
+                </div>
               ))}
             </Stars>
+            <Span>{reviews.length} Reviews</Span>
           </Valoracion>
 
           <DescripcionText>Descripción</DescripcionText>
@@ -235,14 +314,32 @@ export default function DetalleProducto() {
           </Cards>
 
           <Bottom>
-            <Unidades>Unidades</Unidades>
+            <Unidades>
+              {`Unidades (${
+                detalle.stock === 1
+                  ? "1 disponible"
+                  : `${detalle.stock} disponibles`
+              })`}
+            </Unidades>
             <Bar />
             <Botones>
               {detalle.stock ? (
                 <div>
-                  <Cantidad>-</Cantidad>
-                  <Stock>{detalle.stock}</Stock>
-                  <Cantidad>+</Cantidad>
+                  <Cantidad
+                    name="resta"
+                    onClick={cambiarCantidad}
+                    disabled={boton.resta}
+                  >
+                    -
+                  </Cantidad>
+                  <Stock>{cantidad}</Stock>
+                  <Cantidad
+                    name="suma"
+                    onClick={cambiarCantidad}
+                    disabled={boton.suma}
+                  >
+                    +
+                  </Cantidad>
                 </div>
               ) : (
                 <Boton>Sin stock</Boton>
@@ -260,13 +357,21 @@ export default function DetalleProducto() {
                 </Boton>
               ) : null}
             </Botones>
-            <Bar />
           </Bottom>
         </Body>
       </Details>
-      <FormRev onClick={reviewOnclick}>Opina sobre este producto</FormRev>
-      <CrearReview id={id} state={formReview} setFormReview={setFormReview} />
-      <Reviews />
+
+      <Bar style={{ width: "100%" }} />
+
+      <Reviews>
+        <FormRev onClick={reviewOnclick}>Opina sobre este producto</FormRev>
+        <CrearReview id={id} state={formReview} setFormReview={setFormReview} />
+        <ProductReviews />
+      </Reviews>
+
+      <Bar style={{ width: "100%" }} />
+
+      <Relacionados>Productos Relacionados</Relacionados>
     </Container>
   ) : (
     <></>

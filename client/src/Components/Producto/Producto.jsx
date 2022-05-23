@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import "./producto.css";
 import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
+import { useDispatch } from "react-redux";
+import { agregarCarrito } from "../../Redux/actions";
 
 const LinkProduct = styled(Link)`
   text-decoration: none;
@@ -12,13 +14,22 @@ const Button = styled.button`
   height: 30px;
 `;
 
-function Producto({ id, imagen, nombre, precio, descripcion, location }) {
+export default function Producto({ id, imagen, nombre, precio, descripcion, location, producto, stock }) {
+  const dispatch = useDispatch();
   const [showOptions, setOptions] = useState(false);
   const navigate = useNavigate();
 
   const handleEdit = () => {
     navigate(`/admin/productos/${id}`);
   };
+
+  function agregarAlCarrito(e) {
+    e.preventDefault();
+
+    if (stock > 0) {
+      dispatch(agregarCarrito(id));
+    }
+  }
 
   return (
     <LinkProduct to={`/productos/${id}`}>
@@ -83,7 +94,10 @@ function Producto({ id, imagen, nombre, precio, descripcion, location }) {
         <div className="precio-boton">
           <p className="precio">${precio}</p>
 
-          <button className="boton-agregar" onClick={(e) => e.preventDefault()}>
+          <button
+            className="boton-agregar"
+            onClick={(e) => agregarAlCarrito(e)}
+          >
             AGREGAR
           </button>
         </div>
@@ -91,5 +105,3 @@ function Producto({ id, imagen, nombre, precio, descripcion, location }) {
     </LinkProduct>
   );
 }
-
-export default Producto;

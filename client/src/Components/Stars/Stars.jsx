@@ -32,10 +32,10 @@ export default function StarRating({ inputs, setInputs }) {
     // eslint-disable-next-line
   }, []);
 
-    useEffect(() => {
-      setInputs({ ...inputs, puntaje });
-      // eslint-disable-next-line
-    }, [puntaje]);
+  useEffect(() => {
+    setInputs({ ...inputs, puntaje });
+    // eslint-disable-next-line
+  }, [puntaje]);
 
   return (
     <Container>

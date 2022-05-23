@@ -82,9 +82,15 @@ export function filtrarCategorias(payload) {
 
 export function getReviews(id) {
   return async function (dispatch) {
-    let json = await axios
-      .get(`${urlBase}ratings/${id}`)
-      .then((res) => dispatch({ type: "GET_REVIEWS", payload: json }));
+    try {
+      const resp = await axios.get(`${urlBase}ratings/${id}`);
+
+      if (resp) {
+        dispatch({ type: "GET_REVIEWS", payload: resp.data });
+      }
+    } catch (err) {
+      console.log(err, "error reviews");
+    }
   };
 }
 
@@ -122,3 +128,9 @@ export function postReviews(id, payload) {
 export const setSort = (value) => (dispatch) => {
   dispatch({ type: "SET_SORT", payload: value });
 };
+
+export function agregarCarrito(idProducto) {
+  return function (dispatch) {
+    dispatch({ type: "AGREGAR_CARRITO", payload: idProducto });
+  };
+}

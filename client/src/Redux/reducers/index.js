@@ -5,6 +5,7 @@ const initialState = {
   productosCopiados: [],
   detalle: {},
   reviews: [],
+  carrito: [],
 };
 
 export default function rootReducer(state = initialState, action) {
@@ -138,6 +139,14 @@ export default function rootReducer(state = initialState, action) {
       return {
         ...state,
         reviews: action.payload,
+      };
+    case "AGREGAR_CARRITO":
+      const productoSeleccionado = state.productos.find(
+        (producto) => producto.id == action.payload
+      );
+      return {
+        ...state,
+        carrito: [...state.carrito, productoSeleccionado],
       };
 
     // case "PUT_PRODUCTO":

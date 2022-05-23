@@ -1,13 +1,17 @@
 import React from "react";
 import { useSelector } from "react-redux";
 import { Review } from "../index";
-import "./Reviews.css";
+import styled from "styled-components";
+
+const Container = styled.div`
+  display: flex;
+`;
 
 export default function Producto() {
   const reviews = useSelector((state) => state.reviews);
 
   return (
-    <div className="div-reviews">
+    <Container>
       {reviews?.map((review) => {
         return (
           <Review
@@ -19,6 +23,6 @@ export default function Producto() {
           />
         );
       })}
-    </div>
+    </Container>
   );
 }
