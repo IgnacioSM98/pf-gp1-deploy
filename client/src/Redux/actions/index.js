@@ -101,18 +101,17 @@ export function postProducto(payload) {
   };
 }
 
-export function putProducto(id) {
+export function putProducto(id, body) {
   return function (dispatch) {
-    axios.put(`/admin/${id}`).then((res) => {
-      console.log(res.data, "xd?put");
-      // dispatch({ type: "PUT_PRODUCTO", payload: res.data });
+    axios.put(`${urlBase}admin/${id}`, body).then((res) => {
+      dispatch({ type: "PUT_PRODUCTO", payload: res.data });
     });
   };
 }
 
 export function deleteProducto(id) {
   return function (dispatch) {
-    axios.delete(`/admin/${id}`).then((res) => {
+    axios.delete(`${urlBase}producto/${id}`).then((res) => {
       dispatch({ type: "DELETE_PRODUCTO", payload: res.data });
     });
   };
