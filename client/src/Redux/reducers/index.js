@@ -11,6 +11,7 @@ const initialState = {
 export default function rootReducer(state = initialState, action) {
   switch (action.type) {
     case "GET_PRODUCTOS":
+      console.log(action.payload, "afita");
       return {
         ...state,
         productos: action.payload,
@@ -170,8 +171,8 @@ export default function rootReducer(state = initialState, action) {
       productosAux = productosAux
         .slice(0, index)
         .concat(productosAux.slice(index + 1));
-      console.log(productosAux, "uwuaux");
-      localStorage.setItem("foods", productosAux);
+
+      localStorage.setItem("productos", JSON.stringify(productosAux));
 
       return {
         ...state,

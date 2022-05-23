@@ -11,9 +11,12 @@ export function getProductos() {
   return async function (dispatch) {
     const data = JSON.parse(localStorage.getItem("productos"));
 
+    console.log(data, "tk");
+
     if (data) {
       dispatch({ type: "GET_PRODUCTOS", payload: data });
     } else {
+      console.log("momento uwu");
       try {
         const resp = await axios.get(`${urlBase}${productos}`);
 
