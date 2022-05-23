@@ -26,7 +26,8 @@ export default function Producto({
   categorias,
 }) {
   const dispatch = useDispatch();
-  const [showOptions, setOptions] = useState(false);
+
+  const [showOptions, setOptions] = useState({ button: false, popup: false });
   const navigate = useNavigate();
 
   const handleEdit = () => {
@@ -47,11 +48,16 @@ export default function Producto({
 
   return (
     <LinkProduct to={`/productos/${id}`}>
-      <div className="container-producto">
+      <div
+        className="container-producto"
+        onMouseEnter={() => setOptions({ ...showOptions, button: true })}
+        onMouseLeave={() => setOptions({ popup: false, button: false })}
+      >
         <div className="container-foto">
           <img src={imagen} className="foto" alt="foto" />
         </div>
-        {location && location.pathname.slice(0, 6) === "/admin" && (
+        
+        {showOptions.button && (
           <button
             style={{
               position: "absolute",
@@ -65,14 +71,14 @@ export default function Producto({
             }}
             onClick={(e) => {
               e.preventDefault();
-              setOptions(!showOptions);
+              setOptions({ ...showOptions, popup: !showOptions.popup });
             }}
           >
             ...
           </button>
         )}
 
-        {showOptions ? (
+        {showOptions.popup && (
           <div
             style={{
               position: "absolute",
@@ -95,7 +101,7 @@ export default function Producto({
             </Button>
             <Button onClick={handleDelete}>Eliminar producto</Button>
           </div>
-        ) : null}
+        )}
 
         <div className="nombre">
           <p>{nombre}</p>

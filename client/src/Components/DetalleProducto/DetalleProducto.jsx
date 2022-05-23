@@ -8,7 +8,7 @@ import {
   agregarCarrito,
   getProductos,
 } from "../../Redux/actions";
-import { CrearReview, Reviews as ProductReviews } from "../index";
+import { CrearReview, Reviews as ProductReviews, Stars } from "../index";
 import styled from "styled-components";
 import cards from "../../Images/Cards/index";
 import { Relacionados } from "../index";
@@ -31,7 +31,8 @@ const Details = styled.div`
 const Reviews = styled.div`
   display: flex;
   width: 100%;
-  height: 144px;
+  align-items: center;
+  height: 194px;
 `;
 
 const RelacionadosCont = styled.div`
@@ -118,6 +119,7 @@ const Boton = styled.button`
   margin: 5px;
   height: 40px;
   width: 100px;
+  cursor: pointer;
   // padding: 2%;
 `;
 
@@ -167,11 +169,11 @@ const Card = styled.img`
   object-fit: contain;
 `;
 
-const Stars = styled.div`
-  display: flex;
-  color: white;
-  font-size: 17px;
-`;
+// const Stars = styled.div`
+//   display: flex;
+//   color: white;
+//   font-size: 17px;
+// `;
 
 const Botones = styled.div`
   display: flex;
@@ -226,9 +228,25 @@ export default function DetalleProducto() {
     setRelacionados(productos);
   }, [productos]);
 
-  const cambiarCantidad = (e) => {
-    console.log(e.target.name);
+  // Creamos la variable a utilizar
+  var rating = 0;
 
+  // Sumarizamos la cantidad de estrellas entre todas las reviews
+  reviews[0]
+    ? reviews.map((reviews) => (rating += reviews.puntaje))
+    : (rating = 1);
+
+  // Dividimos la suma de estrellas por cantidad de review para saber el promedio
+  if (reviews.length) {
+    rating = rating / reviews.length;
+  } else {
+    rating = rating / 1;
+  }
+
+  // Redondeamos el promedio de estrellas
+  rating = Math.round(rating);
+
+  const cambiarCantidad = (e) => {
     if (e.target.name === "suma") {
       if (cantidad < detalle.stock) {
         setCantidad(cantidad + 1);
@@ -244,10 +262,6 @@ export default function DetalleProducto() {
         setBoton({ resta: true });
       }
     }
-  };
-
-  const reviewOnclick = () => {
-    setFormReview(!formReview);
   };
 
   const onClick = (e) => {
@@ -287,36 +301,8 @@ export default function DetalleProducto() {
         <Body>
           <Nombre>{detalle.nombre}</Nombre>
           <Valoracion>
-            <Stars>
-              {[...Array(5)].map((star, index) => (
-                <div
-                  style={{
-                    display: "flex",
-                    justifyContent: "center",
-                    alignItems: "center",
-                    fontFamily: "initial",
-                  }}
-                >
-                  <span
-                    style={{
-                      position: "absolute",
-                      color: "white",
-                      fontSize: "10px",
-                    }}
-                    key={index}
-                  >
-                    &#9733;
-                  </span>
+            <Stars rating={rating ? rating : 1} />
 
-                  <span
-                    style={{ color: "black", fontSize: "18px" }}
-                    key={index}
-                  >
-                    &#9733;
-                  </span>
-                </div>
-              ))}
-            </Stars>
             <Span>{reviews.length} Reviews</Span>
           </Valoracion>
 
@@ -389,8 +375,7 @@ export default function DetalleProducto() {
       </Details>
       <Bar style={{ width: "100%" }} />
       <Reviews>
-        <FormRev onClick={reviewOnclick}>Opina sobre este producto</FormRev>
-        <CrearReview id={id} state={formReview} setFormReview={setFormReview} />
+        <CrearReview id={id} state={formReview} />
         <ProductReviews />
       </Reviews>
       <Bar style={{ width: "100%" }} />
