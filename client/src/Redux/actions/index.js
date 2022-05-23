@@ -118,9 +118,9 @@ export function postCategoria(payload) {
 export function deleteCategoria(id) {
   return async function () {
     await axios.delete(`${urlBase}${categorias}/${id}`);
-    return dispatch({
-      type: "DELETE_CATEGORIA",
-    });
+    return function (dispatch) {
+      dispatch({ type: "DELETE_CATEGORIA" });
+    };
   };
 }
 

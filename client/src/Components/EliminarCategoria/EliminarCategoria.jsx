@@ -1,12 +1,14 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { deleteCategoria, getCategorias } from "../../Redux/actions";
 
 export default function EliminarCategoria() {
   const dispatch = useDispatch();
-  const categorías = useSelector((state) => state.categorias);
-  ([categoria, setCategoria] = useState()),
-    useEffect(() => {
-      dispatch(getCategorias());
-    }, [dispatch]);
+  const categorias = useSelector((state) => state.categorias);
+  const [categoria, setCategoria] = useState();
+  useEffect(() => {
+    dispatch(getCategorias());
+  }, [dispatch]);
 
   function handleSelectCategorias(e) {
     const seleccionada = e.target.value;
