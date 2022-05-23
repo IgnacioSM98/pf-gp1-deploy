@@ -14,6 +14,10 @@ module.exports = (sequelize) => {
       type: DataTypes.INTEGER,
       allowNull: true,
     },
+    titulo: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
     comentario: {
       type: DataTypes.TEXT,
       allowNull: false,

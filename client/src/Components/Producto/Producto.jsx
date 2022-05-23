@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import "./producto.css";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { useDispatch } from "react-redux";
-import { agregarCarrito } from "../../Redux/actions";
+import { agregarCarrito, deleteProducto } from "../../Redux/actions";
 
 const LinkProduct = styled(Link)`
   text-decoration: none;
@@ -20,11 +20,23 @@ export default function Producto({
   nombre,
   precio,
   descripcion,
+  location,
   producto,
   stock,
+  categorias,
 }) {
   const dispatch = useDispatch();
+
   const [showOptions, setOptions] = useState({ button: false, popup: false });
+  const navigate = useNavigate();
+
+  const handleEdit = () => {
+    navigate(`/admin/productos/${id}`);
+  };
+
+  const handleDelete = () => {
+    dispatch(deleteProducto(id));
+  };
 
   function agregarAlCarrito(e) {
     e.preventDefault();
@@ -42,12 +54,11 @@ export default function Producto({
         onMouseLeave={() => setOptions({ popup: false, button: false })}
       >
         <div className="container-foto">
-          <img src={imagen} className="foto" />
+          <img src={imagen} className="foto" alt="foto" />
         </div>
-
+        
         {showOptions.button && (
           <button
-            className="rodri"
             style={{
               position: "absolute",
               top: "5px",
@@ -85,9 +96,10 @@ export default function Producto({
             }}
             onClick={(e) => e.preventDefault()}
           >
-            <Button style={{ marginTop: "35px" }}>Boton 1</Button>
-            <Button>Boton 2</Button>
-            <Button>Boton 3</Button>
+            <Button style={{ marginTop: "35px" }} onClick={handleEdit}>
+              Editar producto
+            </Button>
+            <Button onClick={handleDelete}>Eliminar producto</Button>
           </div>
         )}
 
@@ -97,6 +109,12 @@ export default function Producto({
 
         <div className="descripcion">
           <p>{descripcion}</p>
+        </div>
+
+        <div>
+          {categorias?.map((categoria) => (
+            <p>{categoria.nombre}</p>
+          ))}
         </div>
 
         <div className="precio-boton">

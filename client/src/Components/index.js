@@ -17,7 +17,11 @@ import Paginado from "./Paginado/Paginado";
 import Review from "./Reviews/Review";
 import Reviews from "./Reviews/Reviews";
 import ScrollToTop from "./ScrollToTop/ScrollToTop";
+import Filtros from "./Filtros/Filtros";
 import Modal from "./Modal/Modal";
+import EliminarCategoria from "./EliminarCategoria/EliminarCategoria.jsx";
+import AgregarProducto from "./AgregarProducto/AgregarProducto";
+import Relacionados from "./Relacionados/Relacionados";
 
 export {
   Home,
@@ -34,10 +38,14 @@ export {
   Boton,
   Producto,
   DetalleProducto,
+  EliminarCategoria,
   CrearReview,
   Paginado,
   Review,
   Reviews,
   ScrollToTop,
+  Filtros,
+  AgregarProducto,
   Modal,
+  Relacionados,
 };
