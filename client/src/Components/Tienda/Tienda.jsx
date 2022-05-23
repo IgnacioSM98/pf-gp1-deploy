@@ -1,12 +1,18 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useLocation } from "react-router-dom";
 import { getProductos, getProductosFiltrados } from "../../Redux/actions/index";
-import { Producto, Paginado, Footer } from "../index";
+import {
+  Producto,
+  Paginado,
+  Footer,
+  Filtros,
+  ScrollToTop,
+  AgregarProducto,
+} from "../index";
 import "./Tienda.css";
 import styled from "styled-components";
 import image from "./cuchara-cafe3.jpg";
-import ScrollToTop from "./../ScrollToTop/ScrollToTop";
-import Filtros from "../Filtros/Filtros";
 
 const Container = styled.div`
   display: flex;
@@ -160,6 +166,7 @@ function Shop({ contacto }) {
   const [pageSelected, setPageSelected] = useState(1);
   const [resVis, setResVis] = useState(0);
   const [flag, setFlag] = useState(false);
+  const location = useLocation();
 
   useEffect(() => {
     if (productos.length === 0) dispatch(getProductos());
@@ -174,13 +181,28 @@ function Shop({ contacto }) {
     setPages(Math.ceil(productos.length / 9));
   }, [productos]);
 
-  // useEffect(() => {
-  //   setPages(Math.ceil(productosFiltrados.filter(filterDropdown).length / 9));
-  // }, [selected]);
+  useEffect(() => {
+    setPages(Math.ceil(productosFiltrados.filter(filterDropdown).length / 9));
+  }, [selected]);
 
-  const filterPerPages = (food, i) => {
-    if (i >= 9 * (pageSelected - 1) && i <= 9 * pageSelected - 1) {
-      return food;
+  const filterPerPages = (producto, i) => {
+    if (location && location.pathname.slice(0, 6) === "/admin") {
+      if (Number(pageSelected) === 1) {
+        if (i >= 8 * (pageSelected - 1) && i <= 8 * pageSelected - 1) {
+          return producto;
+        }
+      } else {
+        if (
+          i >= 8 * (pageSelected - 1) &&
+          i <= 9 * pageSelected - pageSelected
+        ) {
+          return producto;
+        }
+      }
+    } else {
+      if (i >= 9 * (pageSelected - 1) && i <= 9 * pageSelected - 1) {
+        return producto;
+      }
     }
   };
 
@@ -188,7 +210,6 @@ function Shop({ contacto }) {
     const value = e.target.value;
 
     setResVis(0);
-
     setFlag(true);
 
     if (!value) {
@@ -208,15 +229,20 @@ function Shop({ contacto }) {
     dispatch(getProductosFiltrados(arrayAux));
   }
 
-  // const filterDropdown = (food) => {
-  //   if (!selected || food.diets?.includes(selected.toLowerCase())) {
-  //     return food;
-  //   }
+  const filterDropdown = (producto) => {
+    if (
+      !selected ||
+      producto.categoria.find(
+        (cate) => cate.nombre.toLowerCase() === selected.toLocaleLowerCase()
+      )
+    ) {
+      return producto;
+    }
 
-  //   if (selected === "DEFAULT") {
-  //     return food;
-  //   }
-  // };
+    if (selected === "DEFAULT") {
+      return producto;
+    }
+  };
 
   return (
     <Container>
@@ -256,20 +282,30 @@ function Shop({ contacto }) {
             ) : (
               <></>
             )}
+            {location && location.pathname.slice(0, 6) === "/admin" && (
+              <AgregarProducto />
+            )}
 
             {productosFiltrados &&
-              productosFiltrados.filter(filterPerPages).map((el) => {
-                return (
-                  <Producto
-                    key={el.id}
-                    id={el.id}
-                    imagen={el.imagen}
-                    nombre={el.nombre}
-                    precio={el.precio}
-                    stock={el.stock}
-                    descripcion={el.descripcion}
-                  />
-                );
+              productosFiltrados
+                .filter(filterDropdown)
+                .filter(filterPerPages)
+                .map((el) => {
+                  if (el.stock > 0) {
+                  return (
+                    <Producto
+                      key={el.id}
+                      id={el.id}
+                      imagen={el.imagen}
+                      nombre={el.nombre}
+                      precio={el.precio}
+                      stock={el.stock}
+                      descripcion={el.descripcion}
+                      location={location}
+                      categorias={el.categoria}
+                   />
+                  );
+                }
               })}
           </ProductosTienda>
           {pages > 0 ? (

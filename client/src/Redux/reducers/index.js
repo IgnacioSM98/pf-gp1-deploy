@@ -11,6 +11,7 @@ const initialState = {
 export default function rootReducer(state = initialState, action) {
   switch (action.type) {
     case "GET_PRODUCTOS":
+      console.log(action.payload, "afita");
       return {
         ...state,
         productos: action.payload,
@@ -62,6 +63,11 @@ export default function rootReducer(state = initialState, action) {
       return {
         ...state,
         categorias: action.payload,
+      };
+    case "DELETE_CATEGORIA":
+      return {
+        ...state,
+        categorias: state.categorias.filter((c) => c.id !== action.payload),
       };
 
     case "GET_DETAIL":
@@ -157,6 +163,30 @@ export default function rootReducer(state = initialState, action) {
         carrito: data,
       };
 
+    // case "PUT_PRODUCTO":
+    //devolver productos, pero con el producto modificado en base al id
+    // return{
+    //   ...state,
+    //   productos: state.productos
+    // }
+    case "DELETE_PRODUCTO":
+      let productosAux = [...state.productosFiltrados];
+
+      const index = productosAux.findIndex((producto) => {
+        return producto.id === action.payload;
+      });
+
+      productosAux = productosAux
+        .slice(0, index)
+        .concat(productosAux.slice(index + 1));
+
+      localStorage.setItem("productos", JSON.stringify(productosAux));
+
+      return {
+        ...state,
+        productos: productosAux,
+        productosFiltrados: productosAux,
+      };
     default:
       return state;
   }
