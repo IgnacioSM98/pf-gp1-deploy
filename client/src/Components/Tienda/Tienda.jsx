@@ -210,11 +210,6 @@ function Shop({ contacto }) {
   }
 
   const filterDropdown = (producto) => {
-    console.log(
-      producto.categoria.find(
-        (cate) => cate.nombre.toLowerCase() === selected.toLocaleLowerCase()
-      )
-    );
     if (
       !selected ||
       producto.categoria.find(
