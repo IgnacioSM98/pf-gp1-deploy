@@ -63,6 +63,11 @@ export default function rootReducer(state = initialState, action) {
         ...state,
         categorias: action.payload,
       };
+    case "DELETE_CATEGORIA":
+      return {
+        ...state,
+        categorias: state.categorias.filter((c) => c.id !== action.payload),
+      };
 
     case "GET_DETAIL":
       return {

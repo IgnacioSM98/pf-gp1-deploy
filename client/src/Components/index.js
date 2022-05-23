@@ -17,7 +17,7 @@ import Review from "./Reviews/Review";
 import Reviews from "./Reviews/Reviews";
 import ScrollToTop from "./ScrollToTop/ScrollToTop";
 import Modal from "./Modal/Modal";
-
+import EliminarCategoria from "./EliminarCategoria/EliminarCategoria.jsx";
 export {
   Home,
   Blog,
@@ -32,6 +32,7 @@ export {
   Boton,
   Producto,
   DetalleProducto,
+  EliminarCategoria,
   CrearReview,
   Paginado,
   Review,
