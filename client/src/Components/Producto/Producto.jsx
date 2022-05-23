@@ -23,6 +23,7 @@ export default function Producto({
   location,
   producto,
   stock,
+  categorias,
 }) {
   const dispatch = useDispatch();
   const [showOptions, setOptions] = useState(false);
@@ -102,6 +103,12 @@ export default function Producto({
 
         <div className="descripcion">
           <p>{descripcion}</p>
+        </div>
+
+        <div>
+          {categorias?.map((categoria) => (
+            <p>{categoria.nombre}</p>
+          ))}
         </div>
 
         <div className="precio-boton">
