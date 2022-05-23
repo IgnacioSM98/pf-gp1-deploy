@@ -139,7 +139,9 @@ router.get("/producto/:id", async (req, res) => {
 
 router.get("/categorias", async (req, res) => {
   try {
-    const categorias = await Categoria.findAll();
+    const categorias = await Categoria.findAll({
+      include: [{ model: Producto }],
+    });
     res.status(200).send(categorias);
   } catch (error) {
     res.status(400).send(error);
@@ -180,10 +182,11 @@ router.post("/categorias/crear", async (req, res) => {
 
 router.post("/ratings/crear/:productoid", async (req, res) => {
   try {
-    const { puntaje, comentario } = req.body;
+    const { puntaje, comentario, titulo } = req.body;
     const rating = await Rating.create({
       puntaje: puntaje,
       comentario: comentario,
+      titulo: titulo,
     });
     rating.productoId = req.params.productoid;
     rating.save();

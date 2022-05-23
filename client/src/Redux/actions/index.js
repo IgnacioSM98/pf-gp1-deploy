@@ -115,6 +115,14 @@ export function postCategoria(payload) {
     return json;
   };
 }
+export function deleteCategoria(id) {
+  return async function () {
+    await axios.delete(`${urlBase}${categorias}/${id}`);
+    return dispatch({
+      type: "DELETE_CATEGORIA",
+    });
+  };
+}
 
 export function postReviews(id, payload) {
   return async function (dispatch) {
