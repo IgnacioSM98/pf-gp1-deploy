@@ -1,8 +1,10 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { useLocation } from "react-router-dom";
 import Usuario from "../Usuario/Usuario";
+import { useSelector } from "react-redux";
+import { app } from "../../firebase";
 
 const Container = styled.div`
   display: flex;
@@ -21,6 +23,33 @@ const NavLink = styled(Link)`
   color: white;
 `;
 
+const UserButton = styled(Link)`
+  color: white;
+  background-color: transparent;
+  text-decoration: none;
+  border: none;
+  cursor: pointer;
+  // width: 100%;
+  margin-bottom: 7px;
+  font-weight: 500;
+`;
+
+const UserMenu = styled.div`
+  position: absolute;
+  bottom: -70px;
+  color: white;
+  right: 0;
+  background-color: #000000f0;
+  height: 70px;
+  width: 170px;
+  border-radius: 0px 0px 0px 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-evenly;
+  font-size: 14px;
+`;
+
 const Span = styled.span`
   margin: 0px 40px;
   font-weight: bold;
@@ -35,6 +64,8 @@ const Login = styled.div`
   justify-content: center;
   align-items: center;
   position: absolute;
+  font-size: 13px;
+  color: white;
   right: 20px;
 `;
 
@@ -53,14 +84,22 @@ const Button = styled.button`
 `;
 
 export default function NavBar({ contacto, user, setUser }) {
+  const carrito = useSelector((state) => state.carrito);
+  const location = useLocation().pathname;
+  const [userMenu, setMenu] = useState(false);
+
+  const logOut = () => {
+    localStorage.removeItem("user");
+    app.auth().signOut();
+    app.auth().onAuthStateChanged((user) => setUser(user));
+  };
+
   const scrollToSection = (elementRef) => {
     window.scrollTo({
       top: elementRef.current.offsetTop,
       behavior: "smooth",
     });
   };
-
-  const location = useLocation().pathname;
 
   useEffect(() => {
     if (!user) {
@@ -92,7 +131,16 @@ export default function NavBar({ contacto, user, setUser }) {
 
       {location !== "/login" ? (
         <Login>
-          <NavLink to="/carrito">
+          <NavLink
+            to="/carrito"
+            style={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+            }}
+            title="Carrito"
+          >
+            <span style={{ margin: "4px 2px" }}>{carrito.length}</span>
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="16"
@@ -105,14 +153,21 @@ export default function NavBar({ contacto, user, setUser }) {
             </svg>
           </NavLink>
 
-          {console.log(
-            user && user,
-            "xd?",
-            user && Object.entries(user).length === 0
-          )}
-
           {user && Object.entries(user).length !== 0 ? (
-            <Usuario user={user} setUser={setUser} />
+            <button
+              title="Cuenta"
+              style={{
+                border: "none",
+                backgroundColor: "transparent",
+                cursor: "pointer",
+              }}
+              onClick={(e) => {
+                e.preventDefault();
+                setMenu(!userMenu);
+              }}
+            >
+              <Usuario user={user} setUser={setUser} />
+            </button>
           ) : (
             <NavLink to="/login">
               <Button>Login</Button>
@@ -120,6 +175,26 @@ export default function NavBar({ contacto, user, setUser }) {
           )}
         </Login>
       ) : null}
+
+      {userMenu && (
+        <UserMenu>
+          <UserButton to="/cuenta" onClick={() => setMenu(!userMenu)}>
+            Mi Cuenta
+          </UserButton>
+          <UserButton to="/carrito" onClick={() => setMenu(!userMenu)}>
+            Carrito
+          </UserButton>
+          <UserButton
+            to="/"
+            onClick={() => {
+              logOut();
+              setMenu(!userMenu);
+            }}
+          >
+            Cerrar Sesion
+          </UserButton>
+        </UserMenu>
+      )}
     </Container>
   );
 }

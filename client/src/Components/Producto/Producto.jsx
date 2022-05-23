@@ -9,22 +9,31 @@ const LinkProduct = styled(Link)`
   text-decoration: none;
   width: 240px;
 `;
- 
+
 const Button = styled.button`
   height: 30px;
 `;
 
-export default function Producto({ id, imagen, nombre, precio, descripcion, producto, stock }) {
+export default function Producto({
+  id,
+  imagen,
+  nombre,
+  precio,
+  descripcion,
+  producto,
+  stock,
+}) {
   const dispatch = useDispatch();
   const [showOptions, setOptions] = useState(false);
-  
+
   function agregarAlCarrito(e) {
-   e.preventDefault();
-   if (stock > 1) {
-     dispatch(agregarCarrito(id));
-   }
+    e.preventDefault();
+
+    if (stock > 0) {
+      dispatch(agregarCarrito(id));
+    }
   }
-  
+
   return (
     <LinkProduct to={`/productos/${id}`}>
       <div className="container-producto">

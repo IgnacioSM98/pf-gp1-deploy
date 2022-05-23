@@ -188,7 +188,6 @@ function Shop({ contacto }) {
     const value = e.target.value;
 
     setResVis(0);
-
     setFlag(true);
 
     if (!value) {
