@@ -248,6 +248,7 @@ export default function CrearProducto() {
               type="text"
               value={post.nombre}
               name="nombre"
+              placeholder=" "
               onChange={(e) => handleInputChange(e)}
             />
             <span className="barra"></span>
@@ -261,6 +262,7 @@ export default function CrearProducto() {
               value={post.descripcion}
               name="descripcion"
               rows="3"
+              placeholder=" "
               onChange={(e) => handleInputChange(e)}
             />
             <span className="barra"></span>
@@ -275,6 +277,7 @@ export default function CrearProducto() {
               min="0"
               value={post.precio}
               name="precio"
+              placeholder=" "
               onChange={(e) => handleInputChange(e)}
             />
             <span className="barra"></span>
@@ -289,6 +292,7 @@ export default function CrearProducto() {
               min="0"
               value={post.stock}
               name="stock"
+              placeholder=" "
               onChange={(e) => handleInputChange(e)}
             />
             <span className="barra"></span>
@@ -302,6 +306,7 @@ export default function CrearProducto() {
             <input
               className="input-create"
               type="text"
+              placeholder=" "
               value={post.imagen}
               name="imagen"
               onChange={(e) => {
@@ -314,6 +319,7 @@ export default function CrearProducto() {
               className="input-create"
               type="file"
               name="imagen"
+              placeholder=" "
               onChange={(e) => {
                 handleImageChange(e);
               }}
