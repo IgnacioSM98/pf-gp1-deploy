@@ -311,6 +311,8 @@ router.put("/admin/:id", async (req, res) => {
       producto.stock = stock;
       producto.save();
     }
+
+    //creo que deberia devolver id
     res.status(200).send({ msg: "cambios guardados!" });
   } catch (error) {
     res.status(400).send(error);
