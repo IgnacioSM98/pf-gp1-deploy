@@ -1,15 +1,17 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useParams } from "react-router-dom";
+import { useLocation, useParams } from "react-router-dom";
 import {
   clearDetail,
   getDetail,
   getReviews,
   agregarCarrito,
+  getProductos,
 } from "../../Redux/actions";
 import { CrearReview, Reviews as ProductReviews } from "../index";
 import styled from "styled-components";
 import cards from "../../Images/Cards/index";
+import { Relacionados } from "../index";
 
 const Container = styled.div`
   height: 100vh;
@@ -32,9 +34,10 @@ const Reviews = styled.div`
   height: 144px;
 `;
 
-const Relacionados = styled.div`
+const RelacionadosCont = styled.div`
   display: flex;
   width: 100%;
+  flex-wrap: wrap;
 `;
 
 const Image = styled.img`
@@ -205,14 +208,23 @@ const FormRev = styled.button`
 export default function DetalleProducto() {
   const { id } = useParams();
   const dispatch = useDispatch();
+  const location = useLocation();
 
   const [formReview, setFormReview] = useState(false),
     [carrito, setCarrito] = useState(true),
     [cantidad, setCantidad] = useState(1),
-    [boton, setBoton] = useState({ suma: false, resta: true });
+    [boton, setBoton] = useState({ suma: false, resta: true }),
+    [relacionados, setRelacionados] = useState([]);
 
   const detalle = useSelector((state) => state.detalle);
   const reviews = useSelector((state) => state.reviews);
+  const productos = useSelector((state) => state.productos);
+
+  useEffect(() => {
+    if (productos.length === 0) dispatch(getProductos());
+
+    setRelacionados(productos);
+  }, [productos]);
 
   const cambiarCantidad = (e) => {
     console.log(e.target.name);
@@ -255,6 +267,18 @@ export default function DetalleProducto() {
       dispatch(clearDetail());
     };
   }, []);
+
+  const filterCategorias = (producto) => {
+    for (const categoria of detalle.categoria) {
+      if (
+        producto.categoria.find(
+          (cate) => cate.nombre.toLowerCase() === categoria.nombre.toLowerCase()
+        )
+      ) {
+        return producto;
+      }
+    }
+  };
 
   return detalle && Object.keys(detalle)[0] ? (
     <Container>
@@ -344,7 +368,10 @@ export default function DetalleProducto() {
               ) : (
                 <Boton>Sin stock</Boton>
               )}
-              <Boton>Editar</Boton>
+
+              {location && location.pathname.slice(0, 6) === "/admin" && (
+                <Boton>Editar</Boton>
+              )}
 
               {detalle.stock ? (
                 <Boton
@@ -360,18 +387,21 @@ export default function DetalleProducto() {
           </Bottom>
         </Body>
       </Details>
-
       <Bar style={{ width: "100%" }} />
-
       <Reviews>
         <FormRev onClick={reviewOnclick}>Opina sobre este producto</FormRev>
         <CrearReview id={id} state={formReview} setFormReview={setFormReview} />
         <ProductReviews />
       </Reviews>
-
       <Bar style={{ width: "100%" }} />
-
-      <Relacionados>Productos Relacionados</Relacionados>
+      <h1>Quienes vieron este producto también compraron</h1>
+      <p>si lo saque de mercadolibre xd</p>
+      <RelacionadosCont>
+        {relacionados &&
+          relacionados
+            .filter(filterCategorias)
+            .map((relacionado) => <Relacionados relacionado={relacionado} />)}
+      </RelacionadosCont>
     </Container>
   ) : (
     <></>

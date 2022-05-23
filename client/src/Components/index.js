@@ -20,6 +20,7 @@ import Filtros from "./Filtros/Filtros";
 import Modal from "./Modal/Modal";
 import EliminarCategoria from "./EliminarCategoria/EliminarCategoria.jsx";
 import AgregarProducto from "./AgregarProducto/AgregarProducto";
+import Relacionados from "./Relacionados/Relacionados";
 
 export {
   Home,
@@ -44,4 +45,5 @@ export {
   Filtros,
   AgregarProducto,
   Modal,
+  Relacionados,
 };

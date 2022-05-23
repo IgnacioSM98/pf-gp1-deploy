@@ -233,7 +233,7 @@ function Shop({ contacto }) {
     if (
       !selected ||
       producto.categoria.find(
-        (cate) => cate.nombre.toLowerCase() === selected.toLocaleLowerCase()
+        (cate) => cate.nombre.toLowerCase() === selected.toLowerCase()
       )
     ) {
       return producto;
@@ -292,21 +292,21 @@ function Shop({ contacto }) {
                 .filter(filterPerPages)
                 .map((el) => {
                   if (el.stock > 0) {
-                  return (
-                    <Producto
-                      key={el.id}
-                      id={el.id}
-                      imagen={el.imagen}
-                      nombre={el.nombre}
-                      precio={el.precio}
-                      stock={el.stock}
-                      descripcion={el.descripcion}
-                      location={location}
-                      categorias={el.categoria}
-                   />
-                  );
-                }
-              })}
+                    return (
+                      <Producto
+                        key={el.id}
+                        id={el.id}
+                        imagen={el.imagen}
+                        nombre={el.nombre}
+                        precio={el.precio}
+                        stock={el.stock}
+                        descripcion={el.descripcion}
+                        location={location}
+                        categorias={el.categoria}
+                      />
+                    );
+                  }
+                })}
           </ProductosTienda>
           {pages > 0 ? (
             <Paginado pages={pages} setPageSelected={setPageSelected} />
