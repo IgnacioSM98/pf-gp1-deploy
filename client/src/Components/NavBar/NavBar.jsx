@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { useLocation } from "react-router-dom";
@@ -53,6 +53,7 @@ const Button = styled.button`
 `;
 
 export default function NavBar({ contacto, user, setUser }) {
+  const [link, setLink] = useState("");
   const scrollToSection = (elementRef) => {
     window.scrollTo({
       top: elementRef.current.offsetTop,
@@ -72,17 +73,29 @@ export default function NavBar({ contacto, user, setUser }) {
 
   return (
     <Container>
-      <NavLink to="/">
-        <Span>Home</Span>
-      </NavLink>
+      {location.slice(0, 6) === "/admin" ? (
+        <NavLink to={"/admin"}>
+          <Span>Home</Span>
+        </NavLink>
+      ) : (
+        <NavLink to={"/"}>
+          <Span>Home</Span>
+        </NavLink>
+      )}
 
       {/* <NavLink to="/">
         <Span>About</Span>
       </NavLink> */}
 
-      <NavLink to="/tienda">
-        <Span>Tienda</Span>
-      </NavLink>
+      {location.slice(0, 6) === "/admin" ? (
+        <NavLink to={"/admin/tienda"}>
+          <Span>Tienda</Span>
+        </NavLink>
+      ) : (
+        <NavLink to={"tienda"}>
+          <Span>Tienda</Span>
+        </NavLink>
+      )}
 
       <Span onClick={() => scrollToSection(contacto)}>Contacto</Span>
 
@@ -90,31 +103,40 @@ export default function NavBar({ contacto, user, setUser }) {
         <Span>Blog</Span>
       </NavLink> */}
 
-      {location !== "/login" ? (
+      {location !== `${link}login` ? (
         <Login>
-          <NavLink to="/carrito">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="16"
-              height="16"
-              fill="currentColor"
-              className="bi bi-bag"
-              viewBox="0 0 16 16"
-            >
-              <path d="M8 1a2.5 2.5 0 0 1 2.5 2.5V4h-5v-.5A2.5 2.5 0 0 1 8 1zm3.5 3v-.5a3.5 3.5 0 1 0-7 0V4H1v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V4h-3.5zM2 5h12v9a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V5z" />
-            </svg>
-          </NavLink>
-
-          {console.log(
-            user && user,
-            "xd?",
-            user && Object.entries(user).length === 0
+          {location.slice(0, 6) === "/admin" ? (
+            <NavLink to={"/admin/carrito"}>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="16"
+                height="16"
+                fill="currentColor"
+                className="bi bi-bag"
+                viewBox="0 0 16 16"
+              >
+                <path d="M8 1a2.5 2.5 0 0 1 2.5 2.5V4h-5v-.5A2.5 2.5 0 0 1 8 1zm3.5 3v-.5a3.5 3.5 0 1 0-7 0V4H1v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V4h-3.5zM2 5h12v9a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V5z" />
+              </svg>
+            </NavLink>
+          ) : (
+            <NavLink to={"/carrito"}>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="16"
+                height="16"
+                fill="currentColor"
+                className="bi bi-bag"
+                viewBox="0 0 16 16"
+              >
+                <path d="M8 1a2.5 2.5 0 0 1 2.5 2.5V4h-5v-.5A2.5 2.5 0 0 1 8 1zm3.5 3v-.5a3.5 3.5 0 1 0-7 0V4H1v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V4h-3.5zM2 5h12v9a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V5z" />
+              </svg>
+            </NavLink>
           )}
 
           {user && Object.entries(user).length !== 0 ? (
             <Usuario user={user} setUser={setUser} />
           ) : (
-            <NavLink to="/login">
+            <NavLink to={"/login"}>
               <Button>Login</Button>
             </NavLink>
           )}

@@ -5,10 +5,13 @@ import {
   getCategorias,
   postProducto,
   postCategoria,
+  getDetail,
+  putProducto,
 } from "../../Redux/actions";
 import "./CrearProducto.css";
 import styled from "styled-components";
 import validate from "./validaciones.js";
+import { useParams } from "react-router-dom";
 
 const Container = styled.div`
   display: flex;
@@ -85,6 +88,8 @@ const Button = styled.button`
 export default function CrearProducto() {
   const dispatch = useDispatch();
   const categorías = useSelector((state) => state.categorias);
+  const { id } = useParams();
+  const detalle = useSelector((state) => state.detalle);
 
   const [categorias, setCategorias] = useState([]),
     [errors, setErrors] = useState({}),
@@ -99,6 +104,23 @@ export default function CrearProducto() {
     [categoria, setCategoria] = useState({ nombre: "" }),
     [cambio, setCambio] = useState(false),
     [imageSelected, setImageSelected] = useState();
+
+  useEffect(() => {
+    if (id) dispatch(getDetail(id));
+  }, []);
+
+  useEffect(() => {
+    setPost({
+      ...post,
+      nombre: detalle.nombre,
+      descripcion: detalle.descripcion,
+      precio: detalle.precio,
+      imagen: detalle.imagen,
+      stock: detalle.stock,
+    });
+
+    setImageSelected(detalle.imagen);
+  }, [detalle]);
 
   useEffect(() => {
     dispatch(getCategorias());
@@ -206,8 +228,12 @@ export default function CrearProducto() {
     if (Object.values(errors).length > 0)
       alert("Por favor rellenar todos los campos");
     else {
-      dispatch(postProducto(post));
-      alert("¡Producto creado con éxito!");
+      if (id) {
+        dispatch(putProducto(id));
+      } else {
+        dispatch(postProducto(post));
+        alert("¡Producto creado con éxito!");
+      }
     }
   }
 
@@ -335,7 +361,12 @@ export default function CrearProducto() {
             )}
           </div>
         </Right>
-        <Button type="submit">¡Crear!</Button>
+
+        {id ? (
+          <Button type="submit">Modificar</Button>
+        ) : (
+          <Button type="submit">¡Crear!</Button>
+        )}
       </Form>
     </Container>
   );

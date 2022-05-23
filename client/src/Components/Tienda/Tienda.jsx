@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useLocation } from "react-router-dom";
 import { getProductos, getProductosFiltrados } from "../../Redux/actions/index";
 import { Producto, Paginado, Footer } from "../index";
 import "./Tienda.css";
@@ -160,6 +161,7 @@ function Shop({ contacto }) {
   const [pageSelected, setPageSelected] = useState(1);
   const [resVis, setResVis] = useState(0);
   const [flag, setFlag] = useState(false);
+  const location = useLocation();
 
   useEffect(() => {
     if (productos.length === 0) dispatch(getProductos());
@@ -267,6 +269,7 @@ function Shop({ contacto }) {
                     nombre={el.nombre}
                     precio={el.precio}
                     descripcion={el.descripcion}
+                    location={location}
                   />
                 );
               })}

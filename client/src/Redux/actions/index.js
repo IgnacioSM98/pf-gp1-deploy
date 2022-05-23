@@ -95,6 +95,14 @@ export function postProducto(payload) {
   };
 }
 
+export function putProducto(id) {
+  return function (dispatch) {
+    axios.put(`/admin/${id}`).then((res) => {
+      dispatch({ type: "PUT_PRODUCTO", payload: res.data });
+    });
+  };
+}
+
 export function postCategoria(payload) {
   return async function () {
     let json = await axios.post(`${urlBase}${categorias}/${crear}`, payload);

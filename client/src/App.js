@@ -20,6 +20,8 @@ function App() {
   const productos = useSelector((state) => state.productos);
   const contacto = useRef(null);
   const [user, setUser] = useState();
+  const homeRoutes = ["/", "/admin"];
+  const tiendaRoutes = ["/tienda", "/admin/tienda"];
 
   useEffect(() => {
     localStorage.removeItem("productos");
@@ -45,13 +47,22 @@ function App() {
       <NavBar contacto={contacto} user={user} setUser={setUser} />
       <div className="App">
         <Routes>
-          <Route exact path="/" element={<Home contacto={contacto} />} />
+          {homeRoutes.map((path) => (
+            <Route exact path={path} element={<Home contacto={contacto} />} />
+          ))}
+
+          {tiendaRoutes.map((path) => (
+            <Route exact path={path} element={<Tienda contacto={contacto} />} />
+          ))}
+
+          <Route exact path="/productos/:id" element={<DetalleProducto />} />
+
           <Route
             exact
-            path="/tienda"
-            element={<Tienda contacto={contacto} />}
+            path="/admin/productos/:id"
+            element={<CrearProducto />}
           />
-          <Route exact path="/productos/:id" element={<DetalleProducto />} />
+
           <Route exact path="/carrito" element={<Carrito />} />
           <Route exact path="/blog" element={<Blog contacto={contacto} />} />
           <Route exact path="/usuario" element={<Cuenta />} />

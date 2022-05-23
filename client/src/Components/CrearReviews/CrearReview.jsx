@@ -75,8 +75,6 @@ export default function CrearReview({ state, id, setFormReview }) {
     });
   };
 
-  console.log(input);
-
   let handleSubmit = (e) => {
     e.preventDefault();
     dispatch(postReviews(id, input));

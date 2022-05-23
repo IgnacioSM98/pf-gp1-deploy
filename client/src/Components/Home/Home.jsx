@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { Boton, Producto } from "../index";
 import styled from "styled-components";
@@ -73,7 +73,7 @@ const Header = styled.div`
 
 export default function Home({ contacto }) {
   const productos = useSelector((state) => state.productos);
-
+  const location = useLocation();
   const [destacados, setDestacados] = useState();
   const [width, setWidth] = useState(window.innerWidth);
 
@@ -141,6 +141,7 @@ export default function Home({ contacto }) {
                   nombre={producto.nombre}
                   precio={producto.precio}
                   descripcion={producto.descripcion}
+                  location={location}
                 />
               );
             })}

@@ -140,6 +140,12 @@ export default function rootReducer(state = initialState, action) {
         reviews: action.payload,
       };
 
+    // case "PUT_PRODUCTO":
+    //devolver productos, pero con el producto modificado en base al id
+    // return{
+    //   ...state,
+    //   productos: state.productos
+    // }
     default:
       return state;
   }
