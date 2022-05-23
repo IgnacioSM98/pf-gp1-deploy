@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Boton, Producto } from "../index";
 import styled from "styled-components";
 import "./Home.css";
 import Footer from "../Footer/Footer";
 import ScrollToTop from "../ScrollToTop/ScrollToTop";
+import { getProductos } from "../../Redux/actions";
 
 const Container = styled.div`
   height: 100vh;
@@ -73,9 +74,19 @@ const Header = styled.div`
 
 export default function Home({ contacto }) {
   const productos = useSelector((state) => state.productos);
+  const dispatch = useDispatch();
   const location = useLocation();
   const [destacados, setDestacados] = useState();
   const [width, setWidth] = useState(window.innerWidth);
+
+  useEffect(() => {
+    localStorage.removeItem("productos");
+    dispatch(getProductos());
+  }, []);
+
+  useEffect(() => {
+    localStorage.setItem("productos", JSON.stringify(productos));
+  }, [productos]);
 
   useEffect(() => {
     const handleResize = () => setWidth(window.innerWidth);

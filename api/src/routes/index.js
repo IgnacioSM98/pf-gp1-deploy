@@ -228,7 +228,7 @@ router.post("/crear", async (req, res) => {
   try {
     const { id, nombre, apellido, dni, direccion, contraseña, telefono, mail } =
       req.body;
-    const usuario = await Usuarios.create({
+    const usuario = await Usuario.create({
       id: id,
       nombre: nombre,
       apellido: apellido,

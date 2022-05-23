@@ -176,9 +176,9 @@ function Shop({ contacto }) {
     setPages(Math.ceil(productos.length / 9));
   }, [productos]);
 
-  // useEffect(() => {
-  //   setPages(Math.ceil(productosFiltrados.filter(filterDropdown).length / 9));
-  // }, [selected]);
+  useEffect(() => {
+    setPages(Math.ceil(productosFiltrados.filter(filterDropdown).length / 9));
+  }, [selected]);
 
   const filterPerPages = (food, i) => {
     if (i >= 9 * (pageSelected - 1) && i <= 9 * pageSelected - 1) {
@@ -209,15 +209,20 @@ function Shop({ contacto }) {
     dispatch(getProductosFiltrados(arrayAux));
   }
 
-  // const filterDropdown = (food) => {
-  //   if (!selected || food.diets?.includes(selected.toLowerCase())) {
-  //     return food;
-  //   }
+  const filterDropdown = (producto) => {
+    if (
+      !selected ||
+      producto.categoria.find(
+        (cate) => cate.nombre.toLowerCase() === selected.toLocaleLowerCase()
+      )
+    ) {
+      return producto;
+    }
 
-  //   if (selected === "DEFAULT") {
-  //     return food;
-  //   }
-  // };
+    if (selected === "DEFAULT") {
+      return producto;
+    }
+  };
 
   return (
     <Container>
@@ -259,8 +264,11 @@ function Shop({ contacto }) {
             )}
 
             {productosFiltrados &&
-              productosFiltrados.filter(filterPerPages).map((el) => {
-                if (el.stock > 0) {
+              productosFiltrados
+                .filter(filterDropdown)
+                .filter(filterPerPages)
+                .map((el) => {
+                  if (el.stock > 0) {
                   return (
                     <Producto
                       key={el.id}
@@ -271,7 +279,8 @@ function Shop({ contacto }) {
                       stock={el.stock}
                       descripcion={el.descripcion}
                       location={location}
-                    />
+                      categorias={el.categoria}
+                   />
                   );
                 }
               })}

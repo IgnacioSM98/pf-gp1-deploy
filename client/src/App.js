@@ -23,18 +23,19 @@ function App() {
   const homeRoutes = ["/", "/admin"];
   const tiendaRoutes = ["/tienda", "/admin/tienda"];
 
-  useEffect(() => {
-    localStorage.removeItem("productos");
-    dispatch(getProductos());
-  }, [dispatch]);
+  // useEffect(() => {
+  //   localStorage.removeItem("productos");
+  //   console.log("pls dont make him sing this one");
+  //   dispatch(getProductos());
+  // }, []);
 
   useEffect(() => {
     dispatch(getCategorias());
   }, [dispatch]);
 
-  useEffect(() => {
-    localStorage.setItem("productos", JSON.stringify(productos));
-  }, [productos]);
+  // useEffect(() => {
+  //   localStorage.setItem("productos", JSON.stringify(productos));
+  // }, [productos]);
 
   useEffect(() => {
     if (user) {
