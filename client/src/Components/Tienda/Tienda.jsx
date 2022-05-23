@@ -268,6 +268,7 @@ function Shop({ contacto }) {
                 .filter(filterDropdown)
                 .filter(filterPerPages)
                 .map((el) => {
+                  if (el.stock > 0) {
                   return (
                     <Producto
                       key={el.id}
@@ -279,9 +280,10 @@ function Shop({ contacto }) {
                       descripcion={el.descripcion}
                       location={location}
                       categorias={el.categoria}
-                    />
+                   />
                   );
-                })}
+                }
+              })}
           </ProductosTienda>
           {pages > 0 ? (
             <Paginado pages={pages} setPageSelected={setPageSelected} />
