@@ -104,7 +104,16 @@ export function postProducto(payload) {
 export function putProducto(id) {
   return function (dispatch) {
     axios.put(`/admin/${id}`).then((res) => {
-      dispatch({ type: "PUT_PRODUCTO", payload: res.data });
+      console.log(res.data, "xd?put");
+      // dispatch({ type: "PUT_PRODUCTO", payload: res.data });
+    });
+  };
+}
+
+export function deleteProducto(id) {
+  return function (dispatch) {
+    axios.delete(`/admin/${id}`).then((res) => {
+      dispatch({ type: "DELETE_PRODUCTO", payload: res.data });
     });
   };
 }

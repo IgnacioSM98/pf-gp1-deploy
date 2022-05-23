@@ -160,6 +160,24 @@ export default function rootReducer(state = initialState, action) {
     //   ...state,
     //   productos: state.productos
     // }
+    case "DELETE_PRODUCTO":
+      let productosAux = [...state.productosFiltrados];
+
+      const index = productosAux.findIndex((producto) => {
+        return producto.id === action.payload;
+      });
+
+      productosAux = productosAux
+        .slice(0, index)
+        .concat(productosAux.slice(index + 1));
+      console.log(productosAux, "uwuaux");
+      localStorage.setItem("foods", productosAux);
+
+      return {
+        ...state,
+        productos: productosAux,
+        productosFiltrados: productosAux,
+      };
     default:
       return state;
   }
