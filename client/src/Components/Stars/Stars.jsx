@@ -5,14 +5,25 @@ const Container = styled.div`
   display: flex;
   justify-content: space-around;
   align-items: center;
-  width: 140px;
-  margin-left: 2px;
+  width: 90px;
+  height: 25px;
+  margin-left: -3px;
   border-radius: 5px 5px 5px 5px;
-  background-color: #80808030;
+  position: relative;
+`;
+
+const StarBorder = styled.span`
+  font-size: 17px;
+  font-family: initial;
+  color: black;
+  position: absolute;
+  z-index: 1;
 `;
 
 const Star = styled.span`
-  font-size: 22px;
+  font-size: 10px;
+  font-family: initial;
+  z-index: 2;
 `;
 
 const Button = styled.button`
@@ -20,23 +31,12 @@ const Button = styled.button`
   border: none;
   outline: none;
   cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;
 
-export default function StarRating({ inputs, setInputs }) {
-  // const [inputs, setInputs] = useState(props);
-  const [puntaje, setPuntaje] = useState(0);
-  const [hover, setHover] = useState(0);
-
-  useEffect(() => {
-    setPuntaje(1);
-    // eslint-disable-next-line
-  }, []);
-
-  useEffect(() => {
-    setInputs({ ...inputs, puntaje });
-    // eslint-disable-next-line
-  }, [puntaje]);
-
+export default function StarRating({ rating }) {
   return (
     <Container>
       {[...Array(5)].map((star, index) => {
@@ -46,14 +46,12 @@ export default function StarRating({ inputs, setInputs }) {
             type="button"
             key={index}
             style={
-              index <= (hover || puntaje)
-                ? { color: "yellow" }
-                : { color: "lightgrey" }
+              index <= rating
+                ? { color: "black", cursor: "auto" }
+                : { color: "white", cursor: "auto" }
             }
-            onClick={() => setPuntaje(index)}
-            onMouseEnter={() => setHover(index)}
-            onMouseLeave={() => setHover(puntaje)}
           >
+            <StarBorder>&#9733;</StarBorder>
             <Star>&#9733;</Star>
           </Button>
         );

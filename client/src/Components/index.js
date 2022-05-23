@@ -3,7 +3,8 @@ import Blog from "./Blog/Blog";
 import Carrito from "./Carrito/Carrito";
 import Cuenta from "./Cuenta/Cuenta";
 import Tienda from "./Tienda/Tienda";
-import StarRating from "./Stars/Stars";
+import StarRating from "./Stars/StarRating";
+import Stars from "./Stars/Stars";
 import CrearProducto from "./CrearProducto/CrearProducto";
 import NavBar from "./NavBar/NavBar";
 import Footer from "./Footer/Footer";
@@ -28,6 +29,7 @@ export {
   NavBar,
   Footer,
   StarRating,
+  Stars,
   Login,
   Boton,
   Producto,

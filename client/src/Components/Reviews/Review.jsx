@@ -1,57 +1,76 @@
 import React from "react";
 import styled from "styled-components";
+import { Stars } from "../index";
 
 const Container = styled.div`
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  height: 184px;
+  // justify-content: flex-start;
+  align-items: start;
+
+  height: 144px;
   width: 292px;
-  background-color: #f5f5f5;
+
+  background-color: lightgrey;
   margin: 0.5rem;
-  border-radius: 10px;
-  box-shadow: 0 2px 2px 0 black, 2px 2px 2px 2px darkgray;
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-size: 15px;
 `;
 
-const Stars = styled.div`
-  display: flex;
-  color: black;
-`;
-
-const ContenedorEstrPun = styled.div`
-  display: flex;
-  flex-direction: row;
-  justify-content: space-evenly;
-  margin-bottom: 10px;
-  font-size: 28px;
-  color: black;
-`;
+// const Stars = styled.div`
+//   display: flex;
+//   color: black;
+//   font-family: initial;
+//   font-size: 15px;
+// `;
 
 const Comentario = styled.p`
-  font-size: 22px;
-  font-family: Poppins;
+  font-size: 16px;
+  font-weight: 500;
+  text-align: initial;
 `;
 
-export default function Review({ puntaje, comentario }) {
+const ComentarioDetallado = styled.p`
+  margin-top: 4px;
+  font-size: 13px;
+  text-align: initial;
+`;
+
+const Fecha = styled.p`
+  font-size: 10px;
+`;
+
+const Titulo = styled.div`
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+`;
+
+export default function Review({
+  puntaje,
+  comentario,
+  comentarioDetallado,
+  fecha,
+}) {
   return (
     <Container>
-      <ContenedorEstrPun>
-        <Stars>
-          {[...Array(5)].map((star, index) => (
-            <span style={{ textShadow: "1px 1px black" }} key={index}>
-              &#9733;
-            </span>
-          ))}
-        </Stars>
-
-        <div className="puntaje-review">
-          <h3>{puntaje}</h3>
-        </div>
-      </ContenedorEstrPun>
-
-      <div className="comentario-review">
+      <Titulo>
+        {/* Comentario corto */}
         <Comentario>{comentario}</Comentario>
-      </div>
+        <Fecha>{fecha}</Fecha>
+      </Titulo>
+
+      {puntaje && <Stars rating={puntaje} />}
+
+      {/* Comentario largo // 168 maximo */}
+      {comentarioDetallado && (
+        <ComentarioDetallado>
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Eligendi,
+          quisquam eos ad nobis voluptate nulla? Amet quos commodi eligendi quam
+          reiciendis deleni
+        </ComentarioDetallado>
+      )}
     </Container>
   );
 }

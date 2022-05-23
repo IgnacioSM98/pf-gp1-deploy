@@ -24,7 +24,7 @@ export default function Producto({
   stock,
 }) {
   const dispatch = useDispatch();
-  const [showOptions, setOptions] = useState(false);
+  const [showOptions, setOptions] = useState({ button: false, popup: false });
 
   function agregarAlCarrito(e) {
     e.preventDefault();
@@ -36,31 +36,38 @@ export default function Producto({
 
   return (
     <LinkProduct to={`/productos/${id}`}>
-      <div className="container-producto">
+      <div
+        className="container-producto"
+        onMouseEnter={() => setOptions({ ...showOptions, button: true })}
+        onMouseLeave={() => setOptions({ popup: false, button: false })}
+      >
         <div className="container-foto">
           <img src={imagen} className="foto" />
         </div>
 
-        <button
-          style={{
-            position: "absolute",
-            top: "5px",
-            right: "5px",
-            width: "30px",
-            height: "30px",
-            borderRadius: "50px",
-            border: "none",
-            zIndex: "2",
-          }}
-          onClick={(e) => {
-            e.preventDefault();
-            setOptions(!showOptions);
-          }}
-        >
-          ...
-        </button>
+        {showOptions.button && (
+          <button
+            className="rodri"
+            style={{
+              position: "absolute",
+              top: "5px",
+              right: "5px",
+              width: "30px",
+              height: "30px",
+              borderRadius: "50px",
+              border: "none",
+              zIndex: "2",
+            }}
+            onClick={(e) => {
+              e.preventDefault();
+              setOptions({ ...showOptions, popup: !showOptions.popup });
+            }}
+          >
+            ...
+          </button>
+        )}
 
-        {showOptions ? (
+        {showOptions.popup && (
           <div
             style={{
               position: "absolute",
@@ -82,7 +89,7 @@ export default function Producto({
             <Button>Boton 2</Button>
             <Button>Boton 3</Button>
           </div>
-        ) : null}
+        )}
 
         <div className="nombre">
           <p>{nombre}</p>
