@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { useLocation } from "react-router-dom";
 import Usuario from "../Usuario/Usuario";
+import { useSelector } from "react-redux";
 
 const Container = styled.div`
   display: flex;
