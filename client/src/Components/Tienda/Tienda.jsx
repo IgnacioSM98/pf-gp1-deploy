@@ -260,18 +260,20 @@ function Shop({ contacto }) {
 
             {productosFiltrados &&
               productosFiltrados.filter(filterPerPages).map((el) => {
-                return (
-                  <Producto
-                    key={el.id}
-                    id={el.id}
-                    imagen={el.imagen}
-                    nombre={el.nombre}
-                    precio={el.precio}
-                    stock={el.stock}
-                    descripcion={el.descripcion}
-                    location={location}
-                  />
-                );
+                if (el.stock > 0) {
+                  return (
+                    <Producto
+                      key={el.id}
+                      id={el.id}
+                      imagen={el.imagen}
+                      nombre={el.nombre}
+                      precio={el.precio}
+                      stock={el.stock}
+                      descripcion={el.descripcion}
+                      location={location}
+                    />
+                  );
+                }
               })}
           </ProductosTienda>
           {pages > 0 ? (
