@@ -85,7 +85,7 @@ export default function ModalComp({children,  state , setStateModal}) {
             </ContainerTitulo>
             <Saludo>Hola!</Saludo>
             {children}
-            <Boton onClick={() => setStateModal(!state)}>Cerrar</Boton>
+            <Boton onClick={() => setStateModal(!state)}>Aceptar</Boton>
           </Modal>
         </ModalBack>
       )}
