@@ -3,7 +3,7 @@ import "./producto.css";
 import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { useDispatch } from "react-redux";
-import { agregarCarrito } from "../../Redux/actions";
+import { agregarCarrito, deleteProducto } from "../../Redux/actions";
 
 const LinkProduct = styled(Link)`
   text-decoration: none;
@@ -14,13 +14,26 @@ const Button = styled.button`
   height: 30px;
 `;
 
-export default function Producto({ id, imagen, nombre, precio, descripcion, location, producto, stock }) {
+export default function Producto({
+  id,
+  imagen,
+  nombre,
+  precio,
+  descripcion,
+  location,
+  producto,
+  stock,
+}) {
   const dispatch = useDispatch();
   const [showOptions, setOptions] = useState(false);
   const navigate = useNavigate();
 
   const handleEdit = () => {
     navigate(`/admin/productos/${id}`);
+  };
+
+  const handleDelete = () => {
+    dispatch(deleteProducto(id));
   };
 
   function agregarAlCarrito(e) {
@@ -79,7 +92,7 @@ export default function Producto({ id, imagen, nombre, precio, descripcion, loca
             <Button style={{ marginTop: "35px" }} onClick={handleEdit}>
               Editar producto
             </Button>
-            <Button>Eliminar producto</Button>
+            <Button onClick={handleDelete}>Eliminar producto</Button>
           </div>
         ) : null}
 
