@@ -154,6 +154,14 @@ export default function rootReducer(state = initialState, action) {
         ...state,
         carrito: [...state.carrito, productoSeleccionado],
       };
+    case "QUITAR_ITEM":
+      const data = state.carrito.filter(
+        (item) => item.id !== action.payload.id
+      );
+      return {
+        ...state,
+        carrito: data,
+      };
 
     // case "PUT_PRODUCTO":
     //devolver productos, pero con el producto modificado en base al id
