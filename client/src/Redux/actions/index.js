@@ -103,7 +103,7 @@ export function postProducto(payload) {
 
 export function putProducto(id, body) {
   return function (dispatch) {
-    axios.put(`${urlBase}admin/${id}`, body).then((res) => {
+    axios.put(`${urlBase}${admin}${id}`).then((res) => {
       dispatch({ type: "PUT_PRODUCTO", payload: res.data });
     });
   };

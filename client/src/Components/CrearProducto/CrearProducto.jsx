@@ -245,12 +245,13 @@ export default function CrearProducto() {
 
   function handleSubmit(e) {
     e.preventDefault();
-    if (Object.values(errors).length > 0)
-      // alert("Por favor rellenar todos los campos");
-      setStateModalProd(!stateModalProd);
-    else {
-      if (id) {
-        dispatch(putProducto(id, post));
+
+    if (id) {
+      dispatch(putProducto(id));
+      alert("¡Cambios realizados con éxito!");
+    } else {
+      if (Object.values(errors).length > 0) {
+        alert("Por favor rellenar todos los campos");
       } else {
         dispatch(postProducto(post));
         // alert("¡Producto creado con éxito!");
@@ -262,7 +263,11 @@ export default function CrearProducto() {
   return (
     <Container>
       <Form onSubmit={(e) => handleSubmit(e)}>
-        <h1 className="titulo-form">Completar todos los campos</h1>
+        {id ? (
+          <h1 className="titulo-form">Completar los campos a editar</h1>
+        ) : (
+          <h1 className="titulo-form">Completar todos los campos</h1>
+        )}
         <Left>
           <Input>
             <input

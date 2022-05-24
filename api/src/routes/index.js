@@ -1,7 +1,8 @@
 const { Router } = require("express");
 // Importar todos los routers;
 // Ejemplo: const authRouter = require('./auth.js');
-// const productosDB = require("../../assets/products.json");
+const productosDB = require("../../assets/products.json");
+const usuariosDB = require("../../assets/users.json");
 const { Producto, Categoria, Usuario, Rating } = require("../db");
 
 const router = Router();
@@ -226,10 +227,17 @@ router.get("/usuario/:id", async (req, res) => {
 
 router.post("/crear", async (req, res) => {
   try {
-    const { id, nombre, apellido, dni, direccion, contraseña, telefono, mail } =
-      req.body;
+    const {
+      nombre,
+      apellido,
+      dni,
+      direccion,
+      contraseña,
+      telefono,
+      mail,
+      isAdmin,
+    } = req.body;
     const usuario = await Usuario.create({
-      id: id,
       nombre: nombre,
       apellido: apellido,
       dni: dni,
@@ -237,15 +245,22 @@ router.post("/crear", async (req, res) => {
       contraseña: contraseña,
       telefono: telefono,
       mail: mail,
+      isAdmin: isAdmin,
     });
     res.status(200).send(console.log(usuario));
   } catch (error) {
-    res.status(200).send(error);
+    console.log(error);
+    res.status(400).send(error);
   }
 });
 
 router.post("/admin/crearorigen", async (req, res) => {
   const producto = await Producto.bulkCreate(productosDB);
+
+  res.status(200).send(producto);
+});
+router.post("/admin/crearusuarios", async (req, res) => {
+  const producto = await Usuario.bulkCreate(usuariosDB);
 
   res.status(200).send(producto);
 });
