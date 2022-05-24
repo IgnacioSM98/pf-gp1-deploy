@@ -1,6 +1,6 @@
 import "./App.css";
 import { useEffect, useRef, useState } from "react";
-import { getProductos, getCategorias } from "./Redux/actions/index";
+import { getProductos, getCategorias, getUser } from "./Redux/actions/index";
 import {
   Home,
   Tienda,
@@ -13,62 +13,37 @@ import {
   DetalleProducto,
 } from "./Components/index";
 import { Routes, Route } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 
 function App() {
   const dispatch = useDispatch();
-  const productos = useSelector((state) => state.productos);
   const contacto = useRef(null);
   const [user, setUser] = useState();
-  const homeRoutes = ["/", "/admin"];
-  const tiendaRoutes = ["/tienda", "/admin/tienda"];
-
-  // useEffect(() => {
-  //   localStorage.removeItem("productos");
-  //   console.log("pls dont make him sing this one");
-  //   dispatch(getProductos());
-  // }, []);
 
   useEffect(() => {
     dispatch(getCategorias());
+    dispatch(getUser());
   }, [dispatch]);
-
-  // useEffect(() => {
-  //   localStorage.setItem("productos", JSON.stringify(productos));
-  // }, [productos]);
-
-  useEffect(() => {
-    if (user) {
-      localStorage.setItem("user", JSON.stringify(user));
-    }
-  }, [user]);
 
   return (
     <div>
       <NavBar contacto={contacto} user={user} setUser={setUser} />
       <div className="App">
         <Routes>
-          {homeRoutes.map((path) => (
-            <Route exact path={path} element={<Home contacto={contacto} />} />
-          ))}
-
-          {tiendaRoutes.map((path) => (
-            <Route exact path={path} element={<Tienda contacto={contacto} />} />
-          ))}
-
+          <Route exact path={"/"} element={<Home contacto={contacto} />} />
           <Route exact path="/productos/:id" element={<DetalleProducto />} />
-
           <Route
             exact
-            path="/admin/productos/:id"
-            element={<CrearProducto />}
+            path={"/tienda"}
+            element={<Tienda contacto={contacto} />}
           />
-
+          <Route exact path="/productos/:id" element={<DetalleProducto />} />
+          <Route exact path="/edit/:id" element={<CrearProducto />} />
           <Route exact path="/carrito" element={<Carrito />} />
           <Route exact path="/blog" element={<Blog contacto={contacto} />} />
           <Route exact path="/usuario" element={<Cuenta />} />
-          <Route exact path="/admin" element={"admin"} />
-          <Route exact path="/admin/crear" element={<CrearProducto />} />
+          {/* <Route exact path="/admin" element={"admin"} /> */}
+          <Route exact path="/crear" element={<CrearProducto />} />
           <Route
             exact
             path="/login"

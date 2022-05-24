@@ -23,9 +23,9 @@ const Image = styled.img`
 export default function Usuario({ user, setUser }) {
   return (
     <Container>
-      <P>{user.displayName.split(" ")[0]}</P>
+      {user.displayName && <P>{user.displayName.split(" ")[0]}</P>}
 
-      <Image src={user.photoURL} alt="Profile Picture" />
+      {user.photoURL && <Image src={user.photoURL} alt="Profile Picture" />}
     </Container>
   );
 }

@@ -6,12 +6,12 @@ const initialState = {
   detalle: {},
   reviews: [],
   carrito: [],
+  user: true,
 };
 
 export default function rootReducer(state = initialState, action) {
   switch (action.type) {
     case "GET_PRODUCTOS":
-      console.log(action.payload, "afita");
       return {
         ...state,
         productos: action.payload,
@@ -146,14 +146,17 @@ export default function rootReducer(state = initialState, action) {
         ...state,
         reviews: action.payload,
       };
+
     case "AGREGAR_CARRITO":
       const productoSeleccionado = state.productos.find(
         (producto) => producto.id == action.payload
       );
+
       return {
         ...state,
         carrito: [...state.carrito, productoSeleccionado],
       };
+
     case "QUITAR_ITEM":
       const data = state.carrito.filter(
         (item) => item.id !== action.payload.id
@@ -164,17 +167,19 @@ export default function rootReducer(state = initialState, action) {
       };
 
     // case "PUT_PRODUCTO":
-    //devolver productos, pero con el producto modificado en base al id
-    // return{
-    //   ...state,
-    //   productos: state.productos
-    // }
+    //   return {
+    //     ...state,
+    //     productos: state.productos,
+    //   };
+
     case "DELETE_PRODUCTO":
       let productosAux = [...state.productosFiltrados];
 
       const index = productosAux.findIndex((producto) => {
-        return producto.id === action.payload;
+        return producto.id === Number(action.payload);
       });
+
+      localStorage.removeItem("productos");
 
       productosAux = productosAux
         .slice(0, index)
@@ -186,6 +191,12 @@ export default function rootReducer(state = initialState, action) {
         ...state,
         productos: productosAux,
         productosFiltrados: productosAux,
+      };
+
+    case "GET_USER":
+      return {
+        ...state,
+        user: action.payload.isAdmin,
       };
     default:
       return state;

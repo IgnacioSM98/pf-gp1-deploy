@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import GoogleButton from "react-google-button";
 import { app, authentication } from "../../firebase";
 import { signInWithPopup, GoogleAuthProvider } from "firebase/auth";
@@ -6,6 +6,8 @@ import "./LogInMethods.css";
 import styled from "styled-components";
 import google from "./Google.png";
 import { useNavigate } from "react-router-dom";
+import { getUser } from "../../Redux/actions";
+import { useDispatch, useSelector } from "react-redux";
 
 const Container = styled.div`
   background-image: url("https://i.blogs.es/b92620/cafe-cafeina/840_560.jpg");
@@ -35,7 +37,7 @@ const SignIn = styled.div`
   height: 75vh;
 `;
 
-const SignUp = styled.div`
+const SignUp = styled.form`
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -96,7 +98,12 @@ export default function Login({ setUser }) {
   const [isSignUp, setIsSignUp] = useState(false);
   const [flag, setFlag] = useState({});
   const navigate = useNavigate();
-  
+  const dispatch = useDispatch();
+  const nombreRef = useRef(null);
+  const apellidoRef = useRef(null);
+  const emailRef = useRef(null);
+  const passRef = useRef(null);
+
   const handleChange = (e) => {
     setFlag({
       ...flag,
@@ -108,7 +115,8 @@ export default function Login({ setUser }) {
     const provider = new GoogleAuthProvider();
 
     signInWithPopup(authentication, provider)
-      .then((result) => {
+      .then((res) => {
+        localStorage.setItem("user", JSON.stringify(res.user));
         navigate(-1);
       })
       .catch((error) => {
@@ -116,28 +124,44 @@ export default function Login({ setUser }) {
       });
   };
 
-  const createUser = (mail, pass) => {
+  const createUser = (mail, pass, nombre) => {
     app
       .auth()
       .createUserWithEmailAndPassword(mail, pass)
-      .then((res) => setUser(res));
+      .then((res) => {
+        res.user
+          .updateProfile({
+            displayName: nombre,
+          })
+          .then(() => {
+            localStorage.setItem("user", JSON.stringify(res.user));
+            setUser(res.user);
+          });
+      });
   };
 
   const logIn = (mail, pass) => {
     app
       .auth()
       .signInWithEmailAndPassword(mail, pass)
-      .then((res) => setUser(res));
+      .then((res) => {
+        localStorage.setItem("user", JSON.stringify(res.user));
+        setUser(res.user);
+      });
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    const mail = e.target.emailField.value;
-    const pass = e.target.passwordField.value;
+    const mail = emailRef.current.value;
+    const pass = passRef.current.value;
+    const nombre = nombreRef.current.value;
 
     if (isSignUp) {
-      createUser(mail, pass);
+      createUser(mail, pass, nombre);
+
+      // dispatch(getUser(mail));
+      navigate(-1);
     } else {
       logIn(mail, pass);
     }
@@ -158,9 +182,37 @@ export default function Login({ setUser }) {
         <Boton color="black" backgroundColor="white" type="submit">
           Iniciar Sesion
         </Boton>
+
+        <div className="grupo-login">
+          <input
+            className="input-login"
+            type="email"
+            id="emailField"
+            name="correo"
+            onChange={handleChange}
+          />
+          <span className="barra-login"></span>
+          <label className="label-login" htmlFor="emailField">
+            Correo
+          </label>
+        </div>
+
+        <div className="grupo-login">
+          <input
+            className="input-login"
+            type="password"
+            id="passwordField"
+            name="contraseña"
+            onChange={handleChange}
+          />
+          <span className="barra-login"></span>
+          <label className="label-login" htmlFor="passwordField">
+            Contraseña
+          </label>
+        </div>
         {/* </form> */}
       </SignIn>
-      <SignUp>
+      <SignUp onSubmit={handleSubmit}>
         <Titulo color="#08ce72" className="titulo-login">
           Crear Cuenta
         </Titulo>
@@ -175,17 +227,14 @@ export default function Login({ setUser }) {
             <div className="grupo-login" style={{ width: "150px" }}>
               <input
                 className="input-login"
-                type="email"
-                id="emailField"
+                type="text"
+                id="nombreField"
                 name="nombre"
+                ref={nombreRef}
                 onChange={handleChange}
               />
               <span className="barra-login"></span>
-              <label
-                className="label-login"
-                htmlFor="emailField"
-                hidden={flag.nombre}
-              >
+              <label className="label-login" htmlFor="nombreField">
                 Nombre
               </label>
             </div>
@@ -193,17 +242,14 @@ export default function Login({ setUser }) {
             <div className="grupo-login" style={{ width: "150px" }}>
               <input
                 className="input-login"
-                type="email"
-                id="emailField"
+                type="text"
+                id="apellidoField"
                 name="apellido"
+                ref={apellidoRef}
                 onChange={handleChange}
               />
               <span className="barra-login"></span>
-              <label
-                className="label-login"
-                htmlFor="emailField"
-                hidden={flag.apellido}
-              >
+              <label className="label-login" htmlFor="apellidoText">
                 Apellido
               </label>
             </div>
@@ -215,6 +261,7 @@ export default function Login({ setUser }) {
               type="email"
               id="emailField"
               name="correo"
+              ref={emailRef}
               onChange={handleChange}
             />
             <span className="barra-login"></span>
@@ -229,6 +276,7 @@ export default function Login({ setUser }) {
               type="password"
               id="passwordField"
               name="contraseña"
+              ref={passRef}
               onChange={handleChange}
             />
             <span className="barra-login"></span>
@@ -242,7 +290,7 @@ export default function Login({ setUser }) {
           color="white"
           backgroundColor="rgb(8, 206, 114)"
           className="boton-logedinmethods"
-          // onClick={() => setIsSignUp(!isSignUp)}
+          onClick={() => setIsSignUp(!isSignUp)}
         >
           {/* {isSignUp ? "Iniciar Sesion" : "Registrarse"} */}
           Registrarse
