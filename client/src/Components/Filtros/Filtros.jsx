@@ -48,7 +48,7 @@ export default function Filtros({ setSelected }) {
             handleOnChange(e);
           }}
         >
-          <option value="DEFAULT">Alphabetical Order</option>
+          <option value="DEFAULT">Ordenar por Nombre</option>
           <option value="A-Z">A - Z</option>
           <option value="Z-A">Z - A</option>
         </select>
@@ -60,10 +60,11 @@ export default function Filtros({ setSelected }) {
             handleOnChange(e);
           }}
         >
-          <option value="DEFAULT">Order by points</option>
-          <option value="Highest SpoonScore">Highest to lowest score</option>
-          <option value="Lowest SpoonScore">Lowest to highest score</option>
+          <option value="DEFAULT">Ordenar por Precio</option>
+          <option value="Highest SpoonScore">Mayor a menor</option>
+          <option value="Lowest SpoonScore">Menor a mayor </option>
         </select>
+
         <select
           name="diets"
           id="diets"
