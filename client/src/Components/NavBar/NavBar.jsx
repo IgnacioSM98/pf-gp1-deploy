@@ -88,6 +88,9 @@ export default function NavBar({ contacto, user, setUser }) {
   const carrito = useSelector((state) => state.carrito);
   const location = useLocation().pathname;
   const [userMenu, setMenu] = useState(false);
+  const countCarrito = carrito.filter((cv, i) => {
+    return i === carrito.findIndex((e) => e.id === cv.id);
+  }).length;
 
   const logOut = () => {
     localStorage.removeItem("user");
@@ -145,15 +148,16 @@ export default function NavBar({ contacto, user, setUser }) {
       {location !== `${link}login` ? (
         <Login>
           {location.slice(0, 6) === "/admin" ? (
-            <NavLink to={"/admin/carrito"}
+            <NavLink
+              to={"/admin/carrito"}
               style={{
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-            }}
-            title="Carrito"
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+              }}
+              title="Carrito"
             >
-              <span style={{ margin: "4px 2px" }}>{carrito.length}</span>
+              <span style={{ margin: "4px 2px" }}>{countCarrito}</span>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="16"
@@ -166,15 +170,16 @@ export default function NavBar({ contacto, user, setUser }) {
               </svg>
             </NavLink>
           ) : (
-            <NavLink to={"/carrito"}
-             style={{
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-            }}
-            title="Carrito"
+            <NavLink
+              to={"/carrito"}
+              style={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+              }}
+              title="Carrito"
             >
-              <span style={{ margin: "4px 2px" }}>{carrito.length}</span>
+              <span style={{ margin: "4px 2px" }}>{countCarrito}</span>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="16"
