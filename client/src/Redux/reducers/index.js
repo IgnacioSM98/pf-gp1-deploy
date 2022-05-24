@@ -146,14 +146,17 @@ export default function rootReducer(state = initialState, action) {
         ...state,
         reviews: action.payload,
       };
+
     case "AGREGAR_CARRITO":
       const productoSeleccionado = state.productos.find(
         (producto) => producto.id == action.payload
       );
+
       return {
         ...state,
         carrito: [...state.carrito, productoSeleccionado],
       };
+
     case "QUITAR_ITEM":
       const data = state.carrito.filter(
         (item) => item.id !== action.payload.id
@@ -169,6 +172,7 @@ export default function rootReducer(state = initialState, action) {
     //   ...state,
     //   productos: state.productos
     // }
+
     case "DELETE_PRODUCTO":
       let productosAux = [...state.productosFiltrados];
 

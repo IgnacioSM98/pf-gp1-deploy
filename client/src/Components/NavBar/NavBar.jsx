@@ -36,11 +36,11 @@ const UserButton = styled(Link)`
 
 const UserMenu = styled.div`
   position: absolute;
-  bottom: -70px;
+  bottom: -100px;
   color: white;
   right: 0;
   background-color: #000000f0;
-  height: 70px;
+  height: 100px;
   width: 170px;
   border-radius: 0px 0px 0px 10px;
   display: flex;
@@ -145,13 +145,14 @@ export default function NavBar({ contacto, user, setUser }) {
       {location !== `${link}login` ? (
         <Login>
           {location.slice(0, 6) === "/admin" ? (
-            <NavLink to={"/admin/carrito"}
+            <NavLink
+              to={"/admin/carrito"}
               style={{
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-            }}
-            title="Carrito"
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+              }}
+              title="Carrito"
             >
               <span style={{ margin: "4px 2px" }}>{carrito.length}</span>
               <svg
@@ -166,13 +167,14 @@ export default function NavBar({ contacto, user, setUser }) {
               </svg>
             </NavLink>
           ) : (
-            <NavLink to={"/carrito"}
-             style={{
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-            }}
-            title="Carrito"
+            <NavLink
+              to={"/carrito"}
+              style={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+              }}
+              title="Carrito"
             >
               <span style={{ margin: "4px 2px" }}>{carrito.length}</span>
               <svg
@@ -213,6 +215,10 @@ export default function NavBar({ contacto, user, setUser }) {
 
       {userMenu && (
         <UserMenu>
+          <UserButton to="/" onClick={() => setMenu(!userMenu)}>
+            {user ? "Modo Admin" : "Modo Invitado"}
+          </UserButton>
+
           <UserButton to="/cuenta" onClick={() => setMenu(!userMenu)}>
             Mi Cuenta
           </UserButton>
