@@ -111,9 +111,12 @@ export function putProducto(id, body) {
 
 export function deleteProducto(id) {
   return function (dispatch) {
-    axios.delete(`${urlBase}producto/${id}`).then((res) => {
-      dispatch({ type: "DELETE_PRODUCTO", payload: res.data });
-    });
+    axios
+      .delete(`${urlBase}producto/${id}`)
+      .then((res) => {
+        dispatch({ type: "DELETE_PRODUCTO", payload: res.data });
+      })
+      .catch((err) => console.log(err, "error delete"));
   };
 }
 

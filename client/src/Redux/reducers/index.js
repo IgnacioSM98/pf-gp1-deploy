@@ -175,10 +175,13 @@ export default function rootReducer(state = initialState, action) {
 
     case "DELETE_PRODUCTO":
       let productosAux = [...state.productosFiltrados];
+      console.log(action.payload);
 
       const index = productosAux.findIndex((producto) => {
         return producto.id === action.payload;
       });
+
+      localStorage.removeItem("productos");
 
       productosAux = productosAux
         .slice(0, index)
