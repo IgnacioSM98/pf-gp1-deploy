@@ -1,6 +1,6 @@
 import "./App.css";
 import { useEffect, useRef, useState } from "react";
-import { getProductos, getCategorias, getUser } from "./Redux/actions/index";
+import { getCategorias } from "./Redux/actions/index";
 import {
   Home,
   Tienda,
@@ -22,7 +22,6 @@ function App() {
 
   useEffect(() => {
     dispatch(getCategorias());
-    // dispatch(getUser());
   }, [dispatch]);
 
   return (

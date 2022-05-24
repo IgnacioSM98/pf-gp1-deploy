@@ -6,7 +6,7 @@ const initialState = {
   detalle: {},
   reviews: [],
   carrito: [],
-  user: true,
+  user: false,
 };
 
 export default function rootReducer(state = initialState, action) {
@@ -224,9 +224,17 @@ export default function rootReducer(state = initialState, action) {
       };
 
     case "GET_USER":
+      const usuario = action.payload.find((usuario) => {
+        if (usuario.mail === action.mail) {
+          return usuario.isAdmin;
+        }
+      });
+
+      const admin = usuario === undefined ? false : usuario.isAdmin;
+
       return {
         ...state,
-        user: action.payload.isAdmin,
+        user: admin,
       };
     default:
       return state;
