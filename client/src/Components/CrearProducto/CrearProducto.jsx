@@ -13,6 +13,7 @@ import styled from "styled-components";
 import validate from "./validaciones.js";
 import { useParams } from "react-router-dom";
 import { Modal } from "../index";
+import AgregarCategorias from "../AgregarCategorias/AgregarCategorias";
 
 const Container = styled.div`
   display: flex;
@@ -355,7 +356,7 @@ export default function CrearProducto() {
           </Input>
 
           <Input>
-            <select
+            {/* <select
               onChange={(e) => handleSelectCategorias(e)}
               className="barra"
               defaultValue="default"
@@ -372,7 +373,8 @@ export default function CrearProducto() {
                       {d.nombre}
                     </option>
                   ))}
-            </select>
+            </select> */}
+            <AgregarCategorias post={post} setPost={setPost} />
             {errors.categorías && <p>{errors.categorías}</p>}
           </Input>
 
