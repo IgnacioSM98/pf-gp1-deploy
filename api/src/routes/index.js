@@ -182,6 +182,7 @@ router.post("/categorias/crear", async (req, res) => {
 });
 
 router.post("/ratings/crear/:productoid", async (req, res) => {
+  console.log(req.body);
   try {
     const { puntaje, comentario, titulo } = req.body;
     const rating = await Rating.create({
@@ -226,10 +227,8 @@ router.get("/usuario/:id", async (req, res) => {
 });
 
 router.get("/usuarios", async (req, res) => {
-  const { mail } = req.body;
-
   try {
-    const usuario = await Usuario.findOne({ where: { mail } });
+    const usuario = await Usuario.findAll();
     res.status(200).send(usuario);
   } catch (error) {
     console.log(error);

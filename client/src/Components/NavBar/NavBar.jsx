@@ -2,7 +2,8 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import Usuario from "../Usuario/Usuario";
-import { useSelector } from "react-redux";
+import { getUser } from "../../Redux/actions";
+import { useSelector, useDispatch } from "react-redux";
 import { app } from "../../firebase";
 
 const Container = styled.div`
@@ -84,6 +85,7 @@ const Button = styled.button`
 
 export default function NavBar({ contacto, user, setUser }) {
   const carrito = useSelector((state) => state.carrito);
+  const dispatch = useDispatch();
   const [userMenu, setMenu] = useState(false);
   const countCarrito = carrito.filter((cv, i) => {
     return i === carrito.findIndex((e) => e.id === cv.id);
@@ -93,8 +95,10 @@ export default function NavBar({ contacto, user, setUser }) {
   const logOut = () => {
     localStorage.removeItem("user");
     app.auth().signOut();
+    dispatch(getUser());
     app.auth().onAuthStateChanged((user) => {
       setUser(user);
+      dispatch(getUser());
     });
   };
 
@@ -106,10 +110,13 @@ export default function NavBar({ contacto, user, setUser }) {
   };
 
   useEffect(() => {
+    console.log("aca esta vacio user", user);
     if (!user) {
       const userAux = JSON.parse(localStorage.getItem("user"));
 
       setUser(userAux);
+    } else {
+      dispatch(getUser(user.email));
     }
   }, []);
 

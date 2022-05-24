@@ -155,6 +155,7 @@ const TitCat = styled.h3`
   text-align: center;
   padding: 0px 5px;
 `;
+
 const InCat = styled.input`
   padding: 4px 0px;
   border: none;
@@ -196,6 +197,7 @@ export default function CrearProducto() {
 
   const [stateModalProd, setStateModalProd] = useState(false);
   const [stateModalCat, setStateModalCat] = useState(false);
+  const [stateModalPut, setStateModalPut] = useState(false);
 
   const [categorias, setCategorias] = useState([]),
     [errors, setErrors] = useState({}),
@@ -212,7 +214,18 @@ export default function CrearProducto() {
     [imageSelected, setImageSelected] = useState();
 
   useEffect(() => {
-    if (id) dispatch(getDetail(id));
+    if (id) {
+      dispatch(getDetail(id));
+    } else {
+      setPost({
+        nombre: "",
+        descripcion: "",
+        precio: 0,
+        imagen: "",
+        stock: 0,
+        categorias: [],
+      });
+    }
   }, []);
 
   useEffect(() => {
@@ -254,11 +267,8 @@ export default function CrearProducto() {
 
   function handleSub(e) {
     e.preventDefault();
-
     setCategorias([...categorias, categoria]);
-
     dispatch(postCategoria(categoria));
-
     setStateModalCat(!stateModalCat);
   }
 
@@ -341,13 +351,12 @@ export default function CrearProducto() {
 
     if (id) {
       dispatch(putProducto(id));
-      alert("¡Cambios realizados con éxito!");
+      setStateModalPut(!stateModalPut);
     } else {
       if (Object.values(errors).length > 0) {
-        alert("Por favor rellenar todos los campos");
+        setStateModalProd(!stateModalProd);
       } else {
         dispatch(postProducto(post));
-
         setStateModalProd(!stateModalProd);
       }
     }
@@ -491,7 +500,6 @@ export default function CrearProducto() {
             )}
           </Right>
         </Form>
-
         <Modal state={stateModalProd} setStateModal={setStateModalProd}>
           {Object.values(errors).length > 0 ? (
             <ParrafoAlerta>Por favor rellenar todos los campos</ParrafoAlerta>
@@ -501,6 +509,10 @@ export default function CrearProducto() {
         </Modal>
         <Modal state={stateModalCat} setStateModal={setStateModalCat}>
           <ParrafoCat>¡Categoría creada con éxito!</ParrafoCat>
+        </Modal>
+
+        <Modal state={stateModalPut} setStateModal={setStateModalPut}>
+          <ParrafoOk>¡Cambios realizados con éxito!</ParrafoOk>
         </Modal>
       </Container>
     </>

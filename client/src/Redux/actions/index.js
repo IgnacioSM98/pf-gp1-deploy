@@ -147,6 +147,7 @@ export function postReviews(id, payload) {
 
     return dispatch({
       type: "CREAR_REVIEW",
+      payload,
     });
   };
 }
@@ -170,9 +171,8 @@ export function quitarItem(idProducto) {
 export function getUser(mail) {
   return function (dispatch) {
     try {
-      axios(`${urlBase}usuarios`).then(
-        (res) => console.log(res.data)
-        // dispatch({ type: "GET_USER", payload: res.data })
+      axios(`${urlBase}usuarios`).then((res) =>
+        dispatch({ type: "GET_USER", payload: res.data, mail })
       );
     } catch (err) {
       console.log(err);
