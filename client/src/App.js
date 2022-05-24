@@ -49,11 +49,21 @@ function App() {
       <div className="App">
         <Routes>
           {homeRoutes.map((path) => (
-            <Route exact path={path} element={<Home contacto={contacto} />} />
+            <Route
+              exact
+              path={path}
+              key={path}
+              element={<Home contacto={contacto} />}
+            />
           ))}
 
           {tiendaRoutes.map((path) => (
-            <Route exact path={path} element={<Tienda contacto={contacto} />} />
+            <Route
+              exact
+              path={path}
+              key={path}
+              element={<Tienda contacto={contacto} />}
+            />
           ))}
 
           <Route exact path="/productos/:id" element={<DetalleProducto />} />
