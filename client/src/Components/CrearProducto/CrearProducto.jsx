@@ -165,6 +165,7 @@ export default function CrearProducto() {
 
   const [stateModalProd, setStateModalProd] = useState(false);
   const [stateModalCat, setStateModalCat] = useState(false);
+  const [stateModalPut, setStateModalPut] = useState(false);
 
   const [categorias, setCategorias] = useState([]),
     [errors, setErrors] = useState({}),
@@ -211,6 +212,10 @@ export default function CrearProducto() {
   }
 
   function handleInputCambio(e) {
+    if (e.key === "Enter") {
+      handleSub(e);
+    }
+
     setCategoria({
       id: categorias.length + 1,
       nombre: e.target.value,
@@ -221,7 +226,6 @@ export default function CrearProducto() {
     e.preventDefault();
     setCategorias([...categorias, categoria]);
     dispatch(postCategoria(categoria));
-    // alert("¡Categoría creada con éxito!");
     setStateModalCat(!stateModalCat);
   }
 
@@ -304,13 +308,12 @@ export default function CrearProducto() {
 
     if (id) {
       dispatch(putProducto(id));
-      alert("¡Cambios realizados con éxito!");
+      setStateModalPut(!stateModalPut);
     } else {
       if (Object.values(errors).length > 0) {
-        alert("Por favor rellenar todos los campos");
+        setStateModalProd(!stateModalProd);
       } else {
         dispatch(postProducto(post));
-        // alert("¡Producto creado con éxito!");
         setStateModalProd(!stateModalProd);
       }
     }
@@ -473,11 +476,15 @@ export default function CrearProducto() {
             <button onClick={handleOpenCategoria}>Crear Categoría</button>
 
             {cambio && (
-              <form onSubmit={(e) => handleSub(e)} className="form-create">
+              <div className="form-create">
                 <label>Nueva Categoría</label>
-                <input type="text" onChange={(e) => handleInputCambio(e)} />
-                <button type="submit">Crear</button>
-              </form>
+                <input
+                  type="text"
+                  onKeyDown={(e) => handleInputCambio(e)}
+                  onChange={(e) => handleInputCambio(e)}
+                />
+                <button onClick={(e) => handleSub(e)}>Crear</button>
+              </div>
             )}
           </div>
         </Right>
@@ -488,6 +495,7 @@ export default function CrearProducto() {
           <Button type="submit">¡Crear producto!</Button>
         )}
       </Form>
+
       <CrearCat>
         <TitCat>Crear Categoría</TitCat>
           <form onSubmit={(e) => handleSub(e)} className="form-create">
@@ -497,6 +505,7 @@ export default function CrearProducto() {
       
       </CrearCat>
       {/* <EliminarCategoria/> */}
+
       <Modal state={stateModalProd} setStateModal={setStateModalProd}>
         {Object.values(errors).length > 0 ? (
           <ParrafoAlerta>Por favor rellenar todos los campos</ParrafoAlerta>
@@ -506,6 +515,9 @@ export default function CrearProducto() {
       </Modal>
       <Modal state={stateModalCat} setStateModal={setStateModalCat}>
         <ParrafoCat>¡Categoría creada con éxito!</ParrafoCat>
+      </Modal>
+      <Modal state={stateModalPut} setStateModal={setStateModalPut}>
+        <ParrafoOk>¡Cambios realizados con éxito!</ParrafoOk>
       </Modal>
     </Container>
     </>

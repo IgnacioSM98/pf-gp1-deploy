@@ -6,7 +6,7 @@ const initialState = {
   detalle: {},
   reviews: [],
   carrito: [],
-  user: true,
+  user: false,
 };
 
 export default function rootReducer(state = initialState, action) {
@@ -169,11 +169,41 @@ export default function rootReducer(state = initialState, action) {
         carrito: data,
       };
 
-    // case "PUT_PRODUCTO":
-    //   return {
-    //     ...state,
-    //     productos: state.productos,
-    //   };
+    case "PUT_PRODUCTO":
+      const prods = [...state.productosFiltrados];
+
+      // localStorage.removeItem("productos");
+
+      prods.find((prod) => {
+        if (prod.id === action.payload.id) {
+          if (action.payload.nombre) {
+            prod.nombre = action.payload.nombre;
+          }
+          if (action.payload.precio) {
+            prod.precio = action.payload.precio;
+          }
+          if (action.payload.descripcion) {
+            prod.descripcion = action.payload.descripcion;
+          }
+          if (action.payload.imagen) {
+            prod.imagen = action.payload.imagen;
+          }
+          if (action.payload.stock) {
+            prod.stock = action.payload.stock;
+          }
+        }
+      });
+
+      console.log(prods);
+
+      break;
+
+    // localStorage.setItem("productos", JSON.stringify(productosAux));
+    // return {
+    //   ...state,
+    //   productos: state.productosFiltrados,
+    //   productosFiltrados: state.productosFiltrados,
+    // };
 
     case "DELETE_PRODUCTO":
       let productosAux = [...state.productosFiltrados];
@@ -197,9 +227,17 @@ export default function rootReducer(state = initialState, action) {
       };
 
     case "GET_USER":
+      const usuario = action.payload.find((usuario) => {
+        if (usuario.mail === action.mail) {
+          return usuario.isAdmin;
+        }
+      });
+
+      const admin = usuario === undefined ? false : usuario.isAdmin;
+
       return {
         ...state,
-        user: action.payload.isAdmin,
+        user: admin,
       };
     default:
       return state;
