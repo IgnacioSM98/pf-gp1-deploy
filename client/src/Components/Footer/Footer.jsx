@@ -104,13 +104,15 @@ export default function Footer({ contacto }) {
               url="https://instagram.com/infusion.store.pf"
               fgColor="black"
               bgColor="white"
+              target="_blank"
               style={{ height: 25, width: 25, margin: 5 }}
             />
 
             <Icon
-              url="https://facebook.com/jaketrent"
+              url="https://www.facebook.com/Infusion-Store-103226679074141"
               fgColor="black"
               bgColor="white"
+              target="_blank"
               style={{ height: 25, width: 25, margin: 5 }}
             />
 
@@ -118,6 +120,7 @@ export default function Footer({ contacto }) {
               url="https://twitter.com/jaketrent"
               fgColor="black"
               bgColor="white"
+              target="_blank"
               style={{ height: 25, width: 25, margin: 5 }}
             />
 

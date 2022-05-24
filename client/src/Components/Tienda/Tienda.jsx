@@ -161,11 +161,14 @@ function Shop({ contacto }) {
   const dispatch = useDispatch();
   const productos = useSelector((state) => state.productos);
   const productosFiltrados = useSelector((state) => state.productosFiltrados);
+  const admin = useSelector((state) => state.user);
+
   const [selected, setSelected] = useState("");
   const [pages, setPages] = useState(4);
   const [pageSelected, setPageSelected] = useState(1);
   const [resVis, setResVis] = useState(0);
   const [flag, setFlag] = useState(false);
+
   const location = useLocation();
 
   useEffect(() => {
@@ -186,7 +189,7 @@ function Shop({ contacto }) {
   }, [selected]);
 
   const filterPerPages = (producto, i) => {
-    if (location && location.pathname.slice(0, 6) === "/admin") {
+    if (admin) {
       if (Number(pageSelected) === 1) {
         if (i >= 8 * (pageSelected - 1) && i <= 8 * pageSelected - 1) {
           return producto;
@@ -282,9 +285,7 @@ function Shop({ contacto }) {
             ) : (
               <></>
             )}
-            {location && location.pathname.slice(0, 6) === "/admin" && (
-              <AgregarProducto />
-            )}
+            {admin && <AgregarProducto />}
 
             {productosFiltrados &&
               productosFiltrados

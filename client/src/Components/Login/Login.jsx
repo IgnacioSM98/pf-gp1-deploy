@@ -5,16 +5,20 @@ import LogInMethods from "./LogInMethods";
 import Footer from "../Footer/Footer";
 import ScrollToTop from "../ScrollToTop/ScrollToTop";
 
-export default function Login({ contacto, user, setUser }) {
-  useEffect(() => {
-    app.auth().onAuthStateChanged((user) => setUser(user));
+export default function Login({ contacto, setUser }) {
+  // useEffect(() => {
+  //   app.auth().onAuthStateChanged((user) => {
+  //     console.log("hola, login", user);
+  //     setUser(user);
+  //   });
 
-    window.scrollTo(0, 0);
-  }, []);
+  //   window.scrollTo(0, 0);
+  // }, []);
 
   return (
     <>
-      {user ? <LogedIn user={user} /> : <LogInMethods setUser={setUser} />}
+      {/* {user ? <LogedIn user={user} /> :  */}
+      <LogInMethods setUser={setUser} />
 
       <Footer contacto={contacto} />
       <ScrollToTop />

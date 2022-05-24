@@ -6,7 +6,7 @@ const initialState = {
   detalle: {},
   reviews: [],
   carrito: [],
-  user: {},
+  user: false,
 };
 
 export default function rootReducer(state = initialState, action) {
