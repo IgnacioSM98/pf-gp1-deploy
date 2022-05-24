@@ -89,6 +89,7 @@ export default function CrearReview({ state, id }) {
   let [input, setInput] = useState({
     puntaje: "",
     comentario: "",
+    titulo: "",
   });
 
   let handleInputChange = (e) => {
@@ -117,6 +118,7 @@ export default function CrearReview({ state, id }) {
         <Comentario
           type={"text"}
           name="titulo"
+          value={input.titulo}
           placeholder="Titulo"
           onChange={handleInputChange}
         ></Comentario>

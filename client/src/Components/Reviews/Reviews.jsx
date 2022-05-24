@@ -31,11 +31,15 @@ export default function Producto() {
       <Reviews>
         {reviews.length ? (
           reviews.map((review) => {
+            {
+              console.log(review);
+            }
             return (
               <Review
                 key={review.id}
                 id={review.id}
                 puntaje={review.puntaje}
+                titulo={review.titulo}
                 comentario={review.comentario}
                 fecha={review.updatedAt.slice(0, 10)}
               />

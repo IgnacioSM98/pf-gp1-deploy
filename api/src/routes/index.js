@@ -182,6 +182,7 @@ router.post("/categorias/crear", async (req, res) => {
 });
 
 router.post("/ratings/crear/:productoid", async (req, res) => {
+  console.log(req.body);
   try {
     const { puntaje, comentario, titulo } = req.body;
     const rating = await Rating.create({

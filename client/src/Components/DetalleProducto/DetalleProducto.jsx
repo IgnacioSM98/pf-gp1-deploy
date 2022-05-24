@@ -373,11 +373,13 @@ export default function DetalleProducto() {
               {detalle.stock ? (
                 <Boton
                   onClick={onClick}
+                  value="Agregar"
+                  disabled={false}
                   color={carrito ? "white" : "black"}
                   backcolor={carrito ? "black" : "#00000045"}
                   // borders={carrito ? "none" : null}
                 >
-                  {carrito ? "Agregar" : "Eliminar"}
+                  Agregar
                 </Boton>
               ) : null}
             </Botones>

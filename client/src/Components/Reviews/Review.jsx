@@ -47,30 +47,18 @@ const Titulo = styled.div`
   justify-content: space-between;
 `;
 
-export default function Review({
-  puntaje,
-  comentario,
-  comentarioDetallado,
-  fecha,
-}) {
+export default function Review({ puntaje, comentario, fecha, titulo }) {
   return (
     <Container>
       <Titulo>
-        {/* Comentario corto */}
-        <Comentario>{comentario}</Comentario>
+        <Comentario>{titulo}</Comentario>
         <Fecha>{fecha}</Fecha>
       </Titulo>
 
       {puntaje && <Stars rating={puntaje} />}
 
       {/* Comentario largo // 168 maximo */}
-      {comentarioDetallado && (
-        <ComentarioDetallado>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Eligendi,
-          quisquam eos ad nobis voluptate nulla? Amet quos commodi eligendi quam
-          reiciendis deleni
-        </ComentarioDetallado>
-      )}
+      {comentario && <ComentarioDetallado>{comentario}</ComentarioDetallado>}
     </Container>
   );
 }
