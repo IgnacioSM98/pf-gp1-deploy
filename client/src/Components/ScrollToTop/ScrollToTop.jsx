@@ -30,8 +30,6 @@ export default function ScrollToTop() {
       const scroll =
         document.documentElement.scrollHeight - window.innerHeight - 40;
 
-      console.log(window);
-
       if (window.scrollY > scroll) {
         setSrollTopBtn(true);
       } else {
