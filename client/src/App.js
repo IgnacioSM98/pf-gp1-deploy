@@ -22,7 +22,7 @@ function App() {
 
   useEffect(() => {
     dispatch(getCategorias());
-    dispatch(getUser());
+    // dispatch(getUser());
   }, [dispatch]);
 
   return (
