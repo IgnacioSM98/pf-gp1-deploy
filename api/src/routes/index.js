@@ -218,9 +218,19 @@ router.get("/usuario/:id", async (req, res) => {
   const idUsuario = req.params.id;
 
   try {
-    const usuario = await Usuarios.findByPk(idUsuario);
+    const usuario = await Usuario.findByPk(idUsuario);
     res.status(200).send(usuario);
   } catch (error) {
+    res.status(400).send(error);
+  }
+});
+
+router.get("/usuarios", async (req, res) => {
+  try {
+    const usuario = await Usuario.findAll();
+    res.status(200).send(usuario);
+  } catch (error) {
+    console.log(error);
     res.status(400).send(error);
   }
 });
