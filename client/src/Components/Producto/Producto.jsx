@@ -56,7 +56,7 @@ export default function Producto({
         <div className="container-foto">
           <img src={imagen} className="foto" alt="foto" />
         </div>
-        
+
         {showOptions.button && (
           <button
             style={{
@@ -108,14 +108,18 @@ export default function Producto({
         </div>
 
         <div className="descripcion">
-          <p>{descripcion}</p>
+          <p>
+            {descripcion.length > 210
+              ? descripcion.slice(0, 210) + " (Ver más)"
+              : descripcion}
+          </p>
         </div>
 
-        <div>
+        {/* <div>
           {categorias?.map((categoria) => (
             <p>{categoria.nombre}</p>
           ))}
-        </div>
+        </div> */}
 
         <div className="precio-boton">
           <p className="precio">${precio}</p>

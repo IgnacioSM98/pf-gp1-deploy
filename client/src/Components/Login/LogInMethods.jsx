@@ -96,7 +96,7 @@ export default function Login({ setUser }) {
   const [isSignUp, setIsSignUp] = useState(false);
   const [flag, setFlag] = useState({});
   const navigate = useNavigate();
-  
+
   const handleChange = (e) => {
     setFlag({
       ...flag,
@@ -158,6 +158,34 @@ export default function Login({ setUser }) {
         <Boton color="black" backgroundColor="white" type="submit">
           Iniciar Sesion
         </Boton>
+
+        <div className="grupo-login">
+          <input
+            className="input-login"
+            type="email"
+            id="emailField"
+            name="correo"
+            onChange={handleChange}
+          />
+          <span className="barra-login"></span>
+          <label className="label-login" htmlFor="emailField">
+            Correo
+          </label>
+        </div>
+
+        <div className="grupo-login">
+          <input
+            className="input-login"
+            type="password"
+            id="passwordField"
+            name="contraseña"
+            onChange={handleChange}
+          />
+          <span className="barra-login"></span>
+          <label className="label-login" htmlFor="passwordField">
+            Contraseña
+          </label>
+        </div>
         {/* </form> */}
       </SignIn>
       <SignUp>

@@ -11,10 +11,10 @@ import {
 import { CrearReview, Reviews as ProductReviews, Stars } from "../index";
 import styled from "styled-components";
 import cards from "../../Images/Cards/index";
-import { Relacionados } from "../index";
+import { Relacionado } from "../index";
 
 const Container = styled.div`
-  height: 100vh;
+  // height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -35,10 +35,11 @@ const Reviews = styled.div`
   height: 194px;
 `;
 
-const RelacionadosCont = styled.div`
+const RelacionadosContainer = styled.div`
   display: flex;
+  flex-direction: column;
+
   width: 100%;
-  flex-wrap: wrap;
 `;
 
 const Image = styled.img`
@@ -169,12 +170,6 @@ const Card = styled.img`
   object-fit: contain;
 `;
 
-// const Stars = styled.div`
-//   display: flex;
-//   color: white;
-//   font-size: 17px;
-// `;
-
 const Botones = styled.div`
   display: flex;
   width: 100%;
@@ -205,6 +200,22 @@ const FormRev = styled.button`
   width: 200px;
   padding: 2%;
   cursor: pointer;
+`;
+
+const Titulo = styled.span`
+  text-align: initial;
+  margin: 7px 10px 0px 10px;
+  font-size: 20px;
+  font-weight: 600;
+`;
+
+const Relacionados = styled.div`
+  display: flex;
+
+  // text-align: initial;
+  // margin-left: 10px;
+  // font-size: 20px;
+  // font-weight: 600;
 `;
 
 export default function DetalleProducto() {
@@ -379,14 +390,21 @@ export default function DetalleProducto() {
         <ProductReviews />
       </Reviews>
       <Bar style={{ width: "100%" }} />
-      <h1>Quienes vieron este producto también compraron</h1>
-      <p>si lo saque de mercadolibre xd</p>
-      <RelacionadosCont>
-        {relacionados &&
-          relacionados
-            .filter(filterCategorias)
-            .map((relacionado) => <Relacionados relacionado={relacionado} />)}
-      </RelacionadosCont>
+
+      <RelacionadosContainer>
+        <Titulo>Quienes vieron este producto también compraron</Titulo>
+        <Relacionados>
+          {relacionados &&
+            relacionados
+              .filter(filterCategorias)
+              .slice(0, 5)
+              .map((relacionado) => (
+                <Relacionado key={relacionado.id} relacionado={relacionado} />
+              ))}
+        </Relacionados>
+      </RelacionadosContainer>
+
+      <Bar style={{ width: "100%" }} />
     </Container>
   ) : (
     <></>
