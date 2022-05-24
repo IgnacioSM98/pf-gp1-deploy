@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import s from "styled-components";
 
@@ -6,33 +6,52 @@ const Container = s.div`
     display: flex;
     flex-direction: inherit;
     justify-content: end;
-    width: 320px;
-    margin: 0px 4px;
-    border-radius: 6px 6px 6px 6px;
-    border-width: 0;
-    background-color: #ffffff59;
-    height: 170px;
+     width: 100%;
+     height: 100%;
+    // margin: 0px 4px;
+    border-radius: 7px 7px 7px 7px;
+    border: none;
+    background-color: lightgrey;
+    height: 150px;
 `;
 
 const Button = s.button`
-    margin: 0px 4px 1px 4px;
+    margin: 0px 4px 10px 4px;
+    padding: 4px;
     border-radius: 5px 5px 5px 5px;
     border-width: 0;
     background-color: #ffffffc4;
-    font-size: 11px;
+    font-size: 12px;
 `;
 
 const Select = s.select`
-    width: 310px;
+    // width: 310px;
     margin: 2px 4px;
-    border-radius: 7px 7px 7px 7px;
+    border-radius: 3px 3px 3px 3px;
     border-width: 0;
+`;
+
+const Option = s.option`
+    // width: 310px;
+     margin: 2px 2px;
+     padding: 0px 4px;
+    //  border-radius: 5px 5px 5px 5px;
+    // border-width: 0;
 `;
 
 export default function AgregarCategorias({ setPost, post }) {
   const [selectedValue, setSelectedValue] = useState([]);
 
-  const categorias = useSelector((state) => state.categorias);
+  var categorias = useSelector((state) => state.categorias);
+
+  useEffect(() => {
+    categorias = categorias.sort(function (a, b) {
+      var x = a.nombre.toLowerCase();
+      var y = b.nombre.toLowerCase();
+
+      return x < y ? -1 : x > y ? 1 : 0;
+    });
+  }, [categorias]);
 
   const handleChange = ({ target }) => {
     const categoria = categorias?.filter(
@@ -85,21 +104,21 @@ export default function AgregarCategorias({ setPost, post }) {
         name="select"
         id=""
         multiple="multiple"
-        size={3}
+        size={6}
         onChange={(e) => handleChange(e)}
       >
         {categorias[0] ? (
           categorias.map((categoria) => (
-            <option
+            <Option
               value={categoria.nombre}
               key={categoria.id}
               disabled={selectedValue.length > 2 ? true : false}
             >
               {categoria.nombre}
-            </option>
+            </Option>
           ))
         ) : (
-          <option>Loading...</option>
+          <Option>Loading...</Option>
         )}
       </Select>
     </Container>

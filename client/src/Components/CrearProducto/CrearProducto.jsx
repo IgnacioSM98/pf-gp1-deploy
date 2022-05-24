@@ -21,12 +21,13 @@ const Container = styled.div`
   // flex-direction: column;
   // justify-content: space-between;
   // margin-bottom: 2em;
+  height: 80vh;
 `;
 const Encabezado = styled.div`
   padding-top: 5em;
 `;
 const Titulo = styled.h2`
-  color: #107994;
+  color: #4b6650;
   margin-bottom: 10px;
 `;
 
@@ -41,53 +42,82 @@ const Form = styled.form`
   padding: 10px 0;
   border-radius: 10px;
   box-shadow: 0 0 6px 0 rgba(255, 255, 255, 0.8);
+  height: 100%;
 `;
 
 const Left = styled.div`
   display: flex;
   flex-direction: column;
   width: 35%;
-  height: 80vh;
-  justify-content: center;
+  height: 100%;
+  // justify-content: center;
   align-items: center;
   margin-top: 50px;
   border: 2px solid black;
   border-radius: 8px;
+  justify-content: space-evenly;
 `;
 
 const Right = styled.div`
   display: flex;
   flex-direction: column;
   width: 30%;
-  height: 80vh;
-  justify-content: center;
+  height: 100%;
+  // justify-content: center;
   align-items: center;
   margin-top: 50px;
   border: 2px solid black;
   border-radius: 8px;
+  position: relative;
 `;
 
 const Input = styled.div`
   position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
   margin: 30px;
   width: 80%;
 `;
 
+const Errors = styled.span`
+  position: absolute;
+  bottom: -20px;
+  width: 100%;
+
+  left: 0;
+  // white-space: nowrap;
+  font-size: 12px;
+  font-weight: 500;
+  color: #951414d9;
+`;
+
 const SelectorImagen = styled.input`
-  width: 355px;
-  height: 40px;
+  width: 90%;
+  height: 300px;
+  left: 5%;
+  right: 5%;
   margin: auto;
+  position: absolute;
+  color: transparent;
+  // background-color: red;
+  z-index: 0;
 `;
 
 const Imagen = styled.img`
-  height: 400px;
-  width: 350px;
+  height: 300px;
+  width: 90%;
   object-fit: cover;
+  background-color: grey;
+  z-index: 2;
 `;
 
 const Button = styled.button`
   position: absolute;
-  top: 660px;
+  // top: 660px;
+  bottom: 35px;
+  width: 80%;
   background: #37563d;
   // /* fallback for old browsers */
   // background: -webkit-linear-gradient(to left, #190a05, #870000);
@@ -95,7 +125,7 @@ const Button = styled.button`
   // background: linear-gradient(to left, #190a05, #870000);
   // /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
   display: block;
-  width: 300px;
+  // width: 300px;
   height: 40px;
   border: none;
   color: white;
@@ -111,16 +141,23 @@ const SelectCat = styled.select`
   border: 1px solid black;
   border-radius: 6px;
 `;
+
 const CrearCat = styled.div`
   position: absolute;
-  top: 880px;
-  left: 240px;
-  padding-bottom: 3em;
+  bottom: 15%;
+  width: 80%;
+  left: 10%;
+  right: 10%;
+  // padding-bottom: 3em;
 `;
+
 const TitCat = styled.h3`
-  text-align: left;
+  text-align: center;
+  padding: 0px 5px;
 `;
+
 const InCat = styled.input`
+  padding: 4px 0px;
   border: none;
   border-bottom: 1px solid black;
 `;
@@ -167,9 +204,9 @@ export default function CrearProducto() {
     [post, setPost] = useState({
       nombre: "",
       descripcion: "",
-      precio: 0,
+      // precio: 0,
       imagen: "",
-      stock: 0,
+      // stock: 1,
       categorias: [],
     }),
     [categoria, setCategoria] = useState({ nombre: "" }),
@@ -328,20 +365,26 @@ export default function CrearProducto() {
   return (
     <>
       <Encabezado>
-        <Titulo>¡Agrega tus productos!</Titulo>
-        <p>
-          Recorda completar todo los campos y la imagen para guardar tu nuevo
-          producto.
-        </p>
+        {id ? (
+          <Titulo>Editar Producto</Titulo>
+        ) : (
+          <Titulo>¡Agrega tus productos!</Titulo>
+        )}
+
+        {id ? (
+          <p>
+            Recorda que no podés dejar campos incompletos antes de guardar tu
+            producto.
+          </p>
+        ) : (
+          <p>
+            Recorda completar todo los campos y la imagen para guardar tu nuevo
+            producto.
+          </p>
+        )}
       </Encabezado>
       <Container>
         <Form onSubmit={(e) => handleSubmit(e)}>
-          {/* <h1 className="titulo-form">Completar todos los campos</h1> */}
-          {id ? (
-            <h1 className="titulo-form">Completar los campos a editar</h1>
-          ) : (
-            <h1 className="titulo-form">Completar todos los campos</h1>
-          )}
           <Left>
             <Input>
               <input
@@ -354,7 +397,7 @@ export default function CrearProducto() {
               />
               <span className="barra"></span>
               <label className="label">Nombre</label>
-              {errors.nombre && <p>{errors.nombre}</p>}
+              {errors.nombre && <Errors>{errors.nombre}</Errors>}
             </Input>
 
             <Input>
@@ -368,7 +411,7 @@ export default function CrearProducto() {
               />
               <span className="barra"></span>
               <label className="label">Descripción</label>
-              {errors.descripción && <p>{errors.descripción}</p>}
+              {errors.descripción && <Errors>{errors.descripción}</Errors>}
             </Input>
 
             <Input>
@@ -383,7 +426,7 @@ export default function CrearProducto() {
               />
               <span className="barra"></span>
               <label className="label">Precio</label>
-              {errors.precio && <p>{errors.precio}</p>}
+              {errors.precio && <Errors>{errors.precio}</Errors>}
             </Input>
 
             <Input>
@@ -398,28 +441,12 @@ export default function CrearProducto() {
               />
               <span className="barra"></span>
               <label className="label">Stock</label>
-              {errors.stock && <p>{errors.stock}</p>}
+              {errors.stock && <Errors>{errors.stock}</Errors>}
             </Input>
-            <Input>
-              <SelectCat
-                onChange={(e) => handleSelectCategorias(e)}
-                className="barra"
-                defaultValue="default"
-              >
-                <option value="default" disabled>
-                  Elegir categorías
-                </option>
 
-                {categorias &&
-                  categorias
-                    .filter((categoria) => categoria.nombre)
-                    .map((d) => (
-                      <option value={d.nombre} key={d.id}>
-                        {d.nombre}
-                      </option>
-                    ))}
-              </SelectCat>
-              {errors.categorías && <p>{errors.categorías}</p>}
+            <Input>
+              <AgregarCategorias post={post} setPost={setPost} />
+              {errors.categorías && <Errors>{errors.categorías}</Errors>}
             </Input>
           </Left>
 
@@ -428,7 +455,7 @@ export default function CrearProducto() {
               <input
                 className="input-create"
                 type="text"
-                placeholder=" "
+                placeholder="Imagen desde URL o archivo local"
                 value={post.imagen}
                 name="imagen"
                 onChange={(e) => {
@@ -436,85 +463,43 @@ export default function CrearProducto() {
                   setImageSelected(e.target.value);
                 }}
               />
+              <div style={{ margin: "20px 0px" }}>
+                <SelectorImagen
+                  className="input-create"
+                  type="file"
+                  name="imagen"
+                  placeholder=" "
+                  onChange={(e) => {
+                    handleImageChange(e);
+                  }}
+                />
 
-              <SelectorImagen
-                className="input-create"
-                type="file"
-                name="imagen"
-                placeholder=" "
-                onChange={(e) => {
-                  handleImageChange(e);
-                }}
-              />
+                <Imagen src={imageSelected} />
+              </div>
 
-              <Imagen src={imageSelected} />
-
-              {/* <label className="label">Imagen desde URL o archivo local</label> */}
-              {/* <span className="barra"></span> */}
-
-              {errors.imagen && <p>{errors.imagen}</p>}
+              {errors.imagen && <Errors>{errors.imagen}</Errors>}
             </Input>
 
-            <Input>
-              {/* <select
-              onChange={(e) => handleSelectCategorias(e)}
-              className="barra"
-              defaultValue="default"
-            >
-              <option value="default" disabled>
-                Elegir categorías
-              </option>
+            <CrearCat>
+              <TitCat>Crear Categoría</TitCat>
+              <div className="form-create">
+                <InCat
+                  placeholder="Escribir nueva categoria"
+                  type="text"
+                  onKeyDown={(e) => handleInputCambio(e)}
+                  onChange={(e) => handleInputCambio(e)}
+                />
+                <ButtonCat onClick={(e) => handleSub(e)}>Agregar</ButtonCat>
+              </div>
+            </CrearCat>
 
-              {categorias &&
-                categorias
-                  .filter((categoria) => categoria.nombre)
-                  .map((d) => (
-                    <option value={d.nombre} key={d.id}>
-                      {d.nombre}
-                    </option>
-                  ))}
-            </select> */}
-              <AgregarCategorias post={post} setPost={setPost} />
-              {errors.categorías && <p>{errors.categorías}</p>}
-            </Input>
-
-            <div>
-              <button onClick={handleOpenCategoria}>Crear Categoría</button>
-
-              {cambio && (
-                <div className="form-create">
-                  <label>Nueva Categoría</label>
-                  <input
-                    type="text"
-                    onKeyDown={(e) => handleInputCambio(e)}
-                    onChange={(e) => handleInputCambio(e)}
-                  />
-                  <button onClick={(e) => handleSub(e)}>Crear</button>
-                </div>
-              )}
-            </div>
+            {id ? (
+              <Button type="submit">Editar producto</Button>
+            ) : (
+              <Button type="submit">¡Crear producto!</Button>
+            )}
           </Right>
-
-          {id ? (
-            <Button type="submit">Modificar producto</Button>
-          ) : (
-            <Button type="submit">¡Crear producto!</Button>
-          )}
         </Form>
-
-        <CrearCat>
-          <TitCat>Crear Categoría</TitCat>
-          <form onSubmit={(e) => handleSub(e)} className="form-create">
-            <InCat
-              placeholder="Escribir nueva categoria"
-              type="text"
-              onChange={(e) => handleInputCambio(e)}
-            />
-            <ButtonCat type="submit">Agregar</ButtonCat>
-          </form>
-        </CrearCat>
-        {/* <EliminarCategoria/> */}
-
         <Modal state={stateModalProd} setStateModal={setStateModalProd}>
           {Object.values(errors).length > 0 ? (
             <ParrafoAlerta>Por favor rellenar todos los campos</ParrafoAlerta>
@@ -525,6 +510,7 @@ export default function CrearProducto() {
         <Modal state={stateModalCat} setStateModal={setStateModalCat}>
           <ParrafoCat>¡Categoría creada con éxito!</ParrafoCat>
         </Modal>
+
         <Modal state={stateModalPut} setStateModal={setStateModalPut}>
           <ParrafoOk>¡Cambios realizados con éxito!</ParrafoOk>
         </Modal>
