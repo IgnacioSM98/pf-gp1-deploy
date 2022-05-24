@@ -190,27 +190,6 @@ function Shop({ contacto }) {
     setPages(Math.ceil(productosFiltrados.filter(filterDropdown).length / 9));
   }, [selected]);
 
-  const filterPerPages = (producto, i) => {
-    if (admin) {
-      if (Number(pageSelected) === 1) {
-        if (i >= 8 * (pageSelected - 1) && i <= 8 * pageSelected - 1) {
-          return producto;
-        }
-      } else {
-        if (
-          i >= 8 * (pageSelected - 1) &&
-          i <= 9 * pageSelected - pageSelected
-        ) {
-          return producto;
-        }
-      }
-    } else {
-      if (i >= 9 * (pageSelected - 1) && i <= 9 * pageSelected - 1) {
-        return producto;
-      }
-    }
-  };
-
   function onChangeHandle(e) {
     const value = e.target.value;
 
@@ -233,6 +212,32 @@ function Shop({ contacto }) {
     });
     dispatch(getProductosFiltrados(arrayAux));
   }
+
+  const filterStock = (producto) => {
+    if (producto.stock > 0) return producto;
+  };
+
+  const filterPerPages = (producto, i) => {
+    if (admin) {
+      if (Number(pageSelected) === 1) {
+        if (i >= 8 * (pageSelected - 1) && i <= 8 * pageSelected - 1) {
+          return producto;
+        }
+      } else {
+        if (
+          i >= 8 * (pageSelected - 1) &&
+          i <= 9 * pageSelected - pageSelected
+        ) {
+          return producto;
+        }
+      }
+    } else {
+      if (i >= 9 * (pageSelected - 1) && i <= 9 * pageSelected - 1) {
+        console.log(i, producto.nombre);
+        return producto;
+      }
+    }
+  };
 
   const filterDropdown = (producto) => {
     if (
@@ -284,30 +289,30 @@ function Shop({ contacto }) {
             {flag && productosFiltrados.length === 0 && (
               <p>No se encontraron resultados</p>
             )}
+
             {admin && <AgregarProducto />}
-              <AgregarProducto />
-            )}
 
             {productosFiltrados &&
               productosFiltrados
+                .filter(filterStock)
                 .filter(filterDropdown)
                 .filter(filterPerPages)
                 .map((el) => {
-                  if (el.stock > 0) {
-                    return (
-                      <Producto
-                        key={el.id}
-                        id={el.id}
-                        imagen={el.imagen}
-                        nombre={el.nombre}
-                        precio={el.precio}
-                        stock={el.stock}
-                        descripcion={el.descripcion}
-                        location={location}
-                        categorias={el.categoria}
-                      />
-                    );
-                  }
+                  // if (el.stock > 0) {
+                  return (
+                    <Producto
+                      key={el.id}
+                      id={el.id}
+                      imagen={el.imagen}
+                      nombre={el.nombre}
+                      precio={el.precio}
+                      stock={el.stock}
+                      descripcion={el.descripcion}
+                      location={location}
+                      categorias={el.categoria}
+                    />
+                  );
+                  // }
                 })}
           </ProductosTienda>
           {pages > 0 ? (
