@@ -120,6 +120,7 @@ export default function Login({ setUser }) {
       .then((res) => {
         localStorage.setItem("user", JSON.stringify(res.user));
         setUser(res.user);
+        dispatch(getUser(res.user.email));
         navigate(-1);
       })
       .catch((error) => {
@@ -139,6 +140,7 @@ export default function Login({ setUser }) {
           .then(() => {
             localStorage.setItem("user", JSON.stringify(res.user));
             setUser(res.user);
+            dispatch(getUser(mail));
             navigate(-1);
           });
       });
@@ -150,6 +152,7 @@ export default function Login({ setUser }) {
       .signInWithEmailAndPassword(mail, pass)
       .then((res) => {
         localStorage.setItem("user", JSON.stringify(res.user));
+        dispatch(getUser(mail));
         setUser(res.user);
         navigate(-1);
       });
@@ -166,9 +169,6 @@ export default function Login({ setUser }) {
 
     if (isSignUp) {
       createUser(mail, pass, nombre);
-
-      // dispatch(getUser(mail));
-      navigate(-1);
     } else {
       logIn(mailL, passL);
     }
