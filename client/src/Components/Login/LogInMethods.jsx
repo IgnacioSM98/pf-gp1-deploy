@@ -115,7 +115,8 @@ export default function Login({ setUser }) {
     const provider = new GoogleAuthProvider();
 
     signInWithPopup(authentication, provider)
-      .then(() => {
+      .then((res) => {
+        localStorage.setItem("user", JSON.stringify(res.user));
         navigate(-1);
       })
       .catch((error) => {
@@ -128,9 +129,14 @@ export default function Login({ setUser }) {
       .auth()
       .createUserWithEmailAndPassword(mail, pass)
       .then((res) => {
-        res.user.updateProfile({
-          displayName: nombre,
-        });
+        res.user
+          .updateProfile({
+            displayName: nombre,
+          })
+          .then(() => {
+            localStorage.setItem("user", JSON.stringify(res.user));
+            setUser(res.user);
+          });
       });
   };
 
@@ -138,7 +144,10 @@ export default function Login({ setUser }) {
     app
       .auth()
       .signInWithEmailAndPassword(mail, pass)
-      .then((res) => setUser(res));
+      .then((res) => {
+        localStorage.setItem("user", JSON.stringify(res.user));
+        setUser(res.user);
+      });
   };
 
   const handleSubmit = (e) => {
