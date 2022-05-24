@@ -27,12 +27,8 @@ export default function ScrollToTop() {
 
   useEffect(() => {
     window.addEventListener("scroll", () => {
-      // console.log(
-      //   window.innerHeight,
-      //   document.documentElement.scrollHeight,
-      //   window.scrollY
-      // );
-      const scroll = window.innerHeight - 80;
+      const scroll =
+        document.documentElement.scrollHeight - window.innerHeight - 40;
 
       if (window.scrollY > scroll) {
         setSrollTopBtn(true);

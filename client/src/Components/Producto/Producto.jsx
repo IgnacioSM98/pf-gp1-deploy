@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import "./producto.css";
 import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { agregarCarrito, deleteProducto } from "../../Redux/actions";
 
 const LinkProduct = styled(Link)`
@@ -26,12 +26,12 @@ export default function Producto({
   categorias,
 }) {
   const dispatch = useDispatch();
-
+  const admin = useSelector((state) => state.user);
   const [showOptions, setOptions] = useState({ button: false, popup: false });
   const navigate = useNavigate();
 
   const handleEdit = () => {
-    navigate(`/admin/productos/${id}`);
+    navigate(`/edit/${id}`);
   };
 
   const handleDelete = () => {
@@ -50,8 +50,12 @@ export default function Producto({
     <LinkProduct to={`/productos/${id}`}>
       <div
         className="container-producto"
-        onMouseEnter={() => setOptions({ ...showOptions, button: true })}
-        onMouseLeave={() => setOptions({ popup: false, button: false })}
+        onMouseEnter={() => {
+          if (admin) setOptions({ ...showOptions, button: true });
+        }}
+        onMouseLeave={() => {
+          if (admin) setOptions({ popup: false, button: false });
+        }}
       >
         <div className="container-foto">
           <img src={imagen} className="foto" alt="foto" />
