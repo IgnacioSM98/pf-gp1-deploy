@@ -226,8 +226,10 @@ router.get("/usuario/:id", async (req, res) => {
 });
 
 router.get("/usuarios", async (req, res) => {
+  const { mail } = req.body;
+
   try {
-    const usuario = await Usuario.findAll();
+    const usuario = await Usuario.findOne({ where: { mail } });
     res.status(200).send(usuario);
   } catch (error) {
     console.log(error);

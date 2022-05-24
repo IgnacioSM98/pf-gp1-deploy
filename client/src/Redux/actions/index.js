@@ -162,8 +162,9 @@ export function quitarItem(idProducto) {
 
 export function getUser(mail) {
   return function (dispatch) {
-    // axios(`${urlBase}`, mail).then((res) =>
-    dispatch({ type: "GET_USER", payload: false });
-    // );
+    axios(`${urlBase}usuarios`).then(
+      (res) => console.log(res.data)
+      // dispatch({ type: "GET_USER", payload: res.data })
+    );
   };
 }
