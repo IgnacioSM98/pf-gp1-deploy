@@ -166,11 +166,12 @@ export default function rootReducer(state = initialState, action) {
         carrito: data,
       };
 
-    // case "PUT_PRODUCTO":
-    //   return {
-    //     ...state,
-    //     productos: state.productos,
-    //   };
+    case "PUT_PRODUCTO":
+      // devolver productos, pero con el producto modificado en base al id
+      return {
+        ...state,
+        productos: state.productos,
+      };
 
     case "DELETE_PRODUCTO":
       let productosAux = [...state.productosFiltrados];
