@@ -165,6 +165,7 @@ export default function CrearProducto() {
 
   const [stateModalProd, setStateModalProd] = useState(false);
   const [stateModalCat, setStateModalCat] = useState(false);
+  const [stateModalPut, setStateModalPut] = useState(false);
 
   const [categorias, setCategorias] = useState([]),
     [errors, setErrors] = useState({}),
@@ -223,11 +224,8 @@ export default function CrearProducto() {
 
   function handleSub(e) {
     e.preventDefault();
-
     setCategorias([...categorias, categoria]);
-
     dispatch(postCategoria(categoria));
-
     setStateModalCat(!stateModalCat);
   }
 
@@ -310,13 +308,12 @@ export default function CrearProducto() {
 
     if (id) {
       dispatch(putProducto(id));
-      alert("¡Cambios realizados con éxito!");
+      setStateModalPut(!stateModalPut);
     } else {
       if (Object.values(errors).length > 0) {
-        alert("Por favor rellenar todos los campos");
+        setStateModalProd(!stateModalProd);
       } else {
         dispatch(postProducto(post));
-
         setStateModalProd(!stateModalProd);
       }
     }
@@ -518,6 +515,9 @@ export default function CrearProducto() {
       </Modal>
       <Modal state={stateModalCat} setStateModal={setStateModalCat}>
         <ParrafoCat>¡Categoría creada con éxito!</ParrafoCat>
+      </Modal>
+      <Modal state={stateModalPut} setStateModal={setStateModalPut}>
+        <ParrafoOk>¡Cambios realizados con éxito!</ParrafoOk>
       </Modal>
     </Container>
     </>

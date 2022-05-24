@@ -139,7 +139,7 @@ export default function rootReducer(state = initialState, action) {
         productos: productosPrecio,
       };
     case "CREAR_REVIEW":
-      return [...state];
+      return {...state};
 
     case "GET_REVIEWS":
       return {

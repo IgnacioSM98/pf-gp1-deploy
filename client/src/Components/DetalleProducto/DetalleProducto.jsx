@@ -223,8 +223,8 @@ export default function DetalleProducto() {
   const dispatch = useDispatch();
   const location = useLocation();
 
-  const [formReview, setFormReview] = useState(false),
-    [carrito, setCarrito] = useState(true),
+ 
+  const [carrito, setCarrito] = useState(true),
     [cantidad, setCantidad] = useState(1),
     [boton, setBoton] = useState({ suma: false, resta: true }),
     [relacionados, setRelacionados] = useState([]);
@@ -386,7 +386,7 @@ export default function DetalleProducto() {
       </Details>
       <Bar style={{ width: "100%" }} />
       <Reviews>
-        <CrearReview id={id} state={formReview} />
+        <CrearReview id={id} />
         <ProductReviews />
       </Reviews>
       <Bar style={{ width: "100%" }} />

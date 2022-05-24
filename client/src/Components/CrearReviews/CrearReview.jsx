@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { postReviews } from "../../Redux/actions";
-import { StarRating } from "../index";
+import { StarRating, Modal } from "../index";
 import styled from "styled-components";
 import send from "../../Images/Send.png";
 
@@ -84,8 +84,15 @@ const Image = styled.img`
   }
 `;
 
-export default function CrearReview({ state, id }) {
+const ParrafoOk = styled.p`
+  font-size: 20px;
+  font-weight: bold;
+`;
+
+export default function CrearReview({ id }) {
   let dispatch = useDispatch();
+  const [stateModalOpinion, setStateModalOpinion] = useState(false);
+
   let [input, setInput] = useState({
     puntaje: "",
     comentario: "",
@@ -101,7 +108,7 @@ export default function CrearReview({ state, id }) {
   let handleSubmit = (e) => {
     e.preventDefault();
     dispatch(postReviews(id, input));
-    alert("opinion enviada");
+    setStateModalOpinion(!stateModalOpinion)
   };
 
   return (
@@ -132,6 +139,9 @@ export default function CrearReview({ state, id }) {
           rows="10"
         ></ComentarioDetallado>
       </Formulario>
+      <Modal state={stateModalOpinion} setStateModal={setStateModalOpinion}>
+        <ParrafoOk>¡Opinion enviada con exito!</ParrafoOk>
+      </Modal>
     </Container>
   );
 }
