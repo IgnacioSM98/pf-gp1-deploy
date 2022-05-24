@@ -7,7 +7,7 @@ import ScrollToTop from "../ScrollToTop/ScrollToTop";
 
 export default function Login({ contacto, user, setUser }) {
   useEffect(() => {
-    app.auth().onAuthStateChanged((user) => setUser(user));
+    app.auth().onAuthStateChanged((user) => console.log(user));
 
     window.scrollTo(0, 0);
   }, []);
