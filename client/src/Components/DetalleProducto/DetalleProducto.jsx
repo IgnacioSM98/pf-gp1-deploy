@@ -398,9 +398,16 @@ export default function DetalleProducto() {
             relacionados
               .filter(filterCategorias)
               .slice(0, 5)
-              .map((relacionado) => (
-                <Relacionado key={relacionado.id} relacionado={relacionado} />
-              ))}
+              .map((relacionado) => {
+                if (Number(relacionado.id) !== Number(id)) {
+                  return (
+                    <Relacionado
+                      key={relacionado.id}
+                      relacionado={relacionado}
+                    />
+                  );
+                }
+              })}
         </Relacionados>
       </RelacionadosContainer>
 

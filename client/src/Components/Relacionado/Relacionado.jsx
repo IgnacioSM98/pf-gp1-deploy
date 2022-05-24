@@ -57,6 +57,7 @@ const LinkProduct = styled(Link)`
 export default function Relacionado({ relacionado }) {
   return (
     <Container>
+      {console.log(relacionado, "tuki")}
       {/* <LinkProduct to={`/productos/${relacionado.id}`}> */}
       <Image src={relacionado.imagen} alt="" />
       <Precio>{`$${relacionado.precio}`}</Precio>

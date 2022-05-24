@@ -167,11 +167,40 @@ export default function rootReducer(state = initialState, action) {
       };
 
     case "PUT_PRODUCTO":
-      // devolver productos, pero con el producto modificado en base al id
-      return {
-        ...state,
-        productos: state.productos,
-      };
+      const prods = [...state.productosFiltrados];
+
+      // localStorage.removeItem("productos");
+
+      prods.find((prod) => {
+        if (prod.id === action.payload.id) {
+          if (action.payload.nombre) {
+            prod.nombre = action.payload.nombre;
+          }
+          if (action.payload.precio) {
+            prod.precio = action.payload.precio;
+          }
+          if (action.payload.descripcion) {
+            prod.descripcion = action.payload.descripcion;
+          }
+          if (action.payload.imagen) {
+            prod.imagen = action.payload.imagen;
+          }
+          if (action.payload.stock) {
+            prod.stock = action.payload.stock;
+          }
+        }
+      });
+
+      console.log(prods);
+
+      break;
+
+    // localStorage.setItem("productos", JSON.stringify(productosAux));
+    // return {
+    //   ...state,
+    //   productos: state.productosFiltrados,
+    //   productosFiltrados: state.productosFiltrados,
+    // };
 
     case "DELETE_PRODUCTO":
       let productosAux = [...state.productosFiltrados];
