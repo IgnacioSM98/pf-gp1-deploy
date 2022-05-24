@@ -147,6 +147,7 @@ export function postReviews(id, payload) {
 
     return dispatch({
       type: "CREAR_REVIEW",
+      payload,
     });
   };
 }
