@@ -63,6 +63,7 @@ const LetraFiltro = styled.p`
 
 const ProductosTienda = styled.div`
   width: 840px;
+  min-height: 600px;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   grid-gap: 20px 60px;
