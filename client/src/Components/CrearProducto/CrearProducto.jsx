@@ -177,7 +177,7 @@ export default function CrearProducto() {
       categorias: [],
     }),
     [categoria, setCategoria] = useState({ nombre: "" }),
-    // [cambio, setCambio] = useState(false),
+     [cambio, setCambio] = useState(false),
     [imageSelected, setImageSelected] = useState();
 
   useEffect(() => {
@@ -205,10 +205,10 @@ export default function CrearProducto() {
     setCategorias(categorías);
   }, [categorías]);
 
-  // function handleOpenCategoria(e) {
-  //   e.preventDefault();
-  //   cambio ? setCambio(false) : setCambio(true);
-  // }
+   function handleOpenCategoria(e) {
+    e.preventDefault();
+     cambio ? setCambio(false) : setCambio(true);
+  }
 
   function handleInputCambio(e) {
     setCategoria({
