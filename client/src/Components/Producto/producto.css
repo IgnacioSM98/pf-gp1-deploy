@@ -21,12 +21,13 @@
 
 .container-foto {
   margin: 10px;
+  height: 130px;
   background-color: white;
   border-radius: 5px 5px 5px 5px;
 }
 
 .nombre {
-  font-size: 20px;
+  font-size: 18px;
   font-family: Poppins;
   font-weight: 550;
   text-align: left;

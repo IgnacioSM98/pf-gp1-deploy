@@ -30,6 +30,7 @@ function App() {
       <div className="App">
         <Routes>
           <Route exact path={"/"} element={<Home contacto={contacto} />} />
+          <Route exact path="/productos/:id" element={<DetalleProducto />} />
           <Route
             exact
             path={"/tienda"}

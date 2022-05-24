@@ -62,6 +62,7 @@ const LetraFiltro = styled.p`
 `;
 
 const ProductosTienda = styled.div`
+  width: 840px;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   grid-gap: 20px 60px;
@@ -110,13 +111,14 @@ const Header = styled.div`
 
 const Marco = styled.div`
   width: 95%;
-  height: 20vh;
+  height: 90%;
   z-index: 3;
   border: 1px solid black;
   position: absolute;
-  top: 10px;
-  left: 20px;
-  right: 20px;
+  top: 5%;
+  bottom: 5%;
+  left: 2.5%;
+  right: 2.5%;
   margin: auto;
   border-color: white;
   border-radius: 8px;
@@ -279,13 +281,12 @@ function Shop({ contacto }) {
         </FiltrosCont>
         <div>
           <ProductosTienda>
-            {flag && productosFiltrados.length === 0 ? (
-              //poner foto 404
-              <p>tuki</p>
-            ) : (
-              <></>
+            {flag && productosFiltrados.length === 0 && (
+              <p>No se encontraron resultados</p>
             )}
             {admin && <AgregarProducto />}
+              <AgregarProducto />
+            )}
 
             {productosFiltrados &&
               productosFiltrados
