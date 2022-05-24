@@ -3,7 +3,8 @@ import Blog from "./Blog/Blog";
 import Carrito from "./Carrito/Carrito";
 import Cuenta from "./Cuenta/Cuenta";
 import Tienda from "./Tienda/Tienda";
-import StarRating from "./Stars/Stars";
+import StarRating from "./Stars/StarRating";
+import Stars from "./Stars/Stars";
 import CrearProducto from "./CrearProducto/CrearProducto";
 import NavBar from "./NavBar/NavBar";
 import Footer from "./Footer/Footer";
@@ -20,7 +21,7 @@ import Filtros from "./Filtros/Filtros";
 import Modal from "./Modal/Modal";
 import EliminarCategoria from "./EliminarCategoria/EliminarCategoria.jsx";
 import AgregarProducto from "./AgregarProducto/AgregarProducto";
-import Relacionados from "./Relacionados/Relacionados";
+import Relacionado from "./Relacionado/Relacionado";
 
 export {
   Home,
@@ -32,6 +33,7 @@ export {
   NavBar,
   Footer,
   StarRating,
+  Stars,
   Login,
   Boton,
   Producto,
@@ -45,5 +47,5 @@ export {
   Filtros,
   AgregarProducto,
   Modal,
-  Relacionados,
+  Relacionado,
 };

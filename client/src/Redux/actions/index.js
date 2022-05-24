@@ -11,12 +11,9 @@ export function getProductos() {
   return async function (dispatch) {
     const data = JSON.parse(localStorage.getItem("productos"));
 
-    console.log(data, "tk");
-
     if (data) {
       dispatch({ type: "GET_PRODUCTOS", payload: data });
     } else {
-      console.log("momento uwu");
       try {
         const resp = await axios.get(`${urlBase}${productos}`);
 
@@ -106,7 +103,7 @@ export function postProducto(payload) {
 
 export function putProducto(id, body) {
   return function (dispatch) {
-    axios.put(`${urlBase}admin/${id}`, body).then((res) => {
+    axios.put(`${urlBase}${admin}${id}`).then((res) => {
       dispatch({ type: "PUT_PRODUCTO", payload: res.data });
     });
   };
@@ -114,9 +111,12 @@ export function putProducto(id, body) {
 
 export function deleteProducto(id) {
   return function (dispatch) {
-    axios.delete(`${urlBase}producto/${id}`).then((res) => {
-      dispatch({ type: "DELETE_PRODUCTO", payload: res.data });
-    });
+    axios
+      .delete(`${urlBase}producto/${id}`)
+      .then((res) => {
+        dispatch({ type: "DELETE_PRODUCTO", payload: res.data });
+      })
+      .catch((err) => console.log(err, "error delete"));
   };
 }
 
@@ -153,8 +153,18 @@ export function agregarCarrito(idProducto) {
     dispatch({ type: "AGREGAR_CARRITO", payload: idProducto });
   };
 }
+
 export function quitarItem(idProducto) {
   return function (dispatch) {
     dispatch({ type: "QUITAR_ITEM", payload: idProducto });
+  };
+}
+
+export function getUser(mail) {
+  return function (dispatch) {
+    axios(`${urlBase}usuarios`).then(
+      (res) => console.log(res.data)
+      // dispatch({ type: "GET_USER", payload: res.data })
+    );
   };
 }

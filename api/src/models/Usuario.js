@@ -19,24 +19,29 @@ module.exports = (sequelize) => {
       allowNull: false,
     },
     telefono: {
-      type: DataTypes.INTEGER,
+      type: DataTypes.BIGINT,
       allowNull: true,
     },
     mail: {
       type: DataTypes.STRING,
       allowNull: false,
+      unique: true,
     },
     direccion: {
       type: DataTypes.STRING,
       allowNull: false,
     },
     dni: {
-      type: DataTypes.INTEGER,
-      allowNull: true,
+      type: DataTypes.BIGINT,
+      allowNull: false,
     },
     contraseña: {
       type: DataTypes.STRING,
       allowNull: false,
+    },
+    isAdmin: {
+      type: DataTypes.BOOLEAN,
+      defaultValue: false,
     },
   });
 };

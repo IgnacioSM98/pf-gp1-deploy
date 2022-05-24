@@ -14,8 +14,7 @@ import validate from "./validaciones.js";
 import { useParams } from "react-router-dom";
 import { Modal } from "../index";
 // import EliminarCategoria from "../EliminarCategoria/EliminarCategoria";
-
-
+import AgregarCategorias from "../AgregarCategorias/AgregarCategorias";
 
 const Container = styled.div`
   // display: flex;
@@ -302,12 +301,13 @@ export default function CrearProducto() {
 
   function handleSubmit(e) {
     e.preventDefault();
-    if (Object.values(errors).length > 0)
-      // alert("Por favor rellenar todos los campos");
-      setStateModalProd(!stateModalProd);
-    else {
-      if (id) {
-        dispatch(putProducto(id, post));
+
+    if (id) {
+      dispatch(putProducto(id));
+      alert("¡Cambios realizados con éxito!");
+    } else {
+      if (Object.values(errors).length > 0) {
+        alert("Por favor rellenar todos los campos");
       } else {
         dispatch(postProducto(post));
         // alert("¡Producto creado con éxito!");
@@ -328,7 +328,11 @@ export default function CrearProducto() {
     <Container>
       <Form onSubmit={(e) => handleSubmit(e)}>
         {/* <h1 className="titulo-form">Completar todos los campos</h1> */}
-
+        {id ? (
+          <h1 className="titulo-form">Completar los campos a editar</h1>
+        ) : (
+          <h1 className="titulo-form">Completar todos los campos</h1>
+        )}
         <Left>
           <Input>
             <input
@@ -441,6 +445,41 @@ export default function CrearProducto() {
 
             {errors.imagen && <p>{errors.imagen}</p>}
           </Input>
+
+          <Input>
+            {/* <select
+              onChange={(e) => handleSelectCategorias(e)}
+              className="barra"
+              defaultValue="default"
+            >
+              <option value="default" disabled>
+                Elegir categorías
+              </option>
+
+              {categorias &&
+                categorias
+                  .filter((categoria) => categoria.nombre)
+                  .map((d) => (
+                    <option value={d.nombre} key={d.id}>
+                      {d.nombre}
+                    </option>
+                  ))}
+            </select> */}
+            <AgregarCategorias post={post} setPost={setPost} />
+            {errors.categorías && <p>{errors.categorías}</p>}
+          </Input>
+
+          <div>
+            <button onClick={handleOpenCategoria}>Crear Categoría</button>
+
+            {cambio && (
+              <form onSubmit={(e) => handleSub(e)} className="form-create">
+                <label>Nueva Categoría</label>
+                <input type="text" onChange={(e) => handleInputCambio(e)} />
+                <button type="submit">Crear</button>
+              </form>
+            )}
+          </div>
         </Right>
 
         {id ? (

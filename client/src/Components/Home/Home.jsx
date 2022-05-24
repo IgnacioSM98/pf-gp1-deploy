@@ -80,7 +80,7 @@ export default function Home({ contacto }) {
   const [width, setWidth] = useState(window.innerWidth);
 
   useEffect(() => {
-    localStorage.removeItem("productos");
+    // localStorage.removeItem("productos");
     dispatch(getProductos());
   }, []);
 
