@@ -150,6 +150,7 @@ export function agregarCarrito(idProducto) {
     dispatch({ type: "AGREGAR_CARRITO", payload: idProducto });
   };
 }
+
 export function quitarItem(idProducto) {
   return function (dispatch) {
     dispatch({ type: "QUITAR_ITEM", payload: idProducto });

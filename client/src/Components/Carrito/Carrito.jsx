@@ -5,59 +5,79 @@ import styled from "styled-components";
 import { quitarItem } from "../../Redux/actions";
 
 const Container = styled.div`
-  background-color: white;
-  border: 3px solid black;
+  // border: 3px solid black;
   display: flex;
+  flex-direction: column;
+
   align-items: center;
   justify-content: center;
-  width: 40%;
-  flex-direction: column;
+
+  width: 100%;
+  height: 100%;
+
   align-items: flex-start;
 `;
-const Cont = styled.div`
-  background-color: #1533e333;
-  height: 100vh;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: space-around;
-`;
+
 const Label = styled.label`
   margin-top: auto;
   margin-left: auto;
+  padding: 40px;
+  font-size: 20px;
+  font-weight: 600;
+`;
+
+const Productos = styled.div`
+  position: relative;
+  margin-top: 30px;
+  width: 100%;
+  background-color: lightgrey;
+  padding: 5px;
+`;
+
+const Borrar = styled.button`
+  position: absolute;
+  top: 5px;
+  right: 20px;
+  border: none;
+  border-radius: 8px;
+  width: 20px;
+  height: 20px;
+  background-color: red;
 `;
 
 function Carrito() {
+  const dispatch = useDispatch();
+
   const [precioTotal, setPrecioTotal] = useState(0);
   const carrito = useSelector((state) => state.carrito);
-  const dispatch = useDispatch();
 
   function handleQuit(props) {
     dispatch(quitarItem(props));
   }
+
   useEffect(() => {
     let precio = 0;
+
     carrito.forEach((item) => {
       precio = precio + Number(item.precio);
     });
+
     setPrecioTotal(precio);
   }, [carrito, precioTotal, setPrecioTotal]);
 
   return (
-    <Cont>
-      <Container>
-        {carrito.map((el) => {
-          return (
-            <div>
-              <CarritoItem key={el.id} nombre={el.nombre} precio={el.precio} />
-              <button onClick={() => handleQuit(el)}>X</button>
-            </div>
-          );
-        })}
+    <Container>
+      {carrito.map((el) => {
+        return (
+          <Productos>
+            <CarritoItem key={el.id} producto={el} />
+            <Borrar onClick={() => handleQuit(el)}>X</Borrar>
+          </Productos>
+        );
+      })}
 
-        <Label>Precio Total: {precioTotal}</Label>
-      </Container>
-    </Cont>
+      <Label>Monto Total: ${precioTotal}</Label>
+    </Container>
   );
 }
 

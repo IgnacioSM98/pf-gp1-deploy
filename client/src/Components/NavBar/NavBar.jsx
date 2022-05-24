@@ -36,11 +36,11 @@ const UserButton = styled(Link)`
 
 const UserMenu = styled.div`
   position: absolute;
-  bottom: -70px;
+  bottom: -100px;
   color: white;
   right: 0;
   background-color: #000000f0;
-  height: 70px;
+  height: 100px;
   width: 170px;
   border-radius: 0px 0px 0px 10px;
   display: flex;
@@ -145,31 +145,7 @@ export default function NavBar({ contacto, user, setUser }) {
         <Span>Blog</Span>
       </NavLink> */}
 
-      {/* {location !== `${link}login` ? ( */}
       <Login>
-        {location.slice(0, 6) === "/admin" ? (
-          <NavLink
-            to={"/admin/carrito"}
-            style={{
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-            }}
-            title="Carrito"
-          >
-            <span style={{ margin: "4px 2px" }}>{carrito.length}</span>
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="16"
-              height="16"
-              fill="currentColor"
-              className="bi bi-bag"
-              viewBox="0 0 16 16"
-            >
-              <path d="M8 1a2.5 2.5 0 0 1 2.5 2.5V4h-5v-.5A2.5 2.5 0 0 1 8 1zm3.5 3v-.5a3.5 3.5 0 1 0-7 0V4H1v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V4h-3.5zM2 5h12v9a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V5z" />
-            </svg>
-          </NavLink>
-        ) : (
           <NavLink
             to={"/carrito"}
             style={{
@@ -191,7 +167,7 @@ export default function NavBar({ contacto, user, setUser }) {
               <path d="M8 1a2.5 2.5 0 0 1 2.5 2.5V4h-5v-.5A2.5 2.5 0 0 1 8 1zm3.5 3v-.5a3.5 3.5 0 1 0-7 0V4H1v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V4h-3.5zM2 5h12v9a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V5z" />
             </svg>
           </NavLink>
-        )}
+
         {user && Object.entries(user).length !== 0 ? (
           <button
             title="Cuenta"
@@ -217,6 +193,10 @@ export default function NavBar({ contacto, user, setUser }) {
 
       {userMenu && (
         <UserMenu>
+          <UserButton to="/" onClick={() => setMenu(!userMenu)}>
+            {user ? "Modo Admin" : "Modo Invitado"}
+          </UserButton>
+
           <UserButton to="/cuenta" onClick={() => setMenu(!userMenu)}>
             Mi Cuenta
           </UserButton>
