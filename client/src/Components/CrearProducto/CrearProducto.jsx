@@ -13,19 +13,28 @@ import styled from "styled-components";
 import validate from "./validaciones.js";
 import { useParams } from "react-router-dom";
 import { Modal } from "../index";
+// import EliminarCategoria from "../EliminarCategoria/EliminarCategoria";
 import AgregarCategorias from "../AgregarCategorias/AgregarCategorias";
 
 const Container = styled.div`
-  display: flex;
-  width: 100%;
-  justify-content: center;
-  align-items: center;
+  // display: flex;
+  // flex-direction: column;
+  // justify-content: space-between;
+  // margin-bottom: 2em;
+`;
+const Encabezado = styled.div`
+padding-top: 5em;
+`;
+const Titulo = styled.h2`
+  color: #107994;
+  margin-bottom:10px;
 `;
 
 const Form = styled.form`
   display: flex;
   position: relative;
   justify-content: center;
+  gap:2em;
   align-items: center;
   background-color: white;
   width: 100%;
@@ -37,55 +46,102 @@ const Form = styled.form`
 const Left = styled.div`
   display: flex;
   flex-direction: column;
-  width: 40%;
-  height: 90vh;
+  width: 35%;
+  height: 80vh;
   justify-content: center;
   align-items: center;
-  margin-top: 30px;
+  margin-top: 50px;
+  border: 2px solid black;
+  border-radius: 8px;
 `;
 
 const Right = styled.div`
   display: flex;
   flex-direction: column;
-  width: 40%;
-  height: 90vh;
+  width: 30%;
+  height: 80vh;
   justify-content: center;
   align-items: center;
-  margin-top: 30px;
+  margin-top: 50px;
+  border: 2px solid black;
+  border-radius: 8px;
 `;
 
 const Input = styled.div`
   position: relative;
-  margin: 45px;
+  margin: 30px;
   width: 80%;
 `;
 
+const SelectorImagen = styled.input`
+width: 355px;
+height: 40px;
+margin: auto;
+
+`
+
 const Imagen = styled.img`
-  height: 300px;
-  width: 300px;
-  object-fit: contain;
+  height: 400px;
+  width: 350px;
+  object-fit: cover;
+ 
 `;
 
 const Button = styled.button`
   position: absolute;
-  bottom: 0;
-  background: #870000;
-  /* fallback for old browsers */
-  background: -webkit-linear-gradient(to left, #190a05, #870000);
-  /* Chrome 10-25, Safari 5.1-6 */
-  background: linear-gradient(to left, #190a05, #870000);
-  /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+  top:660px;
+  background: #37563D;
+  // /* fallback for old browsers */
+  // background: -webkit-linear-gradient(to left, #190a05, #870000);
+  // /* Chrome 10-25, Safari 5.1-6 */
+  // background: linear-gradient(to left, #190a05, #870000);
+  // /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
   display: block;
-  width: 100px;
+  width: 300px;
   height: 40px;
   border: none;
   color: white;
   border-radius: 4px;
   font-size: 16px;
-  margin: 10px 0px;
+  margin: 40px 0px 0px 0px;
   margin: auto;
   cursor: pointer;
 `;
+
+const SelectCat = styled.select`
+height: 30px;
+border: 1px solid black;
+border-radius: 6px
+`
+const CrearCat = styled.div`
+  position: absolute;
+  top:880px;
+  left: 240px;
+  padding-bottom: 3em;
+  
+`;
+const TitCat = styled.h3`
+ text-align: left;
+`;
+const InCat = styled.input`
+border: none;
+border-bottom: 1px solid black;
+ 
+`;
+
+const ButtonCat = styled.button`
+background: #37563D;
+width: 80px;
+height: 30px;
+border: none;
+color: white;
+border-radius: 4px;
+font-size: 16px;
+margin-left: 10px;
+margin-top: 10px;
+cursor:pointer;
+`;
+
 
 const ParrafoAlerta = styled.p`
   font-size: 20px;
@@ -121,7 +177,7 @@ export default function CrearProducto() {
       categorias: [],
     }),
     [categoria, setCategoria] = useState({ nombre: "" }),
-    [cambio, setCambio] = useState(false),
+     [cambio, setCambio] = useState(false),
     [imageSelected, setImageSelected] = useState();
 
   useEffect(() => {
@@ -149,9 +205,9 @@ export default function CrearProducto() {
     setCategorias(categorías);
   }, [categorías]);
 
-  function handleOpenCategoria(e) {
+   function handleOpenCategoria(e) {
     e.preventDefault();
-    cambio ? setCambio(false) : setCambio(true);
+     cambio ? setCambio(false) : setCambio(true);
   }
 
   function handleInputCambio(e) {
@@ -261,8 +317,17 @@ export default function CrearProducto() {
   }
 
   return (
+    <>
+    <Encabezado>
+        <Titulo>¡Agrega tus productos!</Titulo>
+        <p>
+          Recorda completar todo los campos y la imagen para guardar tu nuevo
+          producto.
+        </p>
+      </Encabezado>
     <Container>
       <Form onSubmit={(e) => handleSubmit(e)}>
+        {/* <h1 className="titulo-form">Completar todos los campos</h1> */}
         {id ? (
           <h1 className="titulo-form">Completar los campos a editar</h1>
         ) : (
@@ -326,6 +391,27 @@ export default function CrearProducto() {
             <label className="label">Stock</label>
             {errors.stock && <p>{errors.stock}</p>}
           </Input>
+          <Input>
+            <SelectCat
+              onChange={(e) => handleSelectCategorias(e)}
+              className="barra"
+              defaultValue="default"
+            >
+              <option value="default" disabled>
+                Elegir categorías
+              </option>
+
+              {categorias &&
+                categorias
+                  .filter((categoria) => categoria.nombre)
+                  .map((d) => (
+                    <option value={d.nombre} key={d.id}>
+                      {d.nombre}
+                    </option>
+                  ))}
+            </SelectCat>
+            {errors.categorías && <p>{errors.categorías}</p>}
+          </Input>
         </Left>
 
         <Right>
@@ -342,7 +428,7 @@ export default function CrearProducto() {
               }}
             />
 
-            <input
+            <SelectorImagen
               className="input-create"
               type="file"
               name="imagen"
@@ -354,7 +440,7 @@ export default function CrearProducto() {
 
             <Imagen src={imageSelected} />
 
-            <label className="label">Imagen desde URL o archivo local</label>
+            {/* <label className="label">Imagen desde URL o archivo local</label> */}
             {/* <span className="barra"></span> */}
 
             {errors.imagen && <p>{errors.imagen}</p>}
@@ -397,11 +483,20 @@ export default function CrearProducto() {
         </Right>
 
         {id ? (
-          <Button type="submit">Modificar</Button>
+          <Button type="submit">Modificar producto</Button>
         ) : (
-          <Button type="submit">¡Crear!</Button>
+          <Button type="submit">¡Crear producto!</Button>
         )}
       </Form>
+      <CrearCat>
+        <TitCat>Crear Categoría</TitCat>
+          <form onSubmit={(e) => handleSub(e)} className="form-create">
+            <InCat placeholder="Escribir nueva categoria" type="text" onChange={(e) => handleInputCambio(e)} />
+            <ButtonCat type="submit">Agregar</ButtonCat>
+          </form>
+      
+      </CrearCat>
+      {/* <EliminarCategoria/> */}
       <Modal state={stateModalProd} setStateModal={setStateModalProd}>
         {Object.values(errors).length > 0 ? (
           <ParrafoAlerta>Por favor rellenar todos los campos</ParrafoAlerta>
@@ -413,5 +508,6 @@ export default function CrearProducto() {
         <ParrafoCat>¡Categoría creada con éxito!</ParrafoCat>
       </Modal>
     </Container>
+    </>
   );
 }
