@@ -9,17 +9,17 @@ export default function Filtros({ setSelected }) {
   const productos = useSelector((state) => state.productos);
   const categorias = useSelector((state) => state.categorias);
 
-  useEffect(() => {
-    if (productos.length > 0) {
-      const typesAux = productos?.map((food) => {
-        return food.diets?.map((diet) => {
-          return diet.charAt(0).toUpperCase() + diet.slice(1);
-        });
-      });
+  // useEffect(() => {
+  //   if (productos.length > 0) {
+  //     const typesAux = productos?.map((food) => {
+  //       return food.diets?.map((diet) => {
+  //         return diet.charAt(0).toUpperCase() + diet.slice(1);
+  //       });
+  //     });
 
-      setDiets([...new Set(typesAux.flat())]);
-    }
-  }, [productos]);
+  //     setDiets([...new Set(typesAux.flat())]);
+  //   }
+  // }, [productos]);
 
   //   useEffect(() => {
   //     if (typesOfDiets.length > 0) {

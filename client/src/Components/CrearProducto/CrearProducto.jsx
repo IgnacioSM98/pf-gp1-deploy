@@ -12,6 +12,8 @@ import "./CrearProducto.css";
 import styled from "styled-components";
 import validate from "./validaciones.js";
 import { useParams } from "react-router-dom";
+import { Modal } from "../index";
+import AgregarCategorias from "../AgregarCategorias/AgregarCategorias";
 
 const Container = styled.div`
   display: flex;
@@ -85,11 +87,28 @@ const Button = styled.button`
   cursor: pointer;
 `;
 
+const ParrafoAlerta = styled.p`
+  font-size: 20px;
+  font-weight: bold;
+  color: red;
+`;
+const ParrafoOk = styled.p`
+  font-size: 20px;
+  font-weight: bold;
+`;
+const ParrafoCat = styled.p`
+  font-size: 20px;
+  font-weight: bold;
+`;
+
 export default function CrearProducto() {
   const dispatch = useDispatch();
   const categorías = useSelector((state) => state.categorias);
   const { id } = useParams();
   const detalle = useSelector((state) => state.detalle);
+
+  const [stateModalProd, setStateModalProd] = useState(false);
+  const [stateModalCat, setStateModalCat] = useState(false);
 
   const [categorias, setCategorias] = useState([]),
     [errors, setErrors] = useState({}),
@@ -146,7 +165,8 @@ export default function CrearProducto() {
     e.preventDefault();
     setCategorias([...categorias, categoria]);
     dispatch(postCategoria(categoria));
-    alert("¡Categoría creada con éxito!");
+    // alert("¡Categoría creada con éxito!");
+    setStateModalCat(!stateModalCat);
   }
 
   function handleInputChange(e) {
@@ -234,7 +254,8 @@ export default function CrearProducto() {
         alert("Por favor rellenar todos los campos");
       } else {
         dispatch(postProducto(post));
-        alert("¡Producto creado con éxito!");
+        // alert("¡Producto creado con éxito!");
+        setStateModalProd(!stateModalProd);
       }
     }
   }
@@ -254,6 +275,7 @@ export default function CrearProducto() {
               type="text"
               value={post.nombre}
               name="nombre"
+              placeholder=" "
               onChange={(e) => handleInputChange(e)}
             />
             <span className="barra"></span>
@@ -267,6 +289,7 @@ export default function CrearProducto() {
               value={post.descripcion}
               name="descripcion"
               rows="3"
+              placeholder=" "
               onChange={(e) => handleInputChange(e)}
             />
             <span className="barra"></span>
@@ -281,6 +304,7 @@ export default function CrearProducto() {
               min="0"
               value={post.precio}
               name="precio"
+              placeholder=" "
               onChange={(e) => handleInputChange(e)}
             />
             <span className="barra"></span>
@@ -295,6 +319,7 @@ export default function CrearProducto() {
               min="0"
               value={post.stock}
               name="stock"
+              placeholder=" "
               onChange={(e) => handleInputChange(e)}
             />
             <span className="barra"></span>
@@ -308,6 +333,7 @@ export default function CrearProducto() {
             <input
               className="input-create"
               type="text"
+              placeholder=" "
               value={post.imagen}
               name="imagen"
               onChange={(e) => {
@@ -320,6 +346,7 @@ export default function CrearProducto() {
               className="input-create"
               type="file"
               name="imagen"
+              placeholder=" "
               onChange={(e) => {
                 handleImageChange(e);
               }}
@@ -334,7 +361,7 @@ export default function CrearProducto() {
           </Input>
 
           <Input>
-            <select
+            {/* <select
               onChange={(e) => handleSelectCategorias(e)}
               className="barra"
               defaultValue="default"
@@ -351,7 +378,8 @@ export default function CrearProducto() {
                       {d.nombre}
                     </option>
                   ))}
-            </select>
+            </select> */}
+            <AgregarCategorias post={post} setPost={setPost} />
             {errors.categorías && <p>{errors.categorías}</p>}
           </Input>
 
@@ -374,6 +402,16 @@ export default function CrearProducto() {
           <Button type="submit">¡Crear!</Button>
         )}
       </Form>
+      <Modal state={stateModalProd} setStateModal={setStateModalProd}>
+        {Object.values(errors).length > 0 ? (
+          <ParrafoAlerta>Por favor rellenar todos los campos</ParrafoAlerta>
+        ) : (
+          <ParrafoOk>¡Producto creado con éxito!</ParrafoOk>
+        )}
+      </Modal>
+      <Modal state={stateModalCat} setStateModal={setStateModalCat}>
+        <ParrafoCat>¡Categoría creada con éxito!</ParrafoCat>
+      </Modal>
     </Container>
   );
 }

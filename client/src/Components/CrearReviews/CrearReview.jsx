@@ -1,67 +1,90 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { postReviews } from "../../Redux/actions";
-import Stars from "../Stars/Stars";
+import { StarRating } from "../index";
 import styled from "styled-components";
+import send from "../../Images/Send.png";
 
-const ModalBack = styled.div`
-  width: 100vw;
-  height: 100vh;
-  position: fixed;
-  top: 0px;
-  left: 0px;
-  background: rgba(0, 0, 0, 0.5);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-`;
-const Modal = styled.div`
-  width: 420px;
-  height: 340px;
-  padding: 20px;
-  background-color: white;
-  border-radius: 10px;
-  box-shadow: 0px 7px 29px 0px rgba(100, 100, 111, 0.2);
-  text-align: center;
+const Container = styled.div`
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  align-items: center;
+  height: 184px;
+  justify-content: space-around;
+  align-items: start;
+  position: relative;
 `;
 
 const Formulario = styled.form`
   display: flex;
   flex-direction: column;
-  align-items: center;
+  position: relative;
+
+  align-items: start;
+  justify-content: space-around;
+
+  height: 144px;
+  width: 292px;
+  margin: 0.5rem;
+  padding: 10px 20px;
+
+  background-color: #1b1919ed;
+  border-radius: 10px;
+
+  text-align: center;
 `;
 
-const Titulo = styled.p`
-  font-size: 20px;
-  font-weight: 800;
-  margin: 10px 0px;
+const Comentario = styled.input`
+  color: black;
+  width: 80%;
+  border: none;
+  border-radius: 5px;
+  background-color: white;
+  padding: 2px 6px;
+  font-size: 13px;
 `;
 
-const Coment = styled.textarea`
-  margin: 1em 0em;
-  padding: 0.8em 0.8em;
+const ComentarioDetallado = styled.textarea`
+  color: black;
+  padding: 3px 6px;
+  height: 74px;
+  width: 252px;
   text-align: justify;
   border-radius: 10px;
-  border: 2px solid black;
-`;
-const Boton = styled.button`
-  color: ${(props) => (props.color ? props.color : "white")};
-  font-weight: bold;
-  background-color: ${(props) => (props.backcolor ? props.backcolor : "black")};
   border: none;
-  border-radius: 8px;
-  margin: 5px;
-  height: 40px;
-  width: 100px;
-  padding: 2%;
-  cursor: pointer;
+
+  resize: none;
+  font-size: 13px;
+  font-family: sans-serif;
+  background-color: white;
 `;
 
-export default function CrearReview({ state, id, setFormReview }) {
+const Titulo = styled.span`
+  margin-left: 10px;
+  font-size: 20px;
+  font-weight: 600;
+`;
+
+const Image = styled.img`
+  position: absolute;
+  object-fit: contain;
+  top: 7px;
+  right: 7px;
+  width: 25px;
+  height: 25px;
+  background-color: white;
+  border-radius: 15px;
+  padding: 2px 2px 2px 5px;
+  margin: 3px;
+  cursor: pointer;
+
+  &: hover {
+    width: 32px;
+    height: 32px;
+    border-radius: 50px;
+  }
+`;
+
+export default function CrearReview({ state, id }) {
   let dispatch = useDispatch();
   let [input, setInput] = useState({
     puntaje: "",
@@ -79,30 +102,36 @@ export default function CrearReview({ state, id, setFormReview }) {
     e.preventDefault();
     dispatch(postReviews(id, input));
     alert("opinion enviada");
-    setFormReview(!state);
   };
 
   return (
-    <>
-      {state && (
-        <ModalBack>
-          <Modal>
-            <Titulo>Opina sobre este producto</Titulo>
-            <Formulario onSubmit={handleSubmit}>
-              <Stars inputs={input} setInputs={setInput}></Stars>
+    <Container>
+      <Titulo>Crea tu reseña</Titulo>
+      <Formulario onSubmit={handleSubmit}>
+        <Image
+          title="Enviar reseña"
+          src={send}
+          onClick={(e) => handleSubmit(e)}
+        ></Image>
 
-              <Coment
-                name="comentario"
-                onChange={handleInputChange}
-                value={input.comentario}
-                cols="30"
-                rows="10"
-              ></Coment>
-              <Boton type="submit">Enviar</Boton>
-            </Formulario>
-          </Modal>
-        </ModalBack>
-      )}
-    </>
+        <Comentario
+          type={"text"}
+          name="titulo"
+          placeholder="Titulo"
+          onChange={handleInputChange}
+        ></Comentario>
+
+        <StarRating inputs={input} setInputs={setInput}></StarRating>
+
+        <ComentarioDetallado
+          name="comentario"
+          placeholder="Opina sobre este producto"
+          onChange={handleInputChange}
+          value={input.comentario}
+          cols="30"
+          rows="10"
+        ></ComentarioDetallado>
+      </Formulario>
+    </Container>
   );
 }

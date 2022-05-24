@@ -309,6 +309,7 @@ router.put("/admin/:id", async (req, res) => {
     const id = req.params.id;
     const producto = await Producto.findByPk(id);
     const { nombre, precio, descripcion, imagen, stock } = req.body;
+
     if (nombre) {
       producto.nombre = nombre;
       producto.save();
@@ -331,7 +332,7 @@ router.put("/admin/:id", async (req, res) => {
     }
 
     //creo que deberia devolver id
-    res.status(200).send({ msg: "cambios guardados!" });
+    res.status(200).send(producto);
   } catch (error) {
     res.status(400).send(error);
   }
@@ -389,7 +390,7 @@ router.delete("/producto/:id", async (req, res, next) => {
     const id = req.params.id;
     const productoABorrar = await Producto.findByPk(id);
     await productoABorrar.destroy();
-    res.json({ msg: "borrado" });
+    res.json(id);
   } catch (error) {
     next(error);
   }

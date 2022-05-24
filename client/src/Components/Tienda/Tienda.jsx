@@ -2,12 +2,17 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useLocation } from "react-router-dom";
 import { getProductos, getProductosFiltrados } from "../../Redux/actions/index";
-import { Producto, Paginado, Footer } from "../index";
+import {
+  Producto,
+  Paginado,
+  Footer,
+  Filtros,
+  ScrollToTop,
+  AgregarProducto,
+} from "../index";
 import "./Tienda.css";
 import styled from "styled-components";
 import image from "./cuchara-cafe3.jpg";
-import ScrollToTop from "./../ScrollToTop/ScrollToTop";
-import Filtros from "../Filtros/Filtros";
 
 const Container = styled.div`
   display: flex;
@@ -57,6 +62,7 @@ const LetraFiltro = styled.p`
 `;
 
 const ProductosTienda = styled.div`
+  width: 840px;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   grid-gap: 20px 60px;
@@ -105,13 +111,14 @@ const Header = styled.div`
 
 const Marco = styled.div`
   width: 95%;
-  height: 20vh;
+  height: 90%;
   z-index: 3;
   border: 1px solid black;
   position: absolute;
-  top: 10px;
-  left: 20px;
-  right: 20px;
+  top: 5%;
+  bottom: 5%;
+  left: 2.5%;
+  right: 2.5%;
   margin: auto;
   border-color: white;
   border-radius: 8px;
@@ -156,11 +163,14 @@ function Shop({ contacto }) {
   const dispatch = useDispatch();
   const productos = useSelector((state) => state.productos);
   const productosFiltrados = useSelector((state) => state.productosFiltrados);
+  const admin = useSelector((state) => state.user);
+
   const [selected, setSelected] = useState("");
   const [pages, setPages] = useState(4);
   const [pageSelected, setPageSelected] = useState(1);
   const [resVis, setResVis] = useState(0);
   const [flag, setFlag] = useState(false);
+
   const location = useLocation();
 
   useEffect(() => {
@@ -176,15 +186,9 @@ function Shop({ contacto }) {
     setPages(Math.ceil(productos.length / 9));
   }, [productos]);
 
-  // useEffect(() => {
-  //   setPages(Math.ceil(productosFiltrados.filter(filterDropdown).length / 9));
-  // }, [selected]);
-
-  const filterPerPages = (food, i) => {
-    if (i >= 9 * (pageSelected - 1) && i <= 9 * pageSelected - 1) {
-      return food;
-    }
-  };
+  useEffect(() => {
+    setPages(Math.ceil(productosFiltrados.filter(filterDropdown).length / 9));
+  }, [selected]);
 
   function onChangeHandle(e) {
     const value = e.target.value;
@@ -209,15 +213,46 @@ function Shop({ contacto }) {
     dispatch(getProductosFiltrados(arrayAux));
   }
 
-  // const filterDropdown = (food) => {
-  //   if (!selected || food.diets?.includes(selected.toLowerCase())) {
-  //     return food;
-  //   }
+  const filterStock = (producto) => {
+    if (producto.stock > 0) return producto;
+  };
 
-  //   if (selected === "DEFAULT") {
-  //     return food;
-  //   }
-  // };
+  const filterPerPages = (producto, i) => {
+    if (admin) {
+      if (Number(pageSelected) === 1) {
+        if (i >= 8 * (pageSelected - 1) && i <= 8 * pageSelected - 1) {
+          return producto;
+        }
+      } else {
+        if (
+          i >= 8 * (pageSelected - 1) &&
+          i <= 9 * pageSelected - pageSelected
+        ) {
+          return producto;
+        }
+      }
+    } else {
+      if (i >= 9 * (pageSelected - 1) && i <= 9 * pageSelected - 1) {
+        console.log(i, producto.nombre);
+        return producto;
+      }
+    }
+  };
+
+  const filterDropdown = (producto) => {
+    if (
+      !selected ||
+      producto.categoria.find(
+        (cate) => cate.nombre.toLowerCase() === selected.toLowerCase()
+      )
+    ) {
+      return producto;
+    }
+
+    if (selected === "DEFAULT") {
+      return producto;
+    }
+  };
 
   return (
     <Container>
@@ -251,28 +286,34 @@ function Shop({ contacto }) {
         </FiltrosCont>
         <div>
           <ProductosTienda>
-            {flag && productosFiltrados.length === 0 ? (
-              //poner foto 404
-              <p>tuki</p>
-            ) : (
-              <></>
+            {flag && productosFiltrados.length === 0 && (
+              <p>No se encontraron resultados</p>
             )}
 
+            {admin && <AgregarProducto />}
+
             {productosFiltrados &&
-              productosFiltrados.filter(filterPerPages).map((el) => {
-                return (
-                  <Producto
-                    key={el.id}
-                    id={el.id}
-                    imagen={el.imagen}
-                    nombre={el.nombre}
-                    precio={el.precio}
-                    stock={el.stock}
-                    descripcion={el.descripcion}
-                    location={location}
-                  />
-                );
-              })}
+              productosFiltrados
+                .filter(filterStock)
+                .filter(filterDropdown)
+                .filter(filterPerPages)
+                .map((el) => {
+                  // if (el.stock > 0) {
+                  return (
+                    <Producto
+                      key={el.id}
+                      id={el.id}
+                      imagen={el.imagen}
+                      nombre={el.nombre}
+                      precio={el.precio}
+                      stock={el.stock}
+                      descripcion={el.descripcion}
+                      location={location}
+                      categorias={el.categoria}
+                    />
+                  );
+                  // }
+                })}
           </ProductosTienda>
           {pages > 0 ? (
             <Paginado pages={pages} setPageSelected={setPageSelected} />

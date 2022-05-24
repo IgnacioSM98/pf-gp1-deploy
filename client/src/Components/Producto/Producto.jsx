@@ -2,8 +2,8 @@ import React, { useState } from "react";
 import "./producto.css";
 import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
-import { useDispatch } from "react-redux";
-import { agregarCarrito } from "../../Redux/actions";
+import { useDispatch, useSelector } from "react-redux";
+import { agregarCarrito, deleteProducto } from "../../Redux/actions";
 
 const LinkProduct = styled(Link)`
   text-decoration: none;
@@ -14,13 +14,28 @@ const Button = styled.button`
   height: 30px;
 `;
 
-export default function Producto({ id, imagen, nombre, precio, descripcion, location, producto, stock }) {
+export default function Producto({
+  id,
+  imagen,
+  nombre,
+  precio,
+  descripcion,
+  location,
+  producto,
+  stock,
+  categorias,
+}) {
   const dispatch = useDispatch();
-  const [showOptions, setOptions] = useState(false);
+  const admin = useSelector((state) => state.user);
+  const [showOptions, setOptions] = useState({ button: false, popup: false });
   const navigate = useNavigate();
 
   const handleEdit = () => {
-    navigate(`/admin/productos/${id}`);
+    navigate(`/edit/${id}`);
+  };
+
+  const handleDelete = () => {
+    dispatch(deleteProducto(id));
   };
 
   function agregarAlCarrito(e) {
@@ -33,11 +48,20 @@ export default function Producto({ id, imagen, nombre, precio, descripcion, loca
 
   return (
     <LinkProduct to={`/productos/${id}`}>
-      <div className="container-producto">
+      <div
+        className="container-producto"
+        onMouseEnter={() => {
+          if (admin) setOptions({ ...showOptions, button: true });
+        }}
+        onMouseLeave={() => {
+          if (admin) setOptions({ popup: false, button: false });
+        }}
+      >
         <div className="container-foto">
           <img src={imagen} className="foto" alt="foto" />
         </div>
-        {location && location.pathname.slice(0, 6) === "/admin" && (
+
+        {showOptions.button && (
           <button
             style={{
               position: "absolute",
@@ -51,14 +75,14 @@ export default function Producto({ id, imagen, nombre, precio, descripcion, loca
             }}
             onClick={(e) => {
               e.preventDefault();
-              setOptions(!showOptions);
+              setOptions({ ...showOptions, popup: !showOptions.popup });
             }}
           >
             ...
           </button>
         )}
 
-        {showOptions ? (
+        {showOptions.popup && (
           <div
             style={{
               position: "absolute",
@@ -79,17 +103,27 @@ export default function Producto({ id, imagen, nombre, precio, descripcion, loca
             <Button style={{ marginTop: "35px" }} onClick={handleEdit}>
               Editar producto
             </Button>
-            <Button>Eliminar producto</Button>
+            <Button onClick={handleDelete}>Eliminar producto</Button>
           </div>
-        ) : null}
+        )}
 
         <div className="nombre">
           <p>{nombre}</p>
         </div>
 
         <div className="descripcion">
-          <p>{descripcion}</p>
+          <p>
+            {descripcion.length > 210
+              ? descripcion.slice(0, 210) + " (Ver más)"
+              : descripcion}
+          </p>
         </div>
+
+        {/* <div>
+          {categorias?.map((categoria) => (
+            <p>{categoria.nombre}</p>
+          ))}
+        </div> */}
 
         <div className="precio-boton">
           <p className="precio">${precio}</p>

@@ -6,6 +6,7 @@ const initialState = {
   detalle: {},
   reviews: [],
   carrito: [],
+  user: true,
 };
 
 export default function rootReducer(state = initialState, action) {
@@ -145,13 +146,24 @@ export default function rootReducer(state = initialState, action) {
         ...state,
         reviews: action.payload,
       };
+
     case "AGREGAR_CARRITO":
       const productoSeleccionado = state.productos.find(
         (producto) => producto.id == action.payload
       );
+
       return {
         ...state,
         carrito: [...state.carrito, productoSeleccionado],
+      };
+
+    case "QUITAR_ITEM":
+      const data = state.carrito.filter(
+        (item) => item.id !== action.payload.id
+      );
+      return {
+        ...state,
+        carrito: data,
       };
 
     // case "PUT_PRODUCTO":
@@ -160,6 +172,34 @@ export default function rootReducer(state = initialState, action) {
     //   ...state,
     //   productos: state.productos
     // }
+
+    case "DELETE_PRODUCTO":
+      let productosAux = [...state.productosFiltrados];
+      console.log(action.payload);
+
+      const index = productosAux.findIndex((producto) => {
+        return producto.id === action.payload;
+      });
+
+      localStorage.removeItem("productos");
+
+      productosAux = productosAux
+        .slice(0, index)
+        .concat(productosAux.slice(index + 1));
+
+      localStorage.setItem("productos", JSON.stringify(productosAux));
+
+      return {
+        ...state,
+        productos: productosAux,
+        productosFiltrados: productosAux,
+      };
+
+    case "GET_USER":
+      return {
+        ...state,
+        user: action.payload,
+      };
     default:
       return state;
   }

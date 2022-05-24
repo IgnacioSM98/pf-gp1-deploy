@@ -1,18 +1,20 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useParams } from "react-router-dom";
+import { useLocation, useParams } from "react-router-dom";
 import {
   clearDetail,
   getDetail,
   getReviews,
   agregarCarrito,
+  getProductos,
 } from "../../Redux/actions";
-import { CrearReview, Reviews as ProductReviews } from "../index";
+import { CrearReview, Reviews as ProductReviews, Stars } from "../index";
 import styled from "styled-components";
 import cards from "../../Images/Cards/index";
+import { Relacionado } from "../index";
 
 const Container = styled.div`
-  height: 100vh;
+  // height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -29,11 +31,14 @@ const Details = styled.div`
 const Reviews = styled.div`
   display: flex;
   width: 100%;
-  height: 144px;
+  align-items: center;
+  height: 194px;
 `;
 
-const Relacionados = styled.div`
+const RelacionadosContainer = styled.div`
   display: flex;
+  flex-direction: column;
+
   width: 100%;
 `;
 
@@ -115,6 +120,7 @@ const Boton = styled.button`
   margin: 5px;
   height: 40px;
   width: 100px;
+  cursor: pointer;
   // padding: 2%;
 `;
 
@@ -164,12 +170,6 @@ const Card = styled.img`
   object-fit: contain;
 `;
 
-const Stars = styled.div`
-  display: flex;
-  color: white;
-  font-size: 17px;
-`;
-
 const Botones = styled.div`
   display: flex;
   width: 100%;
@@ -202,21 +202,62 @@ const FormRev = styled.button`
   cursor: pointer;
 `;
 
+const Titulo = styled.span`
+  text-align: initial;
+  margin: 7px 10px 0px 10px;
+  font-size: 20px;
+  font-weight: 600;
+`;
+
+const Relacionados = styled.div`
+  display: flex;
+
+  // text-align: initial;
+  // margin-left: 10px;
+  // font-size: 20px;
+  // font-weight: 600;
+`;
+
 export default function DetalleProducto() {
   const { id } = useParams();
   const dispatch = useDispatch();
+  const location = useLocation();
 
   const [formReview, setFormReview] = useState(false),
     [carrito, setCarrito] = useState(true),
     [cantidad, setCantidad] = useState(1),
-    [boton, setBoton] = useState({ suma: false, resta: true });
+    [boton, setBoton] = useState({ suma: false, resta: true }),
+    [relacionados, setRelacionados] = useState([]);
 
   const detalle = useSelector((state) => state.detalle);
   const reviews = useSelector((state) => state.reviews);
+  const productos = useSelector((state) => state.productos);
+
+  useEffect(() => {
+    if (productos.length === 0) dispatch(getProductos());
+
+    setRelacionados(productos);
+  }, [productos]);
+
+  // Creamos la variable a utilizar
+  var rating = 0;
+
+  // Sumarizamos la cantidad de estrellas entre todas las reviews
+  reviews[0]
+    ? reviews.map((reviews) => (rating += reviews.puntaje))
+    : (rating = 1);
+
+  // Dividimos la suma de estrellas por cantidad de review para saber el promedio
+  if (reviews.length) {
+    rating = rating / reviews.length;
+  } else {
+    rating = rating / 1;
+  }
+
+  // Redondeamos el promedio de estrellas
+  rating = Math.round(rating);
 
   const cambiarCantidad = (e) => {
-    console.log(e.target.name);
-
     if (e.target.name === "suma") {
       if (cantidad < detalle.stock) {
         setCantidad(cantidad + 1);
@@ -232,10 +273,6 @@ export default function DetalleProducto() {
         setBoton({ resta: true });
       }
     }
-  };
-
-  const reviewOnclick = () => {
-    setFormReview(!formReview);
   };
 
   const onClick = (e) => {
@@ -256,6 +293,18 @@ export default function DetalleProducto() {
     };
   }, []);
 
+  const filterCategorias = (producto) => {
+    for (const categoria of detalle.categoria) {
+      if (
+        producto.categoria.find(
+          (cate) => cate.nombre.toLowerCase() === categoria.nombre.toLowerCase()
+        )
+      ) {
+        return producto;
+      }
+    }
+  };
+
   return detalle && Object.keys(detalle)[0] ? (
     <Container>
       <Details>
@@ -263,36 +312,8 @@ export default function DetalleProducto() {
         <Body>
           <Nombre>{detalle.nombre}</Nombre>
           <Valoracion>
-            <Stars>
-              {[...Array(5)].map((star, index) => (
-                <div
-                  style={{
-                    display: "flex",
-                    justifyContent: "center",
-                    alignItems: "center",
-                    fontFamily: "initial",
-                  }}
-                >
-                  <span
-                    style={{
-                      position: "absolute",
-                      color: "white",
-                      fontSize: "10px",
-                    }}
-                    key={index}
-                  >
-                    &#9733;
-                  </span>
+            <Stars rating={rating ? rating : 1} />
 
-                  <span
-                    style={{ color: "black", fontSize: "18px" }}
-                    key={index}
-                  >
-                    &#9733;
-                  </span>
-                </div>
-              ))}
-            </Stars>
             <Span>{reviews.length} Reviews</Span>
           </Valoracion>
 
@@ -344,7 +365,10 @@ export default function DetalleProducto() {
               ) : (
                 <Boton>Sin stock</Boton>
               )}
-              <Boton>Editar</Boton>
+
+              {location && location.pathname.slice(0, 6) === "/admin" && (
+                <Boton>Editar</Boton>
+              )}
 
               {detalle.stock ? (
                 <Boton
@@ -360,18 +384,27 @@ export default function DetalleProducto() {
           </Bottom>
         </Body>
       </Details>
-
       <Bar style={{ width: "100%" }} />
-
       <Reviews>
-        <FormRev onClick={reviewOnclick}>Opina sobre este producto</FormRev>
-        <CrearReview id={id} state={formReview} setFormReview={setFormReview} />
+        <CrearReview id={id} state={formReview} />
         <ProductReviews />
       </Reviews>
-
       <Bar style={{ width: "100%" }} />
 
-      <Relacionados>Productos Relacionados</Relacionados>
+      <RelacionadosContainer>
+        <Titulo>Quienes vieron este producto también compraron</Titulo>
+        <Relacionados>
+          {relacionados &&
+            relacionados
+              .filter(filterCategorias)
+              .slice(0, 5)
+              .map((relacionado) => (
+                <Relacionado key={relacionado.id} relacionado={relacionado} />
+              ))}
+        </Relacionados>
+      </RelacionadosContainer>
+
+      <Bar style={{ width: "100%" }} />
     </Container>
   ) : (
     <></>

@@ -101,11 +101,22 @@ export function postProducto(payload) {
   };
 }
 
-export function putProducto(id) {
+export function putProducto(id, body) {
   return function (dispatch) {
     axios.put(`${urlBase}${admin}${id}`).then((res) => {
       dispatch({ type: "PUT_PRODUCTO", payload: res.data });
     });
+  };
+}
+
+export function deleteProducto(id) {
+  return function (dispatch) {
+    axios
+      .delete(`${urlBase}producto/${id}`)
+      .then((res) => {
+        dispatch({ type: "DELETE_PRODUCTO", payload: res.data });
+      })
+      .catch((err) => console.log(err, "error delete"));
   };
 }
 
@@ -140,5 +151,19 @@ export const setSort = (value) => (dispatch) => {
 export function agregarCarrito(idProducto) {
   return function (dispatch) {
     dispatch({ type: "AGREGAR_CARRITO", payload: idProducto });
+  };
+}
+
+export function quitarItem(idProducto) {
+  return function (dispatch) {
+    dispatch({ type: "QUITAR_ITEM", payload: idProducto });
+  };
+}
+
+export function getUser(mail) {
+  return function (dispatch) {
+    // axios(`${urlBase}`, mail).then((res) =>
+    dispatch({ type: "GET_USER", payload: false });
+    // );
   };
 }
