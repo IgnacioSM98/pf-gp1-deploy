@@ -13,7 +13,7 @@ const Button = styled(BsPlusLg)`
 export default function AgregarProducto() {
   return (
     <div className="container-producto">
-      <NavLink to="/crear">
+      <NavLink to="/admin/crear">
         <Button size="5rem" />
       </NavLink>
     </div>
