@@ -85,6 +85,9 @@ const Button = styled.button`
 export default function NavBar({ contacto, user, setUser }) {
   const carrito = useSelector((state) => state.carrito);
   const [userMenu, setMenu] = useState(false);
+  const countCarrito = carrito.filter((cv, i) => {
+    return i === carrito.findIndex((e) => e.id === cv.id);
+  }).length;
   const admin = useSelector((state) => state.user);
 
   const logOut = () => {
@@ -140,7 +143,7 @@ export default function NavBar({ contacto, user, setUser }) {
           }}
           title="Carrito"
         >
-          <span style={{ margin: "4px 2px" }}>{carrito.length}</span>
+          <span style={{ margin: "4px 2px" }}>{countCarrito}</span>
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="16"
