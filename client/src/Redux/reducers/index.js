@@ -175,7 +175,6 @@ export default function rootReducer(state = initialState, action) {
 
     case "DELETE_PRODUCTO":
       let productosAux = [...state.productosFiltrados];
-      console.log(Number(action.payload));
 
       const index = productosAux.findIndex((producto) => {
         return producto.id === Number(action.payload);
@@ -198,7 +197,7 @@ export default function rootReducer(state = initialState, action) {
     case "GET_USER":
       return {
         ...state,
-        user: action.payload,
+        user: action.payload.isAdmin,
       };
     default:
       return state;

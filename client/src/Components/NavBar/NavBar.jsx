@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
-import { useLocation } from "react-router-dom";
 import Usuario from "../Usuario/Usuario";
 import { useSelector } from "react-redux";
 import { app } from "../../firebase";
@@ -84,16 +83,17 @@ const Button = styled.button`
 `;
 
 export default function NavBar({ contacto, user, setUser }) {
-  const [link, setLink] = useState("");
   const carrito = useSelector((state) => state.carrito);
-  const location = useLocation().pathname;
   const [userMenu, setMenu] = useState(false);
+  const countCarrito = carrito.filter((cv, i) => {
+    return i === carrito.findIndex((e) => e.id === cv.id);
+  }).length;
+  const admin = useSelector((state) => state.user);
 
   const logOut = () => {
     localStorage.removeItem("user");
     app.auth().signOut();
     app.auth().onAuthStateChanged((user) => {
-      console.log("hoal,", user);
       setUser(user);
     });
   };
@@ -115,29 +115,17 @@ export default function NavBar({ contacto, user, setUser }) {
 
   return (
     <Container>
-      {location.slice(0, 6) === "/admin" ? (
-        <NavLink to={"/admin"}>
-          <Span>Home</Span>
-        </NavLink>
-      ) : (
-        <NavLink to={"/"}>
-          <Span>Home</Span>
-        </NavLink>
-      )}
+      <NavLink to={"/"}>
+        <Span>Home</Span>
+      </NavLink>
 
       {/* <NavLink to="/">
         <Span>About</Span>
       </NavLink> */}
 
-      {location.slice(0, 6) === "/admin" ? (
-        <NavLink to={"/admin/tienda"}>
-          <Span>Tienda</Span>
-        </NavLink>
-      ) : (
-        <NavLink to={"tienda"}>
-          <Span>Tienda</Span>
-        </NavLink>
-      )}
+      <NavLink to={"tienda"}>
+        <Span>Tienda</Span>
+      </NavLink>
 
       <Span onClick={() => scrollToSection(contacto)}>Contacto</Span>
 
@@ -146,27 +134,27 @@ export default function NavBar({ contacto, user, setUser }) {
       </NavLink> */}
 
       <Login>
-          <NavLink
-            to={"/carrito"}
-            style={{
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-            }}
-            title="Carrito"
+        <NavLink
+          to={"/carrito"}
+          style={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+          title="Carrito"
+        >
+          <span style={{ margin: "4px 2px" }}>{countCarrito}</span>
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="16"
+            height="16"
+            fill="currentColor"
+            className="bi bi-bag"
+            viewBox="0 0 16 16"
           >
-            <span style={{ margin: "4px 2px" }}>{carrito.length}</span>
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="16"
-              height="16"
-              fill="currentColor"
-              className="bi bi-bag"
-              viewBox="0 0 16 16"
-            >
-              <path d="M8 1a2.5 2.5 0 0 1 2.5 2.5V4h-5v-.5A2.5 2.5 0 0 1 8 1zm3.5 3v-.5a3.5 3.5 0 1 0-7 0V4H1v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V4h-3.5zM2 5h12v9a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V5z" />
-            </svg>
-          </NavLink>
+            <path d="M8 1a2.5 2.5 0 0 1 2.5 2.5V4h-5v-.5A2.5 2.5 0 0 1 8 1zm3.5 3v-.5a3.5 3.5 0 1 0-7 0V4H1v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V4h-3.5zM2 5h12v9a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V5z" />
+          </svg>
+        </NavLink>
 
         {user && Object.entries(user).length !== 0 ? (
           <button
@@ -193,9 +181,11 @@ export default function NavBar({ contacto, user, setUser }) {
 
       {userMenu && (
         <UserMenu>
-          <UserButton to="/" onClick={() => setMenu(!userMenu)}>
-            {user ? "Modo Admin" : "Modo Invitado"}
-          </UserButton>
+          {admin && (
+            <UserButton to="/" onClick={() => setMenu(!userMenu)}>
+              {user ? "Modo Admin" : "Modo Invitado"}
+            </UserButton>
+          )}
 
           <UserButton to="/cuenta" onClick={() => setMenu(!userMenu)}>
             Mi Cuenta

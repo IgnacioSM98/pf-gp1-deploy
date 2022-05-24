@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import { Link } from "react-router-dom";
 
 const Container = styled.div`
   display: flex;
@@ -48,12 +49,19 @@ const Precio = styled.span`
   font-weight: 600;
 `;
 
+const LinkProduct = styled(Link)`
+  text-decoration: none;
+  width: 240px;
+`;
+
 export default function Relacionado({ relacionado }) {
   return (
     <Container>
+      {/* <LinkProduct to={`/productos/${relacionado.id}`}> */}
       <Image src={relacionado.imagen} alt="" />
       <Precio>{`$${relacionado.precio}`}</Precio>
       <Nombre>{relacionado.nombre}</Nombre>
+      {/* </LinkProduct> */}
     </Container>
   );
 }
