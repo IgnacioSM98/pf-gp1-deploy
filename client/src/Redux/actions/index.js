@@ -95,9 +95,10 @@ export function getReviews(id) {
 }
 
 export function postProducto(payload) {
-  return async function () {
+  return async function (dispatch) {
     let json = await axios.post(`${urlBase}${admin}${crear}`, payload);
-    return json;
+
+    dispatch({ type: "POST_PRODUCTO", payload: json.data });
   };
 }
 

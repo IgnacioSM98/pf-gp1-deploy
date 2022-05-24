@@ -258,7 +258,7 @@ router.post("/crear", async (req, res) => {
       mail: mail,
       isAdmin: isAdmin,
     });
-    res.status(200).send(console.log(usuario));
+    res.status(200).send(usuario);
   } catch (error) {
     console.log(error);
     res.status(400).send(error);

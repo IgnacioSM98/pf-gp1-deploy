@@ -169,6 +169,17 @@ export default function rootReducer(state = initialState, action) {
         carrito: data,
       };
 
+    case "POST_PRODUCTO":
+      let prodAux = [...state.productos];
+
+      prodAux = prodAux.concat(action.payload);
+
+      return {
+        ...state,
+        productos: prodAux,
+        productosFiltrados: prodAux,
+      };
+
     case "PUT_PRODUCTO":
       const prods = [...state.productosFiltrados];
 

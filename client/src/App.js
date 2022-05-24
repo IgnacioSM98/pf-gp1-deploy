@@ -42,7 +42,7 @@ function App() {
           <Route exact path="/blog" element={<Blog contacto={contacto} />} />
           <Route exact path="/usuario" element={<Cuenta />} />
           {/* <Route exact path="/admin" element={"admin"} /> */}
-          <Route exact path="/crear" element={<CrearProducto />} />
+          <Route exact path="/admin/crear" element={<CrearProducto />} />
           <Route
             exact
             path="/login"
