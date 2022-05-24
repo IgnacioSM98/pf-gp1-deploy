@@ -11,12 +11,9 @@ export function getProductos() {
   return async function (dispatch) {
     const data = JSON.parse(localStorage.getItem("productos"));
 
-    console.log(data, "tk");
-
     if (data) {
       dispatch({ type: "GET_PRODUCTOS", payload: data });
     } else {
-      console.log("momento uwu");
       try {
         const resp = await axios.get(`${urlBase}${productos}`);
 
@@ -156,5 +153,13 @@ export function agregarCarrito(idProducto) {
 export function quitarItem(idProducto) {
   return function (dispatch) {
     dispatch({ type: "QUITAR_ITEM", payload: idProducto });
+  };
+}
+
+export function getUser(mail) {
+  return function (dispatch) {
+    axios(`${urlBase}`, mail).then((res) =>
+      dispatch({ type: "GET_USER", payload: res.data })
+    );
   };
 }

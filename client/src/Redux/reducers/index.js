@@ -6,12 +6,12 @@ const initialState = {
   detalle: {},
   reviews: [],
   carrito: [],
+  user: {},
 };
 
 export default function rootReducer(state = initialState, action) {
   switch (action.type) {
     case "GET_PRODUCTOS":
-      console.log(action.payload, "afita");
       return {
         ...state,
         productos: action.payload,
@@ -186,6 +186,12 @@ export default function rootReducer(state = initialState, action) {
         ...state,
         productos: productosAux,
         productosFiltrados: productosAux,
+      };
+
+    case "GET_USER":
+      return {
+        ...state,
+        user: action.payload,
       };
     default:
       return state;
