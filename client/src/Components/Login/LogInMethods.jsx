@@ -103,6 +103,8 @@ export default function Login({ setUser }) {
   const apellidoRef = useRef(null);
   const emailRef = useRef(null);
   const passRef = useRef(null);
+  const emailLRef = useRef(null);
+  const passLRef = useRef(null);
 
   const handleChange = (e) => {
     setFlag({
@@ -117,6 +119,7 @@ export default function Login({ setUser }) {
     signInWithPopup(authentication, provider)
       .then((res) => {
         localStorage.setItem("user", JSON.stringify(res.user));
+        setUser(res.user);
         navigate(-1);
       })
       .catch((error) => {
@@ -136,6 +139,7 @@ export default function Login({ setUser }) {
           .then(() => {
             localStorage.setItem("user", JSON.stringify(res.user));
             setUser(res.user);
+            navigate(-1);
           });
       });
   };
@@ -147,6 +151,7 @@ export default function Login({ setUser }) {
       .then((res) => {
         localStorage.setItem("user", JSON.stringify(res.user));
         setUser(res.user);
+        navigate(-1);
       });
   };
 
@@ -156,6 +161,8 @@ export default function Login({ setUser }) {
     const mail = emailRef.current.value;
     const pass = passRef.current.value;
     const nombre = nombreRef.current.value;
+    const mailL = emailLRef.current.value;
+    const passL = passLRef.current.value;
 
     if (isSignUp) {
       createUser(mail, pass, nombre);
@@ -163,7 +170,7 @@ export default function Login({ setUser }) {
       // dispatch(getUser(mail));
       navigate(-1);
     } else {
-      logIn(mail, pass);
+      logIn(mailL, passL);
     }
   };
 
@@ -174,43 +181,50 @@ export default function Login({ setUser }) {
           Bienvenido!
         </Titulo>
 
-        {/* <form onSubmit={handleSubmit}> */}
-        <p style={{ margin: "20px" }}>
-          Para continuar conectado con nosotros ingresá con tu cuenta
-        </p>
+        <form onSubmit={handleSubmit}>
+          <p style={{ margin: "20px" }}>
+            Para continuar conectado con nosotros ingresá con tu cuenta
+          </p>
 
-        <Boton color="black" backgroundColor="white" type="submit">
-          Iniciar Sesion
-        </Boton>
+          <Boton
+            onClick={() => setIsSignUp(false)}
+            color="black"
+            backgroundColor="white"
+            type="submit"
+          >
+            Iniciar Sesion
+          </Boton>
 
-        <div className="grupo-login">
-          <input
-            className="input-login"
-            type="email"
-            id="emailField"
-            name="correo"
-            onChange={handleChange}
-          />
-          <span className="barra-login"></span>
-          <label className="label-login" htmlFor="emailField">
-            Correo
-          </label>
-        </div>
+          <div className="grupo-login">
+            <input
+              className="input-login"
+              type="email"
+              id="emailField"
+              name="correo"
+              ref={emailLRef}
+              onChange={handleChange}
+            />
+            <span className="barra-login"></span>
+            <label className="label-login" htmlFor="emailField">
+              Correo
+            </label>
+          </div>
 
-        <div className="grupo-login">
-          <input
-            className="input-login"
-            type="password"
-            id="passwordField"
-            name="contraseña"
-            onChange={handleChange}
-          />
-          <span className="barra-login"></span>
-          <label className="label-login" htmlFor="passwordField">
-            Contraseña
-          </label>
-        </div>
-        {/* </form> */}
+          <div className="grupo-login">
+            <input
+              className="input-login"
+              type="password"
+              id="passwordField"
+              name="contraseña"
+              ref={passLRef}
+              onChange={handleChange}
+            />
+            <span className="barra-login"></span>
+            <label className="label-login" htmlFor="passwordField">
+              Contraseña
+            </label>
+          </div>
+        </form>
       </SignIn>
       <SignUp onSubmit={handleSubmit}>
         <Titulo color="#08ce72" className="titulo-login">
@@ -290,7 +304,7 @@ export default function Login({ setUser }) {
           color="white"
           backgroundColor="rgb(8, 206, 114)"
           className="boton-logedinmethods"
-          onClick={() => setIsSignUp(!isSignUp)}
+          onClick={() => setIsSignUp(true)}
         >
           {/* {isSignUp ? "Iniciar Sesion" : "Registrarse"} */}
           Registrarse
