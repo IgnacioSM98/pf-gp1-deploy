@@ -128,11 +128,9 @@ export default function Login({ setUser }) {
       .auth()
       .createUserWithEmailAndPassword(mail, pass)
       .then((res) => {
-        res.user
-          .updateProfile({
-            displayName: nombre,
-          })
-          .then(() => setUser(res.user));
+        res.user.updateProfile({
+          displayName: nombre,
+        });
       });
   };
 
