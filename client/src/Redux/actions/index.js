@@ -121,11 +121,15 @@ export function deleteProducto(id) {
 }
 
 export function postCategoria(payload) {
-  return async function () {
+  return async function (dispatch) {
     let json = await axios.post(`${urlBase}${categorias}/${crear}`, payload);
+
+    dispatch(getCategorias());
+
     return json;
   };
 }
+
 export function deleteCategoria(id) {
   return async function () {
     await axios.delete(`${urlBase}${categorias}/${id}`);
@@ -138,6 +142,9 @@ export function deleteCategoria(id) {
 export function postReviews(id, payload) {
   return async function (dispatch) {
     await axios.post(`${urlBase}${ratings}${crear}/${id}`, payload);
+
+    dispatch(getReviews(id));
+
     return dispatch({
       type: "CREAR_REVIEW",
     });
