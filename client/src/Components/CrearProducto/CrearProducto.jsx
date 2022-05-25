@@ -376,6 +376,7 @@ export default function CrearProducto() {
       if (Object.values(errors).length > 0) {
         setStateModalProd(!stateModalProd);
       } else {
+        console.log(post, "xd");
         dispatch(postProducto(post));
         setStateModalProd(!stateModalProd);
       }
@@ -503,7 +504,7 @@ export default function CrearProducto() {
                 />
 
                 <Imagen src={imageSelected} />
-                {loading && <Loading />}
+                {/* {loading && <Loading />} */}
               </div>
 
               {errors.imagen && <Errors>{errors.imagen}</Errors>}

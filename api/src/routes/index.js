@@ -277,12 +277,12 @@ router.post("/admin/crearusuarios", async (req, res) => {
 });
 
 router.post("/admin/crear", async (req, res) => {
-  const categorias = await Categoria.findAll({
+  const categoriasAux = await Categoria.findAll({
     include: [{ model: Producto }],
   });
 
   try {
-    const { nombre, descripcion, precio, stock, imagen, categoria } = req.body;
+    const { nombre, descripcion, precio, stock, imagen, categorias } = req.body;
     const producto = await Producto.create({
       nombre: nombre,
       descripcion: descripcion,
@@ -293,25 +293,24 @@ router.post("/admin/crear", async (req, res) => {
 
     let auxiliar = [];
 
-    categoria.forEach((elemento) => {
+    categoriasAux?.forEach((elemento) => {
       const filtroId = categorias.filter((c) => c.nombre === elemento);
       auxiliar.push(filtroId[0].id);
     });
 
-    auxiliar.map((id) => {
+    auxiliar?.map((id) => {
       Categoria.findByPk(id).then((esaCategoria) => {
         Producto.findByPk(producto.id) //aca va el id del producto creado
           .then((productoNuevo) => {
             esaCategoria.addProducto(productoNuevo);
           })
           .catch((error) => {
-            return res.status(400).json(console.log(error));
+            return res.status(400).json(error);
           });
       });
     });
     res.status(200).send(producto);
   } catch (error) {
-    console.log(error, "aca");
     res.status(400).send(error);
   }
 });
