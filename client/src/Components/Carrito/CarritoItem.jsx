@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 
 const Container = styled.div`
@@ -58,6 +58,7 @@ const Boton = styled.button`
   border: none
   outline: none;
   color: white;
+  cursor: pointer
 `;
 
 const Cantidad = styled.p`
@@ -66,18 +67,28 @@ const Cantidad = styled.p`
   width: 100px;
 `;
 
-export default function CarritoItem({ producto }) {
-  const [cantidad, setCantidad] = useState(1);
+export default function CarritoItem({ producto, setPrecioTotal }) {
+  const [cantidad, setCantidad] = useState(0);
+  const [semiTotal, setSemiTotal] = useState();
+
+  useEffect(() => {
+    setCantidad(producto.cantidad);
+    setSemiTotal(producto.precio * producto.cantidad);
+  }, []);
 
   function handleSuma(e) {
     if (cantidad >= 1) {
       setCantidad(cantidad + 1);
+      setSemiTotal(producto.precio * (cantidad + 1));
+      setPrecioTotal((prev) => prev + producto.precio);
     }
   }
 
   function handleResta(e) {
     if (cantidad > 1) {
       setCantidad(cantidad - 1);
+      setSemiTotal(producto.precio * (cantidad - 1));
+      setPrecioTotal((prev) => prev - producto.precio);
     }
   }
 
@@ -90,10 +101,10 @@ export default function CarritoItem({ producto }) {
         <Nombre>{producto.nombre}</Nombre>
         <ContenedorCantidad>
           <Boton onClick={(e) => handleResta(e)}>-</Boton>
-          <Cantidad>{producto.cantidad}</Cantidad>
+          <Cantidad>{cantidad}</Cantidad>
           <Boton onClick={(e) => handleSuma(e)}>+</Boton>
         </ContenedorCantidad>
-        <Precio>${producto.precio * producto.cantidad}</Precio>
+        <Precio>${semiTotal}</Precio>
       </ContenedorInfo>
     </Container>
   );

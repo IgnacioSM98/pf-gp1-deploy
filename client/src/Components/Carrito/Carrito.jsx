@@ -143,7 +143,7 @@ function Carrito() {
     });
 
     setPrecioTotal(precio);
-  }, [carrito, precioTotal, setPrecioTotal]);
+  }, [carrito, setPrecioTotal]);
 
   return (
     <Container>
@@ -163,7 +163,11 @@ function Carrito() {
       {carrito.map((el) => {
         return (
           <Productos>
-            <CarritoItem key={el.id} producto={el} />
+            <CarritoItem
+              key={el.id}
+              producto={el}
+              setPrecioTotal={setPrecioTotal}
+            />
             <Borrar onClick={() => handleQuit(el)}>X</Borrar>
           </Productos>
         );
