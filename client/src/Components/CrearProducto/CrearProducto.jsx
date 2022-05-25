@@ -222,7 +222,7 @@ export default function CrearProducto() {
         descripcion: "",
         precio: 0,
         imagen: "",
-        stock: 0,
+        stock: "0",
         categorias: [],
       });
     }
@@ -276,7 +276,7 @@ export default function CrearProducto() {
     if (e.target.name === "precio" || e.target.name === "stock") {
       setPost({
         ...post,
-        [e.target.name]: Number(e.target.value),
+        [e.target.name]: e.target.value,
       });
 
       setErrors(
