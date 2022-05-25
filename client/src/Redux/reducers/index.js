@@ -154,7 +154,7 @@ export default function rootReducer(state = initialState, action) {
     case "AGREGAR_CARRITO":
       const newCarrito = [...state.carrito];
       const indexCarrito = state.carrito.findIndex(
-        (carrito) => Number(carrito.id) === Number(action.payload)
+        (carrito) => Number(carrito.id) === Number(action.payload.idProducto)
       );
 
       if (indexCarrito !== -1) {
@@ -167,7 +167,8 @@ export default function rootReducer(state = initialState, action) {
         };
       } else {
         const productoSeleccionado = state.productos.find(
-          (producto) => Number(producto.id) === Number(action.payload)
+          (producto) =>
+            Number(producto.id) === Number(action.payload.idProducto)
         );
 
         return {
@@ -179,7 +180,7 @@ export default function rootReducer(state = initialState, action) {
               nombre: productoSeleccionado.nombre,
               precio: productoSeleccionado.precio,
               imagen: productoSeleccionado.imagen,
-              cantidad: action.cantidad,
+              cantidad: action.payload.cantidad,
             },
           ],
         };

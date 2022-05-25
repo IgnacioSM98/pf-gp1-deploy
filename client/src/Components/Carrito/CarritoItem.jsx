@@ -90,10 +90,10 @@ export default function CarritoItem({ producto }) {
         <Nombre>{producto.nombre}</Nombre>
         <ContenedorCantidad>
           <Boton onClick={(e) => handleResta(e)}>-</Boton>
-          <Cantidad>{cantidad}</Cantidad>
+          <Cantidad>{producto.cantidad}</Cantidad>
           <Boton onClick={(e) => handleSuma(e)}>+</Boton>
         </ContenedorCantidad>
-        <Precio>${producto.precio * cantidad}</Precio>
+        <Precio>${producto.precio * producto.cantidad}</Precio>
       </ContenedorInfo>
     </Container>
   );
