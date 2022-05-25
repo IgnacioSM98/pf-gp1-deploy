@@ -6,6 +6,7 @@ export default function EliminarCategoria() {
   const dispatch = useDispatch();
   const categorias = useSelector((state) => state.categorias);
   const [categoria, setCategoria] = useState();
+
   useEffect(() => {
     dispatch(getCategorias());
   }, [dispatch]);
@@ -14,10 +15,12 @@ export default function EliminarCategoria() {
     const seleccionada = e.target.value;
     setCategoria(seleccionada);
   }
+
   function handleSubmit(e) {
     e.preventDefault();
     dispatch(deleteCategoria(categoria));
   }
+
   return (
     <div>
       <form onSubmit={handleSubmit}>

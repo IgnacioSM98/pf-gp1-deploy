@@ -63,6 +63,7 @@ const LetraFiltro = styled.p`
 
 const ProductosTienda = styled.div`
   width: 840px;
+  min-height: 600px;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   grid-gap: 20px 60px;
@@ -138,7 +139,7 @@ const Buscador = styled.input`
   border-radius: 8px;
   width: 500px;
   height: 40px;
-  font-size: 15px;
+  font-size: 14px;
   color: #222;
   box-shadow: 0 2px 2px 0 grey, 0 2px 2px 0 grey;
   border: none;
@@ -233,7 +234,7 @@ function Shop({ contacto }) {
       }
     } else {
       if (i >= 9 * (pageSelected - 1) && i <= 9 * pageSelected - 1) {
-        console.log(i, producto.nombre);
+        // console.log(i, producto.nombre);
         return producto;
       }
     }

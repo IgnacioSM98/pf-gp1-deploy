@@ -31,9 +31,6 @@ export default function Producto() {
       <Reviews>
         {reviews.length ? (
           reviews.map((review) => {
-            {
-              console.log(review);
-            }
             return (
               <Review
                 key={review.id}

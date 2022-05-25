@@ -7,6 +7,7 @@ const initialState = {
   reviews: [],
   carrito: [],
   user: false,
+  userInfo: {},
 };
 
 export default function rootReducer(state = initialState, action) {
@@ -151,14 +152,38 @@ export default function rootReducer(state = initialState, action) {
       };
 
     case "AGREGAR_CARRITO":
-      const productoSeleccionado = state.productos.find(
-        (producto) => producto.id == action.payload
+      const newCarrito = [...state.carrito];
+      const indexCarrito = state.carrito.findIndex(
+        (carrito) => Number(carrito.id) === Number(action.payload)
       );
 
-      return {
-        ...state,
-        carrito: [...state.carrito, productoSeleccionado],
-      };
+      if (indexCarrito !== -1) {
+        console.log(indexCarrito);
+        newCarrito[indexCarrito].cantidad =
+          newCarrito[indexCarrito].cantidad + 1;
+        return {
+          ...state,
+          carrito: newCarrito,
+        };
+      } else {
+        const productoSeleccionado = state.productos.find(
+          (producto) => Number(producto.id) === Number(action.payload)
+        );
+
+        return {
+          ...state,
+          carrito: [
+            ...state.carrito,
+            {
+              id: productoSeleccionado.id,
+              nombre: productoSeleccionado.nombre,
+              precio: productoSeleccionado.precio,
+              imagen: productoSeleccionado.imagen,
+              cantidad: action.cantidad,
+            },
+          ],
+        };
+      }
 
     case "QUITAR_ITEM":
       const data = state.carrito.filter(
@@ -169,12 +194,28 @@ export default function rootReducer(state = initialState, action) {
         carrito: data,
       };
 
+    case "POST_PRODUCTO":
+      let prodAux = [...state.productos];
+
+      localStorage.removeItem("productos");
+
+      prodAux = prodAux.concat(action.payload);
+
+      localStorage.setItem("productos", JSON.stringify(prodAux));
+
+      return {
+        ...state,
+        productos: prodAux,
+        productosFiltrados: prodAux,
+      };
+
     case "PUT_PRODUCTO":
       const prods = [...state.productosFiltrados];
 
-      // localStorage.removeItem("productos");
+      localStorage.removeItem("productos");
 
       prods.find((prod) => {
+        // console.log(prod, "aca");
         if (prod.id === action.payload.id) {
           if (action.payload.nombre) {
             prod.nombre = action.payload.nombre;
@@ -194,16 +235,12 @@ export default function rootReducer(state = initialState, action) {
         }
       });
 
-      console.log(prods);
-
-      break;
-
-    // localStorage.setItem("productos", JSON.stringify(productosAux));
-    // return {
-    //   ...state,
-    //   productos: state.productosFiltrados,
-    //   productosFiltrados: state.productosFiltrados,
-    // };
+      localStorage.setItem("productos", JSON.stringify(prods));
+      return {
+        ...state,
+        productos: prods,
+        productosFiltrados: prods,
+      };
 
     case "DELETE_PRODUCTO":
       let productosAux = [...state.productosFiltrados];
@@ -238,6 +275,12 @@ export default function rootReducer(state = initialState, action) {
       return {
         ...state,
         user: admin,
+      };
+
+    case "SET_USER":
+      return {
+        ...state,
+        userInfo: action.payload,
       };
     default:
       return state;

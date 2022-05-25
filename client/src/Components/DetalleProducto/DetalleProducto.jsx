@@ -12,6 +12,7 @@ import { CrearReview, Reviews as ProductReviews, Stars } from "../index";
 import styled from "styled-components";
 import cards from "../../Images/Cards/index";
 import { Relacionado } from "../index";
+import { setUserInfo } from "../../Redux/actions";
 
 const Container = styled.div`
   // height: 100vh;
@@ -223,7 +224,14 @@ export default function DetalleProducto() {
   const dispatch = useDispatch();
   const location = useLocation();
 
- 
+  useEffect(() => {
+    dispatch(setUserInfo(localStorage.getItem("user")));
+  }, []);
+
+  const user = useSelector((state) => state.userInfo);
+  // Validamos si hay sesion iniciada
+  // const user = localStorage.getItem("user") ? true : false;
+
   const [carrito, setCarrito] = useState(true),
     [cantidad, setCantidad] = useState(1),
     [boton, setBoton] = useState({ suma: false, resta: true }),
@@ -388,7 +396,7 @@ export default function DetalleProducto() {
       </Details>
       <Bar style={{ width: "100%" }} />
       <Reviews>
-        <CrearReview id={id} />
+        {user && <CrearReview id={id} />}
         <ProductReviews />
       </Reviews>
       <Bar style={{ width: "100%" }} />

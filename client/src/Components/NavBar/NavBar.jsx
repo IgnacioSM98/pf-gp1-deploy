@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import Usuario from "../Usuario/Usuario";
-import { getUser } from "../../Redux/actions";
+import { getUser, setUserInfo } from "../../Redux/actions";
 import { useSelector, useDispatch } from "react-redux";
 import { app } from "../../firebase";
 
@@ -96,6 +96,9 @@ export default function NavBar({ contacto, user, setUser }) {
     localStorage.removeItem("user");
     app.auth().signOut();
     dispatch(getUser());
+
+    dispatch(setUserInfo());
+
     app.auth().onAuthStateChanged((user) => {
       setUser(user);
       dispatch(getUser());
@@ -110,8 +113,10 @@ export default function NavBar({ contacto, user, setUser }) {
   };
 
   useEffect(() => {
-    console.log("aca esta vacio user", user);
+    // console.log("aca esta vacio user", user);
     if (!user) {
+      dispatch(setUserInfo(localStorage.getItem("user")));
+
       const userAux = JSON.parse(localStorage.getItem("user"));
 
       setUser(userAux);
@@ -121,8 +126,8 @@ export default function NavBar({ contacto, user, setUser }) {
   }, []);
 
   return (
-    <Container>
-      <NavLink to={"/"}>
+    <Container onMouseLeave={() => setMenu(false)}>
+      <NavLink to={"/"} onClick={() => setMenu(false)}>
         <Span>Home</Span>
       </NavLink>
 
@@ -130,11 +135,18 @@ export default function NavBar({ contacto, user, setUser }) {
         <Span>About</Span>
       </NavLink> */}
 
-      <NavLink to={"tienda"}>
+      <NavLink to={"tienda"} onClick={() => setMenu(false)}>
         <Span>Tienda</Span>
       </NavLink>
 
-      <Span onClick={() => scrollToSection(contacto)}>Contacto</Span>
+      <Span
+        onClick={() => {
+          scrollToSection(contacto);
+          setMenu(false);
+        }}
+      >
+        Contacto
+      </Span>
 
       {/* <NavLink to="/blog">
         <Span>Blog</Span>
@@ -149,6 +161,7 @@ export default function NavBar({ contacto, user, setUser }) {
             justifyContent: "center",
           }}
           title="Carrito"
+          onClick={() => setMenu(false)}
         >
           <span style={{ margin: "4px 2px" }}>{countCarrito}</span>
           <svg
@@ -187,7 +200,7 @@ export default function NavBar({ contacto, user, setUser }) {
       {/* ) : null} */}
 
       {userMenu && (
-        <UserMenu>
+        <UserMenu onMouseLeave={() => setMenu(false)}>
           {admin && (
             <UserButton to="/" onClick={() => setMenu(!userMenu)}>
               {user ? "Modo Admin" : "Modo Invitado"}

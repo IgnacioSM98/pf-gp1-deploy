@@ -350,7 +350,7 @@ export default function CrearProducto() {
     e.preventDefault();
 
     if (id) {
-      dispatch(putProducto(id));
+      dispatch(putProducto(id, post));
       setStateModalPut(!stateModalPut);
     } else {
       if (Object.values(errors).length > 0) {
