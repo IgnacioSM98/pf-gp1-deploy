@@ -141,7 +141,7 @@ export default function rootReducer(state = initialState, action) {
       };
     case "CREAR_REVIEW":
       return {
-        ...state
+        ...state,
       };
 
     case "GET_REVIEWS":
@@ -198,6 +198,8 @@ export default function rootReducer(state = initialState, action) {
       let prodAux = [...state.productos];
 
       localStorage.removeItem("productos");
+
+      action.payload.categoria = action.categorias;
 
       prodAux = prodAux.concat(action.payload);
 

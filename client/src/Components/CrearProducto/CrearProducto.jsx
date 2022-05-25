@@ -12,8 +12,7 @@ import "./CrearProducto.css";
 import styled from "styled-components";
 import validate from "./validaciones.js";
 import { useParams } from "react-router-dom";
-import { Modal } from "../index";
-// import EliminarCategoria from "../EliminarCategoria/EliminarCategoria";
+import { Modal, Loading } from "../index";
 import AgregarCategorias from "../AgregarCategorias/AgregarCategorias";
 
 const Container = styled.div`
@@ -103,6 +102,7 @@ const SelectorImagen = styled.input`
   color: transparent;
   // background-color: red;
   z-index: 0;
+  border-radius: 5px;
 `;
 
 const Imagen = styled.img`
@@ -111,6 +111,7 @@ const Imagen = styled.img`
   object-fit: cover;
   background-color: grey;
   z-index: 2;
+  border-radius: 5px;
 `;
 
 const Button = styled.button`
@@ -209,6 +210,7 @@ export default function CrearProducto() {
       //stock: 0,
       categorias: [],
     }),
+    [loading, setLoading] = useState(false),
     [categoria, setCategoria] = useState({ nombre: "" }),
     [cambio, setCambio] = useState(false),
     [imageSelected, setImageSelected] = useState();
@@ -255,19 +257,29 @@ export default function CrearProducto() {
   }
 
   function handleInputCambio(e) {
-    if (e.target.key === "Enter") {
+    // Cada vez que escribo se actualiza el state de categoria
+    setCategoria({
+      id: categorias.length + 1,
+      nombre: e.target.value,
+    });
+
+    // Pero si damos enter se guarda
+    if (e.key === "Enter") {
       handleSub(e);
-      setCategoria({
-        id: categorias.length + 1,
-        nombre: e.target.value,
-      });
-      setCategorias([...categorias, categoria]);
-      console.log(post.categorias);
+
+      setCategorias([
+        ...categorias,
+        {
+          id: categorias.length + 1,
+          nombre: e.target.value,
+        },
+      ]);
     }
   }
 
   function handleSub(e) {
     e.preventDefault();
+
     dispatch(postCategoria(categoria));
     setStateModalCat(!stateModalCat);
   }
@@ -283,9 +295,9 @@ export default function CrearProducto() {
         validate({
           ...post,
           [e.target.name]: Number(e.target.value),
+          loading,
         })
       );
-      console.log(errors);
     } else {
       setPost({
         ...post,
@@ -296,6 +308,7 @@ export default function CrearProducto() {
         validate({
           ...post,
           [e.target.name]: e.target.value,
+          loading,
         })
       );
       console.log(errors);
@@ -303,6 +316,7 @@ export default function CrearProducto() {
   }
 
   function handleImageChange(changeEvent) {
+    setLoading(true);
     const reader = new FileReader();
 
     reader.onload = function (onLoadEvent) {
@@ -326,7 +340,10 @@ export default function CrearProducto() {
 
     axios
       .post("http://api.cloudinary.com/v1_1/henrypfinal/image/upload", formData)
-      .then((res) => setPost({ ...post, imagen: res.data.secure_url }));
+      .then((res) => {
+        setPost({ ...post, imagen: res.data.secure_url });
+        setLoading(false);
+      });
   }
 
   useEffect(() => {
@@ -344,6 +361,7 @@ export default function CrearProducto() {
       validate({
         ...post,
         categorias: [...post.categorias, e.target.value],
+        loading,
       })
     );
   }
@@ -358,6 +376,7 @@ export default function CrearProducto() {
       if (Object.values(errors).length > 0) {
         setStateModalProd(!stateModalProd);
       } else {
+        console.log(post, "xd");
         dispatch(postProducto(post));
         setStateModalProd(!stateModalProd);
       }
@@ -413,7 +432,7 @@ export default function CrearProducto() {
               />
               <span className="barra"></span>
               <label className="label">Descripción</label>
-              {errors.descripción && <Errors>{errors.descripción}</Errors>}
+              {errors.descripcion && <Errors>{errors.descripcion}</Errors>}
             </Input>
 
             <Input>
@@ -447,25 +466,31 @@ export default function CrearProducto() {
             </Input>
 
             <Input>
-              <AgregarCategorias post={post} setPost={setPost} />
-              {errors.categorías && <Errors>{errors.categorías}</Errors>}
+              <AgregarCategorias
+                post={post}
+                setPost={setPost}
+                setErrors={setErrors}
+              />
+              {errors.categorias && <Errors>{errors.categorias}</Errors>}
             </Input>
           </Left>
 
           <Right>
-            <Input>
+            <Input style={{ cursor: loading ? "wait" : "auto" }}>
               <input
                 className="input-create"
                 type="text"
                 placeholder="Imagen desde URL o archivo local"
                 value={post.imagen}
                 name="imagen"
+                disabled={loading ? true : false}
+                style={{ cursor: loading ? "wait" : "auto" }}
                 onChange={(e) => {
                   handleInputChange(e);
                   setImageSelected(e.target.value);
                 }}
               />
-              <div style={{ margin: "20px 0px" }}>
+              <div style={{ margin: "20px 0px", position: "relative" }}>
                 <SelectorImagen
                   className="input-create"
                   type="file"
@@ -473,11 +498,13 @@ export default function CrearProducto() {
                   placeholder=" "
                   onChange={(e) => {
                     handleImageChange(e);
+
                     setImageSelected(post.imagen);
                   }}
                 />
 
                 <Imagen src={imageSelected} />
+                {/* {loading && <Loading />} */}
               </div>
 
               {errors.imagen && <Errors>{errors.imagen}</Errors>}
@@ -492,6 +519,7 @@ export default function CrearProducto() {
                   onKeyDown={(e) => handleInputCambio(e)}
                   onChange={(e) => handleInputCambio(e)}
                 />
+
                 <ButtonCat onClick={(e) => handleSub(e)}>Agregar</ButtonCat>
               </div>
             </CrearCat>
@@ -503,6 +531,7 @@ export default function CrearProducto() {
             )}
           </Right>
         </Form>
+
         <Modal state={stateModalProd} setStateModal={setStateModalProd}>
           {Object.values(errors).length > 0 ? (
             <ParrafoAlerta>Por favor rellenar todos los campos</ParrafoAlerta>
