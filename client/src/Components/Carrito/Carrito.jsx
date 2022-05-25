@@ -139,8 +139,10 @@ function Carrito() {
     let precio = 0;
 
     carrito.forEach((item) => {
-      precio = precio + Number(item.precio);
+      precio = precio + Number(item.precio) * item.cantidad;
     });
+
+    console.log(carrito, "xd?");
 
     setPrecioTotal(precio);
   }, [carrito, precioTotal, setPrecioTotal]);
