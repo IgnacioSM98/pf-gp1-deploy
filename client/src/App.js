@@ -40,7 +40,7 @@ function App() {
           <Route exact path="/edit/:id" element={<CrearProducto />} />
           <Route exact path="/carrito" element={<Carrito />} />
           <Route exact path="/blog" element={<Blog contacto={contacto} />} />
-          <Route exact path="/usuario" element={<Cuenta />} />
+          <Route exact path="/cuenta" element={<Cuenta />} />
           {/* <Route exact path="/admin" element={"admin"} /> */}
           <Route exact path="/admin/crear" element={<CrearProducto />} />
           <Route
