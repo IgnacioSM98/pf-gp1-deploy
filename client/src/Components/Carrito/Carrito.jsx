@@ -142,8 +142,6 @@ function Carrito() {
       precio = precio + Number(item.precio) * item.cantidad;
     });
 
-    console.log(carrito, "xd?");
-
     setPrecioTotal(precio);
   }, [carrito, precioTotal, setPrecioTotal]);
 
