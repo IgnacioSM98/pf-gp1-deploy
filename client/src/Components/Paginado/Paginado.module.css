@@ -1,0 +1,10 @@
+#pageLi a {
+  cursor: pointer;
+  text-decoration: none;
+  color: black;
+  text-align: center;
+}
+
+.active {
+  background-color: rgb(140, 140, 140);
+}

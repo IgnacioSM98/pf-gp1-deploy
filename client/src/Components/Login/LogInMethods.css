@@ -1,0 +1,112 @@
+*,
+::before,
+::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.form-login {
+  background-color: white;
+  width: 30%;
+  padding: 10px 0;
+  border-radius: 10px;
+  box-shadow: 0 0 6px 0 rgba(255, 255, 255, 0.8);
+  margin: auto;
+}
+
+.grupo-login {
+  position: relative;
+  margin: 45px 0px 0px 0px;
+  width: 320px;
+}
+
+.input-login {
+  background: none;
+  color: #c6c6c6;
+  font-size: 18px;
+  padding: 10px 10px 10px 5px;
+  display: block;
+  width: 100%;
+  border: none;
+  border-bottom: 1px solid var(--colorTextos);
+  resize: none;
+}
+
+.input-login:focus {
+  outline: none;
+  color: rgb(94, 93, 93);
+}
+
+.input-login:focus ~ .label-login {
+  position: absolute;
+  top: -14px;
+  font-size: 12px;
+  color: rgb(8, 206, 114);
+}
+
+.input-login:not(:placeholder-shown) ~ .label-login {
+  position: absolute;
+  top: -14px;
+  font-size: 12px;
+}
+/* .input-login:not(:placeholder-shown) ~ .label-login {
+  position: absolute;
+  top: -14px;
+  font-size: 12px;
+} */
+
+.label-login {
+  color: #49454567;
+  font-size: 16px;
+  position: absolute;
+  left: 5px;
+  top: 10px;
+  transition: 0.3s ease all;
+  pointer-events: none;
+}
+
+.barra-login {
+  position: relative;
+  display: block;
+  width: 100%;
+}
+
+.input-login:focus ~ .barra-login::before {
+  width: 100%;
+}
+
+.barra-login::before {
+  content: "";
+  height: 2px;
+  width: 0;
+  bottom: 0;
+  position: absolute;
+  background: linear-gradient(to left, white, rgb(8, 206, 114));
+  transition: 0.3s ease all;
+  left: 0%;
+}
+
+@media screen and (max-width: 1100px) {
+  .form-login {
+    width: 50%;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .form-login {
+    width: 60%;
+  }
+}
+
+@media screen and (max-width: 450%) {
+  .form-login {
+    width: 80%;
+  }
+}
+
+@media screen and (max-width: 300px) {
+  .form-login {
+    width: 90%;
+  }
+}
