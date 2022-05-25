@@ -222,7 +222,7 @@ export default function CrearProducto() {
         descripcion: "",
         precio: 0,
         imagen: "",
-        stock: "0",
+        stock: 0,
         categorias: [],
       });
     }
