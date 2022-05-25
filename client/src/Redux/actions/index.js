@@ -12,17 +12,11 @@ export function getProductos() {
     const data = JSON.parse(localStorage.getItem("productos"));
 
     if (data) {
-      dispatch({ type: "GET_PRODUCTOS", payload: data });
+      const resp = await axios.get(`${urlBase}${productos}`);
+      dispatch({ type: "GET_PRODUCTOS", payload: data.concat(resp.data) });
     } else {
-      try {
-        const resp = await axios.get(`${urlBase}${productos}`);
-
-        if (resp) {
-          dispatch({ type: "GET_PRODUCTOS", payload: resp.data });
-        }
-      } catch (err) {
-        console.log(err, "error productos");
-      }
+      const resp = await axios.get(`${urlBase}${productos}`);
+      dispatch({ type: "GET_PRODUCTOS", payload: resp.data });
     }
   };
 }

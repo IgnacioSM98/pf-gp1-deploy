@@ -276,7 +276,7 @@ export default function CrearProducto() {
     if (e.target.name === "precio" || e.target.name === "stock") {
       setPost({
         ...post,
-        [e.target.name]: Number(e.target.value),
+        [e.target.name]: e.target.value,
       });
 
       setErrors(
