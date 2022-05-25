@@ -151,14 +151,38 @@ export default function rootReducer(state = initialState, action) {
       };
 
     case "AGREGAR_CARRITO":
-      const productoSeleccionado = state.productos.find(
-        (producto) => producto.id == action.payload
+      const newCarrito = [...state.carrito];
+      const indexCarrito = state.carrito.findIndex(
+        (carrito) => Number(carrito.id) === Number(action.payload)
       );
 
-      return {
-        ...state,
-        carrito: [...state.carrito, productoSeleccionado],
-      };
+      if (indexCarrito !== -1) {
+        console.log(indexCarrito);
+        newCarrito[indexCarrito].cantidad =
+          newCarrito[indexCarrito].cantidad + 1;
+        return {
+          ...state,
+          carrito: newCarrito,
+        };
+      } else {
+        const productoSeleccionado = state.productos.find(
+          (producto) => Number(producto.id) === Number(action.payload)
+        );
+
+        return {
+          ...state,
+          carrito: [
+            ...state.carrito,
+            {
+              id: productoSeleccionado.id,
+              nombre: productoSeleccionado.nombre,
+              precio: productoSeleccionado.precio,
+              imagen: productoSeleccionado.imagen,
+              cantidad: action.cantidad,
+            },
+          ],
+        };
+      }
 
     case "QUITAR_ITEM":
       const data = state.carrito.filter(

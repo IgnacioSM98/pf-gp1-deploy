@@ -162,9 +162,9 @@ export const setSort = (value) => (dispatch) => {
   dispatch({ type: "SET_SORT", payload: value });
 };
 
-export function agregarCarrito(idProducto) {
+export function agregarCarrito(idProducto, cantidad) {
   return function (dispatch) {
-    dispatch({ type: "AGREGAR_CARRITO", payload: idProducto });
+    dispatch({ type: "AGREGAR_CARRITO", payload: idProducto, cantidad });
   };
 }
 
