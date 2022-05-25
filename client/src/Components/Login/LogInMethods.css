@@ -45,6 +45,11 @@
   color: rgb(8, 206, 114);
 }
 
+.input-login:not(:placeholder-shown) ~ .label-login {
+  position: absolute;
+  top: -14px;
+  font-size: 12px;
+}
 /* .input-login:not(:placeholder-shown) ~ .label-login {
   position: absolute;
   top: -14px;

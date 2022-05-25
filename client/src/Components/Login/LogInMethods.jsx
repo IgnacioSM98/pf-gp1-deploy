@@ -271,6 +271,7 @@ export default function Login({ setUser }) {
               name="correo"
               ref={emailLRef}
               onChange={handleChange}
+              placeholder=" "
             />
             <span className="barra-login"></span>
             <label className="label-login" htmlFor="emailField">
@@ -287,6 +288,7 @@ export default function Login({ setUser }) {
               name="contraseña"
               ref={passLRef}
               onChange={handleChange}
+              placeholder=" "
             />
             <span className="barra-login"></span>
             <label className="label-login" htmlFor="passwordField">
@@ -317,6 +319,7 @@ export default function Login({ setUser }) {
                 name="nombre"
                 ref={nombreRef}
                 onChange={handleChange}
+                placeholder=" "
               />
               <span className="barra-login"></span>
               <label className="label-login" htmlFor="nombreField">
@@ -334,6 +337,7 @@ export default function Login({ setUser }) {
                 name="apellido"
                 ref={apellidoRef}
                 onChange={handleChange}
+                placeholder=" "
               />
               <span className="barra-login"></span>
               <label className="label-login" htmlFor="apellidoText">
@@ -352,6 +356,7 @@ export default function Login({ setUser }) {
               name="correo"
               ref={emailRef}
               onChange={handleChange}
+              placeholder=" "
             />
             <span className="barra-login"></span>
             <label className="label-login" htmlFor="emailField">
@@ -369,6 +374,7 @@ export default function Login({ setUser }) {
               name="contraseña"
               ref={passRef}
               onChange={handleChange}
+              placeholder=" "
             />
             <span className="barra-login"></span>
             <label className="label-login" htmlFor="passwordField">
