@@ -101,7 +101,7 @@ export function postProducto(payload) {
     // dispatch({ type: "POST_PRODUCTO", payload: json.data });
 
     axios.post(`${urlBase}${admin}${crear}`, payload).then((res) => {
-      console.log(res, "uwu");
+      // console.log(res, "uwu");
       dispatch({ type: "POST_PRODUCTO", payload: res.data });
     });
   };
@@ -180,6 +180,16 @@ export function getUser(mail) {
       axios(`${urlBase}usuarios`).then((res) =>
         dispatch({ type: "GET_USER", payload: res.data, mail })
       );
+    } catch (err) {
+      console.log(err);
+    }
+  };
+}
+
+export function setUserInfo(user) {
+  return function (dispatch) {
+    try {
+      dispatch({ type: "SET_USER", payload: user });
     } catch (err) {
       console.log(err);
     }

@@ -6,7 +6,7 @@ import "./LogInMethods.css";
 import styled from "styled-components";
 import google from "./Google.png";
 import { useNavigate } from "react-router-dom";
-import { getUser } from "../../Redux/actions";
+import { getUser, setUserInfo } from "../../Redux/actions";
 import { useDispatch, useSelector } from "react-redux";
 
 const Container = styled.div`
@@ -119,6 +119,9 @@ export default function Login({ setUser }) {
     signInWithPopup(authentication, provider)
       .then((res) => {
         localStorage.setItem("user", JSON.stringify(res.user));
+
+        dispatch(setUserInfo(res.user));
+
         setUser(res.user);
         dispatch(getUser(res.user.email));
         navigate(-1);
@@ -139,6 +142,9 @@ export default function Login({ setUser }) {
           })
           .then(() => {
             localStorage.setItem("user", JSON.stringify(res.user));
+
+            dispatch(setUserInfo(res.user));
+
             setUser(res.user);
             dispatch(getUser(mail));
             navigate(-1);
@@ -153,6 +159,7 @@ export default function Login({ setUser }) {
       .then((res) => {
         localStorage.setItem("user", JSON.stringify(res.user));
         dispatch(getUser(mail));
+        dispatch(setUserInfo(res.user));
         setUser(res.user);
         navigate(-1);
       });

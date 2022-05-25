@@ -7,6 +7,7 @@ const initialState = {
   reviews: [],
   carrito: [],
   user: false,
+  userInfo: {},
 };
 
 export default function rootReducer(state = initialState, action) {
@@ -214,7 +215,7 @@ export default function rootReducer(state = initialState, action) {
       localStorage.removeItem("productos");
 
       prods.find((prod) => {
-        console.log(prod, "aca");
+        // console.log(prod, "aca");
         if (prod.id === action.payload.id) {
           if (action.payload.nombre) {
             prod.nombre = action.payload.nombre;
@@ -274,6 +275,12 @@ export default function rootReducer(state = initialState, action) {
       return {
         ...state,
         user: admin,
+      };
+
+    case "SET_USER":
+      return {
+        ...state,
+        userInfo: action.payload,
       };
     default:
       return state;
