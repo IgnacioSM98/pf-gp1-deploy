@@ -204,9 +204,9 @@ export default function CrearProducto() {
     [post, setPost] = useState({
       nombre: "",
       descripcion: "",
-      // precio: 0,
+      //precio: 0,
       imagen: "",
-      // stock: 1,
+      //stock: 0,
       categorias: [],
     }),
     [categoria, setCategoria] = useState({ nombre: "" }),
@@ -255,19 +255,19 @@ export default function CrearProducto() {
   }
 
   function handleInputCambio(e) {
-    if (e.key === "Enter") {
+    if (e.target.key === "Enter") {
       handleSub(e);
+      setCategoria({
+        id: categorias.length + 1,
+        nombre: e.target.value,
+      });
+      setCategorias([...categorias, categoria]);
+      console.log(post.categorias);
     }
-
-    setCategoria({
-      id: categorias.length + 1,
-      nombre: e.target.value,
-    });
   }
 
   function handleSub(e) {
     e.preventDefault();
-    setCategorias([...categorias, categoria]);
     dispatch(postCategoria(categoria));
     setStateModalCat(!stateModalCat);
   }
@@ -276,7 +276,7 @@ export default function CrearProducto() {
     if (e.target.name === "precio" || e.target.name === "stock") {
       setPost({
         ...post,
-        [e.target.name]: e.target.value,
+        [e.target.name]: Number(e.target.value),
       });
 
       setErrors(
@@ -285,6 +285,7 @@ export default function CrearProducto() {
           [e.target.name]: Number(e.target.value),
         })
       );
+      console.log(errors);
     } else {
       setPost({
         ...post,
@@ -297,6 +298,7 @@ export default function CrearProducto() {
           [e.target.name]: e.target.value,
         })
       );
+      console.log(errors);
     }
   }
 
@@ -417,7 +419,7 @@ export default function CrearProducto() {
             <Input>
               <input
                 className="input-create"
-                type="number"
+                type="text"
                 min="0"
                 value={post.precio}
                 name="precio"
@@ -471,6 +473,7 @@ export default function CrearProducto() {
                   placeholder=" "
                   onChange={(e) => {
                     handleImageChange(e);
+                    setImageSelected(post.imagen);
                   }}
                 />
 
