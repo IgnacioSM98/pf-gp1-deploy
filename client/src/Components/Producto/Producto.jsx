@@ -25,26 +25,75 @@ const Botones = styled.div`
 const Cantidad = styled.button`
   color: black;
   font-weight: bold;
-  background-color: "white")};
+  background-color: white;
   border-radius: 8px;
   border-width: 1.5px;
   border-color: black;
+  border: none;
 
-  margin: 5px;
-  height: 40px;
-  width: 40px;
+  margin: 0px;
+  height: 28px;
+  width: 28px;
   padding: 2%;
+  cursor: pointer;
 `;
 
 const Stock = styled.button`
-  margin: 10px 0px;
-  background-color: black;
-  color: white;
-  height: 40px;
-  width: 40px;
+  margin: 0px 0px;
+  background-color: white;
+  color: black;
+  height: 30px;
+  width: 30px;
   border: none;
   border-radius: 8px;
   font-weight: bold;
+`;
+
+const Boton = styled.button`
+  color: #222;
+  border-radius: 10px 10px 10px 10px;
+  height: 35px;
+  width: 100px;
+  background-color: white;
+  font-family: Poppins;
+  font-size: 13px;
+  box-shadow: 0 2px 2px 0 #222, 0 2px 2px 0 #222;
+  border: none;
+  outline: none;
+  padding: 5px 10px 5px 10px;
+  margin-top: 15px;
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+
+  &:hover {
+    background-color: #37563de0;
+    color: white;
+    cursor: pointer;
+  }
+`;
+
+const ManejoStock = styled.div`
+  color: #222;
+  border-radius: 10px 10px 10px 10px;
+  height: 35px;
+  width: 100px;
+  background-color: #90aa95e0;
+  font-family: Poppins;
+  font-size: 13px;
+  box-shadow: 0 2px 2px 0 #222, 0 2px 2px 0 #222;
+  border: none;
+  outline: none;
+  // padding: 5px 10px 5px 10px;
+  margin-top: 15px;
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+  cursor: auto;
+
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
 `;
 
 export default function Producto({
@@ -170,17 +219,11 @@ export default function Producto({
           </p>
         </div>
 
-        {/* <div>
-          {categorias?.map((categoria) => (
-            <p>{categoria.nombre}</p>
-          ))}
-        </div> */}
-
         <div className="precio-boton">
           <p className="precio">${precio}</p>
 
           {flag === true ? (
-            <div>
+            <ManejoStock onClick={(e) => e.preventDefault()}>
               <Cantidad
                 name="resta"
                 onClick={cambiarCantidad}
@@ -196,17 +239,17 @@ export default function Producto({
               >
                 +
               </Cantidad>
-            </div>
+            </ManejoStock>
           ) : (
-            <button
-              className="boton-agregar"
+            <Boton
+              // className="boton-agregar"
               onClick={(e) => {
                 setFlag(true);
                 agregarAlCarrito(e);
               }}
             >
               AGREGAR
-            </button>
+            </Boton>
           )}
         </div>
       </div>
