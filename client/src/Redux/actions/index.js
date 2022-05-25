@@ -1,4 +1,5 @@
 import axios from "axios";
+import Producto from "../../Components/Reviews/Reviews";
 
 const urlBase = "https://proyecto-final-gp1.herokuapp.com/";
 const productos = "productos";
@@ -10,10 +11,8 @@ const ratings = "ratings/";
 export function getProductos() {
   return async function (dispatch) {
     const data = JSON.parse(localStorage.getItem("productos"));
-
     if (data) {
-      const resp = await axios.get(`${urlBase}${productos}`);
-      dispatch({ type: "GET_PRODUCTOS", payload: data.concat(resp.data) });
+      dispatch({ type: "GET_PRODUCTOS", payload: data });
     } else {
       const resp = await axios.get(`${urlBase}${productos}`);
       dispatch({ type: "GET_PRODUCTOS", payload: resp.data });
