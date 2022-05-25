@@ -51,18 +51,20 @@ const Precio = styled.span`
 
 const LinkProduct = styled(Link)`
   text-decoration: none;
-  width: 240px;
+  color: black;
 `;
 
 export default function Relacionado({ relacionado }) {
   return (
-    <Container>
-      {/* {console.log(relacionado, "tuki")} */}
-      {/* <LinkProduct to={`/productos/${relacionado.id}`}> */}
-      <Image src={relacionado.imagen} alt="" />
-      <Precio>{`$${relacionado.precio}`}</Precio>
-      <Nombre>{relacionado.nombre}</Nombre>
-      {/* </LinkProduct> */}
-    </Container>
+    <LinkProduct to={`/productos/${relacionado.id}`}>
+      <Container>
+        {console.log(relacionado, "tuki")}
+        {/* <LinkProduct to={`/productos/${relacionado.id}`}> */}
+        <Image src={relacionado.imagen} alt="" />
+        <Precio>{`$${relacionado.precio}`}</Precio>
+        <Nombre>{relacionado.nombre}</Nombre>
+        {/* </LinkProduct> */}
+      </Container>
+    </LinkProduct>
   );
 }
