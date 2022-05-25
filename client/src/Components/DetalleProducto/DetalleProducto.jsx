@@ -286,7 +286,7 @@ export default function DetalleProducto() {
   const onClick = (e) => {
     setCarrito(!carrito);
     if (detalle.stock > 1) {
-      dispatch(agregarCarrito(id));
+      dispatch(agregarCarrito(id, cantidad));
     }
   };
 
