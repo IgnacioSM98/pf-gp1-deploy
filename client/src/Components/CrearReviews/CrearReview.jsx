@@ -110,6 +110,11 @@ export default function CrearReview({ id }) {
     e.preventDefault();
     dispatch(postReviews(id, input));
     setStateModalOpinion(!stateModalOpinion)
+    setInput({
+      puntaje: "",
+      comentario: "",
+      titulo: "",
+    })
   };
 
   return (
