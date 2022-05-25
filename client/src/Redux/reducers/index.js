@@ -141,8 +141,7 @@ export default function rootReducer(state = initialState, action) {
       };
     case "CREAR_REVIEW":
       return {
-        ...state,
-        reviews: [...state.reviews, action.payload],
+        ...state
       };
 
     case "GET_REVIEWS":
