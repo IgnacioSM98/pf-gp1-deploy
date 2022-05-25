@@ -57,29 +57,6 @@
   left: 20px;
 }
 
-.boton-agregar {
-  color: #222;
-  border-radius: 10px 10px 10px 10px;
-  height: 35px;
-  width: 100px;
-  background-color: white;
-  font-family: Poppins;
-  font-size: 13px;
-  box-shadow: 0 2px 2px 0 #222, 0 2px 2px 0 #222;
-  border: none;
-  outline: none;
-  padding: 5px 10px 5px 10px;
-  margin-top: 15px;
-  position: absolute;
-  bottom: 10px;
-  right: 10px;
-}
-
-.boton-agregar:hover {
-  background-color: #37563de0;
-  color: white;
-  cursor: pointer;
-}
 .img-producto {
   align-items: center;
   margin: 1em;
