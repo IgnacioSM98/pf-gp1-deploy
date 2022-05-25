@@ -311,7 +311,8 @@ router.post("/admin/crear", async (req, res) => {
     });
     res.status(200).send(producto);
   } catch (error) {
-    res.status(200).send(error);
+    console.log(error, "aca");
+    res.status(400).send(error);
   }
 });
 
