@@ -95,15 +95,21 @@ export function getReviews(id) {
 }
 
 export function postProducto(payload) {
-  return async function () {
-    let json = await axios.post(`${urlBase}${admin}${crear}`, payload);
-    return json;
+  return async function (dispatch) {
+    // let json = await axios.post(`${urlBase}${admin}${crear}`, payload);
+
+    // dispatch({ type: "POST_PRODUCTO", payload: json.data });
+
+    axios.post(`${urlBase}${admin}${crear}`, payload).then((res) => {
+      console.log(res, "uwu");
+      dispatch({ type: "POST_PRODUCTO", payload: res.data });
+    });
   };
 }
 
 export function putProducto(id, body) {
   return function (dispatch) {
-    axios.put(`${urlBase}${admin}${id}`).then((res) => {
+    axios.put(`${urlBase}${admin}${id}`, body).then((res) => {
       dispatch({ type: "PUT_PRODUCTO", payload: res.data });
     });
   };

@@ -169,12 +169,28 @@ export default function rootReducer(state = initialState, action) {
         carrito: data,
       };
 
+    case "POST_PRODUCTO":
+      let prodAux = [...state.productos];
+
+      localStorage.removeItem("productos");
+
+      prodAux = prodAux.concat(action.payload);
+
+      localStorage.setItem("productos", JSON.stringify(prodAux));
+
+      return {
+        ...state,
+        productos: prodAux,
+        productosFiltrados: prodAux,
+      };
+
     case "PUT_PRODUCTO":
       const prods = [...state.productosFiltrados];
 
-      // localStorage.removeItem("productos");
+      localStorage.removeItem("productos");
 
       prods.find((prod) => {
+        console.log(prod, "aca");
         if (prod.id === action.payload.id) {
           if (action.payload.nombre) {
             prod.nombre = action.payload.nombre;
@@ -194,16 +210,12 @@ export default function rootReducer(state = initialState, action) {
         }
       });
 
-      console.log(prods);
-
-      break;
-
-    // localStorage.setItem("productos", JSON.stringify(productosAux));
-    // return {
-    //   ...state,
-    //   productos: state.productosFiltrados,
-    //   productosFiltrados: state.productosFiltrados,
-    // };
+      localStorage.setItem("productos", JSON.stringify(prods));
+      return {
+        ...state,
+        productos: prods,
+        productosFiltrados: prods,
+      };
 
     case "DELETE_PRODUCTO":
       let productosAux = [...state.productosFiltrados];
