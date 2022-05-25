@@ -11,6 +11,7 @@ import {
   NavBar,
   Login,
   DetalleProducto,
+  EliminarCategoria,
 } from "./Components/index";
 import { Routes, Route } from "react-router-dom";
 import { useDispatch } from "react-redux";
@@ -42,6 +43,11 @@ function App() {
           <Route exact path="/blog" element={<Blog contacto={contacto} />} />
           <Route exact path="/cuenta" element={<Cuenta />} />
           {/* <Route exact path="/admin" element={"admin"} /> */}
+          <Route
+            exact
+            path="/admin/eliminar/categorias"
+            element={<EliminarCategoria />}
+          />
           <Route exact path="/admin/crear" element={<CrearProducto />} />
           <Route
             exact

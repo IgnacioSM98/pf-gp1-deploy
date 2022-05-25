@@ -108,15 +108,17 @@ export default function AgregarCategorias({ setPost, post }) {
         onChange={(e) => handleChange(e)}
       >
         {categorias[0] ? (
-          categorias.map((categoria) => (
-            <Option
-              value={categoria.nombre}
-              key={categoria.id}
-              disabled={selectedValue.length > 2 ? true : false}
-            >
-              {categoria.nombre}
-            </Option>
-          ))
+          categorias
+            .filter((categoria) => categoria.nombre)
+            .map((categoria) => (
+              <Option
+                value={categoria.nombre}
+                key={categoria.id}
+                disabled={selectedValue.length > 2 ? true : false}
+              >
+                {categoria.nombre}
+              </Option>
+            ))
         ) : (
           <Option>Loading...</Option>
         )}

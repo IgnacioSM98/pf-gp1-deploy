@@ -13,7 +13,6 @@ import styled from "styled-components";
 import validate from "./validaciones.js";
 import { useParams } from "react-router-dom";
 import { Modal } from "../index";
-// import EliminarCategoria from "../EliminarCategoria/EliminarCategoria";
 import AgregarCategorias from "../AgregarCategorias/AgregarCategorias";
 
 const Container = styled.div`
