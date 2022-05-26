@@ -1,4 +1,5 @@
 const { Router } = require("express");
+const { mercadopago } = require("mercadopago");
 // Importar todos los routers;
 // Ejemplo: const authRouter = require('./auth.js');
 const productosDB = require("../../assets/products.json");
@@ -416,6 +417,7 @@ router.delete("/categorias/:id", async (req, res, next) => {
     next(error);
   }
 });
+
 router.delete("/ratings/:id", async (req, res, next) => {
   try {
     const id = req.params.id;
@@ -425,6 +427,26 @@ router.delete("/ratings/:id", async (req, res, next) => {
   } catch (error) {
     next(error);
   }
+});
+
+router.post("/pagar", (req, res) => {
+  const preference = {
+    items: [
+      {
+        title: "Ricochet",
+        quantity: 1,
+        currency_id: "ARS",
+        unit_price: 1000,
+      },
+    ],
+  };
+
+  mercadopago.preferences
+    .create(preference)
+    .then((res) => {
+      res.json(res.body.id);
+    })
+    .catch((error) => res.status(400).send(error));
 });
 
 module.exports = router;

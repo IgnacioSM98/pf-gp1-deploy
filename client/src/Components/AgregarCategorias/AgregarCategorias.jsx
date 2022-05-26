@@ -40,7 +40,6 @@ const Option = s.option`
     // border-width: 0;
 `;
 
-console.log("hola");
 export default function AgregarCategorias({ setPost, post, setErrors }) {
   const [selectedValue, setSelectedValue] = useState([]);
 

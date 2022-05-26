@@ -22,8 +22,8 @@ export default function EliminarCategoria() {
   }
 
   return (
-    <div>
-      <form onSubmit={handleSubmit}>
+    <div style={{ height: "100vh" }}>
+      <form style={{ paddingTop: "100px" }} onSubmit={handleSubmit}>
         <div>Eliminar Categoría</div>
         <select
           onChange={(e) => handleSelectCategorias(e)}
@@ -34,13 +34,11 @@ export default function EliminarCategoria() {
           </option>
 
           {categorias &&
-            categorias
-              .filter((categoria) => categoria.nombre)
-              .map((d) => (
-                <option value={d.id} key={d.id}>
-                  {d.nombre}
-                </option>
-              ))}
+            categorias.map((d) => (
+              <option value={d.id} key={d.id}>
+                {d.nombre}
+              </option>
+            ))}
         </select>
         <button type="submit">Borrar</button>
       </form>
