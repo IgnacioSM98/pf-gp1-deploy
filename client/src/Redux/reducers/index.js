@@ -141,7 +141,7 @@ export default function rootReducer(state = initialState, action) {
       };
     case "CREAR_REVIEW":
       return {
-        ...state
+        ...state,
       };
 
     case "GET_REVIEWS":
@@ -199,6 +199,8 @@ export default function rootReducer(state = initialState, action) {
 
       localStorage.removeItem("productos");
 
+      action.payload.categoria = action.categorias;
+
       prodAux = prodAux.concat(action.payload);
 
       localStorage.setItem("productos", JSON.stringify(prodAux));
@@ -215,7 +217,6 @@ export default function rootReducer(state = initialState, action) {
       localStorage.removeItem("productos");
 
       prods.find((prod) => {
-        // console.log(prod, "aca");
         if (prod.id === action.payload.id) {
           if (action.payload.nombre) {
             prod.nombre = action.payload.nombre;
@@ -236,6 +237,7 @@ export default function rootReducer(state = initialState, action) {
       });
 
       localStorage.setItem("productos", JSON.stringify(prods));
+
       return {
         ...state,
         productos: prods,
