@@ -24,7 +24,6 @@ export default function MercadoPagoIntegracion() {
   }, []);
 
   useEffect(() => {
-    console.log("hola, pref");
     obtenerPreference();
   }, [obtenerPreference]);
 
