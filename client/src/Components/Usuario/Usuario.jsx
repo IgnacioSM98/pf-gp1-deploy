@@ -19,6 +19,7 @@ const Image = styled.img`
   border-radius: 50px;
   margin: 6px;
   border: 1px solid white;
+  color: white;
 `;
 
 const Letter = styled.button`
@@ -37,7 +38,7 @@ export default function Usuario({ user, setUser }) {
       {user.displayName && <P>{user.displayName.split(" ")[0]}</P>}
 
       {user.photoURL ? (
-        <Image src={user.photoURL} alt="Profile Picture" />
+        <Image src={user.photoURL} alt={user.displayName.slice(0, 1)} />
       ) : (
         <Letter>{user.displayName.slice(0, 1)}</Letter>
       )}
