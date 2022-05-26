@@ -279,9 +279,13 @@ export default function CrearProducto() {
 
   function handleSub(e) {
     e.preventDefault();
-
-    dispatch(postCategoria(categoria));
-    setStateModalCat(!stateModalCat);
+    const inputNewCat = document.getElementById("crear-categoria");
+    if (inputNewCat.value) {
+      dispatch(postCategoria(categoria));
+      setStateModalCat(!stateModalCat);
+    } else {
+      errors.crearCategoria = "Debe crear una categoria";
+    }
   }
 
   function handleInputChange(e) {
@@ -514,12 +518,13 @@ export default function CrearProducto() {
               <TitCat>Crear Categoría</TitCat>
               <div className="form-create">
                 <InCat
+                  id="crear-categoria"
+                  name="crear-categoria"
                   placeholder="Escribir nueva categoria"
                   type="text"
                   onKeyDown={(e) => handleInputCambio(e)}
                   onChange={(e) => handleInputCambio(e)}
                 />
-
                 <ButtonCat onClick={(e) => handleSub(e)}>Agregar</ButtonCat>
               </div>
             </CrearCat>
