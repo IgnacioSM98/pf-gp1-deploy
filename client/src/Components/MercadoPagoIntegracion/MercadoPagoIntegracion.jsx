@@ -5,18 +5,17 @@ const FORM_ID = "payment-form";
 
 export default function MercadoPagoIntegracion() {
   const obtenerPreference = useCallback(async () => {
-    console.log("uwuwuwu");
     const res = await axios.post(
       "https://proyecto-final-gp1.herokuapp.com/pagar"
     );
-    console.log(res.global, "xd?");
-    if (res.global) {
+
+    if (res.data) {
       const script = document.createElement("script");
 
       script.type = "text/javascript";
       script.src =
-        "https://www.mercadopago.com/integrations/v1/web-payment-checkout.js";
-      script.setAttribute("data-preference-id", res.global);
+        "https://www.mercadopago.com.ar/integrations/v1/web-payment-checkout.js";
+      script.setAttribute("data-preference-id", res.data);
 
       const form = document.getElementById(FORM_ID);
 
@@ -25,14 +24,7 @@ export default function MercadoPagoIntegracion() {
   }, []);
 
   useEffect(() => {
-    // const script = document.createElement("script");
-    // script.type = "text/javascript";
-    // script.src =
-    //   "https://www.mercadopago.com.ar/integrations/v1/web-payment-checkout.js";
-    // script.setAttribute("data-preference-id", 3);
-    // const form = document.getElementById(FORM_ID);
-    // form.appendChild(script);
-    // console.log("hola");
+    console.log("hola, pref");
     obtenerPreference();
   }, [obtenerPreference]);
 
