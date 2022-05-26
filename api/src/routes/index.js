@@ -4,11 +4,13 @@ const { mercadopago } = require("mercadopago");
 // Ejemplo: const authRouter = require('./auth.js');
 const productosDB = require("../../assets/products.json");
 const usuariosDB = require("../../assets/users.json");
-const { Producto, Categoria, Usuario, Rating } = require("../db");
+const { Producto, Categoria, Usuario, Rating, Pedido } = require("../db");
 
 const router = Router();
 // Configurar los routers
 // Ejemplo: router.use('/auth', authRouter);
+
+//!GET Productos con modelo categoría incluido
 
 router.get("/", async (req, res) => {
   const productos = await Producto.findAll({
@@ -26,6 +28,8 @@ router.get("/", async (req, res) => {
   // res.send("Ya hay datos pa");
   // }
 });
+
+//!GET Productos con búsqueda en el query
 
 router.get("/productos", async (req, res) => {
   // para que busque tiene que llegar "/productos?name=(loquetraeelbuscador)"
@@ -58,38 +62,9 @@ router.get("/productos", async (req, res) => {
     }
   }
 });
-router.get("/productos", async (req, res) => {
-  const productos = await Producto.findAll({
-    include: [{ model: Categoria }],
-  });
 
-  let { name } = req.query;
+//!GET stock de todos los productos
 
-  // name = name.toLowerCase();
-
-  // console.log(name, "esto aparece");
-  // console.log(productos[0].nombre, "y esto?");
-
-  if (name) {
-    try {
-      res
-        .status(200)
-        .send(
-          productos.filter((p) =>
-            p.nombre.toLowerCase().includes(name.toLowerCase())
-          )
-        );
-    } catch (error) {
-      res.status(400).send(error);
-    }
-  } else {
-    try {
-      res.status(200).send(productos);
-    } catch (error) {
-      res.status(400).send(error);
-    }
-  }
-});
 router.get("/stock", async (req, res) => {
   try {
     const productos = await Producto.findAll();
@@ -105,7 +80,8 @@ router.get("/stock", async (req, res) => {
   }
 });
 
-//Ruta para detectar stocks menores a la cifra que se indique en params
+//! Ruta para detectar stocks menores a la cifra que se indique en params
+
 router.get("/stock/:alerta", async (req, res) => {
   const alerta = req.params.alerta;
   try {
@@ -125,6 +101,8 @@ router.get("/stock/:alerta", async (req, res) => {
   }
 });
 
+//! GET producto por ID
+
 router.get("/producto/:id", async (req, res) => {
   const { id } = req.params;
 
@@ -139,6 +117,8 @@ router.get("/producto/:id", async (req, res) => {
   }
 });
 
+//! GET todas las categorías
+
 router.get("/categorias", async (req, res) => {
   try {
     const categorias = await Categoria.findAll({
@@ -150,6 +130,8 @@ router.get("/categorias", async (req, res) => {
   }
 });
 
+//! GET todos los ratings
+
 router.get("/ratings", async (req, res) => {
   try {
     const rating = await Rating.findAll();
@@ -158,6 +140,8 @@ router.get("/ratings", async (req, res) => {
     res.status(400).send(error);
   }
 });
+
+//! GET todos los ratings de un producto
 
 router.get("/ratings/:productoid", async (req, res) => {
   try {
@@ -170,6 +154,73 @@ router.get("/ratings/:productoid", async (req, res) => {
   }
 });
 
+//! GET todos los pedidos
+
+router.get("/pedidos", async (req, res) => {
+  try {
+    const pedidos = await Pedido.findAll();
+
+    res.status(200).send(pedidos);
+  } catch (error) {
+    res.status(400).send(error);
+  }
+});
+
+//! GET todos los pedidos de un usuario
+
+router.get("/pedidos/usuario/:id", async (req, res) => {
+  try {
+    const pedidos = await Pedido.findAll({
+      where: { usuarioId: req.params.id },
+    });
+
+    res.status(200).send(pedidos);
+  } catch (error) {
+    res.status(400).send(error);
+  }
+});
+
+//! GET a un pedido por id
+
+router.get("/producto/:id", async (req, res) => {
+  const { id } = req.params;
+
+  try {
+    const pedido = await Pedido.findByPk(id);
+
+    res.status(200).send(producto);
+  } catch (error) {
+    res.status(400).send(error);
+  }
+});
+
+//! GET Usuario con id
+
+router.get("/usuario/:id", async (req, res) => {
+  const idUsuario = req.params.id;
+
+  try {
+    const usuario = await Usuario.findByPk(idUsuario);
+    res.status(200).send(usuario);
+  } catch (error) {
+    res.status(400).send(error);
+  }
+});
+
+//! GET todos los usuarios
+
+router.get("/usuarios", async (req, res) => {
+  try {
+    const usuario = await Usuario.findAll();
+    res.status(200).send(usuario);
+  } catch (error) {
+    console.log(error);
+    res.status(400).send(error);
+  }
+});
+
+//? POST crear categorias
+
 router.post("/categorias/crear", async (req, res) => {
   try {
     const { nombre } = req.body;
@@ -181,6 +232,8 @@ router.post("/categorias/crear", async (req, res) => {
     res.status(200).send(error);
   }
 });
+
+//? POST crear review de algún producto en particular
 
 router.post("/ratings/crear/:productoid", async (req, res) => {
   console.log(req.body);
@@ -216,26 +269,7 @@ router.post("/ratings/crear/:productoid", async (req, res) => {
 //   }
 // });
 
-router.get("/usuario/:id", async (req, res) => {
-  const idUsuario = req.params.id;
-
-  try {
-    const usuario = await Usuario.findByPk(idUsuario);
-    res.status(200).send(usuario);
-  } catch (error) {
-    res.status(400).send(error);
-  }
-});
-
-router.get("/usuarios", async (req, res) => {
-  try {
-    const usuario = await Usuario.findAll();
-    res.status(200).send(usuario);
-  } catch (error) {
-    console.log(error);
-    res.status(400).send(error);
-  }
-});
+//? POST crear usuario
 
 router.post("/crear", async (req, res) => {
   try {
@@ -266,16 +300,85 @@ router.post("/crear", async (req, res) => {
   }
 });
 
+//? POST crear pedido
+
+router.post("/pedido/crear/:idUsuario", async (req, res) => {
+  try {
+    const idUser = req.params.idUsuario;
+    const {
+      fecha,
+      pago_total,
+      tipo_de_pago,
+      tipo_de_envio,
+      direccion_de_envio,
+      estado,
+      idProductos, //tiene que llegar un array ocn los ids de los productos
+    } = req.body;
+    const pedido = await Pedido.create({
+      fecha: fecha,
+      pago_total: pago_total,
+      Tipo_de_pago: tipo_de_pago,
+      Tipo_de_envio: tipo_de_envio,
+      Direccion_de_envio: direccion_de_envio,
+      Estado: estado,
+    });
+
+    await idProductos.map((p) => {
+      Pedido.findByPk(pedido.id).then((onePedido) => {
+        Producto.findByPk(p)
+          .then((newProducto) => {
+            onePedido.addProducto(newProducto);
+          })
+          .catch((error) => {
+            console.log(error);
+            return res.status(400).json(error);
+          });
+      });
+    });
+    pedido.usuarioId = idUser;
+    res.status(200).send(pedido);
+  } catch (error) {
+    console.log(error);
+    res.status(400).send(error);
+  }
+});
+
+//? POST Relacionar usuarioid con productos favoritos
+
+router.post("/favoritos/wishlist", async (req, res) => {
+  const { idProducto, idUsuario } = req.body;
+
+  Usuario.findByPk(idUsuario).then((oneUsuario) => {
+    Producto.findByPk(idProducto)
+      .then((newProducto) => {
+        oneUsuario.addProducto(newProducto);
+
+        return res.status(200).send({ msg: "Favorito relacionado" });
+      })
+      .catch((error) => {
+        console.log(error);
+        return res.status(400).json(error);
+      });
+  });
+});
+
+//? POST cargar productos en la base de datos
+
 router.post("/admin/crearorigen", async (req, res) => {
   const producto = await Producto.bulkCreate(productosDB);
 
   res.status(200).send(producto);
 });
+
+//? POST cargar usuarios en la base de datos
+
 router.post("/admin/crearusuarios", async (req, res) => {
   const producto = await Usuario.bulkCreate(usuariosDB);
 
   res.status(200).send(producto);
 });
+
+//? POST crear PRODUCTO
 
 router.post("/admin/crear", async (req, res) => {
   const categoriasAux = await Categoria.findAll({
@@ -316,6 +419,8 @@ router.post("/admin/crear", async (req, res) => {
   }
 });
 
+//* PUT Producto
+
 router.put("/admin/:id", async (req, res) => {
   try {
     const id = req.params.id;
@@ -349,6 +454,8 @@ router.put("/admin/:id", async (req, res) => {
     res.status(400).send(error);
   }
 });
+
+//* PUT  Corrección de categorías
 router.put("/categorias/:id", async (req, res) => {
   try {
     const id = req.params.id;
@@ -363,6 +470,9 @@ router.put("/categorias/:id", async (req, res) => {
     res.status(400).send(error);
   }
 });
+
+//? POST Relacionar categorías con productos específicos
+
 router.post("/categorias/producto", async (req, res) => {
   const { idProducto, idCategoria } = req.body;
 
@@ -378,6 +488,9 @@ router.post("/categorias/producto", async (req, res) => {
       });
   });
 });
+
+//? POST Relacionar las categorías iniciales con los productos principales
+//! Solo para cuando recargar la base de datos
 
 router.post("/categorias/producto/all", async (req, res) => {
   let { idProducto, idCategoria } = req.body;
@@ -395,7 +508,7 @@ router.post("/categorias/producto/all", async (req, res) => {
   return res.json({ msg: "Listo" });
 });
 
-//Deletes varios
+// DELETE producto con id
 
 router.delete("/producto/:id", async (req, res, next) => {
   try {
@@ -407,6 +520,9 @@ router.delete("/producto/:id", async (req, res, next) => {
     next(error);
   }
 });
+
+// DELETE categorias con id
+
 router.delete("/categorias/:id", async (req, res, next) => {
   try {
     const id = req.params.id;
@@ -418,12 +534,25 @@ router.delete("/categorias/:id", async (req, res, next) => {
   }
 });
 
+
 router.delete("/ratings/:id", async (req, res, next) => {
   try {
     const id = req.params.id;
     const ratingABorrar = await Rating.findByPk(id);
     await ratingABorrar.destroy();
     res.json({ msg: "borrado" });
+  } catch (error) {
+    next(error);
+  }
+});
+// DELETE pedido con id
+
+router.delete("/pedido/:id", async (req, res, next) => {
+  try {
+    const id = req.params.id;
+    const pedidoABorrar = await Pedido.findByPk(id);
+    await pedidoABorrar.destroy();
+    res.status(200).send(id);
   } catch (error) {
     next(error);
   }
