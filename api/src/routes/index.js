@@ -429,59 +429,22 @@ router.delete("/ratings/:id", async (req, res, next) => {
   }
 });
 
-router.post("/pagar", async (req, res) => {
-  let preference = {
-    transction_amount: 1000,
-    binary_mode: true,
-    payer: {
-      name: "Ignacio",
-      surname: "Sanchez",
-      email: "ignaciosanchezmartinez10@gmail.com",
-      phone: {
-        number: 1130118875,
-        area_code: "54",
-      },
-      address: {
-        zip_code: 1425,
-        street_name: "Guatemala",
-        street_number: 5856,
-      },
-    },
-    shipments: {
-      receiver_address: {
-        zip_code: 1425,
-        street_name: "Guatemala",
-        street_number: 5856,
-        floor: "1",
-        apartment: "pb",
-        city_name: "CABA",
-        state_name: "Palermo",
-        country_name: "Argentina",
-      },
-    },
-    additional_info: "idk",
+router.post("/pagar", (req, res) => {
+  const preference = {
     items: [
       {
-        picture_url:
-          "https://img.wattpad.com/useravatar/Princesinha483.128.679594.jpg",
-        title: "titulovich",
-        unit_price: 1000,
+        title: "Ricochet",
         quantity: 1,
-        description: "textuki",
+        currency_id: "ARS",
+        unit_price: 1000,
       },
     ],
-    back_urls: {
-      success: "http://localhost:3000/feedback",
-      failure: "http://localhost:3000/feedback",
-      pending: "http://localhost:3000/feedback",
-    },
-    auto_return: "approved",
   };
 
   mercadopago.preferences
     .create(preference)
     .then((res) => {
-      res.json({ global: res.body.id });
+      res.json(res.body.id);
     })
     .catch((error) => res.status(400).send(error));
 });
