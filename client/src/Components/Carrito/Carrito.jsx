@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import CarritoItem from "./CarritoItem";
 import styled from "styled-components";
 import { quitarItem } from "../../Redux/actions";
+import { MercadoPagoIntegracion } from "../index";
 
 const Container = styled.div`
   // border: 3px solid black;
@@ -179,6 +180,7 @@ function Carrito() {
           <Label>${precioTotal}</Label>
         </ContenedorMonto>
         <Boton>Continuar compra</Boton>
+        <MercadoPagoIntegracion />
       </ContenedorCompra>
     </Container>
   );
