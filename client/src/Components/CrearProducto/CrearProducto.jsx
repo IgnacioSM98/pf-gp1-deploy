@@ -442,7 +442,7 @@ export default function CrearProducto() {
             <Input>
               <input
                 className="input-create"
-                type="text"
+                type="number"
                 min="0"
                 value={post.precio}
                 name="precio"
