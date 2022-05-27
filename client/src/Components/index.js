@@ -22,6 +22,8 @@ import Modal from "./Modal/Modal";
 import EliminarCategoria from "./EliminarCategoria/EliminarCategoria.jsx";
 import AgregarProducto from "./AgregarProducto/AgregarProducto";
 import Relacionado from "./Relacionado/Relacionado";
+import MercadoPagoIntegracion from "./MercadoPagoIntegracion/MercadoPagoIntegracion";
+import Loading from "./Loading/Loading";
 
 export {
   Home,
@@ -47,5 +49,7 @@ export {
   Filtros,
   AgregarProducto,
   Modal,
+  Loading,
   Relacionado,
+  MercadoPagoIntegracion,
 };

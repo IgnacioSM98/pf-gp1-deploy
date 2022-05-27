@@ -1,6 +1,5 @@
 import BeatLoader from "react-spinners/BeatLoader";
 import styled from "styled-components";
-import BeatLoader from "react-spinners/BeatLoader";
 
 const Container = styled.div`
   display: flex;

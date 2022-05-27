@@ -19,7 +19,13 @@ const Image = styled.img`
   border-radius: 50px;
   margin: 6px;
   border: 1px solid white;
-  color: white;
+  color: black;
+  background-color: beige;
+  font-weight: 600;
+  // padding: 5px;
+  object-fit: cover;
+  line-height: 22px;
+  text-align: center;
 `;
 
 const Letter = styled.button`

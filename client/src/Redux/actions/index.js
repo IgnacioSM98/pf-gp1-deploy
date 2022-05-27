@@ -95,6 +95,7 @@ export function postProducto(payload) {
 
     axios.post(`${urlBase}${admin}${crear}`, payload).then((res) => {
       console.log(payload.categorias, "uwu");
+
       dispatch({
         type: "POST_PRODUCTO",
         payload: res.data,
