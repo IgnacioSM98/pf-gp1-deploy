@@ -218,6 +218,24 @@ router.get("/usuarios", async (req, res) => {
   }
 });
 
+//! GET wishlist de un usuario
+
+router.get("/favoritos/wishlist/:id", async (req, res) => {
+  try {
+    const favoritos = await Producto.findAll({
+      include: {
+        model: Usuario,
+        where: { id: req.params.id },
+      },
+    });
+
+    res.status(200).send(favoritos);
+  } catch (error) {
+    console.log(error);
+    res.status(400).send(error);
+  }
+});
+
 //? POST crear categorias
 
 router.post("/categorias/crear", async (req, res) => {
@@ -662,6 +680,44 @@ router.delete("/usuario/:id", async (req, res, next) => {
   } catch (error) {
     next(error);
   }
+});
+
+//+ DELETE Relación favoritos usuario
+
+router.delete("/favoritos/wishlist", async (req, res) => {
+  const { idUsuario, idProducto } = req.body;
+
+  Usuario.findByPk(idUsuario).then((oneUsuario) => {
+    Producto.findByPk(idProducto)
+      .then((newProducto) => {
+        oneUsuario.removeProducto(newProducto);
+
+        return res.json({ msg: "Favorito fuera de la lista" });
+      })
+      .catch((error) => {
+        console.log(error);
+        return res.status(400).json(error);
+      });
+  });
+});
+
+//+ DELETE categoría producto
+
+router.delete("/categorias/producto", async (req, res) => {
+  const { idCategoria, idProducto } = req.body;
+
+  Categoria.findByPk(idCategoria).then((oneCategoria) => {
+    Producto.findByPk(idProducto)
+      .then((newProducto) => {
+        oneCategoria.removeProducto(newProducto);
+
+        return res.json({ msg: "Producto fuera de la categoria" });
+      })
+      .catch((error) => {
+        console.log(error);
+        return res.status(400).json(error);
+      });
+  });
 });
 
 module.exports = router;
