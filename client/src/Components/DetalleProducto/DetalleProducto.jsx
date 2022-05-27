@@ -242,7 +242,7 @@ export default function DetalleProducto() {
   const productos = useSelector((state) => state.productos);
 
   useEffect(() => {
-    if (productos.length === 0) dispatch(getProductos());
+    // if (productos.length === 0) dispatch(getProductos());
 
     setRelacionados(productos);
   }, [productos]);

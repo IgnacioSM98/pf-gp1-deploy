@@ -199,6 +199,7 @@ export default function CrearProducto() {
   const [stateModalProd, setStateModalProd] = useState(false);
   const [stateModalCat, setStateModalCat] = useState(false);
   const [stateModalPut, setStateModalPut] = useState(false);
+  const [stateModalImg, setStateModalImg] = useState(false);
 
   const [categorias, setCategorias] = useState([]),
     [errors, setErrors] = useState({}),
@@ -212,7 +213,7 @@ export default function CrearProducto() {
     }),
     [loading, setLoading] = useState(false),
     [categoria, setCategoria] = useState({ nombre: "" }),
-    [cambio, setCambio] = useState(false),
+    // [cambio, setCambio] = useState(false),
     [imageSelected, setImageSelected] = useState();
 
   useEffect(() => {
@@ -251,10 +252,10 @@ export default function CrearProducto() {
     setCategorias(categorías);
   }, [categorías]);
 
-  function handleOpenCategoria(e) {
-    e.preventDefault();
-    cambio ? setCambio(false) : setCambio(true);
-  }
+  // function handleOpenCategoria(e) {
+  //   e.preventDefault();
+  //   cambio ? setCambio(false) : setCambio(true);
+  // }
 
   function handleInputCambio(e) {
     // Cada vez que escribo se actualiza el state de categoria
@@ -279,7 +280,9 @@ export default function CrearProducto() {
 
   function handleSub(e) {
     e.preventDefault();
+
     const inputNewCat = document.getElementById("crear-categoria");
+
     if (inputNewCat.value) {
       dispatch(postCategoria(categoria));
       setStateModalCat(!stateModalCat);
@@ -315,7 +318,6 @@ export default function CrearProducto() {
           loading,
         })
       );
-      console.log(errors);
     }
   }
 
@@ -347,34 +349,45 @@ export default function CrearProducto() {
       .then((res) => {
         setPost({ ...post, imagen: res.data.secure_url });
         setLoading(false);
+      })
+      .catch((err) => {
+        setLoading(false);
+        setStateModalImg(true);
+        setImageSelected();
       });
   }
 
   useEffect(() => {
-    setErrors({ ...errors, imagen: null });
+    // Eliminamos el error del state de errores
+    setErrors(() => {
+      const state = { ...errors };
+      delete state.imagen;
+      return state;
+    });
   }, [post.imagen]);
 
-  function handleSelectCategorias(e) {
-    if (!post.categorias.includes(e.target.value))
-      setPost({
-        ...post,
-        categorias: [...post.categorias, e.target.value],
-      });
+  // function handleSelectCategorias(e) {
+  //   if (!post.categorias.includes(e.target.value))
+  //     setPost({
+  //       ...post,
+  //       categorias: [...post.categorias, e.target.value],
+  //     });
 
-    setErrors(
-      validate({
-        ...post,
-        categorias: [...post.categorias, e.target.value],
-        loading,
-      })
-    );
-  }
+  //   setErrors(
+  //     validate({
+  //       ...post,
+  //       categorias: [...post.categorias, e.target.value],
+  //       loading,
+  //     })
+  //   );
+  // }
 
   function handleSubmit(e) {
     e.preventDefault();
 
     if (id) {
       dispatch(putProducto(id, post));
+
       setStateModalPut(!stateModalPut);
     } else {
       if (Object.values(errors).length > 0) {
@@ -494,6 +507,7 @@ export default function CrearProducto() {
                   setImageSelected(e.target.value);
                 }}
               />
+
               <div style={{ margin: "20px 0px", position: "relative" }}>
                 <SelectorImagen
                   className="input-create"
@@ -508,7 +522,7 @@ export default function CrearProducto() {
                 />
 
                 <Imagen src={imageSelected} />
-                {/* {loading && <Loading />} */}
+                {loading && <Loading />}
               </div>
 
               {errors.imagen && <Errors>{errors.imagen}</Errors>}
@@ -544,12 +558,19 @@ export default function CrearProducto() {
             <ParrafoOk>¡Producto creado con éxito!</ParrafoOk>
           )}
         </Modal>
+
         <Modal state={stateModalCat} setStateModal={setStateModalCat}>
           <ParrafoCat>¡Categoría creada con éxito!</ParrafoCat>
         </Modal>
 
         <Modal state={stateModalPut} setStateModal={setStateModalPut}>
           <ParrafoOk>¡Cambios realizados con éxito!</ParrafoOk>
+        </Modal>
+
+        <Modal state={stateModalImg} setStateModal={setStateModalImg}>
+          <ParrafoOk>
+            Ocurrió un error al añadir la imagen, por favor intente nuevamente
+          </ParrafoOk>
         </Modal>
       </Container>
     </>

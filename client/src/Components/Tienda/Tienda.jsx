@@ -175,7 +175,7 @@ function Shop({ contacto }) {
   const location = useLocation();
 
   useEffect(() => {
-    if (productos.length === 0) dispatch(getProductos());
+    // if (productos.length === 0) dispatch(getProductos());
     window.scrollTo(0, 0);
   }, []);
 
