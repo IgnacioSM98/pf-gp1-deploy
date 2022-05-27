@@ -22,6 +22,7 @@ import Modal from "./Modal/Modal";
 import EliminarCategoria from "./EliminarCategoria/EliminarCategoria.jsx";
 import AgregarProducto from "./AgregarProducto/AgregarProducto";
 import Relacionado from "./Relacionado/Relacionado";
+import MercadoPagoIntegracion from "./MercadoPagoIntegracion/MercadoPagoIntegracion";
 
 export {
   Home,
@@ -48,4 +49,5 @@ export {
   AgregarProducto,
   Modal,
   Relacionado,
+  MercadoPagoIntegracion,
 };

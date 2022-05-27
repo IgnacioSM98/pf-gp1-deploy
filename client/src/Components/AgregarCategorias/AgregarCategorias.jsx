@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import s from "styled-components";
+import validate from "../CrearProducto/validaciones";
 
 const Container = s.div`
     display: flex;
@@ -39,7 +40,7 @@ const Option = s.option`
     // border-width: 0;
 `;
 
-export default function AgregarCategorias({ setPost, post }) {
+export default function AgregarCategorias({ setPost, post, setErrors }) {
   const [selectedValue, setSelectedValue] = useState([]);
 
   var categorias = useSelector((state) => state.categorias);
@@ -53,6 +54,10 @@ export default function AgregarCategorias({ setPost, post }) {
     });
   }, [categorias]);
 
+  useEffect(() => {
+    setErrors(validate({ ...post, categorias: selectedValue }));
+  }, [selectedValue]);
+
   const handleChange = ({ target }) => {
     const categoria = categorias?.filter(
       (categoria) => categoria.nombre === target.value
@@ -63,7 +68,7 @@ export default function AgregarCategorias({ setPost, post }) {
     ) {
       setSelectedValue((prevValue) => [...prevValue, categoria]);
 
-      setPost({ ...post, categorias: [...selectedValue] });
+      setPost({ ...post, categorias: [...selectedValue, categoria] });
     }
   };
 

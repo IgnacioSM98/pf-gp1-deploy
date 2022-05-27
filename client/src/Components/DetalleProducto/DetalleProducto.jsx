@@ -299,7 +299,7 @@ export default function DetalleProducto() {
     return () => {
       dispatch(clearDetail());
     };
-  }, []);
+  }, [id]);
 
   const filterCategorias = (producto) => {
     for (const categoria of detalle.categoria) {
@@ -414,6 +414,7 @@ export default function DetalleProducto() {
                     <Relacionado
                       key={relacionado.id}
                       relacionado={relacionado}
+                      location={location}
                     />
                   );
                 }

@@ -3,6 +3,8 @@ import { useDispatch, useSelector } from "react-redux";
 import CarritoItem from "./CarritoItem";
 import styled from "styled-components";
 import { quitarItem } from "../../Redux/actions";
+import Swal from "sweetalert2";
+import { MercadoPagoIntegracion } from "../index";
 
 const Container = styled.div`
   // border: 3px solid black;
@@ -38,6 +40,7 @@ const Borrar = styled.button`
   color: white;
   background-color: rgba(98, 148, 107, 1);
   box-shadow: 0 1px 1px 0 black, 1px 1px 1px 1px darkgray;
+  cursor: pointer;
 `;
 
 const Titulo = styled.h2`
@@ -132,18 +135,43 @@ function Carrito() {
   const carrito = useSelector((state) => state.carrito);
 
   function handleQuit(props) {
-    dispatch(quitarItem(props));
+    Swal.fire({
+      title: "Eliminar producto",
+      text: "¿Estas seguro de eliminar este producto de tu carrito?",
+      icon: "warning",
+      iconColor: "red",
+      color: "#222",
+      showCancelButton: true,
+      cancelButtonText: "No",
+      confirmButtonColor: "red",
+      cancelButtonColor: "darkgrey",
+      confirmButtonText: "Si",
+      // toast: true,
+    }).then((result) => {
+      if (result.isConfirmed) {
+        Swal.fire({
+          text: "El producto se eliminó con éxito",
+          icon: "success",
+          iconColor: "green",
+          color: "#222",
+          showConfirmButton: false,
+          timer: "1500",
+          toast: true,
+        });
+        dispatch(quitarItem(props));
+      }
+    });
   }
 
   useEffect(() => {
     let precio = 0;
 
     carrito.forEach((item) => {
-      precio = precio + Number(item.precio);
+      precio = precio + Number(item.precio) * item.cantidad;
     });
 
     setPrecioTotal(precio);
-  }, [carrito, precioTotal, setPrecioTotal]);
+  }, [carrito, setPrecioTotal]);
 
   return (
     <Container>
@@ -163,7 +191,11 @@ function Carrito() {
       {carrito.map((el) => {
         return (
           <Productos>
-            <CarritoItem key={el.id} producto={el} />
+            <CarritoItem
+              key={el.id}
+              producto={el}
+              setPrecioTotal={setPrecioTotal}
+            />
             <Borrar onClick={() => handleQuit(el)}>X</Borrar>
           </Productos>
         );
@@ -175,6 +207,7 @@ function Carrito() {
           <Label>${precioTotal}</Label>
         </ContenedorMonto>
         <Boton>Continuar compra</Boton>
+        <MercadoPagoIntegracion />
       </ContenedorCompra>
     </Container>
   );
