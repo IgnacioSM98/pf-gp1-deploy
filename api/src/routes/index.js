@@ -219,6 +219,24 @@ router.get("/usuarios", async (req, res) => {
   }
 });
 
+//! GET wishlist de un usuario
+
+router.get("/favoritos/wishlist/:id", async (req, res) => {
+  try {
+    const favoritos = await Producto.findAll({
+      include: {
+        model: Usuario,
+        where: { id: req.params.id },
+      },
+    });
+
+    res.status(200).send(favoritos);
+  } catch (error) {
+    console.log(error);
+    res.status(400).send(error);
+  }
+});
+
 //? POST crear categorias
 
 router.post("/categorias/crear", async (req, res) => {
@@ -419,58 +437,6 @@ router.post("/admin/crear", async (req, res) => {
   }
 });
 
-//* PUT Producto
-
-router.put("/admin/:id", async (req, res) => {
-  try {
-    const id = req.params.id;
-    const producto = await Producto.findByPk(id);
-    const { nombre, precio, descripcion, imagen, stock } = req.body;
-
-    if (nombre) {
-      producto.nombre = nombre;
-      producto.save();
-    }
-    if (precio) {
-      producto.precio = precio;
-      producto.save();
-    }
-    if (descripcion) {
-      producto.descripcion = descripcion;
-      producto.save();
-    }
-    if (imagen) {
-      producto.imagen = imagen;
-      producto.save();
-    }
-    if (stock) {
-      producto.stock = stock;
-      producto.save();
-    }
-
-    //creo que deberia devolver id
-    res.status(200).send(producto);
-  } catch (error) {
-    res.status(400).send(error);
-  }
-});
-
-//* PUT  Corrección de categorías
-router.put("/categorias/:id", async (req, res) => {
-  try {
-    const id = req.params.id;
-    const producto = await Categoria.findByPk(id);
-    const { nombre } = req.body;
-    if (nombre) {
-      producto.nombre = nombre;
-      producto.save();
-    }
-    res.status(200).send({ msg: "cambios guardados!" });
-  } catch (error) {
-    res.status(400).send(error);
-  }
-});
-
 //? POST Relacionar categorías con productos específicos
 
 router.post("/categorias/producto", async (req, res) => {
@@ -508,7 +474,153 @@ router.post("/categorias/producto/all", async (req, res) => {
   return res.json({ msg: "Listo" });
 });
 
-// DELETE producto con id
+//* PUT Producto
+
+router.put("/admin/:id", async (req, res) => {
+  try {
+    const id = req.params.id;
+    const producto = await Producto.findByPk(id);
+    const { nombre, precio, descripcion, imagen, stock } = req.body;
+
+    if (nombre) {
+      producto.nombre = nombre;
+      producto.save();
+    }
+    if (precio) {
+      producto.precio = precio;
+      producto.save();
+    }
+    if (descripcion) {
+      producto.descripcion = descripcion;
+      producto.save();
+    }
+    if (imagen) {
+      producto.imagen = imagen;
+      producto.save();
+    }
+    if (stock) {
+      producto.stock = stock;
+      producto.save();
+    }
+
+    res.status(200).send(id);
+  } catch (error) {
+    res.status(400).send(error);
+  }
+});
+
+//* PUT  Corrección de categorías
+router.put("/categorias/:id", async (req, res) => {
+  try {
+    const id = req.params.id;
+    const producto = await Categoria.findByPk(id);
+    const { nombre } = req.body;
+    if (nombre) {
+      producto.nombre = nombre;
+      producto.save();
+    }
+    res.status(200).send({ msg: "cambios guardados!" });
+  } catch (error) {
+    res.status(400).send(error);
+  }
+});
+
+// PUT Pedido para poder cambiar el estado
+
+router.put("/admin/pedido/:id", async (req, res) => {
+  try {
+    const id = req.params.id;
+    const pedido = await Pedido.findByPk(id);
+    const {
+      pago_total,
+      tipo_de_pago,
+      tipo_de_envio,
+      direccion_de_envio,
+      estado,
+    } = req.body;
+
+    if (pago_total) {
+      pedido.pago_total = pago_total;
+      pedido.save();
+    }
+    if (tipo_de_pago) {
+      pedido.Tipo_de_pago = tipo_de_pago;
+      pedido.save();
+    }
+    if (tipo_de_envio) {
+      pedido.Tipo_de_envio = tipo_de_envio;
+      pedido.save();
+    }
+    if (direccion_de_envio) {
+      pedido.Direccion_de_envio = direccion_de_envio;
+      pedido.save();
+    }
+    if (estado) {
+      pedido.Estado = estado;
+      pedido.save();
+    }
+    res.status(200).send(id);
+  } catch (error) {
+    res.status(400).send(error);
+  }
+});
+
+// PUT Usuario para poder cambiar el estado
+
+router.put("/admin/usuario/:id", async (req, res) => {
+  try {
+    const id = req.params.id;
+    const pedido = await Pedido.findByPk(id);
+    const {
+      nombre,
+      apellido,
+      dni,
+      direccion,
+      contraseña,
+      telefono,
+      mail,
+      isAdmin,
+    } = req.body;
+
+    if (nombre) {
+      pedido.nombre = nombre;
+      pedido.save();
+    }
+    if (apellido) {
+      pedido.apellido = apellido;
+      pedido.save();
+    }
+    if (dni) {
+      pedido.dni = dni;
+      pedido.save();
+    }
+    if (direccion) {
+      pedido.direccion = direccion;
+      pedido.save();
+    }
+    if (contraseña) {
+      pedido.contraseña = contraseña;
+      pedido.save();
+    }
+    if (telefono) {
+      pedido.telefono = telefono;
+      pedido.save();
+    }
+    if (mail) {
+      pedido.mail = mail;
+      pedido.save();
+    }
+    if (isAdmin) {
+      pedido.isAdmin = isAdmin;
+      pedido.save();
+    }
+    res.status(200).send(id);
+  } catch (error) {
+    res.status(400).send(error);
+  }
+});
+
+//+ DELETE producto con id
 
 router.delete("/producto/:id", async (req, res, next) => {
   try {
@@ -521,7 +633,7 @@ router.delete("/producto/:id", async (req, res, next) => {
   }
 });
 
-// DELETE categorias con id
+//+ DELETE categorias con id
 
 router.delete("/categorias/:id", async (req, res, next) => {
   try {
@@ -545,7 +657,7 @@ router.delete("/ratings/:id", async (req, res, next) => {
     next(error);
   }
 });
-// DELETE pedido con id
+//+ DELETE pedido con id
 
 router.delete("/pedido/:id", async (req, res, next) => {
   try {
@@ -556,6 +668,56 @@ router.delete("/pedido/:id", async (req, res, next) => {
   } catch (error) {
     next(error);
   }
+});
+//+ DELETE usuario con id
+
+router.delete("/usuario/:id", async (req, res, next) => {
+  try {
+    const id = req.params.id;
+    const usuarioaborrar = await Usuario.findByPk(id);
+    await usuarioaborrar.destroy();
+    res.status(200).send(id);
+  } catch (error) {
+    next(error);
+  }
+});
+
+//+ DELETE Relación favoritos usuario
+
+router.delete("/favoritos/wishlist", async (req, res) => {
+  const { idUsuario, idProducto } = req.body;
+
+  Usuario.findByPk(idUsuario).then((oneUsuario) => {
+    Producto.findByPk(idProducto)
+      .then((newProducto) => {
+        oneUsuario.removeProducto(newProducto);
+
+        return res.json({ msg: "Favorito fuera de la lista" });
+      })
+      .catch((error) => {
+        console.log(error);
+        return res.status(400).json(error);
+      });
+  });
+});
+
+//+ DELETE categoría producto
+
+router.delete("/categorias/producto", async (req, res) => {
+  const { idCategoria, idProducto } = req.body;
+
+  Categoria.findByPk(idCategoria).then((oneCategoria) => {
+    Producto.findByPk(idProducto)
+      .then((newProducto) => {
+        oneCategoria.removeProducto(newProducto);
+
+        return res.json({ msg: "Producto fuera de la categoria" });
+      })
+      .catch((error) => {
+        console.log(error);
+        return res.status(400).json(error);
+      });
+  });
 });
 
 router.post("/pagar", (req, res) => {
