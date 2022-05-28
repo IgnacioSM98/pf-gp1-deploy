@@ -58,7 +58,7 @@ export default function Relacionado({ relacionado }) {
   return (
     <LinkProduct to={`/productos/${relacionado.id}`}>
       <Container>
-        {console.log(relacionado, "tuki")}
+        {/* {console.log(relacionado, "tuki")} */}
         {/* <LinkProduct to={`/productos/${relacionado.id}`}> */}
         <Image src={relacionado.imagen} alt="" />
         <Precio>{`$${relacionado.precio}`}</Precio>
