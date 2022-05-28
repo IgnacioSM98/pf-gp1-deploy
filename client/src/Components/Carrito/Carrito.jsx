@@ -7,21 +7,21 @@ import Swal from "sweetalert2";
 import { MercadoPagoIntegracion } from "../index";
 
 const Container = styled.div`
-  // border: 3px solid black;
   display: flex;
   flex-direction: column;
 
   align-items: center;
-  justify-content: center;
+  // justify-content: center;
+  // padding-top: 120px;
 
   width: 100%;
-  height: 100%;
+  height: 100vh;
 `;
 
 const Productos = styled.div`
   position: relative;
-  margin-top: 30px;
-  margin-bottom: 30px;
+  margin-top: 20px;
+  margin-bottom: 0px;
   width: 90%;
   height: 153px;
   padding: 5px;
@@ -31,16 +31,21 @@ const Productos = styled.div`
 
 const Borrar = styled.button`
   position: absolute;
-  top: 5px;
-  right: 10px;
+  top: 0;
+  right: 0;
   border: none;
-  border-radius: 8px;
-  width: 20px;
-  height: 20px;
+  border-radius: 0px 8px 0px 8px;
+  width: 26px;
+  height: 26px;
   color: white;
+  font-weight: 900;
   background-color: rgba(98, 148, 107, 1);
-  box-shadow: 0 1px 1px 0 black, 1px 1px 1px 1px darkgray;
+  // box-shadow: 0 1px 1px 0 black, 1px 1px 1px 1px darkgray;
   cursor: pointer;
+
+  &: hover {
+    background-color: red;
+  }
 `;
 
 const Titulo = styled.h2`
@@ -61,6 +66,8 @@ const Linea = styled.hr`
 const ContenedorLinea = styled.div`
   display: flex;
   width: 100%;
+  height: 130px;
+  // padding-top: 120px;
   flex-direction: row;
   justify-content: space-around;
 `;
@@ -68,15 +75,20 @@ const ContenedorLinea = styled.div`
 const ContenedorOpciones = styled.div`
   display: flex;
   flex-direction: row;
-  justify-content: space-around;
+  // justify-content: space-around;
   margin-top: 4rem;
   // margin-right: 30rem;
   width: 100%;
+  position: relative;
 `;
 
 const Opciones = styled.p`
-  font-size: 20px;
+  font-size: 18px;
   font-family: Poppins;
+  position: absolute;
+  right: ${(props) => props.right};
+  left: ${(props) => props.left};
+  top: -23px;
 `;
 
 const LineaOpciones = styled.hr`
@@ -90,14 +102,19 @@ const ContenedorCompra = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-top: auto;
-  margin-left: auto;
+  // margin-top: auto;
+  // margin-left: auto;
+  height: 130px;
   padding: 10px;
   border: 1px solid darkgrey;
   border-radius: 8px;
-  margin-right: 5.4rem;
-  margin-bottom: 2rem;
+  // margin-right: 5.4rem;
+  // margin-bottom: 2rem;
   width: 33%;
+
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
 `;
 
 const ContenedorMonto = styled.div`
@@ -105,6 +122,17 @@ const ContenedorMonto = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: space-evenly;
+  position: relative;
+`;
+
+const ContenedorBotones = styled.div`
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  align-items: center;
+  position: absolute;
+  bottom: 10px;
 `;
 
 const Label = styled.label`
@@ -114,21 +142,30 @@ const Label = styled.label`
   color: black;
   margin: 1rem;
   font-weight: 550;
+  position: absolute;
+  left: ${(props) => props.left};
+  right: ${(props) => props.right};
 `;
 
 const Boton = styled.button`
   font-family: Poppins;
-  font-size: 22px;
+  font-size: 13px;
   color: white;
   background-color: rgba(98, 148, 107, 1);
-  padding: 10px;
-  border-radius: 10px;
-  margin-top: 1rem;
+  padding: 9px;
+  border-radius: 6px;
+  border: none;
+  // margin-top: 1rem;
   width: 60%;
-  box-shadow: 0 2px 2px 0 black, 1px 1px 1px 1px darkgray;
+
+  // box-shadow: 0 2px 2px 0 black, 1px 1px 1px 1px darkgray;
 `;
 
 function Carrito() {
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   const dispatch = useDispatch();
 
   const [precioTotal, setPrecioTotal] = useState(0);
@@ -146,7 +183,6 @@ function Carrito() {
       confirmButtonColor: "red",
       cancelButtonColor: "darkgrey",
       confirmButtonText: "Si",
-      // toast: true,
     }).then((result) => {
       if (result.isConfirmed) {
         Swal.fire({
@@ -182,9 +218,10 @@ function Carrito() {
       </ContenedorLinea>
 
       <ContenedorOpciones>
-        <Opciones>Producto</Opciones>
-        <Opciones>Cantidad</Opciones>
-        <Opciones>Monto</Opciones>
+        <Opciones left={"10%"}>Producto</Opciones>
+        <Opciones right={"45.5%"}>Cantidad</Opciones>
+        <Opciones right={"25%"}>Precio Unitario</Opciones>
+        <Opciones right={"9%"}>Subtotal</Opciones>
       </ContenedorOpciones>
       <LineaOpciones />
 
@@ -203,11 +240,13 @@ function Carrito() {
 
       <ContenedorCompra>
         <ContenedorMonto>
-          <Label>Monto Total:</Label>
-          <Label>${precioTotal}</Label>
+          <Label left={0}>Monto Total:</Label>
+          <Label right={0}>${precioTotal}</Label>
         </ContenedorMonto>
-        <Boton>Continuar compra</Boton>
-        <MercadoPagoIntegracion />
+        <ContenedorBotones>
+          <Boton>Continuar compra</Boton>
+          <MercadoPagoIntegracion />
+        </ContenedorBotones>
       </ContenedorCompra>
     </Container>
   );

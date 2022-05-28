@@ -151,15 +151,50 @@ export default function rootReducer(state = initialState, action) {
       };
 
     case "AGREGAR_CARRITO":
-      const newCarrito = [...state.carrito];
-      const indexCarrito = state.carrito.findIndex(
+      var newCarrito = [...state.carrito];
+
+      var indexCarrito = state.carrito.findIndex(
         (carrito) => Number(carrito.id) === Number(action.payload.idProducto)
       );
 
       if (indexCarrito !== -1) {
-        console.log(indexCarrito);
+        newCarrito[indexCarrito].cantidad = action.payload.cantidad;
+
+        return {
+          ...state,
+          carrito: newCarrito,
+        };
+      } else {
+        const productoSeleccionado = state.productos.find(
+          (producto) =>
+            Number(producto.id) === Number(action.payload.idProducto)
+        );
+
+        return {
+          ...state,
+          carrito: [
+            ...state.carrito,
+            {
+              id: productoSeleccionado.id,
+              nombre: productoSeleccionado.nombre,
+              precio: productoSeleccionado.precio,
+              imagen: productoSeleccionado.imagen,
+              cantidad: action.payload.cantidad,
+            },
+          ],
+        };
+      }
+
+    case "RESTAR_CARRITO":
+      var newCarrito = [...state.carrito];
+
+      var indexCarrito = state.carrito.findIndex(
+        (carrito) => Number(carrito.id) === Number(action.payload.idProducto)
+      );
+
+      if (indexCarrito !== -1) {
         newCarrito[indexCarrito].cantidad =
-          newCarrito[indexCarrito].cantidad + 1;
+          newCarrito[indexCarrito].cantidad - 1;
         return {
           ...state,
           carrito: newCarrito,

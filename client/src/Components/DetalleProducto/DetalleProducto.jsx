@@ -233,19 +233,57 @@ export default function DetalleProducto() {
   // const user = localStorage.getItem("user") ? true : false;
 
   const [carrito, setCarrito] = useState(true),
-    [cantidad, setCantidad] = useState(1),
+    [cantidad, setCantidad] = useState(0),
     [boton, setBoton] = useState({ suma: false, resta: true }),
     [relacionados, setRelacionados] = useState([]);
 
   const detalle = useSelector((state) => state.detalle);
   const reviews = useSelector((state) => state.reviews);
   const productos = useSelector((state) => state.productos);
+  const carritoCantidad = useSelector(
+    (state) => state.carrito.filter((item) => item.id === Number(id))[0]
+  );
 
   useEffect(() => {
     // if (productos.length === 0) dispatch(getProductos());
 
     setRelacionados(productos);
   }, [productos]);
+
+  console.log(
+    "cantidad:",
+    cantidad,
+    "stock:",
+    detalle?.stock,
+    "carrito",
+    carritoCantidad?.cantidad
+  );
+
+  var cantidadTotal =
+    Number(cantidad) + carritoCantidad?.cantidad
+      ? Number(carritoCantidad?.cantidad)
+      : Number(0);
+
+  console.log(cantidadTotal, "aaaaa");
+
+  useEffect(() => {
+    setCarrito(
+      detalle?.stock
+        ? detalle.stock -
+            (cantidad +
+              (carritoCantidad?.cantidad ? carritoCantidad.cantidad : 0) ===
+            0
+              ? true
+              : false)
+        : cantidad +
+            (carritoCantidad?.cantidad ? carritoCantidad.cantidad : 0) ===
+          0
+        ? true
+        : false
+    );
+  }, [detalle, cantidad, carritoCantidad]);
+
+  console.log(carrito);
 
   // Creamos la variable a utilizar
   var rating = 0;
@@ -266,10 +304,28 @@ export default function DetalleProducto() {
   rating = Math.round(rating);
 
   const cambiarCantidad = (e) => {
+    // console.log(
+    //   cantidad + (carritoCantidad?.cantidad ? carritoCantidad.cantidad : 0) <
+    //     detalle.stock
+    //     ? true
+    //     : false
+    // );
+
     if (e.target.name === "suma") {
-      if (cantidad < detalle.stock) {
+      if (
+        cantidad + (carritoCantidad?.cantidad ? carritoCantidad.cantidad : 0) <
+        detalle.stock
+      ) {
         setCantidad(cantidad + 1);
-        setBoton({ resta: false });
+
+        setBoton(
+          cantidad +
+            1 +
+            (carritoCantidad?.cantidad ? carritoCantidad.cantidad : 0) ===
+            detalle.stock
+            ? { resta: false, suma: true }
+            : { resta: false }
+        );
       } else {
         setBoton({ suma: true });
       }
@@ -284,10 +340,29 @@ export default function DetalleProducto() {
   };
 
   const onClick = (e) => {
-    setCarrito(!carrito);
+    setCarrito(
+      (carritoCantidad?.cantidad ? carritoCantidad.cantidad : 0) + cantidad ===
+        detalle.stock
+        ? true
+        : false
+    );
+
+    setBoton(
+      carritoCantidad?.cantidad + cantidad - 1 === detalle.stock
+        ? { resta: true, suma: true }
+        : { resta: false, suma: false }
+    );
+
     if (detalle.stock > 1) {
-      dispatch(agregarCarrito(id, cantidad));
+      dispatch(
+        agregarCarrito(
+          id,
+          cantidad + (carritoCantidad?.cantidad ? carritoCantidad.cantidad : 0)
+        )
+      );
     }
+
+    setCantidad(0);
   };
 
   useEffect(() => {
@@ -343,13 +418,18 @@ export default function DetalleProducto() {
           </Cards>
 
           <Bottom>
-            <Unidades>
-              {`Unidades (${
-                detalle.stock === 1
-                  ? "1 disponible"
-                  : `${detalle.stock} disponibles`
-              })`}
-            </Unidades>
+            <div style={{ display: "flex", alignItems: "center" }}>
+              <Unidades>
+                {`Unidades (${
+                  detalle.stock === 1
+                    ? "1 disponible"
+                    : `${detalle.stock} disponibles`
+                })`}
+              </Unidades>
+              {carritoCantidad?.cantidad ? (
+                <Cuotas>{`${carritoCantidad.cantidad} en tu carrito`}</Cuotas>
+              ) : null}
+            </div>
             <Bar />
             <Botones>
               {detalle.stock ? (
@@ -357,7 +437,7 @@ export default function DetalleProducto() {
                   <Cantidad
                     name="resta"
                     onClick={cambiarCantidad}
-                    disabled={boton.resta}
+                    disabled={cantidad <= 1 ? true : false}
                   >
                     -
                   </Cantidad>
@@ -382,7 +462,7 @@ export default function DetalleProducto() {
                 <Boton
                   onClick={onClick}
                   value="Agregar"
-                  disabled={false}
+                  disabled={carrito ? false : true}
                   color={carrito ? "white" : "black"}
                   backcolor={carrito ? "black" : "#00000045"}
                   // borders={carrito ? "none" : null}

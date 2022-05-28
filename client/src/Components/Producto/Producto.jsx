@@ -1,9 +1,13 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./producto.css";
 import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { useDispatch, useSelector } from "react-redux";
-import { agregarCarrito, deleteProducto } from "../../Redux/actions";
+import {
+  agregarCarrito,
+  deleteProducto,
+  restarCarrito,
+} from "../../Redux/actions";
 
 const LinkProduct = styled(Link)`
   text-decoration: none;
@@ -108,11 +112,20 @@ export default function Producto({
   categorias,
 }) {
   const dispatch = useDispatch();
+
   const admin = useSelector((state) => state.user);
   const [showOptions, setOptions] = useState({ button: false, popup: false });
   const navigate = useNavigate();
   const [flag, setFlag] = useState(false);
   const [cantidad, setCantidad] = useState(1);
+  const cantidadCarrito = useSelector(
+    (state) => state.carrito.filter((item) => item.id === id)[0]
+  );
+
+  useEffect(() => {
+    setFlag(cantidadCarrito?.cantidad ? true : false);
+    setCantidad(cantidadCarrito?.cantidad ? cantidadCarrito.cantidad : 1);
+  }, [cantidadCarrito]);
 
   const handleEdit = () => {
     navigate(`/edit/${id}`);
@@ -132,6 +145,7 @@ export default function Producto({
 
   const cambiarCantidad = (e) => {
     e.preventDefault();
+
     if (e.target.name === "suma") {
       if (cantidad < stock) {
         setCantidad(cantidad + 1);
@@ -140,6 +154,7 @@ export default function Producto({
     } else {
       if (cantidad > 1) {
         setCantidad(cantidad - 1);
+        dispatch(restarCarrito(id, cantidad - 1));
       } else {
         setFlag(false);
       }
