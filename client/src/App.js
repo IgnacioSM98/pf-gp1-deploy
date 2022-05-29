@@ -12,9 +12,11 @@ import {
   Login,
   DetalleProducto,
   EliminarCategoria,
+  DetalleEnvio,
 } from "./Components/index";
 import { Routes, Route } from "react-router-dom";
 import { useDispatch } from "react-redux";
+
 
 function App() {
   const dispatch = useDispatch();
@@ -45,6 +47,7 @@ function App() {
           <Route exact path="/blog" element={<Blog contacto={contacto} />} />
           <Route exact path="/cuenta" element={<Cuenta />} />
           {/* <Route exact path="/admin" element={"admin"} /> */}
+          <Route exact path="/pedido/:id" element={<DetalleEnvio/>}/>
           <Route
             exact
             path="/admin/eliminar/categorias"
