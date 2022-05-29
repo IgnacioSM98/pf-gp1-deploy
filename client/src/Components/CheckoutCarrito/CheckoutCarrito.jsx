@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
+import { MercadoPagoIntegracion } from "../index";
 
 const Contenedor = styled.div`
   display: flex;
@@ -371,7 +372,9 @@ function Checkout() {
               </ContenedorDiv>
             </ContenedorCiudad>
 
-            <Boton type="submit" value="Continuar" />
+            {/* <Boton type="submit" value="Continuar" /> */}
+
+            <MercadoPagoIntegracion precioTotal={precioTotal} />
           </div>
           <Productos>
             <h3>Resumen de compra</h3>

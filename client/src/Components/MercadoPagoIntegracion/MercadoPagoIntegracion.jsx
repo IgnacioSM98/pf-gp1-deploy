@@ -3,10 +3,11 @@ import React, { useCallback, useEffect } from "react";
 
 const FORM_ID = "payment-form";
 
-export default function MercadoPagoIntegracion() {
+export default function MercadoPagoIntegracion({ precioTotal }) {
   const obtenerPreference = useCallback(async () => {
     const res = await axios.post(
-      "https://proyecto-final-gp1.herokuapp.com/pagar"
+      "https://proyecto-final-gp1.herokuapp.com/pagar",
+      precioTotal
     );
 
     if (res.data) {
