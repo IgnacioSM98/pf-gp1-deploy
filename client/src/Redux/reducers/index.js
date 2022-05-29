@@ -9,6 +9,7 @@ const initialState = {
   user: false,
   userInfo: {},
   detalleEnvio:{}
+  pedidos: [],
 };
 
 export default function rootReducer(state = initialState, action) {
@@ -149,6 +150,13 @@ export default function rootReducer(state = initialState, action) {
       return {
         ...state,
         reviews: action.payload,
+      };
+
+    case "SET_CARRITO":
+      // console.log(action.payload);
+      return {
+        ...state,
+        carrito: action.payload,
       };
 
     case "AGREGAR_CARRITO":
@@ -320,15 +328,23 @@ export default function rootReducer(state = initialState, action) {
         ...state,
         userInfo: action.payload,
       };
+      
     case "GET_DETALLE_ENVIO":
       return {
         ...state,
         detalleEnvio: action.payload
       }
+      
     case "ACTUALIZAR_ESTADO":
       return{
         ...state
       }
+
+    case "GET_PEDIDOS":
+      return {
+        ...state,
+        pedidos: action.payload,
+      };
 
     default:
       return state;

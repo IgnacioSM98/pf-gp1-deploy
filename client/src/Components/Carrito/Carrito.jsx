@@ -5,6 +5,7 @@ import styled from "styled-components";
 import { quitarItem } from "../../Redux/actions";
 import Swal from "sweetalert2";
 import { MercadoPagoIntegracion } from "../index";
+import { Link } from "react-router-dom";
 
 const Container = styled.div`
   display: flex;
@@ -227,12 +228,8 @@ function Carrito() {
 
       {carrito.map((el) => {
         return (
-          <Productos>
-            <CarritoItem
-              key={el.id}
-              producto={el}
-              setPrecioTotal={setPrecioTotal}
-            />
+          <Productos key={el.id}>
+            <CarritoItem producto={el} setPrecioTotal={setPrecioTotal} />
             <Borrar onClick={() => handleQuit(el)}>X</Borrar>
           </Productos>
         );
@@ -244,7 +241,9 @@ function Carrito() {
           <Label right={0}>${precioTotal}</Label>
         </ContenedorMonto>
         <ContenedorBotones>
-          <Boton>Continuar compra</Boton>
+          <Link to="/checkout">
+            <Boton>Continuar compra</Boton>
+          </Link>
           <MercadoPagoIntegracion />
         </ContenedorBotones>
       </ContenedorCompra>

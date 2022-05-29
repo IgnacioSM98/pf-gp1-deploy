@@ -212,7 +212,7 @@ export default function Login({ setUser }) {
       }
     }
 
-    console.log(errors);
+    // console.log(errors);
 
     return errors;
   };
