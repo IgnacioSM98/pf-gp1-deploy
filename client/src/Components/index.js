@@ -24,6 +24,7 @@ import AgregarProducto from "./AgregarProducto/AgregarProducto";
 import Relacionado from "./Relacionado/Relacionado";
 import MercadoPagoIntegracion from "./MercadoPagoIntegracion/MercadoPagoIntegracion";
 import Loading from "./Loading/Loading";
+import Checkout from "./CheckoutCarrito/CheckoutCarrito";
 
 export {
   Home,
@@ -52,4 +53,5 @@ export {
   Loading,
   Relacionado,
   MercadoPagoIntegracion,
+  Checkout,
 };
