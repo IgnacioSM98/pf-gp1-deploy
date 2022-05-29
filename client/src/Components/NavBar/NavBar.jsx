@@ -88,7 +88,7 @@ export default function NavBar({ contacto, user, setUser }) {
   const dispatch = useDispatch();
   const [userMenu, setMenu] = useState(false);
 
-  const countCarrito = carrito.filter((cv, i) => {
+  const countCarrito = carrito?.filter((cv, i) => {
     return i === carrito.findIndex((e) => e.id === cv.id);
   }).length;
 
