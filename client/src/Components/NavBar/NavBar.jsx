@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import Usuario from "../Usuario/Usuario";
-import { getUser, setUserInfo } from "../../Redux/actions";
+import { getUser, setCarrito, setUserInfo } from "../../Redux/actions";
 import { useSelector, useDispatch } from "react-redux";
 import { app } from "../../firebase";
 
@@ -87,9 +87,11 @@ export default function NavBar({ contacto, user, setUser }) {
   const carrito = useSelector((state) => state.carrito);
   const dispatch = useDispatch();
   const [userMenu, setMenu] = useState(false);
-  const countCarrito = carrito.filter((cv, i) => {
+
+  const countCarrito = carrito?.filter((cv, i) => {
     return i === carrito.findIndex((e) => e.id === cv.id);
   }).length;
+
   const admin = useSelector((state) => state.user);
 
   const logOut = () => {
@@ -113,7 +115,18 @@ export default function NavBar({ contacto, user, setUser }) {
   };
 
   useEffect(() => {
-    // console.log("aca esta vacio user", user);
+    // Recuperamos el carrito del local storage
+    dispatch(setCarrito(localStorage.getItem("carrito")));
+  }, []);
+
+  useEffect(() => {
+    // Cada vez que se actualice el carrito lo guardamos en caché
+    if (carrito) {
+      localStorage.setItem("carrito", JSON.stringify(carrito));
+    }
+  }, [carrito]);
+
+  useEffect(() => {
     if (!user) {
       dispatch(setUserInfo(localStorage.getItem("user")));
 

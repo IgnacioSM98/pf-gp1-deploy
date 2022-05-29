@@ -6,9 +6,14 @@ import {
   getDetail,
   getReviews,
   agregarCarrito,
-  getProductos,
+  // getProductos,
 } from "../../Redux/actions";
-import { CrearReview, Reviews as ProductReviews, Stars } from "../index";
+import {
+  CrearReview,
+  Reviews as ProductReviews,
+  Stars,
+  Reseñas,
+} from "../index";
 import styled from "styled-components";
 import cards from "../../Images/Cards/index";
 import { Relacionado } from "../index";
@@ -31,16 +36,18 @@ const Details = styled.div`
 
 const Reviews = styled.div`
   display: flex;
-  width: 100%;
+  width: 95%;
   align-items: center;
-  height: 194px;
+  height: 222px;
 `;
 
 const RelacionadosContainer = styled.div`
   display: flex;
   flex-direction: column;
+  justify-content: center;
 
-  width: 100%;
+  height: 352px;
+  width: 95%;
 `;
 
 const Image = styled.img`
@@ -120,7 +127,7 @@ const Boton = styled.button`
   border-radius: 8px;
   margin: 5px;
   height: 40px;
-  width: 100px;
+  width: ${(props) => (props.width ? props.width : "100px")};
   cursor: pointer;
   // padding: 2%;
 `;
@@ -189,6 +196,8 @@ const Span = styled.span`
   font-size: 13px;
   font-weight: 600;
   text-decoration: underline;
+
+  cursor: pointer;
 `;
 
 const FormRev = styled.button`
@@ -235,7 +244,8 @@ export default function DetalleProducto() {
   const [carrito, setCarrito] = useState(true),
     [cantidad, setCantidad] = useState(0),
     [boton, setBoton] = useState({ suma: false, resta: true }),
-    [relacionados, setRelacionados] = useState([]);
+    [relacionados, setRelacionados] = useState([]),
+    [reseñas, setReseñas] = useState(false);
 
   const detalle = useSelector((state) => state.detalle);
   const reviews = useSelector((state) => state.reviews);
@@ -250,40 +260,12 @@ export default function DetalleProducto() {
     setRelacionados(productos);
   }, [productos]);
 
-  console.log(
-    "cantidad:",
-    cantidad,
-    "stock:",
-    detalle?.stock,
-    "carrito",
-    carritoCantidad?.cantidad
-  );
-
-  var cantidadTotal =
-    Number(cantidad) + carritoCantidad?.cantidad
-      ? Number(carritoCantidad?.cantidad)
-      : Number(0);
-
-  console.log(cantidadTotal, "aaaaa");
+  const cantidadTotal =
+    cantidad + (carritoCantidad?.cantidad ? carritoCantidad?.cantidad : 0);
 
   useEffect(() => {
-    setCarrito(
-      detalle?.stock
-        ? detalle.stock -
-            (cantidad +
-              (carritoCantidad?.cantidad ? carritoCantidad.cantidad : 0) ===
-            0
-              ? true
-              : false)
-        : cantidad +
-            (carritoCantidad?.cantidad ? carritoCantidad.cantidad : 0) ===
-          0
-        ? true
-        : false
-    );
-  }, [detalle, cantidad, carritoCantidad]);
-
-  console.log(carrito);
+    setCarrito(cantidadTotal === detalle.stock ? true : false);
+  }, [carritoCantidad, detalle]);
 
   // Creamos la variable a utilizar
   var rating = 0;
@@ -304,13 +286,6 @@ export default function DetalleProducto() {
   rating = Math.round(rating);
 
   const cambiarCantidad = (e) => {
-    // console.log(
-    //   cantidad + (carritoCantidad?.cantidad ? carritoCantidad.cantidad : 0) <
-    //     detalle.stock
-    //     ? true
-    //     : false
-    // );
-
     if (e.target.name === "suma") {
       if (
         cantidad + (carritoCantidad?.cantidad ? carritoCantidad.cantidad : 0) <
@@ -330,7 +305,7 @@ export default function DetalleProducto() {
         setBoton({ suma: true });
       }
     } else {
-      if (cantidad > 1) {
+      if (cantidad >= 1) {
         setCantidad(cantidad - 1);
         setBoton({ suma: false });
       } else {
@@ -340,17 +315,11 @@ export default function DetalleProducto() {
   };
 
   const onClick = (e) => {
-    setCarrito(
+    setBoton(
       (carritoCantidad?.cantidad ? carritoCantidad.cantidad : 0) + cantidad ===
         detalle.stock
-        ? true
-        : false
-    );
-
-    setBoton(
-      carritoCantidad?.cantidad + cantidad - 1 === detalle.stock
-        ? { resta: true, suma: true }
-        : { resta: false, suma: false }
+        ? { suma: true }
+        : { suma: false }
     );
 
     if (detalle.stock > 1) {
@@ -388,6 +357,8 @@ export default function DetalleProducto() {
     }
   };
 
+  // style={reseñas ? { overflowY: "hidden" } : { overflowY: "auto" }}
+
   return detalle && Object.keys(detalle)[0] ? (
     <Container>
       <Details>
@@ -397,7 +368,9 @@ export default function DetalleProducto() {
           <Valoracion>
             <Stars rating={rating ? rating : 1} />
 
-            <Span>{reviews.length} Reviews</Span>
+            <Span onClick={() => setReseñas(true)}>
+              {reviews.length} Reviews
+            </Span>
           </Valoracion>
 
           <DescripcionText>Descripción</DescripcionText>
@@ -413,19 +386,30 @@ export default function DetalleProducto() {
 
           <Cards>
             {cards.map((card, index) => {
-              return <Card src={card.image} key={index} title={card.name} />;
+              return (
+                <Card
+                  draggable="false"
+                  src={card.image}
+                  key={index}
+                  title={card.name}
+                />
+              );
             })}
           </Cards>
 
           <Bottom>
             <div style={{ display: "flex", alignItems: "center" }}>
-              <Unidades>
-                {`Unidades (${
-                  detalle.stock === 1
-                    ? "1 disponible"
-                    : `${detalle.stock} disponibles`
-                })`}
-              </Unidades>
+              {/* Si no hay stock no debería mostrar el stock disponible*/}
+              {detalle?.stock ? (
+                <Unidades>
+                  {`Unidades (${
+                    detalle.stock === 1
+                      ? "1 disponible"
+                      : `${detalle.stock} disponibles`
+                  })`}
+                </Unidades>
+              ) : null}
+
               {carritoCantidad?.cantidad ? (
                 <Cuotas>{`${carritoCantidad.cantidad} en tu carrito`}</Cuotas>
               ) : null}
@@ -437,7 +421,7 @@ export default function DetalleProducto() {
                   <Cantidad
                     name="resta"
                     onClick={cambiarCantidad}
-                    disabled={cantidad <= 1 ? true : false}
+                    disabled={cantidad === 0 ? true : false}
                   >
                     -
                   </Cantidad>
@@ -451,7 +435,9 @@ export default function DetalleProducto() {
                   </Cantidad>
                 </div>
               ) : (
-                <Boton>Sin stock</Boton>
+                <Boton color={"white"} backcolor={"#00000045"} width={"100%"}>
+                  Sin stock disponible
+                </Boton>
               )}
 
               {location && location.pathname.slice(0, 6) === "/admin" && (
@@ -462,9 +448,9 @@ export default function DetalleProducto() {
                 <Boton
                   onClick={onClick}
                   value="Agregar"
-                  disabled={carrito ? false : true}
-                  color={carrito ? "white" : "black"}
-                  backcolor={carrito ? "black" : "#00000045"}
+                  disabled={cantidad === 0 ? true : false}
+                  color={cantidad === 0 ? "black" : "white"}
+                  backcolor={cantidad === 0 ? "#00000045" : "black"}
                   // borders={carrito ? "none" : null}
                 >
                   Agregar
@@ -477,17 +463,18 @@ export default function DetalleProducto() {
       <Bar style={{ width: "100%" }} />
       <Reviews>
         {user && <CrearReview id={id} />}
-        <ProductReviews />
+        <ProductReviews setReseñas={setReseñas} />
+        {reseñas && <Reseñas setReseñas={setReseñas} />}
       </Reviews>
       <Bar style={{ width: "100%" }} />
 
       <RelacionadosContainer>
         <Titulo>Quienes vieron este producto también compraron</Titulo>
-        <Relacionados>
+        <Relacionados style={{ overflowX: "scroll" }}>
           {relacionados &&
             relacionados
               .filter(filterCategorias)
-              .slice(0, 5)
+              .slice(0, 10)
               .map((relacionado) => {
                 if (Number(relacionado.id) !== Number(id)) {
                   return (

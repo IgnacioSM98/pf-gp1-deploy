@@ -25,6 +25,8 @@ import Relacionado from "./Relacionado/Relacionado";
 import MercadoPagoIntegracion from "./MercadoPagoIntegracion/MercadoPagoIntegracion";
 import Loading from "./Loading/Loading";
 import Checkout from "./CheckoutCarrito/CheckoutCarrito";
+import Reseñas from "./Reseñas/Reseñas";
+import ItemCompra from "./Compra/ItemCompra";
 
 export {
   Home,
@@ -50,8 +52,10 @@ export {
   Filtros,
   AgregarProducto,
   Modal,
+  Reseñas,
   Loading,
   Relacionado,
   MercadoPagoIntegracion,
   Checkout,
+  ItemCompra,
 };

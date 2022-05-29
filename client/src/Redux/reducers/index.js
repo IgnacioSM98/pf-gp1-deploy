@@ -150,6 +150,13 @@ export default function rootReducer(state = initialState, action) {
         reviews: action.payload,
       };
 
+    case "SET_CARRITO":
+      // console.log(action.payload);
+      return {
+        ...state,
+        carrito: action.payload,
+      };
+
     case "AGREGAR_CARRITO":
       var newCarrito = [...state.carrito];
 

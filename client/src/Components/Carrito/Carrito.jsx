@@ -228,12 +228,8 @@ function Carrito() {
 
       {carrito.map((el) => {
         return (
-          <Productos>
-            <CarritoItem
-              key={el.id}
-              producto={el}
-              setPrecioTotal={setPrecioTotal}
-            />
+          <Productos key={el.id}>
+            <CarritoItem producto={el} setPrecioTotal={setPrecioTotal} />
             <Borrar onClick={() => handleQuit(el)}>X</Borrar>
           </Productos>
         );

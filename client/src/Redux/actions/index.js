@@ -94,7 +94,7 @@ export function postProducto(payload) {
     // dispatch({ type: "POST_PRODUCTO", payload: json.data });
 
     axios.post(`${urlBase}${admin}${crear}`, payload).then((res) => {
-      console.log(payload.categorias, "uwu");
+      // console.log(payload.categorias, "uwu");
 
       dispatch({
         type: "POST_PRODUCTO",
@@ -159,15 +159,20 @@ export const setSort = (value) => (dispatch) => {
   dispatch({ type: "SET_SORT", payload: value });
 };
 
+export function setCarrito(carrito) {
+  return function (dispatch) {
+    dispatch({ type: "SET_CARRITO", payload: JSON.parse(carrito) });
+  };
+}
+
 export function agregarCarrito(idProducto, cantidad) {
-  console.log(cantidad, "juan");
   return function (dispatch) {
     dispatch({ type: "AGREGAR_CARRITO", payload: { idProducto, cantidad } });
   };
 }
 
 export function restarCarrito(idProducto, cantidad) {
-  console.log(idProducto, cantidad);
+  // console.log(idProducto, cantidad);
   return function (dispatch) {
     dispatch({ type: "RESTAR_CARRITO", payload: { idProducto, cantidad } });
   };
