@@ -8,7 +8,7 @@ const initialState = {
   carrito: [],
   user: false,
   userInfo: {},
-  detalleEnvio:{}
+  detalleEnvio:{},
   pedidos: [],
 };
 
