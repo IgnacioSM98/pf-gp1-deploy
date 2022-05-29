@@ -12,6 +12,7 @@ import {
   Login,
   DetalleProducto,
   EliminarCategoria,
+  Checkout,
 } from "./Components/index";
 import { Routes, Route } from "react-router-dom";
 import { useDispatch } from "react-redux";
@@ -44,6 +45,8 @@ function App() {
           <Route exact path="/carrito" element={<Carrito />} />
           <Route exact path="/blog" element={<Blog contacto={contacto} />} />
           <Route exact path="/cuenta" element={<Cuenta />} />
+          <Route exact path="/checkout" element={<Checkout />} />
+
           {/* <Route exact path="/admin" element={"admin"} /> */}
           <Route
             exact
