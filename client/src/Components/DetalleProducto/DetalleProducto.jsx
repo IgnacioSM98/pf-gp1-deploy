@@ -386,7 +386,14 @@ export default function DetalleProducto() {
 
           <Cards>
             {cards.map((card, index) => {
-              return <Card src={card.image} key={index} title={card.name} />;
+              return (
+                <Card
+                  draggable="false"
+                  src={card.image}
+                  key={index}
+                  title={card.name}
+                />
+              );
             })}
           </Cards>
 
