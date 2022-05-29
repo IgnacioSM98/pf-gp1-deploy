@@ -57,7 +57,7 @@ export {
   Loading,
   Relacionado,
   MercadoPagoIntegracion,
-  DetalleEnvio
+  DetalleEnvio,
   Checkout,
   ItemCompra,
 };
