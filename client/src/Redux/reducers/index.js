@@ -8,6 +8,7 @@ const initialState = {
   carrito: [],
   user: false,
   userInfo: {},
+  pedidos: [],
 };
 
 export default function rootReducer(state = initialState, action) {
@@ -326,6 +327,13 @@ export default function rootReducer(state = initialState, action) {
         ...state,
         userInfo: action.payload,
       };
+
+    case "GET_PEDIDOS":
+      return {
+        ...state,
+        pedidos: action.payload,
+      };
+
     default:
       return state;
   }
