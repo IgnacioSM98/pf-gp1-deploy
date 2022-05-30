@@ -227,7 +227,7 @@ function Carrito({ contacto }) {
         </ContenedorOpciones>
         <LineaOpciones />
 
-        {carrito.map((el) => {
+        {carrito?.map((el) => {
           return (
             <Productos key={el.id}>
               <CarritoItem producto={el} setPrecioTotal={setPrecioTotal} />
