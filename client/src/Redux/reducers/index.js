@@ -12,6 +12,7 @@ const initialState = {
   usuarios: [],
   detalleEnvio: {},
   pedidos: [],
+  favoritos: [],
 };
 
 export default function rootReducer(state = initialState, action) {
@@ -368,6 +369,24 @@ export default function rootReducer(state = initialState, action) {
       return {
         ...state,
         pedidos: action.payload,
+      };
+
+    case "AÑADIR_A_FAVORITOS":
+      const newFavorites = [...state.favoritos, action.payload];
+      return {
+        ...state,
+        favoritos: newFavorites,
+      };
+
+    case "ELIMINAR_DE_FAVORITOS":
+      const favoritosFiltrados = state.favoritos.filter(
+        (e) => e.id !== action.payload
+      );
+      console.log("FAVORITOS FILTRADOS", action.payload);
+
+      return {
+        ...state,
+        favoritos: favoritosFiltrados,
       };
 
     default:

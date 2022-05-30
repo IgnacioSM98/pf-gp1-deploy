@@ -125,6 +125,7 @@ export default function Home({ contacto }) {
                   stock={producto.stock}
                   descripcion={producto.descripcion}
                   location={location}
+                  producto={producto}
                 />
               );
             })}
