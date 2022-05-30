@@ -34,7 +34,7 @@ const ContenedorFiltrosPro = styled.div`
 `;
 
 const FiltrosCont = styled.div`
-  background-color: rgba(55, 86, 61, 0.6);
+  background-color: #36885ed1;
   width: 300px;
   height: 600px;
   padding: 1.5rem;
@@ -44,7 +44,7 @@ const FiltrosCont = styled.div`
 `;
 
 const CuadradoFiltro = styled.div`
-  background: rgba(55, 86, 61, 0.4);
+  background: #36885ed1;
   width: 100%;
   height: 550px;
   display: flex;
