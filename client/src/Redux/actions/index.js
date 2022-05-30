@@ -162,7 +162,6 @@ export function setCarrito(carrito) {
 }
 
 export function agregarCarrito(idProducto, cantidad) {
-  console.log(idProducto, cantidad);
   return function (dispatch) {
     dispatch({ type: "AGREGAR_CARRITO", payload: { idProducto, cantidad } });
   };

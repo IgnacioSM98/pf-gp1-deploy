@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { Children, useEffect, useState } from "react";
 import "./producto.css";
 import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   agregarCarrito,
   deleteProducto,
+  quitarItem,
   restarCarrito,
 } from "../../Redux/actions";
 
@@ -159,6 +160,7 @@ export default function Producto({
         dispatch(restarCarrito(id, cantidad - 1));
       } else {
         setFlag(false);
+        dispatch(quitarItem({ id }));
       }
     }
   };

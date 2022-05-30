@@ -403,7 +403,9 @@ function Checkout({ contacto }) {
                 carrito.map((e, index) => (
                   <ContenedorProducto
                     style={
-                    index + 1 === carrito.length ? { marginBottom: "-15px" } : null
+                      index + 1 === carrito.length
+                        ? { marginBottom: "-15px" }
+                        : null
                     }
                     key={e.id}
                   >

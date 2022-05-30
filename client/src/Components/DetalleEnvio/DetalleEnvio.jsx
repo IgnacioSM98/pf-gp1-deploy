@@ -183,7 +183,7 @@ export default function DetalleEnvio() {
   useEffect(() => {
     dispatch(getDetalleEnvio(id));
   }, []);
-  console.log(detalle);
+
   let [input, setInput] = useState({
     estado: "",
   });
