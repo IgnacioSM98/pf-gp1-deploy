@@ -1,7 +1,12 @@
 import React, { useEffect } from "react";
 import "./AdminNav.css";
 import { useSelector, useDispatch } from "react-redux";
-import { getCategorias, getProductos, getUsuarios } from "../../Redux/actions";
+import {
+  getCategorias,
+  getPedidos,
+  getProductos,
+  getUsuarios,
+} from "../../Redux/actions";
 
 export default function AdminNav({ setCartas }) {
   const dispatch = useDispatch();
@@ -14,7 +19,7 @@ export default function AdminNav({ setCartas }) {
     if (e.target.name === "usuarios") dispatch(getUsuarios);
     if (e.target.name === "categorias") dispatch(getCategorias);
     if (e.target.name === "productos") dispatch(getProductos);
-    if (e.target.name === "pedidos") dispatch(pedidos);
+    if (e.target.name === "pedidos") dispatch(getPedidos);
   }
 
   useEffect(() => {
