@@ -22,7 +22,6 @@ import {
 import { Routes, Route } from "react-router-dom";
 import { useDispatch } from "react-redux";
 
-
 function App() {
   const dispatch = useDispatch();
   const contacto = useRef(null);
@@ -45,21 +44,37 @@ function App() {
       <div className="App">
         <Routes>
           <Route exact path={"/"} element={<Home contacto={contacto} />} />
+
           <Route exact path="/productos/:id" element={<DetalleProducto />} />
+
           <Route
             exact
             path={"/tienda"}
             element={<Tienda contacto={contacto} />}
           />
+
           <Route exact path="/productos/:id" element={<DetalleProducto />} />
+
           <Route exact path="/edit/:id" element={<CrearProducto />} />
-          <Route exact path="/carrito" element={<Carrito />} />
+
+          <Route
+            exact
+            path="/carrito"
+            element={<Carrito contacto={contacto} />}
+          />
+
           <Route exact path="/blog" element={<Blog contacto={contacto} />} />
+
           <Route exact path="/cuenta" element={<Cuenta />} />
-          <Route exact path="/checkout" element={<Checkout />} />
+
+          <Route
+            exact
+            path="/checkout"
+            element={<Checkout contacto={contacto} />}
+          />
 
           {/* <Route exact path="/admin" element={"admin"} /> */}
-          <Route exact path="/pedido/:id" element={<DetalleEnvio/>}/>
+          <Route exact path="/pedido/:id" element={<DetalleEnvio />} />
           <Route
             exact
             path="/admin/eliminar/categorias"
@@ -69,7 +84,9 @@ function App() {
           <Route
             exact
             path="/login"
-            element={<Login user={user} setUser={setUser} />}
+            element={
+              <Login user={user} setUser={setUser} contacto={contacto} />
+            }
           />
           {/*<Route exact path="/user/reviews" element={"user reviews"} />
         <Route exact path="/admin/cambiar/:id" element={"change something"} />*/}

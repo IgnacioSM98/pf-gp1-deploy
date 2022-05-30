@@ -1,29 +1,33 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
-import { MercadoPagoIntegracion, QR } from "../index";
+import { Footer, ScrollToTop, MercadoPagoIntegracion, QR } from "../index";
 
 const Contenedor = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
   width: 100%;
-  height: 100vh;
+
+  height: 90vh;
   padding-top: 5%;
-  background-image: url("https://ichef.bbci.co.uk/news/640/cpsprodpb/76B0/production/_105848303_gettyimages-996540050.jpg");
+  background-image: url("https://media.diepresse.com/images/uploads/8/7/c/5486716/QATAR-COFFEE-CULTURE_1535388239909509.jpg");
   background-size: cover;
   background-repeat: no-repeat;
-  // background-position: center;
+  background-position: center;
 `;
 
 const Formulario = styled.form`
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 1150px;
+  width: 90%;
+  max-width: 1300px;
+  height: 80%;
   padding: 10px;
   margin-bottom: 2rem;
-  background-color: rgba(255, 255, 255, 0.5);
+  background-color: rgba(255, 255, 255, 0.75);
   border-radius: 8px;
   backdrop-filter: blur(10px);
   // box-shadow: 0 2px 2px 0 #222, 2px 2px 2px 2px darkgray;
@@ -41,7 +45,7 @@ const Titulo = styled.h2`
 const Subtitulo = styled.p`
   font-size: 22px;
   font-family: Poppins;
-  font-weight: 500;
+  font-weight: 600;
   margin-bottom: 1rem;
   color: #222;
   // filter: drop-shadow(0px 0px 5px #000);
@@ -53,6 +57,7 @@ const ContenedorDiv = styled.div`
   flex-direction: column;
   margin: 0 10px 30px 10px;
   align-items: flex-start;
+  position: relative;
 `;
 
 const ContenedorDireccion = styled.div`
@@ -113,7 +118,7 @@ const ContenedorInput = styled.div`
     position: absolute;
     width: 100%;
     height: 0.175rem;
-    background: #e69545;
+    background: #36886d;
     left: 0;
     bottom: 0;
     // transform: translateY(3px);
@@ -144,13 +149,13 @@ const Boton = styled.input`
   font-family: Poppins;
   border-radius: 8px;
   color: white;
-  background-color: black;
+  background-color: #36885ed1;
   cursor: pointer;
 `;
 
 const ContenedorVarios = styled.div`
   display: flex;
-  justify-content: space-between;
+  justify-content: space-evenly;
   width: 100%;
 `;
 
@@ -158,7 +163,8 @@ const Productos = styled.div`
   display: flex;
   flex-direction: column;
   width: 400px;
-  padding: 0 20px;
+  height: 460px;
+  padding: 20px 0px;
   background: rgb(255 255 255 / 46%);
   border-radius: 10px;
   border-radius: 10px;
@@ -177,7 +183,7 @@ const Productos = styled.div`
 const ProductosTitulo = styled.div`
   display: flex;
   justify-content: space-between;
-  margin-bottom: 20px;
+  margin: 0px 15px;
   font-family: Poppins;
   font-size: 20px;
   color: black;
@@ -188,6 +194,11 @@ const ContenedorProductos = styled.div`
   flex-direction: column;
   height: 280px;
   max-height: 280px;
+  overflow-y: scroll;
+  width: 100%;
+  padding: 0px 20px;
+  margin-top: 15px;
+  // background-color: red;
 `;
 
 const ContenedorProducto = styled.div`
@@ -199,7 +210,7 @@ const ContenedorProducto = styled.div`
     width: 200px;
     text-align: left;
     font-family: Poppins;
-    font-size: 16px;
+    font-size: 14px;
     margin: 0;
   }
 `;
@@ -214,10 +225,11 @@ const ContenedorMonto = styled.div`
 const Monto = styled.label`
   display: flex;
   font-size: 22px;
+  font-weight: 600;
   font-family: Poppins;
 `;
 
-function Checkout() {
+function Checkout({ contacto }) {
   const carrito = useSelector((state) => state.carrito);
   const [precioTotal, setPrecioTotal] = useState(0);
   const [datos, setDatos] = useState();
@@ -225,7 +237,7 @@ function Checkout() {
   useEffect(() => {
     let precio = 0;
 
-    carrito.forEach((item) => {
+    carrito?.forEach((item) => {
       precio = precio + Number(item.precio) * item.cantidad;
     });
 
@@ -257,153 +269,164 @@ function Checkout() {
   }
 
   return (
-    <Contenedor>
-      <Formulario onSubmit={(e) => handleSubmit(e)}>
-        <Titulo>
-          Antes de continuar, necesitamos que completes estos datos
-        </Titulo>
+    <>
+      <Contenedor>
+        <Formulario onSubmit={(e) => handleSubmit(e)}>
+          <Titulo>
+            Antes de continuar, necesitamos que completes estos datos
+          </Titulo>
 
-        <ContenedorVarios>
-          <div>
-            <Subtitulo>Informacion de entrega</Subtitulo>
-            <ContenedorDireccion>
-              <ContenedorDiv>
-                <Label>Calle</Label>
-                <ContenedorInput>
-                  <Input
-                    placeholder="Calle"
-                    name="calle"
-                    value={input.calle}
-                    onChange={(e) => handleChange(e)}
-                    required
-                  />
-                </ContenedorInput>
-              </ContenedorDiv>
-              <ContenedorDiv>
-                <Label>Altura/Numero</Label>
-                <ContenedorInput>
-                  <Input
-                    placeholder="Altura/Numero"
-                    type="number"
-                    name="altura"
-                    value={input.altura}
-                    onChange={(e) => handleChange(e)}
-                    required
-                  />
-                </ContenedorInput>
-              </ContenedorDiv>
-              <ContenedorDiv>
-                <Label>Piso/Depto/Casa</Label>
-                <ContenedorInput>
-                  <Input
-                    placeholder="Piso/Depto/Casa"
-                    name="piso"
-                    value={input.piso}
-                    onChange={(e) => handleChange(e)}
-                  />
-                </ContenedorInput>
-              </ContenedorDiv>
-            </ContenedorDireccion>
+          <ContenedorVarios>
+            <div>
+              <Subtitulo>Informacion de entrega</Subtitulo>
+              <ContenedorDireccion>
+                <ContenedorDiv>
+                  <Label>Calle</Label>
+                  <ContenedorInput>
+                    <Input
+                      placeholder="Calle"
+                      name="calle"
+                      value={input.calle}
+                      onChange={(e) => handleChange(e)}
+                      required
+                    />
+                  </ContenedorInput>
+                </ContenedorDiv>
+                <ContenedorDiv>
+                  <Label>Altura/Numero</Label>
+                  <ContenedorInput>
+                    <Input
+                      placeholder="Altura/Numero"
+                      type="number"
+                      name="altura"
+                      value={input.altura}
+                      onChange={(e) => handleChange(e)}
+                      required
+                    />
+                  </ContenedorInput>
+                </ContenedorDiv>
+                <ContenedorDiv>
+                  <Label>Piso/Depto/Casa</Label>
+                  <ContenedorInput>
+                    <Input
+                      placeholder="Piso/Depto/Casa"
+                      name="piso"
+                      value={input.piso}
+                      onChange={(e) => handleChange(e)}
+                    />
+                  </ContenedorInput>
+                </ContenedorDiv>
+              </ContenedorDireccion>
 
-            <ContenedorCiudad>
-              <ContenedorDiv>
-                <Label>Ciudad</Label>
-                <ContenedorInput>
-                  <Input
-                    placeholder="Ciudad"
-                    name="ciudad"
-                    value={input.ciudad}
-                    onChange={(e) => handleChange(e)}
-                    required
-                  />
-                </ContenedorInput>
-              </ContenedorDiv>
-              <ContenedorDiv>
-                <Label>Provincia</Label>
-                <ContenedorInput>
-                  <Input
-                    placeholder="Provincia"
-                    name="provincia"
-                    value={input.provincia}
-                    onChange={(e) => handleChange(e)}
-                    required
-                  />
-                </ContenedorInput>
-              </ContenedorDiv>
-              <ContenedorDiv>
-                <Label>Codigo Postal</Label>
-                <ContenedorInput>
-                  <Input
-                    placeholder="Codigo postal"
-                    type="number"
-                    name="codigoPostal"
-                    value={input.codigoPostal}
-                    onChange={(e) => handleChange(e)}
-                    required
-                  />
-                </ContenedorInput>
-              </ContenedorDiv>
-            </ContenedorCiudad>
+              <ContenedorCiudad>
+                <ContenedorDiv>
+                  <Label>Ciudad</Label>
+                  <ContenedorInput>
+                    <Input
+                      placeholder="Ciudad"
+                      name="ciudad"
+                      value={input.ciudad}
+                      onChange={(e) => handleChange(e)}
+                      required
+                    />
+                  </ContenedorInput>
+                </ContenedorDiv>
+                <ContenedorDiv>
+                  <Label>Provincia</Label>
+                  <ContenedorInput>
+                    <Input
+                      placeholder="Provincia"
+                      name="provincia"
+                      value={input.provincia}
+                      onChange={(e) => handleChange(e)}
+                      required
+                    />
+                  </ContenedorInput>
+                </ContenedorDiv>
+                <ContenedorDiv>
+                  <Label>Codigo Postal</Label>
+                  <ContenedorInput>
+                    <Input
+                      placeholder="Codigo postal"
+                      type="number"
+                      name="codigoPostal"
+                      value={input.codigoPostal}
+                      onChange={(e) => handleChange(e)}
+                      required
+                    />
+                  </ContenedorInput>
+                </ContenedorDiv>
+              </ContenedorCiudad>
 
-            <ContenedorCiudad>
-              <ContenedorDiv>
-                <Label>Celular de contacto</Label>
-                <ContenedorInput>
-                  <Input
-                    placeholder="Celular"
-                    type="number"
-                    name="celular"
-                    value={input.celular}
-                    onChange={(e) => handleChange(e)}
-                    required
-                  />
-                </ContenedorInput>
-              </ContenedorDiv>
-              <ContenedorDiv>
-                <Label>Mail de contacto</Label>
-                <ContenedorInput>
-                  <Input
-                    placeholder="E-mail"
-                    name="mail"
-                    id="emailAddress"
-                    type="email"
-                    value={input.mail}
-                    onChange={(e) => handleChange(e)}
-                    required
-                  />
-                </ContenedorInput>
-              </ContenedorDiv>
-            </ContenedorCiudad>
+              <ContenedorCiudad>
+                <ContenedorDiv>
+                  <Label>Celular de contacto</Label>
+                  <ContenedorInput>
+                    <Input
+                      placeholder="Celular"
+                      type="number"
+                      name="celular"
+                      value={input.celular}
+                      onChange={(e) => handleChange(e)}
+                      required
+                    />
+                  </ContenedorInput>
+                </ContenedorDiv>
+                <ContenedorDiv>
+                  <Label>E-mail de contacto</Label>
+                  <ContenedorInput>
+                    <Input
+                      placeholder="E-mail"
+                      name="mail"
+                      id="emailAddress"
+                      type="email"
+                      value={input.mail}
+                      onChange={(e) => handleChange(e)}
+                      required
+                    />
+                  </ContenedorInput>
+                </ContenedorDiv>
+              </ContenedorCiudad>
 
-            {/* <Boton type="submit" value="Continuar" /> */}
+              {/* <Boton type="submit" value="Continuar" /> */}
 
-            <MercadoPagoIntegracion datos={datos} />
-            <QR />
-          </div>
-          <Productos>
-            <h3>Resumen de compra</h3>
+              <MercadoPagoIntegracion datos={datos} />
+              <QR />
+            </div>
+            <Productos>
+              <h3 style={{ fontWeight: 600 }}>Resumen de compra</h3>
 
-            <ProductosTitulo>
-              <p>Producto</p>
-              <p>Monto</p>
-            </ProductosTitulo>
-            <ContenedorProductos>
-              {carrito &&
-                carrito.map((e) => (
-                  <ContenedorProducto key={e}>
-                    <h3>{`${e.nombre}(${e.cantidad})`}</h3>
-                    <p>${e.precio * e.cantidad}</p>
-                  </ContenedorProducto>
-                ))}
-            </ContenedorProductos>
-            <ContenedorMonto>
-              <Monto left={0}>Monto Total:</Monto>
-              <Monto right={0}>${precioTotal}</Monto>
-            </ContenedorMonto>
-          </Productos>
-        </ContenedorVarios>
-      </Formulario>
-    </Contenedor>
+              <ProductosTitulo>
+                <p>Producto</p>
+                <p>Monto</p>
+              </ProductosTitulo>
+              <ContenedorProductos>
+                {carrito &&
+                  carrito.map((e, index) => (
+                    <ContenedorProducto
+                      style={
+                        index + 1 === carrito.length
+                          ? { marginBottom: "-15px" }
+                          : null
+                      }
+                      key={e.id}
+                    >
+                      <h3>{`${e.cantidad} x ${e.nombre}`}</h3>
+                      <p>${e.precio * e.cantidad}</p>
+                    </ContenedorProducto>
+                  ))}
+              </ContenedorProductos>
+              <ContenedorMonto>
+                <Monto left={0}>Monto Total:</Monto>
+                <Monto right={0}>${precioTotal}</Monto>
+              </ContenedorMonto>
+            </Productos>
+          </ContenedorVarios>
+        </Formulario>
+      </Contenedor>
+      <Footer contacto={contacto} />
+      <ScrollToTop />
+    </>
   );
 }
 

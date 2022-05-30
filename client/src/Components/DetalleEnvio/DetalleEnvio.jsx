@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { getDetalleEnvio, actualizarEstadoEnvio } from "../../Redux/actions";
 import styled from "styled-components";
+import Swal from "sweetalert2";
 
 const Container = styled.div`
   width: 90%;
@@ -10,10 +11,13 @@ const Container = styled.div`
   flex-direction: row;
   flex-wrap: wrap;
   justify-content: center;
-  padding-top: 4em;
+  padding-top: 10%;
   margin: auto;
   gap: 4em;
+
+  position: relative;
 `;
+
 const Envio = styled.div`
   display: flex;
   flex-direction: column;
@@ -26,7 +30,7 @@ const Estado = styled.div`
   height: 350px;
   border: 1px solid black;
   border-radius: 16px;
-  box-shadow: 6px 6px 12px grey;
+  box-shadow: 3px 3px 12px #8080807a;
 `;
 const Opciones = styled.div`
   display: flex;
@@ -42,7 +46,7 @@ const EstadosLi = styled.li`
   position: relative;
 `;
 const ImagenEstados = styled.img`
-  width: 9%;
+  width: 8%;
   margin-left: 1em;
   margin-bottom: 6px;
 `;
@@ -51,7 +55,7 @@ const Circulo = styled.div`
   width: 12px;
   height: 12px;
   border-radius: 50%;
-  background-color: ${(props) => (props.active ? "green" : "#bbb9b9")};
+  background-color: ${(props) => (props.active ? "#36885e" : "#bbb9b9")};
   margin-top: 15px;
 `;
 
@@ -67,7 +71,7 @@ const Linea = styled.div`
 const ParrafoLi = styled.p`
   margin: 0.4em 0em 0em 1em;
   text-align: left;
-  color: ${(props) => (props.active ? "green" : "#bbb9b9")};
+  color: ${(props) => (props.active ? "#36885e" : "#bbb9b9")};
 `;
 
 const Domicilio = styled.div`
@@ -78,7 +82,7 @@ const Domicilio = styled.div`
   border: 1px solid black;
   border-radius: 16px;
   margin-top: 2em;
-  box-shadow: 6px 6px 12px grey;
+  box-shadow: 3px 3px 12px #8080807a;
   position: relative;
 `;
 const Lugar = styled.div`
@@ -103,7 +107,7 @@ const Codigo = styled.div`
   border: 1px solid black;
   border-radius: 16px;
   margin: 2em 0em;
-  box-shadow: 6px 6px 12px grey;
+  box-shadow: 3px 3px 12px #8080807a;
   position: relative;
 `;
 
@@ -117,10 +121,10 @@ const Compra = styled.div`
   display: flex;
   flex-direction: column;
   width: 350px;
-  height: 100px;
+  // height: 100px;
   border: 1px solid black;
   border-radius: 16px;
-  box-shadow: 6px 6px 12px grey;
+  box-shadow: 3px 3px 12px #8080807a;
 `;
 const Titulo = styled.h3`
   margin: 0.5em 0em 0em 1.5em;
@@ -132,12 +136,13 @@ const Parrafo = styled.p`
   text-align: left;
   color: #424242;
 `;
+
 const ModificarEstados = styled.select`
   width: 270px;
   height: 40px;
   border: 1px solid black;
-  border-radius: 16px;
-  box-shadow: 6px 6px 12px grey;
+  border-radius: 8px;
+  // box-shadow: 6px 6px 12px #8080807a;
 `;
 
 const OpcionEstado = styled.option`
@@ -149,6 +154,10 @@ const Formulario = styled.form`
   display: flex;
   flex-direction: column;
   align-items: center;
+
+  position: absolute;
+  top: 8%;
+  right: 150px;
 `;
 
 const Boton = styled.button`
@@ -160,11 +169,16 @@ const Boton = styled.button`
   color: white;
 `;
 
+const Producto = styled.p`
+  margin: 10px 1px;
+  font-size: 15px;
+`;
+
 export default function DetalleEnvio() {
   let dispatch = useDispatch();
   let { id } = useParams();
   let detalle = useSelector((state) => state.detalleEnvio);
-  const admin = useSelector((state) => state.user);
+  const user = useSelector((state) => state.userInfo?.visualizacion);
 
   useEffect(() => {
     dispatch(getDetalleEnvio(id));
@@ -187,20 +201,56 @@ export default function DetalleEnvio() {
 
   return (
     <Container>
-      {admin && (
+      <h1 style={{ position: "absolute", top: "8%", left: "160px" }}>
+        {`Pedido (numero de pedido)`}
+      </h1>
+
+      {user === "admin" && (
         <Formulario onSubmit={handleSubmit} action="">
           <ModificarEstados onChange={handleInputChange}>
             <option name="estados">Modificar estado</option>
-            <OpcionEstado value="En Preparación">En Preparación</OpcionEstado>
+            <OpcionEstado
+              onClick={() => {
+                Swal.fire({
+                  title: "Cambiar Estado",
+                  text: "¿Estas seguro de cambiar el estado de este pedido de (Estado actual) a (Proximo estado)?",
+                  icon: "warning",
+                  iconColor: "grey",
+                  color: "#222",
+                  showCancelButton: true,
+                  cancelButtonText: "No",
+                  confirmButtonColor: "green",
+                  cancelButtonColor: "darkgrey",
+                  confirmButtonText: "Si",
+                }).then((result) => {
+                  if (result.isConfirmed) {
+                    Swal.fire({
+                      text: "El pedido se actualizó con éxito",
+                      icon: "success",
+                      iconColor: "green",
+                      color: "#222",
+                      showConfirmButton: false,
+                      timer: "1500",
+                      toast: true,
+                    });
+                    // dispatch(quitarItem(props));
+                  }
+                });
+              }}
+              value="En Preparación"
+            >
+              En Preparación
+            </OpcionEstado>
             <OpcionEstado value="En camino">En camino</OpcionEstado>
             <OpcionEstado value="En punto de entrega/poder del correo">
               En punto de entrega/poder del correo
             </OpcionEstado>
             <OpcionEstado value="Entregado">Entregado</OpcionEstado>
           </ModificarEstados>
-          <Boton type="submit">Actualizar Estado</Boton>
+          {/* <Boton type="submit">Actualizar Estado</Boton> */}
         </Formulario>
       )}
+
       <Envio className="envio">
         <Estado className="Estado">
           <Titulo>Estado de envio</Titulo>
@@ -218,7 +268,7 @@ export default function DetalleEnvio() {
               <EstadosLi>
                 <Circulo
                   active={
-                    detalle.Estado === "En camino" ||
+                    detalle?.Estado === "En camino" ||
                     "En punto de entrega/poder del correo" ||
                     "Entregado"
                       ? true
@@ -227,7 +277,7 @@ export default function DetalleEnvio() {
                 ></Circulo>
                 <Linea
                   active={
-                    detalle.Estado === "En camino" ||
+                    detalle?.Estado === "En camino" ||
                     "En punto de entrega/poder del correo" ||
                     "Entregado"
                       ? true
@@ -240,7 +290,7 @@ export default function DetalleEnvio() {
                 />
                 <ParrafoLi
                   active={
-                    detalle.Estado === "En camino" ||
+                    detalle?.Estado === "En camino" ||
                     "En punto de entrega/poder del correo" ||
                     "Entregado"
                       ? true
@@ -253,16 +303,16 @@ export default function DetalleEnvio() {
               <EstadosLi>
                 <Circulo
                   active={
-                    detalle.Estado === "En punto de entrega/poder del correo" ||
-                    "Entregado"
+                    detalle?.Estado ===
+                      "En punto de entrega/poder del correo" || "Entregado"
                       ? true
                       : false
                   }
                 ></Circulo>
                 <Linea
                   active={
-                    detalle.Estado === "En punto de entrega/poder del correo" ||
-                    "Entregado"
+                    detalle?.Estado ===
+                      "En punto de entrega/poder del correo" || "Entregado"
                       ? true
                       : false
                   }
@@ -273,8 +323,8 @@ export default function DetalleEnvio() {
                 />
                 <ParrafoLi
                   active={
-                    detalle.Estado === "En punto de entrega/poder del correo" ||
-                    "Entregado"
+                    detalle?.Estado ===
+                      "En punto de entrega/poder del correo" || "Entregado"
                       ? true
                       : false
                   }
@@ -284,14 +334,14 @@ export default function DetalleEnvio() {
               </EstadosLi>
               <EstadosLi>
                 <Circulo
-                  active={detalle.Estado === "Entregado" ? true : false}
+                  active={detalle?.Estado === "Entregado" ? true : false}
                 ></Circulo>
                 <ImagenEstados
                   src="https://i.ibb.co/Z2NPGQ0/Asset-210.png"
                   alt=""
                 />
                 <ParrafoLi
-                  active={detalle.Estado === "Entregado" ? true : false}
+                  active={detalle?.Estado === "Entregado" ? true : false}
                 >
                   Entregado
                 </ParrafoLi>
@@ -313,13 +363,24 @@ export default function DetalleEnvio() {
         </Domicilio>
         <Codigo className="codigo">
           <Titulo>Retiro en sucursal/domicilio</Titulo>
-          <Parrafo>Codigo de Retiro: #2022{detalle.id}</Parrafo>
+          <Parrafo>Codigo de Retiro: #2022{detalle?.id}</Parrafo>
           <LogoCodigo src="https://i.ibb.co/vkjfvPY/Asset-930.png" alt="" />
         </Codigo>
       </Envio>
-      <Compra className="compra">
-        <Titulo>Compraste</Titulo>
-      </Compra>
+      <div>
+        <Compra className="compra">
+          <Titulo>
+            {user === "admin" ? "Detalle de Producto" : "Compraste"}
+            <Producto>Producto 1</Producto>
+            <Producto>Producto 2</Producto>
+            <Producto>Producto 3</Producto>
+            <Producto>Producto 4</Producto>
+            <Producto>Producto 5</Producto>
+            <Producto>Producto 6</Producto>
+            <Producto>Producto 7</Producto>
+          </Titulo>
+        </Compra>
+      </div>
     </Container>
   );
 }
