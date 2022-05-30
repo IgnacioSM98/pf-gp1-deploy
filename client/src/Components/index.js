@@ -28,6 +28,7 @@ import DetalleEnvio from "./DetalleEnvio/DetalleEnvio";
 import Checkout from "./CheckoutCarrito/CheckoutCarrito";
 import Reseñas from "./Reseñas/Reseñas";
 import ItemCompra from "./Compra/ItemCompra";
+import QR from "./QR/QR";
 
 export {
   Home,
@@ -60,4 +61,5 @@ export {
   DetalleEnvio,
   Checkout,
   ItemCompra,
+  QR,
 };
