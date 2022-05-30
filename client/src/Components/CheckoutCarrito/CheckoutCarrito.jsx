@@ -220,6 +220,7 @@ const Monto = styled.label`
 function Checkout() {
   const carrito = useSelector((state) => state.carrito);
   const [precioTotal, setPrecioTotal] = useState(0);
+  const [datos, setDatos] = useState();
 
   useEffect(() => {
     let precio = 0;
@@ -251,6 +252,8 @@ function Checkout() {
 
   function handleSubmit(e) {
     e.preventDefault();
+
+    console.log(input);
   }
 
   return (
@@ -374,7 +377,7 @@ function Checkout() {
 
             {/* <Boton type="submit" value="Continuar" /> */}
 
-            <MercadoPagoIntegracion precioTotal={precioTotal} />
+            <MercadoPagoIntegracion datos={datos} />
             <QR />
           </div>
           <Productos>
