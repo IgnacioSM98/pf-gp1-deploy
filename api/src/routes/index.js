@@ -646,7 +646,6 @@ router.delete("/categorias/:id", async (req, res, next) => {
   }
 });
 
-
 router.delete("/ratings/:id", async (req, res, next) => {
   try {
     const id = req.params.id;
@@ -721,13 +720,15 @@ router.delete("/categorias/producto", async (req, res) => {
 });
 
 router.post("/pagar", (req, res) => {
+  const { precioTotal } = req.body;
+
   const preference = {
     items: [
       {
         title: "Ricochet",
         quantity: 1,
         currency_id: "ARS",
-        unit_price: 1000,
+        unit_price: Number(precioTotal),
       },
     ],
   };

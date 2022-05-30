@@ -4,7 +4,6 @@ import CarritoItem from "./CarritoItem";
 import styled from "styled-components";
 import { quitarItem } from "../../Redux/actions";
 import Swal from "sweetalert2";
-import { MercadoPagoIntegracion } from "../index";
 import { Link } from "react-router-dom";
 
 const Container = styled.div`
@@ -244,7 +243,6 @@ function Carrito() {
           <Link to="/checkout">
             <Boton>Continuar compra</Boton>
           </Link>
-          <MercadoPagoIntegracion />
         </ContenedorBotones>
       </ContenedorCompra>
     </Container>

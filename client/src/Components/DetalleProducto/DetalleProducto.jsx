@@ -253,7 +253,7 @@ export default function DetalleProducto() {
   const reviews = useSelector((state) => state.reviews);
   const productos = useSelector((state) => state.productos);
   const carritoCantidad = useSelector(
-    (state) => state.carrito.filter((item) => item.id === Number(id))[0]
+    (state) => state.carrito?.filter((item) => item.id === Number(id))[0]
   );
 
   useEffect(() => {

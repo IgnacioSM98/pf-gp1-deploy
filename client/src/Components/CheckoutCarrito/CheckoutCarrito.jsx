@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
+import { MercadoPagoIntegracion, QR } from "../index";
 
 const Contenedor = styled.div`
   display: flex;
@@ -219,6 +220,7 @@ const Monto = styled.label`
 function Checkout() {
   const carrito = useSelector((state) => state.carrito);
   const [precioTotal, setPrecioTotal] = useState(0);
+  const [datos, setDatos] = useState();
 
   useEffect(() => {
     let precio = 0;
@@ -250,6 +252,8 @@ function Checkout() {
 
   function handleSubmit(e) {
     e.preventDefault();
+
+    console.log(input);
   }
 
   return (
@@ -371,7 +375,10 @@ function Checkout() {
               </ContenedorDiv>
             </ContenedorCiudad>
 
-            <Boton type="submit" value="Continuar" />
+            {/* <Boton type="submit" value="Continuar" /> */}
+
+            <MercadoPagoIntegracion datos={datos} />
+            <QR />
           </div>
           <Productos>
             <h3>Resumen de compra</h3>
