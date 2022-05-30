@@ -7,6 +7,7 @@ const categorias = "categorias";
 const crear = "crear";
 const admin = "admin/";
 const ratings = "ratings/";
+const pedido = "pedido/"
 
 export function getProductos() {
   return async function (dispatch) {
@@ -220,5 +221,30 @@ export function changeUserMode(userInfo) {
     } catch (err) {
       console.log(err);
     }
+
+export function getDetalleEnvio(id){
+  return async function (dispatch){
+    let envio = await axios.get(`${urlBase}${pedido}${id}`)
+    return dispatch({
+      type: "GET_DETALLE_ENVIO",
+      payload: envio.data
+    })
+  }
+}
+
+export function actualizarEstadoEnvio(id, payload){
+  return async function(dispatch){
+    await axios.put(`${urlBase}${admin}${pedido}${id}`, payload)
+    return dispatch({
+      type: "ACTUALIZAR_ESTADO"
+    })
+  }
+}
+
+export function getPedidos() {
+  return function (dispatch) {
+    return axios.get(`${urlBase}/pedidos`).then((response) => {
+      dispatch({ type: "GET_PEDIDOS", payload: response.data });
+    });
   };
 }
