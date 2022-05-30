@@ -259,11 +259,3 @@ export function actualizarEstadoEnvio(id, payload) {
     });
   };
 }
-
-export function getPedidos() {
-  return function (dispatch) {
-    return axios.get(`${urlBase}/pedidos`).then((response) => {
-      dispatch({ type: "GET_PEDIDOS", payload: response.data });
-    });
-  };
-}
