@@ -328,6 +328,12 @@ export default function rootReducer(state = initialState, action) {
         ...state,
         userInfo: action.payload,
       };
+
+    case "CHANGE_MODE":
+      return {
+        ...state,
+        userInfo: action.payload,
+      };
       
     case "GET_DETALLE_ENVIO":
       return {

@@ -233,11 +233,13 @@ export default function DetalleProducto() {
   const dispatch = useDispatch();
   const location = useLocation();
 
-  useEffect(() => {
-    dispatch(setUserInfo(localStorage.getItem("user")));
-  }, []);
+  // useEffect(() => {
+  //   dispatch(setUserInfo(localStorage.getItem("user")));
+  // }, []);
 
-  const user = useSelector((state) => state.userInfo);
+  // Recuperamos el tipo de visualización/permiso del usuario
+  const user = useSelector((state) => state.userInfo?.visualizacion);
+
   // Validamos si hay sesion iniciada
   // const user = localStorage.getItem("user") ? true : false;
 
@@ -462,6 +464,7 @@ export default function DetalleProducto() {
       </Details>
       <Bar style={{ width: "100%" }} />
       <Reviews>
+        {/* Acá sólo se valida que esté la sesión iniciada */}
         {user && <CrearReview id={id} />}
         <ProductReviews setReseñas={setReseñas} />
         {reseñas && <Reseñas setReseñas={setReseñas} />}

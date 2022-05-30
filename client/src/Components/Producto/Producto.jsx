@@ -113,7 +113,8 @@ export default function Producto({
 }) {
   const dispatch = useDispatch();
 
-  const admin = useSelector((state) => state.user);
+  const admin = useSelector((state) => state.userInfo?.visualizacion);
+
   const [showOptions, setOptions] = useState({ button: false, popup: false });
   const navigate = useNavigate();
   const [flag, setFlag] = useState(false);
@@ -166,10 +167,10 @@ export default function Producto({
       <div
         className="container-producto"
         onMouseEnter={() => {
-          if (admin) setOptions({ ...showOptions, button: true });
+          if (admin === "admin") setOptions({ ...showOptions, button: true });
         }}
         onMouseLeave={() => {
-          if (admin) setOptions({ popup: false, button: false });
+          if (admin === "admin") setOptions({ popup: false, button: false });
         }}
       >
         <div className="container-foto">

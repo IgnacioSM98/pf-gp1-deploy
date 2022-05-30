@@ -1,6 +1,10 @@
 import "./App.css";
 import { useEffect, useRef, useState } from "react";
-import { getCategorias, getProductos } from "./Redux/actions/index";
+import {
+  getCategorias,
+  getProductos,
+  setUserInfo,
+} from "./Redux/actions/index";
 import {
   Home,
   Tienda,
@@ -28,7 +32,12 @@ function App() {
     // Si sacamos el GET PRUDUCTOS de acá se rompe Redux al POST PRODUCTO nuevo
     dispatch(getProductos());
     dispatch(getCategorias());
+    dispatch(setUserInfo(JSON.parse(localStorage.getItem("user"))));
   }, [dispatch]);
+
+  // useEffect(() => {
+
+  // }, []);
 
   return (
     <div>

@@ -8,6 +8,7 @@ import google from "./Google.png";
 import { useNavigate } from "react-router-dom";
 import { getUser, setUserInfo } from "../../Redux/actions";
 import { useDispatch, useSelector } from "react-redux";
+import axios from "axios";
 
 const Container = styled.div`
   background-image: url("https://i.blogs.es/b92620/cafe-cafeina/840_560.jpg");
@@ -135,13 +136,30 @@ export default function Login({ setUser }) {
     const provider = new GoogleAuthProvider();
 
     signInWithPopup(authentication, provider)
-      .then((res) => {
-        localStorage.setItem("user", JSON.stringify(res.user));
+      .then(async (res) => {
+        const user = { ...res.user };
 
-        dispatch(setUserInfo(res.user));
+        await axios
+          .get("https://proyecto-final-gp1.herokuapp.com/usuarios")
+          .then(
+            (res) =>
+              res.data.filter((usuario) => usuario.mail === user.email)[0]
+          )
+          .then((res) => {
+            user.rol = res.isAdmin ? "admin" : "user";
+            user.visualizacion = res.isAdmin ? "admin" : "user";
+          })
+          .catch((err) => {
+            user.rol = "user";
+            user.visualizacion = "user";
+          });
 
-        setUser(res.user);
-        dispatch(getUser(res.user.email));
+        localStorage.setItem("user", JSON.stringify(user));
+
+        dispatch(setUserInfo(user));
+
+        setUser(user);
+        dispatch(getUser(user.email));
         navigate(-1);
       })
       .catch((error) => {
@@ -149,7 +167,7 @@ export default function Login({ setUser }) {
       });
   };
 
-  const createUser = (mail, pass, nombre) => {
+  const createUser = (mail, pass, nombre, apellido) => {
     app
       .auth()
       .createUserWithEmailAndPassword(mail, pass)
@@ -159,14 +177,24 @@ export default function Login({ setUser }) {
             displayName: nombre,
           })
           .then(() => {
-            localStorage.setItem("user", JSON.stringify(res.user));
+            console.log(res);
+            const user = { ...res.user };
 
-            dispatch(setUserInfo(res.user));
+            user.displayName = `${nombre} ${apellido}`;
+            user.rol = "user";
+            user.visualizacion = "user";
 
-            setUser(res.user);
+            localStorage.setItem("user", JSON.stringify(user));
+
+            dispatch(setUserInfo(user));
+
+            setUser(user);
             dispatch(getUser(mail));
             navigate(-1);
           });
+      })
+      .catch((err) => {
+        console.log(err, "error al crear cuenta");
       });
   };
 
@@ -174,12 +202,35 @@ export default function Login({ setUser }) {
     app
       .auth()
       .signInWithEmailAndPassword(mail, pass)
-      .then((res) => {
-        localStorage.setItem("user", JSON.stringify(res.user));
+      .then(async (res) => {
+        const user = { ...res.user };
+
+        await axios
+          .get("https://proyecto-final-gp1.herokuapp.com/usuarios")
+          .then(
+            (res) =>
+              res.data.filter((usuario) => usuario.mail === user.email)[0]
+          )
+          .then((res) => {
+            user.rol = res.isAdmin ? "admin" : "user";
+            user.visualizacion = res.isAdmin ? "admin" : "user";
+          })
+          .catch((err) => {
+            user.rol = "user";
+            user.visualizacion = "user";
+          });
+
+        localStorage.setItem("user", JSON.stringify(user));
+
         dispatch(getUser(mail));
-        dispatch(setUserInfo(res.user));
-        setUser(res.user);
+
+        dispatch(setUserInfo(user));
+
+        setUser(user);
         navigate(-1);
+      })
+      .catch((err) => {
+        console.log(err);
       });
   };
 
@@ -229,7 +280,7 @@ export default function Login({ setUser }) {
 
     if (isSignUp) {
       if (mail && pass && nombre && apellido) {
-        createUser(mail, pass, nombre);
+        createUser(mail, pass, nombre, apellido);
       } else {
         setError(validateSubmit({ mail, pass, nombre, apellido, type: true }));
       }

@@ -207,14 +207,28 @@ export function setUserInfo(user) {
   };
 }
 
+export function changeUserMode(userInfo) {
+  const user = { ...userInfo };
+
+  user.visualizacion = user.visualizacion === "admin" ? "user" : "admin";
+
+  return function (dispatch) {
+    try {
+      dispatch({
+        type: "CHANGE_MODE",
+        payload: user,
+      });
+    } catch (err) {
+      console.log(err);
+    }
+  }
+}
+
 export function getDetalleEnvio(id){
   return async function (dispatch){
     let envio = await axios.get(`${urlBase}${pedido}${id}`)
-    return dispatch({
-      type: "GET_DETALLE_ENVIO",
-      payload: envio.data
-    })
-  }
+    return dispatch({ type: "GET_DETALLE_ENVIO", payload: envio.data })
+  };
 }
 
 export function actualizarEstadoEnvio(id, payload){
@@ -223,7 +237,7 @@ export function actualizarEstadoEnvio(id, payload){
     return dispatch({
       type: "ACTUALIZAR_ESTADO"
     })
-  }
+  };
 }
 
 export function getPedidos() {
