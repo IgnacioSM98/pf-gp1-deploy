@@ -237,7 +237,7 @@ function Checkout({ contacto }) {
   useEffect(() => {
     let precio = 0;
 
-    carrito.forEach((item) => {
+    carrito?.forEach((item) => {
       precio = precio + Number(item.precio) * item.cantidad;
     });
 
