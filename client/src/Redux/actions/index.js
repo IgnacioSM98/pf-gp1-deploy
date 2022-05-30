@@ -229,7 +229,7 @@ export function getDetalleEnvio(id){
       type: "GET_DETALLE_ENVIO",
       payload: envio.data
     })
-  }
+  };
 }
 
 export function actualizarEstadoEnvio(id, payload){
@@ -238,7 +238,7 @@ export function actualizarEstadoEnvio(id, payload){
     return dispatch({
       type: "ACTUALIZAR_ESTADO"
     })
-  }
+  };
 }
 
 export function getPedidos() {
