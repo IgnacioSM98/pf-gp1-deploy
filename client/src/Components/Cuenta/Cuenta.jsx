@@ -3,85 +3,112 @@ import CarritoItem from "../Carrito/CarritoItem";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
+import { ItemCompra } from "../index";
 
 const Container = styled.div`
   display: flex;
   // flex-direction: column;
   height: 100vh;
   width: 100%;
-  padding-top: 5%;
+  padding-top: 8%;
   background-color: white;
   justify-content: center;
-  align-items: center;
+  // align-items: center;
 `;
 
 const Informacion = styled.div`
-  width: 50%;
+  width: 60%;
   height: 100%;
-  padding-top: 40px;
+  // padding-top: 40px;
 `;
 
 const Options = styled.div`
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
-  width: 300px;
+  // justify-content: space-between;
+  width: 25%;
   height: 80vh;
   background-color: white;
   border-radius: 10px;
-  border: 1px solid black;
-  box-shadow: 0 2px 2px 0 #222, 0 2px 2px 0 #222;
+  border: 2px solid black;
+  // box-shadow: 0 2px 2px 0 #222, 0 2px 2px 0 #222;
   margin-right: 3rem;
+
+  position: relative;
 `;
 
 const ContenedorTitulo = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
   width: 90%;
   height: 60px;
-  border: 2px solid #222;
+  border: 1px solid #222;
   margin: 15px;
   margin-top: 30px;
-  box-shadow: 0 2px 2px 0 #222, 0 2px 2px 0 #222;
+  border-radius: 3px;
+  // box-shadow: 0 2px 2px 0 #222, 0 2px 2px 0 #222;
+
+  margin-bottom: 40px;
 `;
 
 const Titulo = styled.p`
-  font-size: 25px;
+  font-size: 22px;
   font-family: Poppins;
+  font-weight: 550;
   padding: 10px;
 `;
 
 const Botones = styled.div`
   display: flex;
   flex-direction: column;
-  align-items: center;
-  height: 60%;
+  // align-items: start;
+  // height: 60%;
+  border-bottom: 1px solid black;
   width: 100%;
-  margin-top: 5rem;
+  // margin-top: 5rem;
 `;
 
 const Boton = styled.button`
   width: 100%;
   height: 60px;
-  font-size: 20px;
+
+  text-align: start;
+  padding-left: 15px;
+
+  font-size: 18px;
   font-family: Poppins;
+
   background-color: white;
   color: black;
-  border: 2px solid black;
+
+  border: none;
+  border-top: 1px solid black;
+  // border-bottom: 2px solid black;
+
   &:hover {
     background-color: black;
     color: white;
   }
+
   cursor: pointer;
 `;
 
 const Sesion = styled.button`
+  position: absolute;
+  bottom: 0;
   width: 100%;
   height: 65px;
   font-size: 20px;
   font-family: Poppins;
   background-color: #222;
   color: white;
-  border: 2px solid black;
+  // border: 2px solid black;
+  border: none;
   cursor: pointer;
+
+  border-radius: 0px 0px 8px 8px;
+
   &:hover {
     background-color: black;
   }
@@ -99,7 +126,7 @@ const Categorias = styled.div`
 const Categoria = styled.div`
   display: flex;
   flex-direction: column;
-  height: 40%;
+  height: 50%;
   width: 100%;
 `;
 
@@ -112,14 +139,22 @@ const Secciones = styled.p`
 `;
 
 const Items = styled.div`
-  display: flex;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-auto-flow: dense;
+  grid-gap: 20px 12px;
+
+  // justify-content: center;
+  // align-items: center;
+
+  width: 100%;
+  height: auto;
+
   margin: 15px;
-  width: 90%;
-  height: 153px;
   padding: 5px;
-  border: 1px solid darkgrey;
+  // border: 1px solid darkgrey;
   border-radius: 8px;
-  box-shadow: 0 2px 2px 0 darkgrey, 0 2px 2px 0 #222;
+  // box-shadow: 0 2px 2px 0 darkgrey, 0 2px 2px 0 #222;
 `;
 
 function Cuenta() {
@@ -129,12 +164,15 @@ function Cuenta() {
     <Container>
       <Options>
         <ContenedorTitulo>
-          <Titulo>Mi Cuenta</Titulo>
+          <Titulo>Infusion Store</Titulo>
         </ContenedorTitulo>
         <Botones>
-          <Boton>Historial de compras</Boton>
-          <Boton>Guardados</Boton>
-          <Boton>Actualizar Perfil</Boton>
+          <Boton>Ajustes de Perfil</Boton>
+          <Boton>Mis Compras</Boton>
+          <Boton>Reseñas</Boton>
+          <Boton>Favoritos</Boton>
+          <Boton>Notificaciones</Boton>
+          <Boton>Seguridad</Boton>
           <Boton>Contacto</Boton>
         </Botones>
 
@@ -143,15 +181,15 @@ function Cuenta() {
       <Informacion>
         <Categorias>
           <Categoria>
-            <Secciones>Carrito</Secciones>
+            <Secciones>Historial de compras</Secciones>
 
-            {carrito.map((el) => {
-              return (
-                <Items>
-                  <CarritoItem key={el.id} producto={el} />
-                </Items>
-              );
-            })}
+            {carrito[0] && (
+              <Items>
+                {carrito.map((el) => {
+                  return <ItemCompra key={el.id} producto={el} />;
+                })}
+              </Items>
+            )}
           </Categoria>
 
           <Categoria>

@@ -34,7 +34,7 @@ const ContenedorFiltrosPro = styled.div`
 `;
 
 const FiltrosCont = styled.div`
-  background-color: rgba(55, 86, 61, 0.6);
+  background-color: #36885ed1;
   width: 300px;
   height: 600px;
   padding: 1.5rem;
@@ -44,7 +44,7 @@ const FiltrosCont = styled.div`
 `;
 
 const CuadradoFiltro = styled.div`
-  background: rgba(55, 86, 61, 0.4);
+  background: #36885ed1;
   width: 100%;
   height: 550px;
   display: flex;
@@ -164,7 +164,8 @@ function Shop({ contacto }) {
   const dispatch = useDispatch();
   const productos = useSelector((state) => state.productos);
   const productosFiltrados = useSelector((state) => state.productosFiltrados);
-  const admin = useSelector((state) => state.user);
+
+  const admin = useSelector((state) => state.userInfo?.visualizacion);
 
   const [selected, setSelected] = useState("");
   const [pages, setPages] = useState(4);
@@ -219,7 +220,7 @@ function Shop({ contacto }) {
   };
 
   const filterPerPages = (producto, i) => {
-    if (admin) {
+    if (admin === "admin") {
       if (Number(pageSelected) === 1) {
         if (i >= 8 * (pageSelected - 1) && i <= 8 * pageSelected - 1) {
           return producto;
@@ -291,7 +292,7 @@ function Shop({ contacto }) {
               <p>No se encontraron resultados</p>
             )}
 
-            {admin && <AgregarProducto />}
+            {admin === "admin" && <AgregarProducto />}
 
             {productosFiltrados &&
               productosFiltrados

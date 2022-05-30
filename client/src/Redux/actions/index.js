@@ -1,5 +1,4 @@
 import axios from "axios";
-import Producto from "../../Components/Reviews/Reviews";
 
 const urlBase = "https://proyecto-final-gp1.herokuapp.com/";
 const productos = "productos";
@@ -7,6 +6,7 @@ const categorias = "categorias";
 const crear = "crear";
 const admin = "admin/";
 const ratings = "ratings/";
+const pedido = "pedido/";
 
 export function getProductos() {
   return async function (dispatch) {
@@ -28,8 +28,6 @@ export function getProductosFiltrados(productosFiltrados) {
 
 export function getDetail(id) {
   return function (dispatch) {
-    // console.log(urlBase + "producto" + "/" + id);
-
     axios(`${urlBase}producto/${id}`).then((res) =>
       dispatch({ type: "GET_DETAIL", payload: res.data })
     );
@@ -94,8 +92,6 @@ export function postProducto(payload) {
     // dispatch({ type: "POST_PRODUCTO", payload: json.data });
 
     axios.post(`${urlBase}${admin}${crear}`, payload).then((res) => {
-      console.log(payload.categorias, "uwu");
-
       dispatch({
         type: "POST_PRODUCTO",
         payload: res.data,
@@ -159,15 +155,21 @@ export const setSort = (value) => (dispatch) => {
   dispatch({ type: "SET_SORT", payload: value });
 };
 
+export function setCarrito(carrito) {
+  return function (dispatch) {
+    dispatch({ type: "SET_CARRITO", payload: carrito });
+  };
+}
+
 export function agregarCarrito(idProducto, cantidad) {
-  console.log(cantidad, "juan");
+  console.log(idProducto, cantidad);
   return function (dispatch) {
     dispatch({ type: "AGREGAR_CARRITO", payload: { idProducto, cantidad } });
   };
 }
 
 export function restarCarrito(idProducto, cantidad) {
-  console.log(idProducto, cantidad);
+  // console.log(idProducto, cantidad);
   return function (dispatch) {
     dispatch({ type: "RESTAR_CARRITO", payload: { idProducto, cantidad } });
   };
@@ -210,6 +212,23 @@ export function getUsuarios() {
     } catch (error) {
       console.log(error);
     }
+  }
+}
+
+export function changeUserMode(userInfo) {
+  const user = { ...userInfo };
+
+  user.visualizacion = user.visualizacion === "admin" ? "user" : "admin";
+
+  return function (dispatch) {
+    try {
+      dispatch({
+        type: "CHANGE_MODE",
+        payload: user,
+      });
+    } catch (err) {
+      console.log(err);
+    }
   };
 }
 
@@ -222,5 +241,29 @@ export function getPedidos() {
     } catch (error) {
       console.log(error);
     }
+  }
+}
+
+export function getDetalleEnvio(id) {
+  return async function (dispatch) {
+    let envio = await axios.get(`${urlBase}${pedido}${id}`);
+    return dispatch({ type: "GET_DETALLE_ENVIO", payload: envio?.data });
+  };
+}
+
+export function actualizarEstadoEnvio(id, payload) {
+  return async function (dispatch) {
+    await axios.put(`${urlBase}${admin}${pedido}${id}`, payload);
+    return dispatch({
+      type: "ACTUALIZAR_ESTADO",
+    });
+  };
+}
+
+export function getPedidos() {
+  return function (dispatch) {
+    return axios.get(`${urlBase}/pedidos`).then((response) => {
+      dispatch({ type: "GET_PEDIDOS", payload: response.data });
+    });
   };
 }

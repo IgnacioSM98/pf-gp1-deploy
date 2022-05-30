@@ -10,6 +10,8 @@ const initialState = {
   userInfo: {},
   pedidos: [],
   usuarios: [],
+  detalleEnvio: {},
+  pedidos: [],
 };
 
 export default function rootReducer(state = initialState, action) {
@@ -165,19 +167,29 @@ export default function rootReducer(state = initialState, action) {
         reviews: action.payload,
       };
 
-    case "AGREGAR_CARRITO":
-      var newCarrito = [...state.carrito];
+    case "SET_CARRITO":
+      return {
+        ...state,
+        carrito: action.payload,
+      };
 
-      var indexCarrito = state.carrito.findIndex(
+    case "AGREGAR_CARRITO":
+      let addCarrito = [];
+
+      if (state.carrito !== null) {
+        addCarrito = [...state.carrito];
+      }
+
+      let indexCarritoAdd = state.carrito?.findIndex(
         (carrito) => Number(carrito.id) === Number(action.payload.idProducto)
       );
 
-      if (indexCarrito !== -1) {
-        newCarrito[indexCarrito].cantidad = action.payload.cantidad;
+      if (indexCarritoAdd !== -1) {
+        addCarrito[indexCarritoAdd].cantidad = action.payload.cantidad;
 
         return {
           ...state,
-          carrito: newCarrito,
+          carrito: addCarrito,
         };
       } else {
         const productoSeleccionado = state.productos.find(
@@ -236,7 +248,7 @@ export default function rootReducer(state = initialState, action) {
       }
 
     case "QUITAR_ITEM":
-      const data = state.carrito.filter(
+      const data = state.carrito?.filter(
         (item) => item.id !== action.payload.id
       );
       return {
@@ -334,6 +346,30 @@ export default function rootReducer(state = initialState, action) {
         ...state,
         userInfo: action.payload,
       };
+
+    case "CHANGE_MODE":
+      return {
+        ...state,
+        userInfo: action.payload,
+      };
+
+    case "GET_DETALLE_ENVIO":
+      return {
+        ...state,
+        detalleEnvio: action.payload,
+      };
+
+    case "ACTUALIZAR_ESTADO":
+      return {
+        ...state,
+      };
+
+    case "GET_PEDIDOS":
+      return {
+        ...state,
+        pedidos: action.payload,
+      };
+
     default:
       return state;
   }

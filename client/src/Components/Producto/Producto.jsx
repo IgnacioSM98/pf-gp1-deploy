@@ -113,13 +113,15 @@ export default function Producto({
 }) {
   const dispatch = useDispatch();
 
-  const admin = useSelector((state) => state.user);
+  const admin = useSelector((state) => state.userInfo?.visualizacion);
+
   const [showOptions, setOptions] = useState({ button: false, popup: false });
   const navigate = useNavigate();
   const [flag, setFlag] = useState(false);
   const [cantidad, setCantidad] = useState(1);
+
   const cantidadCarrito = useSelector(
-    (state) => state.carrito.filter((item) => item.id === id)[0]
+    (state) => state.carrito?.filter((item) => item.id === id)[0]
   );
 
   useEffect(() => {
@@ -166,10 +168,10 @@ export default function Producto({
       <div
         className="container-producto"
         onMouseEnter={() => {
-          if (admin) setOptions({ ...showOptions, button: true });
+          if (admin === "admin") setOptions({ ...showOptions, button: true });
         }}
         onMouseLeave={() => {
-          if (admin) setOptions({ popup: false, button: false });
+          if (admin === "admin") setOptions({ popup: false, button: false });
         }}
       >
         <div className="container-foto">

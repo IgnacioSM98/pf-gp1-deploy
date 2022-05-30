@@ -2,7 +2,12 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import Usuario from "../Usuario/Usuario";
-import { getUser, setUserInfo } from "../../Redux/actions";
+import {
+  getUser,
+  setCarrito,
+  setUserInfo,
+  changeUserMode,
+} from "../../Redux/actions";
 import { useSelector, useDispatch } from "react-redux";
 import { app } from "../../firebase";
 
@@ -24,6 +29,17 @@ const NavLink = styled(Link)`
 `;
 
 const UserButton = styled(Link)`
+  color: white;
+  background-color: transparent;
+  text-decoration: none;
+  border: none;
+  cursor: pointer;
+  // width: 100%;
+  margin-bottom: 7px;
+  font-weight: 500;
+`;
+
+const ChangeMode = styled.span`
   color: white;
   background-color: transparent;
   text-decoration: none;
@@ -83,20 +99,23 @@ const Button = styled.button`
   cursor: pointer;
 `;
 
-export default function NavBar({ contacto, user, setUser }) {
+export default function NavBar({ contacto, setUser }) {
   const carrito = useSelector((state) => state.carrito);
   const dispatch = useDispatch();
   const [userMenu, setMenu] = useState(false);
-  const countCarrito = carrito.filter((cv, i) => {
+
+  const countCarrito = carrito?.filter((cv, i) => {
     return i === carrito.findIndex((e) => e.id === cv.id);
   }).length;
-  const admin = useSelector((state) => state.user);
+
+  const userInfo = useSelector((state) => state.userInfo);
 
   const logOut = () => {
     localStorage.removeItem("user");
     app.auth().signOut();
     dispatch(getUser());
 
+    // Deslogeamos el usuario de la cache
     dispatch(setUserInfo());
 
     app.auth().onAuthStateChanged((user) => {
@@ -113,17 +132,34 @@ export default function NavBar({ contacto, user, setUser }) {
   };
 
   useEffect(() => {
-    // console.log("aca esta vacio user", user);
-    if (!user) {
-      dispatch(setUserInfo(localStorage.getItem("user")));
-
-      const userAux = JSON.parse(localStorage.getItem("user"));
-
-      setUser(userAux);
-    } else {
-      dispatch(getUser(user.email));
-    }
+    // Recuperamos el carrito del local storage
+    dispatch(
+      setCarrito(
+        localStorage.getItem("carrito")
+          ? JSON.parse(localStorage.getItem("carrito"))
+          : []
+      )
+    );
   }, []);
+
+  useEffect(() => {
+    // Cada vez que se actualice el carrito lo guardamos en caché
+    if (carrito) {
+      localStorage.setItem("carrito", JSON.stringify(carrito));
+    }
+  }, [carrito]);
+
+  // useEffect(() => {
+  //   if (!user) {
+  //     // dispatch(setUserInfo(JSON.parse(localStorage.getItem("user"))));
+
+  //     const userAux = JSON.parse(localStorage.getItem("user"));
+
+  //     setUser(userAux);
+  //   } else {
+  //     dispatch(getUser(user.email));
+  //   }
+  // }, []);
 
   return (
     <Container onMouseLeave={() => setMenu(false)}>
@@ -176,7 +212,7 @@ export default function NavBar({ contacto, user, setUser }) {
           </svg>
         </NavLink>
 
-        {user && Object.entries(user).length !== 0 ? (
+        {userInfo && Object.entries(userInfo).length !== 0 ? (
           <button
             title="Cuenta"
             style={{
@@ -189,7 +225,7 @@ export default function NavBar({ contacto, user, setUser }) {
               setMenu(!userMenu);
             }}
           >
-            <Usuario user={user} setUser={setUser} />
+            <Usuario user={userInfo} />
           </button>
         ) : (
           <NavLink to={"/login"}>
@@ -201,10 +237,18 @@ export default function NavBar({ contacto, user, setUser }) {
 
       {userMenu && (
         <UserMenu onMouseLeave={() => setMenu(false)}>
-          {admin && (
-            <UserButton to="/" onClick={() => setMenu(!userMenu)}>
-              {user ? "Modo Admin" : "Modo Invitado"}
-            </UserButton>
+          {userInfo?.rol === "admin" && (
+            <ChangeMode
+              // to="/"
+              onClick={() => {
+                setMenu(!userMenu);
+                dispatch(changeUserMode(userInfo));
+              }}
+            >
+              {userInfo?.visualizacion !== "admin"
+                ? "Modo Admin"
+                : "Modo Invitado"}
+            </ChangeMode>
           )}
 
           <UserButton to="/cuenta" onClick={() => setMenu(!userMenu)}>
