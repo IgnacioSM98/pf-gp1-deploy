@@ -4,8 +4,14 @@ const { mercadopago } = require("mercadopago");
 // Ejemplo: const authRouter = require('./auth.js');
 const productosDB = require("../../assets/products.json");
 const usuariosDB = require("../../assets/users.json");
-const { Producto, Categoria, Usuario, Rating, Pedido } = require("../db");
-const nodemailer = require("nodemailer");
+const {
+  Producto,
+  Categoria,
+  Usuario,
+  Rating,
+  Pedido,
+  Compra,
+} = require("../db");
 
 const router = Router();
 // Configurar los routers
@@ -155,6 +161,19 @@ router.get("/ratings/:productoid", async (req, res) => {
   }
 });
 
+//! GET todos los ratings de un usuario
+
+router.get("/usuario/ratings/:usuarioid", async (req, res) => {
+  try {
+    const rating = await Rating.findAll({
+      where: { usuarioId: req.params.usuarioid },
+    });
+    res.status(200).send(rating);
+  } catch (error) {
+    res.status(400).send(error);
+  }
+});
+
 //! GET todos los pedidos
 
 router.get("/pedidos", async (req, res) => {
@@ -183,7 +202,7 @@ router.get("/pedidos/usuario/:id", async (req, res) => {
 
 //! GET a un pedido por id
 
-router.get("/producto/:id", async (req, res) => {
+router.get("/pedido/:id", async (req, res) => {
   const { id } = req.params;
 
   try {
@@ -238,6 +257,20 @@ router.get("/favoritos/wishlist/:id", async (req, res) => {
   }
 });
 
+//! GET ratings de un usuario
+
+router.get("/ratings/usuario/:id", async (req, res) => {
+  try {
+    const reviews = await Rating.findAll({
+      where: { usuarioId: req.params.id },
+    });
+
+    res.status(200).send(reviews);
+  } catch (error) {
+    res.status(400).send(error);
+  }
+});
+
 //? POST crear categorias
 
 router.post("/categorias/crear", async (req, res) => {
@@ -255,17 +288,19 @@ router.post("/categorias/crear", async (req, res) => {
 //? POST crear review de algún producto en particular
 
 router.post("/ratings/crear/:productoid", async (req, res) => {
-  console.log(req.body);
   try {
-    const { puntaje, comentario, titulo } = req.body;
+    const { puntaje, comentario, titulo, usuarioId } = req.body;
     const rating = await Rating.create({
       puntaje: puntaje,
       comentario: comentario,
       titulo: titulo,
     });
     rating.productoId = req.params.productoid;
-    rating.save();
 
+    if (usuarioId) {
+      rating.usuarioId = usuarioId;
+    }
+    await rating.save();
     res.status(200).send(rating);
   } catch (error) {
     res.status(400).send(error);
@@ -331,7 +366,7 @@ router.post("/pedido/crear/:idUsuario", async (req, res) => {
       tipo_de_envio,
       direccion_de_envio,
       estado,
-      idProductos, //tiene que llegar un array ocn los ids de los productos
+      idProductos, //tiene que llegar un array de obj {id:1,cantidad:1}
     } = req.body;
     const pedido = await Pedido.create({
       fecha: fecha,
@@ -341,20 +376,22 @@ router.post("/pedido/crear/:idUsuario", async (req, res) => {
       Direccion_de_envio: direccion_de_envio,
       Estado: estado,
     });
-
     await idProductos.map((p) => {
-      Pedido.findByPk(pedido.id).then((onePedido) => {
-        Producto.findByPk(p)
-          .then((newProducto) => {
-            onePedido.addProducto(newProducto);
-          })
-          .catch((error) => {
-            console.log(error);
-            return res.status(400).json(error);
-          });
-      });
+      Compra.create({
+        cantidad: p.cantidad,
+        productoId: p.id,
+        pedidoId: pedido.id,
+      })
+        .then((response) => {
+          console.log(response);
+        })
+        .catch((error) => {
+          console.log(error);
+          return res.status(400).json(error);
+        });
     });
     pedido.usuarioId = idUser;
+    pedido.save();
     res.status(200).send(pedido);
   } catch (error) {
     console.log(error);
@@ -380,6 +417,24 @@ router.post("/favoritos/wishlist", async (req, res) => {
       });
   });
 });
+//? POST Relacionar pedido con productos
+
+// router.post("/pedido/productos", async (req, res) => {
+//   const { idProducto, idPedido } = req.body;
+
+//   Pedido.findByPk(idPedido).then((onePedido) => {
+//     Producto.findByPk(idProducto)
+//       .then((newProducto) => {
+//         onePedido.addProducto(newProducto);
+
+//         return res.status(200).send({ msg: "Producto relacionado" });
+//       })
+//       .catch((error) => {
+//         console.log(error);
+//         return res.status(400).json(error);
+//       });
+//   });
+// });
 
 //? POST cargar productos en la base de datos
 
@@ -646,6 +701,7 @@ router.delete("/categorias/:id", async (req, res, next) => {
     next(error);
   }
 });
+//+ DELETE reviews con id
 
 router.delete("/ratings/:id", async (req, res, next) => {
   try {

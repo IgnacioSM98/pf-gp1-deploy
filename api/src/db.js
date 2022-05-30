@@ -45,17 +45,20 @@ const { Categoria } = sequelize.models;
 const { Rating } = sequelize.models;
 const { Usuario } = sequelize.models;
 const { Pedido } = sequelize.models;
+const { Compra } = sequelize.models;
 // Aca vendrian las relaciones
 // Product.hasMany(Reviews);
 Producto.belongsToMany(Categoria, { through: "CatPro" });
 Categoria.belongsToMany(Producto, { through: "CatPro" });
 Rating.belongsTo(Producto);
 Producto.hasMany(Rating);
+Rating.belongsTo(Usuario);
+Usuario.hasMany(Rating);
 
 Pedido.belongsTo(Usuario);
 Usuario.hasMany(Pedido);
-Producto.belongsToMany(Pedido, { through: "Compra" });
-Pedido.belongsToMany(Producto, { through: "Compra" });
+Producto.belongsToMany(Pedido, { through: Compra });
+Pedido.belongsToMany(Producto, { through: Compra });
 Producto.belongsToMany(Usuario, { through: "Favoritos" });
 Usuario.belongsToMany(Producto, { through: "Favoritos" });
 

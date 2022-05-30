@@ -27,11 +27,12 @@ module.exports = (sequelize) => {
       allowNull: false,
     },
     Direccion_de_envio: {
-      type: DataTypes.STRING,
+      type: DataTypes.JSON,
       allowNull: false,
     },
     Estado: {
       type: DataTypes.STRING,
+      defaultValue: "En preparación",
       allowNull: true,
     },
   });
