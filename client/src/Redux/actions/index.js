@@ -157,11 +157,12 @@ export const setSort = (value) => (dispatch) => {
 
 export function setCarrito(carrito) {
   return function (dispatch) {
-    dispatch({ type: "SET_CARRITO", payload: JSON.parse(carrito) });
+    dispatch({ type: "SET_CARRITO", payload: carrito });
   };
 }
 
 export function agregarCarrito(idProducto, cantidad) {
+  console.log(idProducto, cantidad);
   return function (dispatch) {
     dispatch({ type: "AGREGAR_CARRITO", payload: { idProducto, cantidad } });
   };

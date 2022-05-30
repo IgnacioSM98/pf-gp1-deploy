@@ -8,7 +8,7 @@ const initialState = {
   carrito: [],
   user: false,
   userInfo: {},
-  detalleEnvio:{},
+  detalleEnvio: {},
   pedidos: [],
 };
 
@@ -337,17 +337,17 @@ export default function rootReducer(state = initialState, action) {
         ...state,
         userInfo: action.payload,
       };
-      
+
     case "GET_DETALLE_ENVIO":
       return {
         ...state,
-        detalleEnvio: action.payload
-      }
-      
+        detalleEnvio: action.payload,
+      };
+
     case "ACTUALIZAR_ESTADO":
-      return{
-        ...state
-      }
+      return {
+        ...state,
+      };
 
     case "GET_PEDIDOS":
       return {
