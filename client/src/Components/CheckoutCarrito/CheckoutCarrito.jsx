@@ -232,7 +232,7 @@ const Monto = styled.label`
 function Checkout({ contacto }) {
   const carrito = useSelector((state) => state.carrito);
   const [precioTotal, setPrecioTotal] = useState(0);
-  const [datos, setDatos] = useState();
+  const [flag, setFlag] = useState(false);
 
   useEffect(() => {
     let precio = 0;
@@ -245,14 +245,14 @@ function Checkout({ contacto }) {
   }, [carrito, setPrecioTotal]);
 
   const [input, setInput] = useState({
-    calle: "",
-    altura: "",
-    piso: "",
-    ciudad: "",
-    provincia: "",
-    codigoPostal: "",
-    celular: "",
-    mail: "",
+    calle: "Guatemala",
+    altura: "5600",
+    piso: "5",
+    ciudad: "CABA",
+    provincia: "Buenos Aires",
+    codigoPostal: "1425",
+    celular: "1130118875",
+    mail: "igna@gmail.com",
   });
 
   function handleChange(e) {
@@ -264,169 +264,162 @@ function Checkout({ contacto }) {
 
   function handleSubmit(e) {
     e.preventDefault();
-
-    console.log(input);
+    setFlag(true);
   }
 
   return (
-    <>
-      <Contenedor>
-        <Formulario onSubmit={(e) => handleSubmit(e)}>
-          <Titulo>
-            Antes de continuar, necesitamos que completes estos datos
-          </Titulo>
+    <Contenedor>
+      <Formulario onSubmit={(e) => handleSubmit(e)}>
+        <Titulo>
+          Antes de continuar, necesitamos que completes estos datos
+        </Titulo>
 
-          <ContenedorVarios>
-            <div>
-              <Subtitulo>Informacion de entrega</Subtitulo>
-              <ContenedorDireccion>
-                <ContenedorDiv>
-                  <Label>Calle</Label>
-                  <ContenedorInput>
-                    <Input
-                      placeholder="Calle"
-                      name="calle"
-                      value={input.calle}
-                      onChange={(e) => handleChange(e)}
-                      required
-                    />
-                  </ContenedorInput>
-                </ContenedorDiv>
-                <ContenedorDiv>
-                  <Label>Altura/Numero</Label>
-                  <ContenedorInput>
-                    <Input
-                      placeholder="Altura/Numero"
-                      type="number"
-                      name="altura"
-                      value={input.altura}
-                      onChange={(e) => handleChange(e)}
-                      required
-                    />
-                  </ContenedorInput>
-                </ContenedorDiv>
-                <ContenedorDiv>
-                  <Label>Piso/Depto/Casa</Label>
-                  <ContenedorInput>
-                    <Input
-                      placeholder="Piso/Depto/Casa"
-                      name="piso"
-                      value={input.piso}
-                      onChange={(e) => handleChange(e)}
-                    />
-                  </ContenedorInput>
-                </ContenedorDiv>
-              </ContenedorDireccion>
+        <ContenedorVarios>
+          <div>
+            <Subtitulo>Informacion de entrega</Subtitulo>
+            <ContenedorDireccion>
+              <ContenedorDiv>
+                <Label>Calle</Label>
+                <ContenedorInput>
+                  <Input
+                    placeholder="Calle"
+                    name="calle"
+                    value={input.calle}
+                    onChange={(e) => handleChange(e)}
+                    required
+                  />
+                </ContenedorInput>
+              </ContenedorDiv>
+              <ContenedorDiv>
+                <Label>Altura/Numero</Label>
+                <ContenedorInput>
+                  <Input
+                    placeholder="Altura/Numero"
+                    type="number"
+                    name="altura"
+                    value={input.altura}
+                    onChange={(e) => handleChange(e)}
+                    required
+                  />
+                </ContenedorInput>
+              </ContenedorDiv>
+              <ContenedorDiv>
+                <Label>Piso/Depto/Casa</Label>
+                <ContenedorInput>
+                  <Input
+                    placeholder="Piso/Depto/Casa"
+                    name="piso"
+                    value={input.piso}
+                    onChange={(e) => handleChange(e)}
+                  />
+                </ContenedorInput>
+              </ContenedorDiv>
+            </ContenedorDireccion>
 
-              <ContenedorCiudad>
-                <ContenedorDiv>
-                  <Label>Ciudad</Label>
-                  <ContenedorInput>
-                    <Input
-                      placeholder="Ciudad"
-                      name="ciudad"
-                      value={input.ciudad}
-                      onChange={(e) => handleChange(e)}
-                      required
-                    />
-                  </ContenedorInput>
-                </ContenedorDiv>
-                <ContenedorDiv>
-                  <Label>Provincia</Label>
-                  <ContenedorInput>
-                    <Input
-                      placeholder="Provincia"
-                      name="provincia"
-                      value={input.provincia}
-                      onChange={(e) => handleChange(e)}
-                      required
-                    />
-                  </ContenedorInput>
-                </ContenedorDiv>
-                <ContenedorDiv>
-                  <Label>Codigo Postal</Label>
-                  <ContenedorInput>
-                    <Input
-                      placeholder="Codigo postal"
-                      type="number"
-                      name="codigoPostal"
-                      value={input.codigoPostal}
-                      onChange={(e) => handleChange(e)}
-                      required
-                    />
-                  </ContenedorInput>
-                </ContenedorDiv>
-              </ContenedorCiudad>
+            <ContenedorCiudad>
+              <ContenedorDiv>
+                <Label>Ciudad</Label>
+                <ContenedorInput>
+                  <Input
+                    placeholder="Ciudad"
+                    name="ciudad"
+                    value={input.ciudad}
+                    onChange={(e) => handleChange(e)}
+                    required
+                  />
+                </ContenedorInput>
+              </ContenedorDiv>
+              <ContenedorDiv>
+                <Label>Provincia</Label>
+                <ContenedorInput>
+                  <Input
+                    placeholder="Provincia"
+                    name="provincia"
+                    value={input.provincia}
+                    onChange={(e) => handleChange(e)}
+                    required
+                  />
+                </ContenedorInput>
+              </ContenedorDiv>
+              <ContenedorDiv>
+                <Label>Codigo Postal</Label>
+                <ContenedorInput>
+                  <Input
+                    placeholder="Codigo postal"
+                    type="number"
+                    name="codigoPostal"
+                    value={input.codigoPostal}
+                    onChange={(e) => handleChange(e)}
+                    required
+                  />
+                </ContenedorInput>
+              </ContenedorDiv>
+            </ContenedorCiudad>
 
-              <ContenedorCiudad>
-                <ContenedorDiv>
-                  <Label>Celular de contacto</Label>
-                  <ContenedorInput>
-                    <Input
-                      placeholder="Celular"
-                      type="number"
-                      name="celular"
-                      value={input.celular}
-                      onChange={(e) => handleChange(e)}
-                      required
-                    />
-                  </ContenedorInput>
-                </ContenedorDiv>
-                <ContenedorDiv>
-                  <Label>E-mail de contacto</Label>
-                  <ContenedorInput>
-                    <Input
-                      placeholder="E-mail"
-                      name="mail"
-                      id="emailAddress"
-                      type="email"
-                      value={input.mail}
-                      onChange={(e) => handleChange(e)}
-                      required
-                    />
-                  </ContenedorInput>
-                </ContenedorDiv>
-              </ContenedorCiudad>
+            <ContenedorCiudad>
+              <ContenedorDiv>
+                <Label>Celular de contacto</Label>
+                <ContenedorInput>
+                  <Input
+                    placeholder="Celular"
+                    type="number"
+                    name="celular"
+                    value={input.celular}
+                    onChange={(e) => handleChange(e)}
+                    required
+                  />
+                </ContenedorInput>
+              </ContenedorDiv>
+              <ContenedorDiv>
+                <Label>E-Mail de contacto</Label>
+                <ContenedorInput>
+                  <Input
+                    placeholder="E-mail"
+                    name="mail"
+                    id="emailAddress"
+                    type="email"
+                    value={input.mail}
+                    onChange={(e) => handleChange(e)}
+                    required
+                  />
+                </ContenedorInput>
+              </ContenedorDiv>
+            </ContenedorCiudad>
 
-              {/* <Boton type="submit" value="Continuar" /> */}
+            <Boton type="submit" value="Continuar" />
 
-              <MercadoPagoIntegracion datos={datos} />
-              <QR />
-            </div>
-            <Productos>
-              <h3 style={{ fontWeight: 600 }}>Resumen de compra</h3>
+            {flag && <MercadoPagoIntegracion carrito={carrito} input={input} />}
+            {/* <QR /> */}
+          </div>
+          <Productos>
+            <h3 style={{ fontWeight: 600 }}>Resumen de compra</h3>
 
-              <ProductosTitulo>
-                <p>Producto</p>
-                <p>Monto</p>
-              </ProductosTitulo>
-              <ContenedorProductos>
-                {carrito &&
-                  carrito.map((e, index) => (
-                    <ContenedorProducto
-                      style={
-                        index + 1 === carrito.length
-                          ? { marginBottom: "-15px" }
-                          : null
-                      }
-                      key={e.id}
-                    >
-                      <h3>{`${e.cantidad} x ${e.nombre}`}</h3>
-                      <p>${e.precio * e.cantidad}</p>
-                    </ContenedorProducto>
-                  ))}
-              </ContenedorProductos>
-              <ContenedorMonto>
-                <Monto left={0}>Monto Total:</Monto>
-                <Monto right={0}>${precioTotal}</Monto>
-              </ContenedorMonto>
-            </Productos>
-          </ContenedorVarios>
-        </Formulario>
-      </Contenedor>
-      <Footer contacto={contacto} />
-      <ScrollToTop />
-    </>
+            <ProductosTitulo>
+              <p>Producto</p>
+              <p>Monto</p>
+            </ProductosTitulo>
+            <ContenedorProductos>
+              {carrito &&
+                carrito.map((e, index) => (
+                  <ContenedorProducto
+                    style={
+                    index + 1 === carrito.length ? { marginBottom: "-15px" } : null
+                    }
+                    key={e.id}
+                  >
+                    <h3>{`${e.cantidad} x ${e.nombre}`}</h3>
+                    <p>${e.precio * e.cantidad}</p>
+                  </ContenedorProducto>
+                ))}
+            </ContenedorProductos>
+            <ContenedorMonto>
+              <Monto left={0}>Monto Total:</Monto>
+              <Monto right={0}>${precioTotal}</Monto>
+            </ContenedorMonto>
+          </Productos>
+        </ContenedorVarios>
+      </Formulario>
+    </Contenedor>
   );
 }
 

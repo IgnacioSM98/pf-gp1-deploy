@@ -720,25 +720,22 @@ router.delete("/categorias/producto", async (req, res) => {
 });
 
 router.post("/pagar", (req, res) => {
-  const { precioTotal } = req.body;
+  const { items, payer } = req.body;
 
   const preference = {
-    items: [
-      {
-        title: "Ricochet",
-        quantity: 1,
-        currency_id: "ARS",
-        unit_price: Number(precioTotal),
-      },
-    ],
+    items: items?.map((item) => item),
+
+    payer: {
+      name: payer.name,
+      surname: payer.surname,
+      email: payer.email,
+    },
   };
 
   mercadopago.preferences
     .create(preference)
-    .then((res) => {
-      res.json(res.body.id);
-    })
-    .catch((error) => res.status(400).send(error));
+    .then((r) => res.json(r.body.id))
+    .catch((err) => res.status(400).send(err));
 });
 
 module.exports = router;

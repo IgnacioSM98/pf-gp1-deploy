@@ -1,5 +1,4 @@
 import axios from "axios";
-import Producto from "../../Components/Reviews/Reviews";
 
 const urlBase = "https://proyecto-final-gp1.herokuapp.com/";
 const productos = "productos";
@@ -29,8 +28,6 @@ export function getProductosFiltrados(productosFiltrados) {
 
 export function getDetail(id) {
   return function (dispatch) {
-    // console.log(urlBase + "producto" + "/" + id);
-
     axios(`${urlBase}producto/${id}`).then((res) =>
       dispatch({ type: "GET_DETAIL", payload: res.data })
     );
@@ -95,8 +92,6 @@ export function postProducto(payload) {
     // dispatch({ type: "POST_PRODUCTO", payload: json.data });
 
     axios.post(`${urlBase}${admin}${crear}`, payload).then((res) => {
-      // console.log(payload.categorias, "uwu");
-
       dispatch({
         type: "POST_PRODUCTO",
         payload: res.data,
@@ -226,10 +221,7 @@ export function changeUserMode(userInfo) {
 
 export function getDetalleEnvio(id) {
   return async function (dispatch) {
-    let envio = await axios
-      .get(`${urlBase}${pedido}${id}`)
-      .catch((err) => console.log(err));
-
+    let envio = await axios.get(`${urlBase}${pedido}${id}`);
     return dispatch({ type: "GET_DETALLE_ENVIO", payload: envio?.data });
   };
 }
