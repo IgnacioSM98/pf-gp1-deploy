@@ -245,7 +245,6 @@ function Carrito({ contacto }) {
             <Link to="/checkout">
               <Boton>Continuar compra</Boton>
             </Link>
-            <MercadoPagoIntegracion />
           </ContenedorBotones>
         </ContenedorCompra>
       </Container>
