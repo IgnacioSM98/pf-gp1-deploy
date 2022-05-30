@@ -189,7 +189,7 @@ router.get("/producto/:id", async (req, res) => {
   try {
     const pedido = await Pedido.findByPk(id);
 
-    res.status(200).send(producto);
+    res.status(200).send(pedido);
   } catch (error) {
     res.status(400).send(error);
   }
