@@ -220,7 +220,7 @@ const Monto = styled.label`
 function Checkout() {
   const carrito = useSelector((state) => state.carrito);
   const [precioTotal, setPrecioTotal] = useState(0);
-  const [datos, setDatos] = useState();
+  const [flag, setFlag] = useState(false);
 
   useEffect(() => {
     let precio = 0;
@@ -233,14 +233,14 @@ function Checkout() {
   }, [carrito, setPrecioTotal]);
 
   const [input, setInput] = useState({
-    calle: "",
-    altura: "",
-    piso: "",
-    ciudad: "",
-    provincia: "",
-    codigoPostal: "",
-    celular: "",
-    mail: "",
+    calle: "Guatemala",
+    altura: "5600",
+    piso: "5",
+    ciudad: "CABA",
+    provincia: "Buenos Aires",
+    codigoPostal: "1425",
+    celular: "1130118875",
+    mail: "igna@gmail.com",
   });
 
   function handleChange(e) {
@@ -252,8 +252,7 @@ function Checkout() {
 
   function handleSubmit(e) {
     e.preventDefault();
-
-    console.log(input);
+    setFlag(true);
   }
 
   return (
@@ -375,10 +374,10 @@ function Checkout() {
               </ContenedorDiv>
             </ContenedorCiudad>
 
-            {/* <Boton type="submit" value="Continuar" /> */}
+            <Boton type="submit" value="Continuar" />
 
-            <MercadoPagoIntegracion datos={datos} />
-            <QR />
+            {flag && <MercadoPagoIntegracion carrito={carrito} input={input} />}
+            {/* <QR /> */}
           </div>
           <Productos>
             <h3>Resumen de compra</h3>

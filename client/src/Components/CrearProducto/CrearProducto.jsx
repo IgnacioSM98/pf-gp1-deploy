@@ -393,7 +393,7 @@ export default function CrearProducto() {
       if (Object.values(errors).length > 0) {
         setStateModalProd(!stateModalProd);
       } else {
-        // console.log(post, "xd");
+        console.log(post, "uno");
         dispatch(postProducto(post));
         setStateModalProd(!stateModalProd);
       }
