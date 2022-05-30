@@ -211,7 +211,7 @@ export function getUsuarios() {
     } catch (error) {
       console.log(error);
     }
-  }
+  };
 }
 
 export function changeUserMode(userInfo) {
@@ -240,7 +240,7 @@ export function getPedidos() {
     } catch (error) {
       console.log(error);
     }
-  }
+  };
 }
 
 export function getDetalleEnvio(id) {
@@ -256,5 +256,17 @@ export function actualizarEstadoEnvio(id, payload) {
     return dispatch({
       type: "ACTUALIZAR_ESTADO",
     });
+  };
+}
+
+export function añadirAFavoritos(productoFav) {
+  return function (dispatch) {
+    dispatch({ type: "AÑADIR_A_FAVORITOS", payload: productoFav });
+  };
+}
+
+export function eliminarDeFavoritos(productoFav) {
+  return function (dispatch) {
+    dispatch({ type: "ELIMINAR_DE_FAVORITOS", payload: productoFav });
   };
 }

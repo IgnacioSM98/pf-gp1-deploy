@@ -8,6 +8,8 @@ import {
   deleteProducto,
   quitarItem,
   restarCarrito,
+  añadirAFavoritos,
+  eliminarDeFavoritos,
 } from "../../Redux/actions";
 
 const LinkProduct = styled(Link)`
@@ -101,6 +103,28 @@ const ManejoStock = styled.div`
   align-items: center;
 `;
 
+const ContenedorFav = styled.div`
+  display: flex;
+  position: absolute;
+  z-index: 3;
+  left: 87%;
+  top: 2%;
+
+  p {
+    color: #5a9d7b;
+    font-size: 30px;
+    margin-top: 0;
+  }
+
+  label {
+    color: #5a9d7b;
+    font-weight: bold;
+    font-size: 22px;
+
+    margin-top: 5px;
+  }
+`;
+
 export default function Producto({
   id,
   imagen,
@@ -115,6 +139,8 @@ export default function Producto({
   const dispatch = useDispatch();
 
   const admin = useSelector((state) => state.userInfo?.visualizacion);
+
+  const favoritos = useSelector((state) => state.favoritos);
 
   const [showOptions, setOptions] = useState({ button: false, popup: false });
   const navigate = useNavigate();
@@ -165,6 +191,17 @@ export default function Producto({
     }
   };
 
+  function handleFav(e) {
+    e.preventDefault();
+
+    if (favoritos.find((fav) => fav.id == id)) {
+      dispatch(eliminarDeFavoritos(id));
+    } else {
+      dispatch(añadirAFavoritos(producto));
+    }
+    console.log(favoritos);
+  }
+
   return (
     <LinkProduct to={`/productos/${id}`}>
       <div
@@ -176,6 +213,14 @@ export default function Producto({
           if (admin === "admin") setOptions({ popup: false, button: false });
         }}
       >
+        <ContenedorFav>
+          {favoritos.find((fav) => fav.id == id) ? (
+            <p onClick={(e) => handleFav(e)}>♥</p>
+          ) : (
+            <label onClick={(e) => handleFav(e)}>♡</label>
+          )}
+        </ContenedorFav>
+
         <div className="container-foto">
           <img src={imagen} className="foto" alt="foto" />
         </div>

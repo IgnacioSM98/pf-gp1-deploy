@@ -312,6 +312,7 @@ function Shop({ contacto }) {
                       descripcion={el.descripcion}
                       location={location}
                       categorias={el.categoria}
+                      producto={el}
                     />
                   );
                   // }
