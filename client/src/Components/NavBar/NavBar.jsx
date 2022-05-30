@@ -133,7 +133,13 @@ export default function NavBar({ contacto, setUser }) {
 
   useEffect(() => {
     // Recuperamos el carrito del local storage
-    dispatch(setCarrito(localStorage.getItem("carrito")));
+    dispatch(
+      setCarrito(
+        localStorage.getItem("carrito")
+          ? JSON.parse(localStorage.getItem("carrito"))
+          : []
+      )
+    );
   }, []);
 
   useEffect(() => {
