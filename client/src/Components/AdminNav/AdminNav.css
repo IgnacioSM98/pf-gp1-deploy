@@ -1,0 +1,39 @@
+*{
+    margin-top: 30px;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.side-bar {
+    background-color: #08CE72;
+    backdrop-filter: blur(15px);
+    width: 290px;
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    left: 0;
+    overflow-y: auto;
+}
+
+.menu {
+    display: flex;
+    width: 100%;
+    margin-top: 80px;
+    justify-content: flex-start;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.item {
+    color: white;
+    cursor: pointer;
+    height: 28px;
+    width: 150px;
+    text-decoration: none;
+    font-size: 20px;
+    display: block;
+    line-height: 60px;
+    padding-left: 10px;
+    margin: 20px 0px; 
+}

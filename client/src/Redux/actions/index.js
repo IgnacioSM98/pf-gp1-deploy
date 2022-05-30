@@ -203,6 +203,18 @@ export function setUserInfo(user) {
   };
 }
 
+export function getUsuarios() {
+  return function (dispatch) {
+    try {
+      axios(`${urlBase}usuarios`).then((res) =>
+        dispatch({ type: "GET_USUARIOS", payload: res.data })
+      );
+    } catch (error) {
+      console.log(error);
+    }
+  }
+}
+
 export function changeUserMode(userInfo) {
   const user = { ...userInfo };
 
@@ -220,6 +232,18 @@ export function changeUserMode(userInfo) {
   };
 }
 
+export function getPedidos() {
+  return function (dispatch) {
+    try {
+      axios(`${urlBase}pedidos`).then((res) =>
+        dispatch({ type: "GET_PEDIDOS", payload: res.data })
+      );
+    } catch (error) {
+      console.log(error);
+    }
+  }
+}
+
 export function getDetalleEnvio(id) {
   return async function (dispatch) {
     let envio = await axios.get(`${urlBase}${pedido}${id}`);
@@ -232,14 +256,6 @@ export function actualizarEstadoEnvio(id, payload) {
     await axios.put(`${urlBase}${admin}${pedido}${id}`, payload);
     return dispatch({
       type: "ACTUALIZAR_ESTADO",
-    });
-  };
-}
-
-export function getPedidos() {
-  return function (dispatch) {
-    return axios.get(`${urlBase}/pedidos`).then((response) => {
-      dispatch({ type: "GET_PEDIDOS", payload: response.data });
     });
   };
 }

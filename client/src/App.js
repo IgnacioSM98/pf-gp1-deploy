@@ -21,6 +21,7 @@ import {
 } from "./Components/index";
 import { Routes, Route } from "react-router-dom";
 import { useDispatch } from "react-redux";
+import AdministradorUsuarios from "./Components/AdministradorUsuarios/AdministradorUsuarios";
 
 function App() {
   const dispatch = useDispatch();
@@ -72,8 +73,7 @@ function App() {
             path="/checkout"
             element={<Checkout contacto={contacto} />}
           />
-
-          {/* <Route exact path="/admin" element={"admin"} /> */}
+          <Route exact path="/admin" element={<AdministradorUsuarios />} />
           <Route exact path="/pedido/:id" element={<DetalleEnvio />} />
           <Route
             exact
