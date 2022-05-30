@@ -27,6 +27,7 @@ import Loading from "./Loading/Loading";
 import Checkout from "./CheckoutCarrito/CheckoutCarrito";
 import Reseñas from "./Reseñas/Reseñas";
 import ItemCompra from "./Compra/ItemCompra";
+import QR from "./QR/QR";
 
 export {
   Home,
@@ -58,4 +59,5 @@ export {
   MercadoPagoIntegracion,
   Checkout,
   ItemCompra,
+  QR,
 };

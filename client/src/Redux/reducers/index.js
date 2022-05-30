@@ -151,25 +151,28 @@ export default function rootReducer(state = initialState, action) {
       };
 
     case "SET_CARRITO":
-      // console.log(action.payload);
       return {
         ...state,
         carrito: action.payload,
       };
 
     case "AGREGAR_CARRITO":
-      var newCarrito = [...state.carrito];
+      let addCarrito = [];
 
-      var indexCarrito = state.carrito.findIndex(
+      if (state.carrito !== null) {
+        addCarrito = [...state.carrito];
+      }
+
+      let indexCarritoAdd = state.carrito?.findIndex(
         (carrito) => Number(carrito.id) === Number(action.payload.idProducto)
       );
 
-      if (indexCarrito !== -1) {
-        newCarrito[indexCarrito].cantidad = action.payload.cantidad;
+      if (indexCarritoAdd !== -1) {
+        addCarrito[indexCarritoAdd].cantidad = action.payload.cantidad;
 
         return {
           ...state,
-          carrito: newCarrito,
+          carrito: addCarrito,
         };
       } else {
         const productoSeleccionado = state.productos.find(
@@ -228,7 +231,7 @@ export default function rootReducer(state = initialState, action) {
       }
 
     case "QUITAR_ITEM":
-      const data = state.carrito.filter(
+      const data = state.carrito?.filter(
         (item) => item.id !== action.payload.id
       );
       return {
