@@ -205,3 +205,20 @@ export function setUserInfo(user) {
     }
   };
 }
+
+export function changeUserMode(userInfo) {
+  const user = { ...userInfo };
+
+  user.visualizacion = user.visualizacion === "admin" ? "user" : "admin";
+
+  return function (dispatch) {
+    try {
+      dispatch({
+        type: "CHANGE_MODE",
+        payload: user,
+      });
+    } catch (err) {
+      console.log(err);
+    }
+  };
+}

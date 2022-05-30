@@ -164,7 +164,8 @@ function Shop({ contacto }) {
   const dispatch = useDispatch();
   const productos = useSelector((state) => state.productos);
   const productosFiltrados = useSelector((state) => state.productosFiltrados);
-  const admin = useSelector((state) => state.user);
+
+  const admin = useSelector((state) => state.userInfo?.visualizacion);
 
   const [selected, setSelected] = useState("");
   const [pages, setPages] = useState(4);
@@ -219,7 +220,7 @@ function Shop({ contacto }) {
   };
 
   const filterPerPages = (producto, i) => {
-    if (admin) {
+    if (admin === "admin") {
       if (Number(pageSelected) === 1) {
         if (i >= 8 * (pageSelected - 1) && i <= 8 * pageSelected - 1) {
           return producto;
@@ -291,7 +292,7 @@ function Shop({ contacto }) {
               <p>No se encontraron resultados</p>
             )}
 
-            {admin && <AgregarProducto />}
+            {admin === "admin" && <AgregarProducto />}
 
             {productosFiltrados &&
               productosFiltrados

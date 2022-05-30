@@ -38,7 +38,7 @@ const Letter = styled.button`
   font-weight: 600;
 `;
 
-export default function Usuario({ user, setUser }) {
+export default function Usuario({ user }) {
   return (
     <Container>
       {user.displayName && <P>{user.displayName.split(" ")[0]}</P>}
