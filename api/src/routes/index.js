@@ -765,7 +765,7 @@ router.post("/usuario/confirmacion", (req, res) => {
   });
 });
 
-router.post("/usuario/despacho", (req, res) => {
+router.post("/admin/despachar", (req, res) => {
   const { mail } = req.body;
   var transporter = nodemailer.createTransport({
     service: "gmail",
