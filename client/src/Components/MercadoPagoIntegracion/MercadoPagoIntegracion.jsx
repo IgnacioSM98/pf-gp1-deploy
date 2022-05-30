@@ -6,7 +6,7 @@ const FORM_ID = "payment-form";
 export default function MercadoPagoIntegracion({ carrito, input }) {
   const obtenerPreference = useCallback(async () => {
     const datos = {
-      items: carrito.map((item) => {
+      items: carrito?.map((item) => {
         return {
           currency_id: "ARS",
           picture_url: item.imagen,
