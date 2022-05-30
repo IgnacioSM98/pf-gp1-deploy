@@ -119,8 +119,9 @@ export default function Producto({
   const navigate = useNavigate();
   const [flag, setFlag] = useState(false);
   const [cantidad, setCantidad] = useState(1);
+
   const cantidadCarrito = useSelector(
-    (state) => state.carrito.filter((item) => item.id === id)[0]
+    (state) => state.carrito?.filter((item) => item.id === id)[0]
   );
 
   useEffect(() => {
