@@ -183,7 +183,7 @@ export default function DetalleEnvio() {
   useEffect(() => {
     dispatch(getDetalleEnvio(id));
   }, []);
-
+console.log(detalle)
   let [input, setInput] = useState({
     estado: "",
   });
@@ -201,9 +201,9 @@ export default function DetalleEnvio() {
 
   return (
     <Container>
-      <h1 style={{ position: "absolute", top: "8%", left: "160px" }}>
-        {`Pedido (numero de pedido)`}
-      </h1>
+      {user === "admin" && <h1 style={{ position: "absolute", top: "8%", left: "160px" }}>
+        {`Pedido numero: #2022${detalle.id}`}
+      </h1>}
 
       {user === "admin" && (
         <Formulario onSubmit={handleSubmit} action="">
@@ -268,20 +268,20 @@ export default function DetalleEnvio() {
               <EstadosLi>
                 <Circulo
                   active={
-                    detalle?.Estado === "En camino" ||
+                    detalle?.Estado !== "En camino" ||
                     "En punto de entrega/poder del correo" ||
                     "Entregado"
-                      ? true
-                      : false
+                      ? false
+                      : true
                   }
                 ></Circulo>
                 <Linea
                   active={
-                    detalle?.Estado === "En camino" ||
+                    detalle?.Estado !== "En camino" ||
                     "En punto de entrega/poder del correo" ||
                     "Entregado"
-                      ? true
-                      : false
+                      ? false
+                      : true
                   }
                 ></Linea>
                 <ImagenEstados
@@ -290,11 +290,11 @@ export default function DetalleEnvio() {
                 />
                 <ParrafoLi
                   active={
-                    detalle?.Estado === "En camino" ||
+                    detalle?.Estado !== "En camino" ||
                     "En punto de entrega/poder del correo" ||
                     "Entregado"
-                      ? true
-                      : false
+                      ? false
+                      : true
                   }
                 >
                   En camino
@@ -303,18 +303,18 @@ export default function DetalleEnvio() {
               <EstadosLi>
                 <Circulo
                   active={
-                    detalle?.Estado ===
+                    detalle?.Estado !==
                       "En punto de entrega/poder del correo" || "Entregado"
-                      ? true
-                      : false
+                      ? false
+                      : true
                   }
                 ></Circulo>
                 <Linea
                   active={
-                    detalle?.Estado ===
-                      "En punto de entrega/poder del correo" || "Entregado"
-                      ? true
-                      : false
+                    detalle?.Estado !==
+                    "En punto de entrega/poder del correo" || "Entregado"
+                    ? false
+                    : true
                   }
                 ></Linea>
                 <ImagenEstados
@@ -323,10 +323,10 @@ export default function DetalleEnvio() {
                 />
                 <ParrafoLi
                   active={
-                    detalle?.Estado ===
-                      "En punto de entrega/poder del correo" || "Entregado"
-                      ? true
-                      : false
+                    detalle?.Estado !==
+                    "En punto de entrega/poder del correo" || "Entregado"
+                    ? false
+                    : true
                   }
                 >
                   En punto de entrega/poder del correo
@@ -334,14 +334,14 @@ export default function DetalleEnvio() {
               </EstadosLi>
               <EstadosLi>
                 <Circulo
-                  active={detalle?.Estado === "Entregado" ? true : false}
+                  active={detalle?.Estado !== "Entregado" ? false: true}
                 ></Circulo>
                 <ImagenEstados
                   src="https://i.ibb.co/Z2NPGQ0/Asset-210.png"
                   alt=""
                 />
                 <ParrafoLi
-                  active={detalle?.Estado === "Entregado" ? true : false}
+                  active={detalle?.Estado !== "Entregado" ? false: true}
                 >
                   Entregado
                 </ParrafoLi>
@@ -350,21 +350,21 @@ export default function DetalleEnvio() {
           </Opciones>
         </Estado>
         <Domicilio className="domicilio">
-          <Titulo>Punto de retiro/entrega</Titulo>
-          <LogoGPS src="https://i.ibb.co/PC2BbmZ/Asset-960.png" alt="" />
+          <Titulo>Domicilio de {detalle.Tipo_de_envio === "domicilio" ? "entrega" : "punto de retiro" }</Titulo>
+          <LogoGPS src="https://i.ibb.co/PC2BbmZ/Asset-960.png" alt="Imagen logo GPS" />
           {/* <Parrafo>{detalle.Direccion_de_envio}</Parrafo> */}
           {/* el domicilio tendria que ser un objeto en el modelo para poder recibir, ciudad, CP y provincia? */}
-          <Parrafo>Av. PRES BARTOLOME MITRE 2769</Parrafo>
+          {/* <Parrafo>{`${detalle?.Direccion_de_envio.Calle} ${detalle?.Direccion_de_envio.Altura} ${detalle?.Direccion_de_envio.Piso}`}</Parrafo>
           <Lugar>
-            <ParrafoLugar>Buenos Aires</ParrafoLugar>
-            <ParrafoLugar>(1872),</ParrafoLugar>
-            <ParrafoLugar> Buenos Aires</ParrafoLugar>
-          </Lugar>
+            <ParrafoLugar>{detalle?.Direccion_de_envio.Ciudad}</ParrafoLugar>
+            <ParrafoLugar>{(detalle?.Direccion_de_envio.CodigoPostal)},</ParrafoLugar>
+            <ParrafoLugar>{detalle?.Direccion_de_envio.Provincia}</ParrafoLugar>
+          </Lugar> */}
         </Domicilio>
         <Codigo className="codigo">
-          <Titulo>Retiro en sucursal/domicilio</Titulo>
+          <Titulo>{detalle.Tipo_de_envio === "domicilio" ? " Entrega en domicilio" : "Retiro en sucursal" }</Titulo>
           <Parrafo>Codigo de Retiro: #2022{detalle?.id}</Parrafo>
-          <LogoCodigo src="https://i.ibb.co/vkjfvPY/Asset-930.png" alt="" />
+          <LogoCodigo src="https://i.ibb.co/vkjfvPY/Asset-930.png" alt="Imagen de una pizarra" />
         </Codigo>
       </Envio>
       <div>
