@@ -5,6 +5,7 @@ const { mercadopago } = require("mercadopago");
 const productosDB = require("../../assets/products.json");
 const usuariosDB = require("../../assets/users.json");
 const { Producto, Categoria, Usuario, Rating, Pedido } = require("../db");
+const nodemailer = require("nodemailer");
 
 const router = Router();
 // Configurar los routers
@@ -736,6 +737,56 @@ router.post("/pagar", (req, res) => {
     .create(preference)
     .then((r) => res.json(r.body.id))
     .catch((err) => res.status(400).send(err));
+});
+
+// Metodo de envio de mail automatico al confirmar la compra y el despacho
+
+router.post("/usuario/confirmacion", (req, res) => {
+  const { mail } = req.body;
+  var transporter = nodemailer.createTransport({
+    service: "gmail",
+    auth: {
+      user: "henrypfg1@gmail.com",
+      pass: "qdhkyjhhfujyogoa",
+    },
+  });
+  var mailOptions = {
+    from: '"Henry Grupo 1 👻" <henrypfg1@gmail.com>',
+    to: mail,
+    subject: "Hello ✔",
+    text: "Compra confirmada",
+  };
+  transporter.sendMail(mailOptions, (error, info) => {
+    if (error) {
+      res.status(500).send(error.message);
+    } else {
+      res.status(200).jsonp(req.body);
+    }
+  });
+});
+
+router.post("/admin/despachar", (req, res) => {
+  const { mail } = req.body;
+  var transporter = nodemailer.createTransport({
+    service: "gmail",
+    auth: {
+      user: "henrypfg1@gmail.com",
+      pass: "qdhkyjhhfujyogoa",
+    },
+  });
+  var mailOptions = {
+    from: '"Henry Grupo 1 👻" <henrypfg1@gmail.com>',
+    to: mail,
+    subject: "Hello ✔",
+    text: "Producto siendo despachado!",
+  };
+  transporter.sendMail(mailOptions, (error, info) => {
+    if (error) {
+      res.status(500).send(error.message);
+    } else {
+      res.status(200).jsonp(req.body);
+    }
+  });
 });
 
 module.exports = router;
