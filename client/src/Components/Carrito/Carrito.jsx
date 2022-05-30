@@ -4,7 +4,7 @@ import CarritoItem from "./CarritoItem";
 import styled from "styled-components";
 import { quitarItem } from "../../Redux/actions";
 import Swal from "sweetalert2";
-import { MercadoPagoIntegracion } from "../index";
+import { MercadoPagoIntegracion, Footer, ScrollToTop } from "../index";
 import { Link } from "react-router-dom";
 
 const Container = styled.div`
@@ -162,7 +162,7 @@ const Boton = styled.button`
   // box-shadow: 0 2px 2px 0 black, 1px 1px 1px 1px darkgray;
 `;
 
-function Carrito() {
+function Carrito({ contacto }) {
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
@@ -211,43 +211,47 @@ function Carrito() {
   }, [carrito, setPrecioTotal]);
 
   return (
-    <Container>
-      <ContenedorLinea>
-        <Linea />
-        <Titulo>Mi Carrito</Titulo>
-        <Linea />
-      </ContenedorLinea>
+    <>
+      <Container>
+        <ContenedorLinea>
+          <Linea />
+          <Titulo>Mi Carrito</Titulo>
+          <Linea />
+        </ContenedorLinea>
 
-      <ContenedorOpciones>
-        <Opciones left={"10%"}>Producto</Opciones>
-        <Opciones right={"45.5%"}>Cantidad</Opciones>
-        <Opciones right={"25%"}>Precio Unitario</Opciones>
-        <Opciones right={"9%"}>Subtotal</Opciones>
-      </ContenedorOpciones>
-      <LineaOpciones />
+        <ContenedorOpciones>
+          <Opciones left={"10%"}>Producto</Opciones>
+          <Opciones right={"45.5%"}>Cantidad</Opciones>
+          <Opciones right={"25%"}>Precio Unitario</Opciones>
+          <Opciones right={"9%"}>Subtotal</Opciones>
+        </ContenedorOpciones>
+        <LineaOpciones />
 
-      {carrito.map((el) => {
-        return (
-          <Productos key={el.id}>
-            <CarritoItem producto={el} setPrecioTotal={setPrecioTotal} />
-            <Borrar onClick={() => handleQuit(el)}>X</Borrar>
-          </Productos>
-        );
-      })}
+        {carrito.map((el) => {
+          return (
+            <Productos key={el.id}>
+              <CarritoItem producto={el} setPrecioTotal={setPrecioTotal} />
+              <Borrar onClick={() => handleQuit(el)}>X</Borrar>
+            </Productos>
+          );
+        })}
 
-      <ContenedorCompra>
-        <ContenedorMonto>
-          <Label left={0}>Monto Total:</Label>
-          <Label right={0}>${precioTotal}</Label>
-        </ContenedorMonto>
-        <ContenedorBotones>
-          <Link to="/checkout">
-            <Boton>Continuar compra</Boton>
-          </Link>
-          <MercadoPagoIntegracion />
-        </ContenedorBotones>
-      </ContenedorCompra>
-    </Container>
+        <ContenedorCompra>
+          <ContenedorMonto>
+            <Label left={0}>Monto Total:</Label>
+            <Label right={0}>${precioTotal}</Label>
+          </ContenedorMonto>
+          <ContenedorBotones>
+            <Link to="/checkout">
+              <Boton>Continuar compra</Boton>
+            </Link>
+            <MercadoPagoIntegracion />
+          </ContenedorBotones>
+        </ContenedorCompra>
+      </Container>
+      <Footer contacto={contacto} />
+      <ScrollToTop />
+    </>
   );
 }
 

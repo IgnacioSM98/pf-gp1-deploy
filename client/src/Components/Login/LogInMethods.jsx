@@ -32,7 +32,7 @@ const SignIn = styled.div`
   justify-content: center;
   position: relative;
 
-  background-color: #08ce72d1;
+  background-color: #36885ed1;
   border-radius: 20px 0px 0px 20px;
   width: 35%;
   height: 75vh;
@@ -351,7 +351,7 @@ export default function Login({ setUser }) {
       </SignIn>
 
       <SignUp onSubmit={handleSubmit}>
-        <Titulo color="#08ce72" className="titulo-login">
+        <Titulo color="#36885ed1" className="titulo-login">
           Crear Cuenta
         </Titulo>
 
@@ -440,7 +440,7 @@ export default function Login({ setUser }) {
 
         <Boton
           color="white"
-          backgroundColor="rgb(8, 206, 114)"
+          backgroundColor="#36885eeb"
           className="boton-logedinmethods"
           onClick={() => setIsSignUp(true)}
         >
