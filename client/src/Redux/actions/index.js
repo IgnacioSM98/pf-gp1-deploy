@@ -200,3 +200,27 @@ export function setUserInfo(user) {
     }
   };
 }
+
+export function getUsuarios() {
+  return function (dispatch) {
+    try {
+      axios(`${urlBase}usuarios`).then((res) =>
+        dispatch({ type: "GET_USUARIOS", payload: res.data })
+      );
+    } catch (error) {
+      console.log(error);
+    }
+  };
+}
+
+export function getPedidos() {
+  return function (dispatch) {
+    try {
+      axios(`${urlBase}pedidos`).then((res) =>
+        dispatch({ type: "GET_PEDIDOS", payload: res.data })
+      );
+    } catch (error) {
+      console.log(error);
+    }
+  };
+}

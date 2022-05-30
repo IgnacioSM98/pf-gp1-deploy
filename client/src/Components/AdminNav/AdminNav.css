@@ -1,11 +1,12 @@
 *{
+    margin-top: 30px;
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
 .side-bar {
-    background: rgba(255, 255, 255, 0.1);
+    background-color: #08CE72;
     backdrop-filter: blur(15px);
     width: 290px;
     height: 100vh;
@@ -15,48 +16,24 @@
     overflow-y: auto;
 }
 
-.side-bar .menu {
+.menu {
+    display: flex;
     width: 100%;
     margin-top: 80px;
-
+    justify-content: flex-start;
+    flex-direction: column;
+    align-items: flex-start;
 }
 
-.side-bar .menu .item {
-    position: relative;
+.item {
+    color: white;
     cursor: pointer;
-}
-
-.side-bar .menu .item a{
     height: 28px;
-    width: 173px;
-    left: 1202px;
-    top: 600px;
-    border-radius: 5px;
+    width: 150px;
     text-decoration: none;
-    font-size: 16px;
+    font-size: 20px;
     display: block;
-    padding: 5px 30px;
     line-height: 60px;
-}
-
-.side-bar .menu .item a:hover{
-    background: rgba(255, 255, 255, 0.1);
-    transition: 0.3s ease;
-}
-
-.side-bar .menu .item a .dropdown {
-    position: absolute;
-    right: 0;
-    margin: 20px;
-    transition: 0.3s ease;
-}
-
-.side-bar .menu .item .sub-menu {
-    background: rgba(255, 255, 255, 0.1);
-
-}
-
-.side-bar .menu .item .sub-menu a{
-    padding-left: 80px;
-    
+    padding-left: 10px;
+    margin: 20px 0px; 
 }

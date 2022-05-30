@@ -1,48 +1,56 @@
-import React from "react";
-import { Link } from "";
+import React, { useEffect } from "react";
+import "./AdminNav.css";
+import { useSelector, useDispatch } from "react-redux";
+import { getCategorias, getProductos, getUsuarios } from "../../Redux/actions";
 
-export default function AdminNav() {
+export default function AdminNav({ setCartas }) {
+  const dispatch = useDispatch();
+  const categorias = useSelector((state) => state.categorias);
+  const productos = useSelector((state) => state.productos);
+  const usuarios = useSelector((state) => state.usuarios);
+  const pedidos = useSelector((state) => state.pedidos);
+
+  function handleClick(e) {
+    if (e.target.name === "usuarios") dispatch(getUsuarios);
+    if (e.target.name === "categorias") dispatch(getCategorias);
+    if (e.target.name === "productos") dispatch(getProductos);
+    if (e.target.name === "pedidos") dispatch(pedidos);
+  }
+
+  useEffect(() => {
+    setCartas(productos);
+  }, [productos]);
+
+  useEffect(() => {
+    setCartas(categorias);
+  }, [categorias]);
+
+  useEffect(() => {
+    setCartas(usuarios);
+  }, [usuarios]);
+
   return (
     <div className="side-bar">
-      <div className="menu">
-        <div className="item">
-          <a className="sub-btn">
-            <i className=""></i>USUARIOS
-          </a>
-        </div>
-        <div className="item">
-          <a className="sub-btn">
-            <i className=""></i>CATEGORIAS
-          </a>
-          <div className="sub-menu">
-            <a className="sub-item">CAFE</a>
-            <a className="sub-item">TE</a>
-            <a className="sub-item">YERBA MATE</a>
-            <a className="sub-item">UTENSILLOS</a>
-            <a className="sub-item"></a>
-          </div>
-        </div>
-        <div className="item">
-          <a className="sub-btn">
-            <i className=""></i>PRODUCTOS
-          </a>
-        </div>
-        <div className="item">
-          <a className="sub-btn">
-            <i className=""></i>PEDIDOS
-          </a>
-        </div>
-        <div className="item">
-          <a className="sub-btn">
-            <i className=""></i>MI PERFIL
-          </a>
-        </div>
-        <div className="item">
-          <a className="sub-btn">
-            <i className=""></i>NOTIFICACIONES
-          </a>
-        </div>
-      </div>
+      <ul className="menu">
+        <li className="item" name="usuarios" onClick={handleClick}>
+          USUARIOS
+        </li>
+        <li className="item" name="categorias" onClick={handleClick}>
+          CATEGORIAS
+        </li>
+        <li className="item" name="productos" onClick={handleClick}>
+          PRODUCTOS
+        </li>
+        <li className="item" name="pedidos" onClick={handleClick}>
+          PEDIDOS
+        </li>
+        <li className="item" name="perfil" onClick={handleClick}>
+          MI PERFIL
+        </li>
+        <li className="item" name="natificaciones" onClick={handleClick}>
+          NOTIFICACIONES
+        </li>
+      </ul>
     </div>
   );
 }
