@@ -221,14 +221,13 @@ export function changeUserMode(userInfo) {
     } catch (err) {
       console.log(err);
     }
+  }
+}
 
 export function getDetalleEnvio(id){
   return async function (dispatch){
     let envio = await axios.get(`${urlBase}${pedido}${id}`)
-    return dispatch({
-      type: "GET_DETALLE_ENVIO",
-      payload: envio.data
-    })
+    return dispatch({ type: "GET_DETALLE_ENVIO", payload: envio.data })
   };
 }
 
