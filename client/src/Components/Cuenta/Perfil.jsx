@@ -1,26 +1,40 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { getUsuarios } from "../../Redux/actions";
 import "./Perfil.css";
 import putPerfil from "./putPerfil";
 
 export default function Perfil() {
   const user = useSelector((state) => state.userInfo);
+  const mail = user.email;
+  const usuarios = useSelector((state) => state.usuarios);
+  const [usuario, setUsuario] = useState({});
   const dispatch = useDispatch();
   const [inputs, setInputs] = useState({});
 
   useEffect(() => {
-    console.log(user);
-    setInputs({
-      ...inputs,
-      nombre: user.nombre,
-      apellido: user.apellido,
-      dni: user.dni,
-      direccion: user.direccion,
-      mail: user.email,
-      contraseña: user.contraseña,
-      telefono: user.telefono,
-    });
+    dispatch(getUsuarios());
   }, []);
+
+  useEffect(() => {
+    setUsuario(usuarios.find((u) => u.mail === mail));
+  }, [usuarios]);
+
+  useEffect(() => {
+    if (usuario) {
+      setInputs({
+        ...inputs,
+        id: usuario.id,
+        nombre: usuario.nombre,
+        apellido: usuario.apellido,
+        dni: usuario.dni,
+        direccion: usuario.direccion,
+        mail: usuario.mail,
+        contraseña: usuario.contraseña,
+        telefono: usuario.telefono,
+      });
+    }
+  }, [usuario]);
 
   const handleInputs = (e) => {
     setInputs({ ...inputs, [e.target.name]: e.target.value });
