@@ -16,7 +16,7 @@ export default function validate(post) {
   if (!post.stock || typeof post.stock !== "number") {
     errors.stock = "Ingresa un stock, que sea un numero";
   }
-  if (!post.categorias[0]) {
+  if (post.probando && !post.categorias[0]) {
     errors.categorias = "Ingresar al menos 1 categoría";
   }
 
