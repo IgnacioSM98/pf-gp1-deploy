@@ -1,9 +1,15 @@
-import React from "react";
-import CarritoItem from "../Carrito/CarritoItem";
+import React, { useState } from "react";
+
 import { useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+
 import styled from "styled-components";
-import { ItemCompra } from "../index";
+import {
+  ItemCompra,
+  Pedidos,
+  AdminProductos,
+  EliminarCategoria,
+} from "../index";
+import Usuarios from "../Usuarios/Usuarios";
 
 const Container = styled.div`
   display: flex;
@@ -20,6 +26,7 @@ const Informacion = styled.div`
   width: 60%;
   height: 100%;
   // padding-top: 40px;
+  position: relative;
 `;
 
 const Options = styled.div`
@@ -159,6 +166,7 @@ const Items = styled.div`
 
 function Cuenta() {
   const carrito = useSelector((state) => state.carrito);
+  const [detalle, setDetalle] = useState("principal");
 
   return (
     <Container>
@@ -167,35 +175,99 @@ function Cuenta() {
           <Titulo>Infusion Store</Titulo>
         </ContenedorTitulo>
         <Botones>
-          <Boton>Ajustes de Perfil</Boton>
-          <Boton>Mis Compras</Boton>
-          <Boton>Reseñas</Boton>
-          <Boton>Favoritos</Boton>
-          <Boton>Notificaciones</Boton>
-          <Boton>Seguridad</Boton>
-          <Boton>Contacto</Boton>
+          <Boton
+            style={
+              detalle === "usuarios"
+                ? { backgroundColor: "#222", color: "white" }
+                : null
+            }
+            onClick={() => {
+              setDetalle("usuarios");
+            }}
+          >
+            Usuarios
+          </Boton>
+          <Boton
+            style={
+              detalle === "categorias"
+                ? { backgroundColor: "#222", color: "white" }
+                : null
+            }
+            onClick={() => {
+              setDetalle("categorias");
+            }}
+          >
+            Categorias
+          </Boton>
+          <Boton
+            style={
+              detalle === "productos"
+                ? { backgroundColor: "#222", color: "white" }
+                : null
+            }
+            onClick={() => {
+              setDetalle("productos");
+            }}
+          >
+            Productos
+          </Boton>
+          <Boton
+            style={
+              detalle === "pedidos"
+                ? { backgroundColor: "#222", color: "white" }
+                : null
+            }
+            onClick={() => {
+              setDetalle("pedidos");
+            }}
+          >
+            Pedidos
+          </Boton>
+
+          <Boton
+            style={
+              detalle === "reseñas"
+                ? { backgroundColor: "#222", color: "white" }
+                : null
+            }
+            onClick={() => {
+              setDetalle("reseñas");
+            }}
+          >
+            Reseñas
+          </Boton>
         </Botones>
 
-        <Sesion>Mi Cuenta</Sesion>
+        <Sesion>Panel de Administrador</Sesion>
       </Options>
       <Informacion>
-        <Categorias>
-          <Categoria>
-            <Secciones>Historial de compras</Secciones>
+        {detalle === "usuarios" && <Usuarios />}
 
-            {carrito[0] && (
-              <Items>
-                {carrito.map((el) => {
-                  return <ItemCompra key={el.id} producto={el} />;
-                })}
-              </Items>
-            )}
-          </Categoria>
+        {detalle === "categorias" && <EliminarCategoria />}
 
-          <Categoria>
-            <Secciones>Productos recomendados</Secciones>
-          </Categoria>
-        </Categorias>
+        {detalle === "pedidos" && <Pedidos />}
+
+        {detalle === "productos" && <AdminProductos />}
+
+        {detalle === "principal" && (
+          <Categorias>
+            <Categoria>
+              <Secciones>Pedidos a Despachar</Secciones>
+
+              {carrito[0] && (
+                <Items>
+                  {carrito.map((el) => {
+                    return <ItemCompra key={el.id} producto={el} />;
+                  })}
+                </Items>
+              )}
+            </Categoria>
+
+            <Categoria>
+              {/* <Secciones>Productos recomendados</Secciones> */}
+            </Categoria>
+          </Categorias>
+        )}
       </Informacion>
     </Container>
   );
