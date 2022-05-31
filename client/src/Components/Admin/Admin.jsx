@@ -1,9 +1,15 @@
-import React, { useState, useEffect } from "react";
-import CarritoItem from "../Carrito/CarritoItem";
+import React, { useState } from "react";
+
 import { useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+
 import styled from "styled-components";
-import { ItemCompra, Compras } from "../index";
+import {
+  ItemCompra,
+  Pedidos,
+  AdminProductos,
+  EliminarCategoria,
+} from "../index";
+import Usuarios from "../Usuarios/Usuarios";
 
 const Container = styled.div`
   display: flex;
@@ -20,6 +26,7 @@ const Informacion = styled.div`
   width: 60%;
   height: 100%;
   // padding-top: 40px;
+  position: relative;
 `;
 
 const Options = styled.div`
@@ -158,17 +165,8 @@ const Items = styled.div`
 `;
 
 function Cuenta() {
-  const componentes = {
-    compras: Compras,
-  };
-
   const carrito = useSelector((state) => state.carrito);
-  const [componente, setComponente] = useState();
-  var ComponenteDinamico = componentes[componente];
-
-  const handleOnClick = (e) => {
-    setComponente(e.target.value);
-  };
+  const [detalle, setDetalle] = useState("principal");
 
   return (
     <Container>
@@ -177,49 +175,99 @@ function Cuenta() {
           <Titulo>Infusion Store</Titulo>
         </ContenedorTitulo>
         <Botones>
-          <Boton onClick={handleOnClick} value="perfil">
-            Ajustes de Perfil
+          <Boton
+            style={
+              detalle === "usuarios"
+                ? { backgroundColor: "#222", color: "white" }
+                : null
+            }
+            onClick={() => {
+              setDetalle("usuarios");
+            }}
+          >
+            Usuarios
           </Boton>
-          <Boton onClick={handleOnClick} value="compras">
-            Mis Compras
+          <Boton
+            style={
+              detalle === "categorias"
+                ? { backgroundColor: "#222", color: "white" }
+                : null
+            }
+            onClick={() => {
+              setDetalle("categorias");
+            }}
+          >
+            Categorias
           </Boton>
-          <Boton onClick={handleOnClick} value="reseñas">
+          <Boton
+            style={
+              detalle === "productos"
+                ? { backgroundColor: "#222", color: "white" }
+                : null
+            }
+            onClick={() => {
+              setDetalle("productos");
+            }}
+          >
+            Productos
+          </Boton>
+          <Boton
+            style={
+              detalle === "pedidos"
+                ? { backgroundColor: "#222", color: "white" }
+                : null
+            }
+            onClick={() => {
+              setDetalle("pedidos");
+            }}
+          >
+            Pedidos
+          </Boton>
+
+          <Boton
+            style={
+              detalle === "reseñas"
+                ? { backgroundColor: "#222", color: "white" }
+                : null
+            }
+            onClick={() => {
+              setDetalle("reseñas");
+            }}
+          >
             Reseñas
-          </Boton>
-          <Boton onClick={handleOnClick} value="favoritos">
-            Favoritos
-          </Boton>
-          <Boton onClick={handleOnClick} value="notificaciones">
-            Notificaciones
-          </Boton>
-          <Boton onClick={handleOnClick} value="seguridad">
-            Seguridad
-          </Boton>
-          <Boton onClick={handleOnClick} value="contacto">
-            Contacto
           </Boton>
         </Botones>
 
-        <Sesion>Mi Cuenta</Sesion>
+        <Sesion>Panel de Administrador</Sesion>
       </Options>
       <Informacion>
-        <Categorias>
-          <Categoria>
-            {componente && <ComponenteDinamico />}
-            {/* <Secciones>Historial de compras</Secciones> */}
-            {/* {carrito[0] && (
-              <Items>
-                {carrito.map((el) => {
-                  return <ItemCompra key={el.id} producto={el} />;
-                })}
-              </Items>
-            )} */}
-          </Categoria>
+        {detalle === "usuarios" && <Usuarios />}
 
-          <Categoria>
-            <Secciones>Productos recomendados</Secciones>
-          </Categoria>
-        </Categorias>
+        {detalle === "categorias" && <EliminarCategoria />}
+
+        {detalle === "pedidos" && <Pedidos />}
+
+        {detalle === "productos" && <AdminProductos />}
+
+        {detalle === "principal" && (
+          <Categorias>
+            <Categoria>
+              <Secciones>Pedidos a Despachar</Secciones>
+
+              {carrito[0] && (
+                <Items>
+                  {carrito.map((el) => {
+                    return <ItemCompra key={el.id} producto={el} />;
+                  })}
+                </Items>
+              )}
+            </Categoria>
+
+            <Categoria>
+              {/* <Secciones>Productos recomendados</Secciones> */}
+            </Categoria>
+          </Categorias>
+        )}
       </Informacion>
     </Container>
   );

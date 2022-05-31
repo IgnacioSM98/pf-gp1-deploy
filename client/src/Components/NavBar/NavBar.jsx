@@ -52,11 +52,11 @@ const ChangeMode = styled.span`
 
 const UserMenu = styled.div`
   position: absolute;
-  bottom: -100px;
+  bottom: -120px;
   color: white;
   right: 0;
   background-color: #000000f0;
-  height: 100px;
+  height: 120px;
   width: 170px;
   border-radius: 0px 0px 0px 10px;
   display: flex;
@@ -251,12 +251,22 @@ export default function NavBar({ contacto, setUser }) {
             </ChangeMode>
           )}
 
+          {userInfo?.rol === "admin" && (
+            <UserButton to="/admin" onClick={() => setMenu(!userMenu)}>
+              Panel Administracion
+            </UserButton>
+          )}
+
           <UserButton to="/cuenta" onClick={() => setMenu(!userMenu)}>
             Mi Cuenta
           </UserButton>
-          <UserButton to="/carrito" onClick={() => setMenu(!userMenu)}>
-            Carrito
-          </UserButton>
+
+          {!userInfo?.rol === "admin" && (
+            <UserButton to="/carrito" onClick={() => setMenu(!userMenu)}>
+              Carrito
+            </UserButton>
+          )}
+
           <UserButton
             to="/"
             onClick={(e) => {

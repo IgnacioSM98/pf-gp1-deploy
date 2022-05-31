@@ -30,14 +30,21 @@ import Reseñas from "./Reseñas/Reseñas";
 import ItemCompra from "./Compra/ItemCompra";
 import QR from "./QR/QR";
 import Compras from "./Compras/Compras";
+import Admin from "./Admin/Admin";
+import Pedidos from "./Pedidos/Pedidos";
+import Usuarios from "./Usuarios/Usuarios";
+import Pedido from "./Pedidos/Pedido";
+import AdminProductos from "./Admin/AdminProductos";
 
 export {
   Home,
   Blog,
   Carrito,
   Cuenta,
+  Admin,
   Tienda,
   CrearProducto,
+  Pedidos,
   NavBar,
   Footer,
   StarRating,
@@ -58,10 +65,13 @@ export {
   Reseñas,
   Loading,
   Relacionado,
+  Pedido,
+  Usuarios,
   MercadoPagoIntegracion,
   DetalleEnvio,
   Checkout,
   ItemCompra,
   QR,
   Compras,
+  AdminProductos,
 };
