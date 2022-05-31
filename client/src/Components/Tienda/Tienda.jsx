@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { getProductos, getProductosFiltrados } from "../../Redux/actions/index";
 import {
   Producto,
@@ -34,17 +34,17 @@ const ContenedorFiltrosPro = styled.div`
 `;
 
 const FiltrosCont = styled.div`
-  background-color: #36885ed1;
+  background-color: #36885e6e;
   width: 300px;
   height: 600px;
   padding: 1.5rem;
   border-radius: 15px;
   margin-top: 2rem;
-  box-shadow: 0px 2px 2px 0 #222, 0 2px 2px 0 #222;
+  // box-shadow: 0px 2px 2px 0 #222, 0 2px 2px 0 #222;
 `;
 
 const CuadradoFiltro = styled.div`
-  background: #36885ed1;
+  background: #36885e99;
   width: 100%;
   height: 550px;
   display: flex;
@@ -74,7 +74,7 @@ const Linea = styled.hr`
   width: 70%;
   height: 0px;
   background-color: rgba(4, 4, 4, 1);
-  margin-top: 1.5rem;
+  // margin-top: 1.5rem;
 `;
 
 const Titulo = styled.p`
@@ -89,7 +89,10 @@ const TextoLinea = styled.div`
   min-width: 1200px;
   flex-direction: row;
   justify-content: space-evenly;
+  align-items: center;
   margin-top: 2rem;
+
+  position: relative;
 `;
 
 const Imagen = styled.img`
@@ -160,12 +163,45 @@ const Tienda = styled.h1`
   text-shadow: 0px 1px 1px #222, 1px -1px 0 darkgrey;
 `;
 
+const Crear = styled.button`
+  // top: 660px;
+  // top: 0;
+  // right: 0;
+  // position: absolute;
+  height: 100%;
+  width: 80px;
+  background: #36885e;
+
+  display: block;
+
+  // height: 30px;
+  border: none;
+  color: white;
+  border-radius: 4px;
+  font-size: 16px;
+  font-weight: 600;
+  padding: 9px 20px;
+  // margin: 40px 0px 0px 0px;
+  // margin: auto;
+  cursor: pointer;
+  margin: 1px;
+
+  &: hover {
+    color: #36885ed1;
+    background-color: white;
+    border: 0.1px solid black;
+    margin: 0px;
+  }
+`;
+
 function Shop({ contacto }) {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+
   const productos = useSelector((state) => state.productos);
   const productosFiltrados = useSelector((state) => state.productosFiltrados);
 
-  const admin = useSelector((state) => state.userInfo?.visualizacion);
+  const user = useSelector((state) => state.userInfo?.visualizacion);
 
   const [selected, setSelected] = useState("");
   const [pages, setPages] = useState(4);
@@ -220,25 +256,24 @@ function Shop({ contacto }) {
   };
 
   const filterPerPages = (producto, i) => {
-    if (admin === "admin") {
-      if (Number(pageSelected) === 1) {
-        if (i >= 8 * (pageSelected - 1) && i <= 8 * pageSelected - 1) {
-          return producto;
-        }
-      } else {
-        if (
-          i >= 8 * (pageSelected - 1) &&
-          i <= 9 * pageSelected - pageSelected
-        ) {
-          return producto;
-        }
-      }
-    } else {
-      if (i >= 9 * (pageSelected - 1) && i <= 9 * pageSelected - 1) {
-        // console.log(i, producto.nombre);
-        return producto;
-      }
+    // if (admin === "admin") {
+    //   if (Number(pageSelected) === 1) {
+    //     if (i >= 8 * (pageSelected - 1) && i <= 8 * pageSelected - 1) {
+    //       return producto;
+    //     }
+    //   } else {
+    //     if (
+    //       i >= 8 * (pageSelected - 1) &&
+    //       i <= 9 * pageSelected - pageSelected
+    //     ) {
+    //       return producto;
+    //     }
+    //   }
+    // } else {
+    if (i >= 9 * (pageSelected - 1) && i <= 9 * pageSelected - 1) {
+      return producto;
     }
+    // }
   };
 
   const filterDropdown = (producto) => {
@@ -264,8 +299,6 @@ function Shop({ contacto }) {
         <TextoInfusion>INFUSION STORE</TextoInfusion>
       </Header>
 
-      {/* <Tienda>Tienda</Tienda> */}
-
       <Buscador
         type="text"
         placeholder="Buscar productos..."
@@ -276,7 +309,19 @@ function Shop({ contacto }) {
 
       <TextoLinea>
         <Titulo>Nuestros Productos</Titulo>
-        <Linea />
+        <Linea
+          style={user === "admin" ? { width: "60%" } : { marginTop: "1.5rem" }}
+        />
+        {user === "admin" && (
+          <Crear
+            onClick={(e) => {
+              e.preventDefault();
+              navigate("/admin/crear");
+            }}
+          >
+            Crear
+          </Crear>
+        )}
       </TextoLinea>
 
       <ContenedorFiltrosPro>
@@ -292,7 +337,7 @@ function Shop({ contacto }) {
               <p>No se encontraron resultados</p>
             )}
 
-            {admin === "admin" && <AgregarProducto />}
+            {/* {admin === "admin" && <AgregarProducto />} */}
 
             {productosFiltrados &&
               productosFiltrados
@@ -318,11 +363,10 @@ function Shop({ contacto }) {
                   // }
                 })}
           </ProductosTienda>
+
           {pages > 0 ? (
             <Paginado pages={pages} setPageSelected={setPageSelected} />
-          ) : (
-            <></>
-          )}
+          ) : null}
         </div>
       </ContenedorFiltrosPro>
 
