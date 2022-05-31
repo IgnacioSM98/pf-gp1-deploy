@@ -271,3 +271,12 @@ export function eliminarDeFavoritos(productoFav) {
     dispatch({ type: "ELIMINAR_DE_FAVORITOS", payload: productoFav });
   };
 }
+
+export function enviarMail(userInfo) {
+  const user = { ...userInfo };
+  const usuario = user.multiFactor.user.email;
+  return async function (dispatch) {
+    await axios.post(`${urlBase}usuario/confirmacion`, { mail: usuario });
+    return dispatch({ type: "ENVIAR_MAIL", payload: usuario });
+  };
+}

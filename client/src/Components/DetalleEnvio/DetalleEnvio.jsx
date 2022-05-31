@@ -1,7 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams, Link } from "react-router-dom";
-import { getDetalleEnvio, actualizarEstadoEnvio } from "../../Redux/actions";
+import {
+  getDetalleEnvio,
+  actualizarEstadoEnvio,
+  enviarMail,
+} from "../../Redux/actions";
 import styled from "styled-components";
 import Swal from "sweetalert2";
 
@@ -181,10 +185,12 @@ export default function DetalleEnvio() {
   let dispatch = useDispatch();
   let { id } = useParams();
   let detalle = useSelector((state) => state.detalleEnvio);
+  const usermail = useSelector((state) => state.userInfo);
   const user = useSelector((state) => state.userInfo?.visualizacion);
 
   useEffect(() => {
     dispatch(getDetalleEnvio(id));
+    dispatch(enviarMail(usermail));
   }, []);
   console.log(detalle);
   let [input, setInput] = useState({
