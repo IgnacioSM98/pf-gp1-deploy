@@ -29,6 +29,7 @@ import Checkout from "./CheckoutCarrito/CheckoutCarrito";
 import Reseñas from "./Reseñas/Reseñas";
 import ItemCompra from "./Compra/ItemCompra";
 import QR from "./QR/QR";
+import Compras from "./Compras/Compras";
 import Admin from "./Admin/Admin";
 import Pedidos from "./Pedidos/Pedidos";
 import Usuarios from "./Usuarios/Usuarios";
@@ -71,5 +72,6 @@ export {
   Checkout,
   ItemCompra,
   QR,
+  Compras,
   AdminProductos,
 };
