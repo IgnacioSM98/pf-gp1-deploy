@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useParams } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 import { getDetalleEnvio, actualizarEstadoEnvio } from "../../Redux/actions";
 import styled from "styled-components";
 import Swal from "sweetalert2";
@@ -61,11 +61,10 @@ const Circulo = styled.div`
 
 const Linea = styled.div`
   width: 1.5px;
-  height: 45px;
+  height: 40px;
   background-color: ${(props) => (props.active ? "green" : "#bbb9b9")};
-
   position: absolute;
-  top: 30px;
+  top: 31px;
   left: 5.5px;
 `;
 const ParrafoLi = styled.p`
@@ -88,6 +87,7 @@ const Domicilio = styled.div`
 const Lugar = styled.div`
   display: flex;
   margin: 0.2em 0em 0em 1.8em;
+  gap: 3px;
 `;
 const ParrafoLugar = styled.p`
   text-align: left;
@@ -122,6 +122,7 @@ const Compra = styled.div`
   flex-direction: column;
   width: 350px;
   // height: 100px;
+  padding-bottom: 1em;
   border: 1px solid black;
   border-radius: 16px;
   box-shadow: 3px 3px 12px #8080807a;
@@ -157,21 +158,23 @@ const Formulario = styled.form`
 
   position: absolute;
   top: 8%;
-  right: 150px;
+  right: 300px;
 `;
 
 const Boton = styled.button`
   width: 50%;
   height: 30px;
   border-radius: 20px;
-  margin: 1em;
+  margin: 0.5em;
   background: black;
   color: white;
+  cursor: pointer;
 `;
 
 const Producto = styled.p`
-  margin: 10px 1px;
-  font-size: 15px;
+  margin: 0.5em 0em 0em 1.8em;
+  text-align: left;
+  color: #424242;
 `;
 
 export default function DetalleEnvio() {
@@ -183,7 +186,7 @@ export default function DetalleEnvio() {
   useEffect(() => {
     dispatch(getDetalleEnvio(id));
   }, []);
-console.log(detalle)
+  console.log(detalle);
   let [input, setInput] = useState({
     estado: "",
   });
@@ -193,6 +196,7 @@ console.log(detalle)
       estado: e.target.value,
     });
   };
+  console.log(input);
 
   let handleSubmit = (e) => {
     e.preventDefault();
@@ -201,45 +205,47 @@ console.log(detalle)
 
   return (
     <Container>
-      {user === "admin" && <h1 style={{ position: "absolute", top: "8%", left: "160px" }}>
-        {`Pedido numero: #2022${detalle.id}`}
-      </h1>}
+      {user === "admin" && (
+        <h1 style={{ position: "absolute", top: "8%", left: "250px" }}>
+          {`Pedido numero: #2022${detalle.id}`}
+        </h1>
+      )}
 
       {user === "admin" && (
-        <Formulario onSubmit={handleSubmit} action="">
+        <Formulario onSubmit={handleSubmit}>
           <ModificarEstados onChange={handleInputChange}>
             <option name="estados">Modificar estado</option>
             <OpcionEstado
-              onClick={() => {
-                Swal.fire({
-                  title: "Cambiar Estado",
-                  text: "¿Estas seguro de cambiar el estado de este pedido de (Estado actual) a (Proximo estado)?",
-                  icon: "warning",
-                  iconColor: "grey",
-                  color: "#222",
-                  showCancelButton: true,
-                  cancelButtonText: "No",
-                  confirmButtonColor: "green",
-                  cancelButtonColor: "darkgrey",
-                  confirmButtonText: "Si",
-                }).then((result) => {
-                  if (result.isConfirmed) {
-                    Swal.fire({
-                      text: "El pedido se actualizó con éxito",
-                      icon: "success",
-                      iconColor: "green",
-                      color: "#222",
-                      showConfirmButton: false,
-                      timer: "1500",
-                      toast: true,
-                    });
-                    // dispatch(quitarItem(props));
-                  }
-                });
-              }}
-              value="En Preparación"
+              // onClick={() => {
+              //   Swal.fire({
+              //     title: "Cambiar Estado",
+              //     text: "¿Estas seguro de cambiar el estado de este pedido de (Estado actual) a (Proximo estado)?",
+              //     icon: "warning",
+              //     iconColor: "grey",
+              //     color: "#222",
+              //     showCancelButton: true,
+              //     cancelButtonText: "No",
+              //     confirmButtonColor: "green",
+              //     cancelButtonColor: "darkgrey",
+              //     confirmButtonText: "Si",
+              //   }).then((result) => {
+              //     if (result.isConfirmed) {
+              //       Swal.fire({
+              //         text: "El pedido se actualizó con éxito",
+              //         icon: "success",
+              //         iconColor: "green",
+              //         color: "#222",
+              //         showConfirmButton: false,
+              //         timer: "1500",
+              //         toast: true,
+              //       });
+              //       // dispatch(quitarItem(props));
+              //     }
+              //   });
+              // }}
+              value="En preparación"
             >
-              En Preparación
+              En preparación
             </OpcionEstado>
             <OpcionEstado value="En camino">En camino</OpcionEstado>
             <OpcionEstado value="En punto de entrega/poder del correo">
@@ -247,7 +253,7 @@ console.log(detalle)
             </OpcionEstado>
             <OpcionEstado value="Entregado">Entregado</OpcionEstado>
           </ModificarEstados>
-          {/* <Boton type="submit">Actualizar Estado</Boton> */}
+          <Boton type="submit">Actualizar Estado</Boton>
         </Formulario>
       )}
 
@@ -257,45 +263,35 @@ console.log(detalle)
           <Opciones>
             <ul>
               <EstadosLi>
-                <Circulo active={true}></Circulo>
-                <Linea active={true}></Linea>
+                <Circulo
+                  active={detalle?.Estado !== "En preparación" ? false : true}
+                ></Circulo>
+                <Linea
+                  active={detalle?.Estado !== "En preparación" ? false : true}
+                ></Linea>
                 <ImagenEstados
                   src="https://i.ibb.co/NFLFkKr/Asset-460.png"
                   alt=""
                 />
-                <ParrafoLi active={true}>En Preparación</ParrafoLi>
+                <ParrafoLi
+                  active={detalle?.Estado !== "En preparación" ? false : true}
+                >
+                  En preparación
+                </ParrafoLi>
               </EstadosLi>
               <EstadosLi>
                 <Circulo
-                  active={
-                    detalle?.Estado !== "En camino" ||
-                    "En punto de entrega/poder del correo" ||
-                    "Entregado"
-                      ? false
-                      : true
-                  }
+                  active={detalle?.Estado !== "En camino" ? false : true}
                 ></Circulo>
                 <Linea
-                  active={
-                    detalle?.Estado !== "En camino" ||
-                    "En punto de entrega/poder del correo" ||
-                    "Entregado"
-                      ? false
-                      : true
-                  }
+                  active={detalle?.Estado !== "En camino" ? false : true}
                 ></Linea>
                 <ImagenEstados
                   src="https://i.ibb.co/NCmsgvw/Asset-510.png"
                   alt=""
                 />
                 <ParrafoLi
-                  active={
-                    detalle?.Estado !== "En camino" ||
-                    "En punto de entrega/poder del correo" ||
-                    "Entregado"
-                      ? false
-                      : true
-                  }
+                  active={detalle?.Estado !== "En camino" ? false : true}
                 >
                   En camino
                 </ParrafoLi>
@@ -303,18 +299,16 @@ console.log(detalle)
               <EstadosLi>
                 <Circulo
                   active={
-                    detalle?.Estado !==
-                      "En punto de entrega/poder del correo" || "Entregado"
+                    detalle?.Estado !== "En punto de entrega/poder del correo"
                       ? false
                       : true
                   }
                 ></Circulo>
                 <Linea
                   active={
-                    detalle?.Estado !==
-                    "En punto de entrega/poder del correo" || "Entregado"
-                    ? false
-                    : true
+                    detalle?.Estado !== "En punto de entrega/poder del correo"
+                      ? false
+                      : true
                   }
                 ></Linea>
                 <ImagenEstados
@@ -323,10 +317,9 @@ console.log(detalle)
                 />
                 <ParrafoLi
                   active={
-                    detalle?.Estado !==
-                    "En punto de entrega/poder del correo" || "Entregado"
-                    ? false
-                    : true
+                    detalle?.Estado !== "En punto de entrega/poder del correo"
+                      ? false
+                      : true
                   }
                 >
                   En punto de entrega/poder del correo
@@ -334,14 +327,14 @@ console.log(detalle)
               </EstadosLi>
               <EstadosLi>
                 <Circulo
-                  active={detalle?.Estado !== "Entregado" ? false: true}
+                  active={detalle?.Estado !== "Entregado" ? false : true}
                 ></Circulo>
                 <ImagenEstados
                   src="https://i.ibb.co/Z2NPGQ0/Asset-210.png"
                   alt=""
                 />
                 <ParrafoLi
-                  active={detalle?.Estado !== "Entregado" ? false: true}
+                  active={detalle?.Estado !== "Entregado" ? false : true}
                 >
                   Entregado
                 </ParrafoLi>
@@ -350,35 +343,58 @@ console.log(detalle)
           </Opciones>
         </Estado>
         <Domicilio className="domicilio">
-          <Titulo>Domicilio de {detalle.Tipo_de_envio === "domicilio" ? "entrega" : "punto de retiro" }</Titulo>
-          <LogoGPS src="https://i.ibb.co/PC2BbmZ/Asset-960.png" alt="Imagen logo GPS" />
-          {/* <Parrafo>{detalle.Direccion_de_envio}</Parrafo> */}
-          {/* el domicilio tendria que ser un objeto en el modelo para poder recibir, ciudad, CP y provincia? */}
-          {/* <Parrafo>{`${detalle?.Direccion_de_envio.Calle} ${detalle?.Direccion_de_envio.Altura} ${detalle?.Direccion_de_envio.Piso}`}</Parrafo>
+          <Titulo>
+            Domicilio de{" "}
+            {detalle.Tipo_de_envio === "domicilio"
+              ? "entrega"
+              : "punto de retiro"}
+          </Titulo>
+          <LogoGPS
+            src="https://i.ibb.co/PC2BbmZ/Asset-960.png"
+            alt="Imagen logo GPS"
+          />
+          <Parrafo>{`${detalle?.Direccion_de_envio?.calle} ${detalle?.Direccion_de_envio?.altura} ${detalle?.Direccion_de_envio?.piso}`}</Parrafo>
           <Lugar>
-            <ParrafoLugar>{detalle?.Direccion_de_envio.Ciudad}</ParrafoLugar>
-            <ParrafoLugar>{(detalle?.Direccion_de_envio.CodigoPostal)},</ParrafoLugar>
-            <ParrafoLugar>{detalle?.Direccion_de_envio.Provincia}</ParrafoLugar>
-          </Lugar> */}
+            <ParrafoLugar>{`${detalle?.Direccion_de_envio?.ciudad} `}</ParrafoLugar>
+            <ParrafoLugar>
+              {" "}
+              {`(${detalle?.Direccion_de_envio?.CP}), `}
+            </ParrafoLugar>
+            <ParrafoLugar>{` ${detalle?.Direccion_de_envio?.provincia}`}</ParrafoLugar>
+          </Lugar>
         </Domicilio>
         <Codigo className="codigo">
-          <Titulo>{detalle.Tipo_de_envio === "domicilio" ? " Entrega en domicilio" : "Retiro en sucursal" }</Titulo>
-          <Parrafo>Codigo de Retiro: #2022{detalle?.id}</Parrafo>
-          <LogoCodigo src="https://i.ibb.co/vkjfvPY/Asset-930.png" alt="Imagen de una pizarra" />
+          <Titulo>
+            {detalle.Tipo_de_envio === "domicilio"
+              ? " Entrega en domicilio"
+              : "Retiro en sucursal"}
+          </Titulo>
+          <Parrafo>
+            Codigo de{" "}
+            {detalle.Tipo_de_envio === "domicilio"
+              ? "para entrega:"
+              : "para retiro:"}{" "}
+            #2022{detalle?.id}
+          </Parrafo>
+          <LogoCodigo
+            src="https://i.ibb.co/vkjfvPY/Asset-930.png"
+            alt="Imagen de una pizarra"
+          />
         </Codigo>
       </Envio>
       <div>
         <Compra className="compra">
           <Titulo>
             {user === "admin" ? "Detalle de Producto" : "Compraste"}
-            <Producto>Producto 1</Producto>
-            <Producto>Producto 2</Producto>
-            <Producto>Producto 3</Producto>
-            <Producto>Producto 4</Producto>
-            <Producto>Producto 5</Producto>
-            <Producto>Producto 6</Producto>
-            <Producto>Producto 7</Producto>
           </Titulo>
+          {detalle?.idProductos?.map((el) => {
+            <>
+              <Link to={`/productos/${el?.id}`}>
+                <Producto>Producto</Producto>
+              </Link>
+              <Producto>Cantidad: {el?.cantidad}</Producto>
+            </>;
+          })}
         </Compra>
       </div>
     </Container>

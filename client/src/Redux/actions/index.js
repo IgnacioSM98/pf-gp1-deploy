@@ -253,6 +253,7 @@ export function getDetalleEnvio(id) {
 export function actualizarEstadoEnvio(id, payload) {
   return async function (dispatch) {
     await axios.put(`${urlBase}${admin}${pedido}${id}`, payload);
+    dispatch(getDetalleEnvio(id));
     return dispatch({
       type: "ACTUALIZAR_ESTADO",
     });
