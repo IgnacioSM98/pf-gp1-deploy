@@ -4,7 +4,7 @@ import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { ItemCompra, Compras } from "../index";
-import { Perfil } from "./Perfil";
+import Perfil from "./Perfil.jsx";
 
 const Container = styled.div`
   display: flex;
@@ -161,6 +161,7 @@ const Items = styled.div`
 function Cuenta() {
   const componentes = {
     compras: Compras,
+    perfil: Perfil,
   };
 
   const carrito = useSelector((state) => state.carrito);
@@ -178,7 +179,7 @@ function Cuenta() {
           <Titulo>Infusion Store</Titulo>
         </ContenedorTitulo>
         <Botones>
-          <Boton onClick={handleOnClick} value="Perfil">
+          <Boton onClick={handleOnClick} value="perfil">
             Ajustes de Perfil
           </Boton>
           <Boton onClick={handleOnClick} value="compras">
