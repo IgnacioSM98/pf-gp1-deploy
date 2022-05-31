@@ -239,6 +239,7 @@ export default function CrearProducto() {
       precio: detalle.precio,
       imagen: detalle.imagen,
       stock: detalle.stock,
+      categorias: detalle.categorias?.map((categoria) => categoria.nombre),
     });
 
     setImageSelected(detalle.imagen);
