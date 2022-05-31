@@ -387,12 +387,12 @@ export default function DetalleEnvio() {
           <Titulo>
             {user === "admin" ? "Detalle de Producto" : "Compraste"}
           </Titulo>
-          {detalle?.idProductos?.map((el) => {
+          {detalle?.productos?.map((el) => {
             <>
-              <Link to={`/productos/${el?.id}`}>
-                <Producto>Producto</Producto>
+              <Link to={`/productos/${el?.compra?.productoId}`}>
+                <Producto>{el?.nombre}</Producto>
               </Link>
-              <Producto>Cantidad: {el?.cantidad}</Producto>
+              <Producto>Cantidad: {el?.compra?.cantidad}</Producto>
             </>;
           })}
         </Compra>
