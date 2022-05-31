@@ -18,6 +18,7 @@ import {
   EliminarCategoria,
   DetalleEnvio,
   Checkout,
+  Compras,
 } from "./Components/index";
 import { Routes, Route } from "react-router-dom";
 import { useDispatch } from "react-redux";

@@ -29,6 +29,7 @@ import Checkout from "./CheckoutCarrito/CheckoutCarrito";
 import Reseñas from "./Reseñas/Reseñas";
 import ItemCompra from "./Compra/ItemCompra";
 import QR from "./QR/QR";
+import Compras from "./Compras/Compras";
 
 export {
   Home,
@@ -62,4 +63,5 @@ export {
   Checkout,
   ItemCompra,
   QR,
+  Compras,
 };
