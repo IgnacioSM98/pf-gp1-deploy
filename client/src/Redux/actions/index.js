@@ -211,7 +211,7 @@ export function getUsuarios() {
     } catch (error) {
       console.log(error);
     }
-  }
+  };
 }
 
 export function changeUserMode(userInfo) {
@@ -240,7 +240,7 @@ export function getPedidos() {
     } catch (error) {
       console.log(error);
     }
-  }
+  };
 }
 
 export function getDetalleEnvio(id) {

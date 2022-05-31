@@ -14,6 +14,7 @@ import {
   CrearProducto,
   NavBar,
   Login,
+  Admin,
   DetalleProducto,
   EliminarCategoria,
   DetalleEnvio,
@@ -21,7 +22,6 @@ import {
 } from "./Components/index";
 import { Routes, Route } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import AdministradorUsuarios from "./Components/AdministradorUsuarios/AdministradorUsuarios";
 
 function App() {
   const dispatch = useDispatch();
@@ -34,10 +34,6 @@ function App() {
     dispatch(getCategorias());
     dispatch(setUserInfo(JSON.parse(localStorage.getItem("user"))));
   }, [dispatch]);
-
-  // useEffect(() => {
-
-  // }, []);
 
   return (
     <div>
@@ -73,7 +69,7 @@ function App() {
             path="/checkout"
             element={<Checkout contacto={contacto} />}
           />
-          <Route exact path="/admin" element={<AdministradorUsuarios />} />
+          <Route exact path="/admin" element={<Admin />} />
           <Route exact path="/pedido/:id" element={<DetalleEnvio />} />
           <Route
             exact
