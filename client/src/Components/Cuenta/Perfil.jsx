@@ -1,20 +1,34 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import "./Perfil.css";
 import putPerfil from "./putPerfil";
 
 export default function Perfil() {
   const user = useSelector((state) => state.userInfo);
-  const [usuario, setUsuario] = useState(user);
   const dispatch = useDispatch();
+  const [inputs, setInputs] = useState({});
+
+  useEffect(() => {
+    console.log(user);
+    setInputs({
+      ...inputs,
+      nombre: user.nombre,
+      apellido: user.apellido,
+      dni: user.dni,
+      direccion: user.direccion,
+      mail: user.email,
+      contraseña: user.contraseña,
+      telefono: user.telefono,
+    });
+  }, []);
 
   const handleInputs = (e) => {
-    setUsuario({ ...usuario, [e.target.name]: e.target.value });
+    setInputs({ ...inputs, [e.target.name]: e.target.value });
   };
 
   function handleSubmit(e) {
     e.preventDefault();
-    dispatch(putPerfil(usuario));
+    dispatch(putPerfil(inputs));
   }
 
   return (
@@ -35,7 +49,7 @@ export default function Perfil() {
             <input
               type="text"
               name="nombre"
-              value={usuario.nombre}
+              value={inputs.nombre}
               onChange={(e) => handleInputs(e)}
               placeholder=" "
               className="input-perfil"
@@ -47,7 +61,7 @@ export default function Perfil() {
             <input
               type="text"
               name="apellido"
-              value={usuario.apellido}
+              value={inputs.apellido}
               onChange={(e) => handleInputs(e)}
               placeholder=" "
               className="input-perfil"
@@ -59,7 +73,7 @@ export default function Perfil() {
             <input
               type="text"
               name="dni"
-              value={usuario.dni}
+              value={inputs.dni}
               onChange={(e) => handleInputs(e)}
               placeholder=" "
               className="input-perfil"
@@ -71,7 +85,7 @@ export default function Perfil() {
             <input
               type="text"
               name="direccion"
-              value={usuario.direccion}
+              value={inputs.direccion}
               onChange={(e) => handleInputs(e)}
               placeholder=" "
               className="input-perfil"
@@ -83,7 +97,7 @@ export default function Perfil() {
             <input
               type="text"
               name="mail"
-              value={usuario.mail}
+              value={inputs.mail}
               onChange={(e) => handleInputs(e)}
               placeholder=" "
               className="input-perfil"
@@ -95,7 +109,7 @@ export default function Perfil() {
             <input
               type="text"
               name="contraseña"
-              value={usuario.contraseña}
+              value={inputs.contraseña}
               onChange={(e) => handleInputs(e)}
               placeholder=" "
               className="input-perfil"
@@ -107,7 +121,7 @@ export default function Perfil() {
             <input
               type="text"
               name="telefono"
-              value={usuario.telefono}
+              value={inputs.telefono}
               onChange={(e) => handleInputs(e)}
               placeholder=" "
               className="input-perfil"
