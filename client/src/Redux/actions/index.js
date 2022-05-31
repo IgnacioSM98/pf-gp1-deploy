@@ -150,6 +150,14 @@ export function postReviews(id, payload) {
     });
   };
 }
+export function enviarConsulta(payload) {
+  return async function (dispatch) {
+    await axios.post(`${urlBase}usuario/contacto`, payload);
+    return dispatch({
+      type: "ENVIAR_CONSULTA",
+    });
+  };
+}
 
 export const setSort = (value) => (dispatch) => {
   dispatch({ type: "SET_SORT", payload: value });
