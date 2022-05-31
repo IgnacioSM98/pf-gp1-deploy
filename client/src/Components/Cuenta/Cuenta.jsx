@@ -4,6 +4,7 @@ import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { ItemCompra, Compras } from "../index";
+import { Perfil } from "./Perfil";
 
 const Container = styled.div`
   display: flex;
@@ -177,7 +178,7 @@ function Cuenta() {
           <Titulo>Infusion Store</Titulo>
         </ContenedorTitulo>
         <Botones>
-          <Boton onClick={handleOnClick} value="perfil">
+          <Boton onClick={handleOnClick} value="Perfil">
             Ajustes de Perfil
           </Boton>
           <Boton onClick={handleOnClick} value="compras">
