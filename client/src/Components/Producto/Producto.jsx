@@ -18,7 +18,30 @@ const LinkProduct = styled(Link)`
 `;
 
 const Button = styled.button`
-  height: 30px;
+  height: 25px;
+  width: 90%;
+  margin: 2px 5%;
+  background-color: white;
+  border: none;
+
+  cursor: pointer;
+`;
+
+const Popup = styled.div`
+  position: absolute;
+  top: 3%;
+  right: 7%;
+  width: 22px;
+  height: 22px;
+  border-radius: 50px;
+  border: none;
+  z-index: 11;
+  margin-top: 5px;
+  font-size: 12px;
+  font-weight: 700;
+  background-color: #36885ed1;
+  color: white;
+  cursor: auto;
 `;
 
 const Botones = styled.div`
@@ -57,13 +80,14 @@ const Stock = styled.button`
 `;
 
 const Boton = styled.button`
-  color: #222;
+  color: #36885ed1;
   border-radius: 10px 10px 10px 10px;
   height: 35px;
   width: 100px;
   background-color: white;
   font-family: Poppins;
   font-size: 13px;
+  font-weight: 800;
   box-shadow: 0 2px 2px 0 #222, 0 2px 2px 0 #222;
   border: none;
   outline: none;
@@ -74,7 +98,7 @@ const Boton = styled.button`
   right: 10px;
 
   &:hover {
-    background-color: #37563de0;
+    background-color: #36885ed1;
     color: white;
     cursor: pointer;
   }
@@ -107,19 +131,19 @@ const ContenedorFav = styled.div`
   display: flex;
   position: absolute;
   z-index: 3;
-  left: 87%;
+  left: 7%;
   top: 2%;
 
   p {
     color: #5a9d7b;
-    font-size: 30px;
-    margin-top: 0;
+    font-size: 25px;
+    margin-top: 5px;
   }
 
   label {
     color: #5a9d7b;
     font-weight: bold;
-    font-size: 22px;
+    font-size: 25px;
 
     margin-top: 5px;
   }
@@ -226,39 +250,34 @@ export default function Producto({
         </div>
 
         {showOptions.button && (
-          <button
-            style={{
-              position: "absolute",
-              top: "5px",
-              right: "5px",
-              width: "30px",
-              height: "30px",
-              borderRadius: "50px",
-              border: "none",
-              zIndex: "2",
-            }}
+          <Popup
+            style={
+              showOptions.popup
+                ? { backgroundColor: "white", color: "#36885ed1" }
+                : null
+            }
             onClick={(e) => {
               e.preventDefault();
               setOptions({ ...showOptions, popup: !showOptions.popup });
             }}
           >
             ...
-          </button>
+          </Popup>
         )}
 
         {showOptions.popup && (
           <div
             style={{
               position: "absolute",
-              top: "3px",
+              top: "12px",
               left: "1%",
               right: "1%",
               width: "98%",
-              height: "130px",
+              height: "100px",
               borderRadius: "12px",
               border: "none",
-              backgroundColor: "grey",
-              zIndex: "1",
+              backgroundColor: "#36885ed1",
+              zIndex: "10",
               display: "flex",
               flexDirection: "column",
             }}
@@ -312,7 +331,7 @@ export default function Producto({
                 agregarAlCarrito(e);
               }}
             >
-              AGREGAR
+              Agregar
             </Boton>
           )}
         </div>

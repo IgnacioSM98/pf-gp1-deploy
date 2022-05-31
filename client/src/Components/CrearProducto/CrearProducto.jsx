@@ -108,8 +108,9 @@ const SelectorImagen = styled.input`
 const Imagen = styled.img`
   height: 300px;
   width: 90%;
-  object-fit: cover;
-  background-color: grey;
+  object-fit: contain;
+  background-color: white;
+  border: 1px solid black;
   z-index: 2;
   border-radius: 5px;
 `;
