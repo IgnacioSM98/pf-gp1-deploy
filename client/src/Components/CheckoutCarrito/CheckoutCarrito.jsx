@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 import { Footer, ScrollToTop, MercadoPagoIntegracion, QR } from "../index";
+import "./CheckoutCarrito.css";
 
 const Contenedor = styled.div`
   display: flex;
@@ -74,72 +75,11 @@ const ContenedorCiudad = styled.div`
   margin: 20px;
 `;
 
-const Input = styled.input`
-  width: 12rem;
-  height: 25px;
-  // border-radius: 8px;
-  padding: 10px;
-  font-size: 16px;
-  color: #222;
-  font-family: Poppins;
-  &::-webkit-input-placeholder {
-    font-family: Poppins;
-    font-size: 16px;
-    font-weight: lighter;
-    color: 1c1c1c;
-  }
+const Input = styled.input``;
 
-  border-top: none;
-  border-right: none;
-  border-left: none;
-  outline: none;
-  background: none;
+const ContenedorInput = styled.div``;
 
-  &::-webkit-inner-spin-button {
-    -webkit-appearance: none;
-    margin: 0;
-  }
-
-  &::-webkit-outer-spin-button {
-    -webkit-appearance: none;
-    margin: 0;
-  }
-  -moz-appearance: textfield;
-`;
-
-const ContenedorInput = styled.div`
-  position: relative;
-  border-radius: 8px;
-  outline: none;
-  overflow: hidden;
-
-  &:after {
-    content: "";
-    position: absolute;
-    width: 100%;
-    height: 0.175rem;
-    background: #36886d;
-    left: 0;
-    bottom: 0;
-    // transform: translateY(3px);
-    // transition: transform 0.3s ease;
-
-    transform: scale(0, 1);
-    transform-origin: 0% 100%;
-    transition: transform 0.3s ease;
-  }
-
-  &:hover:after {
-    transform: scale(1, 1);
-  }
-`;
-
-const Label = styled.label`
-  font-size: 16px;
-  color: black;
-  font-family: Poppins;
-  margin: 5px;
-`;
+const Label = styled.label``;
 
 const Boton = styled.input`
   width: 200px;
@@ -278,111 +218,110 @@ function Checkout({ contacto }) {
           <div>
             <Subtitulo>Informacion de entrega</Subtitulo>
             <ContenedorDireccion>
-              <ContenedorDiv>
-                <Label>Calle</Label>
-                <ContenedorInput>
-                  <Input
-                    placeholder="Calle"
-                    name="calle"
-                    value={input.calle}
-                    onChange={(e) => handleChange(e)}
-                    required
-                  />
-                </ContenedorInput>
+              <ContenedorDiv className="grupo-checkout">
+                <Input
+                  className="input-checkout"
+                  placeholder=" "
+                  name="calle"
+                  value={input.calle}
+                  onChange={(e) => handleChange(e)}
+                  required
+                />
+                <span className="barra-checkout"></span>
+                <Label className="label-checkout">Calle</Label>
               </ContenedorDiv>
-              <ContenedorDiv>
-                <Label>Altura/Numero</Label>
-                <ContenedorInput>
-                  <Input
-                    placeholder="Altura/Numero"
-                    type="number"
-                    name="altura"
-                    value={input.altura}
-                    onChange={(e) => handleChange(e)}
-                    required
-                  />
-                </ContenedorInput>
+              <ContenedorDiv className="grupo-checkout">
+                <Input
+                  className="input-checkout"
+                  placeholder=" "
+                  type="number"
+                  name="altura"
+                  value={input.altura}
+                  onChange={(e) => handleChange(e)}
+                  required
+                />
+                <span className="barra-checkout"></span>
+                <Label className="label-checkout">Altura/Numero</Label>
               </ContenedorDiv>
-              <ContenedorDiv>
-                <Label>Piso/Depto/Casa</Label>
-                <ContenedorInput>
-                  <Input
-                    placeholder="Piso/Depto/Casa"
-                    name="piso"
-                    value={input.piso}
-                    onChange={(e) => handleChange(e)}
-                  />
-                </ContenedorInput>
+              <ContenedorDiv className="grupo-checkout">
+                <Input
+                  className="input-checkout"
+                  placeholder=" "
+                  name="piso"
+                  value={input.piso}
+                  onChange={(e) => handleChange(e)}
+                />
+                <span className="barra-checkout"></span>
+                <Label className="label-checkout">Piso/Depto/Casa</Label>
               </ContenedorDiv>
             </ContenedorDireccion>
 
             <ContenedorCiudad>
-              <ContenedorDiv>
-                <Label>Ciudad</Label>
-                <ContenedorInput>
-                  <Input
-                    placeholder="Ciudad"
-                    name="ciudad"
-                    value={input.ciudad}
-                    onChange={(e) => handleChange(e)}
-                    required
-                  />
-                </ContenedorInput>
+              <ContenedorDiv className="grupo-checkout">
+                <Input
+                  className="input-checkout"
+                  placeholder=" "
+                  name="ciudad"
+                  value={input.ciudad}
+                  onChange={(e) => handleChange(e)}
+                  required
+                />
+                <Label className="label-checkout">Ciudad</Label>
               </ContenedorDiv>
-              <ContenedorDiv>
-                <Label>Provincia</Label>
-                <ContenedorInput>
-                  <Input
-                    placeholder="Provincia"
-                    name="provincia"
-                    value={input.provincia}
-                    onChange={(e) => handleChange(e)}
-                    required
-                  />
-                </ContenedorInput>
+              <ContenedorDiv className="grupo-checkout">
+                <Input
+                  className="input-checkout"
+                  placeholder=" "
+                  name="provincia"
+                  value={input.provincia}
+                  onChange={(e) => handleChange(e)}
+                  required
+                />
+                <span className="barra-checkout"></span>
+                <Label className="label-checkout">Provincia</Label>
               </ContenedorDiv>
-              <ContenedorDiv>
-                <Label>Codigo Postal</Label>
-                <ContenedorInput>
-                  <Input
-                    placeholder="Codigo postal"
-                    type="number"
-                    name="codigoPostal"
-                    value={input.codigoPostal}
-                    onChange={(e) => handleChange(e)}
-                    required
-                  />
-                </ContenedorInput>
+              <ContenedorDiv className="grupo-checkout">
+                <Input
+                  className="input-checkout"
+                  placeholder=" "
+                  type="number"
+                  name="codigoPostal"
+                  value={input.codigoPostal}
+                  onChange={(e) => handleChange(e)}
+                  required
+                />
+                <span className="barra-checkout"></span>
+                <Label className="label-checkout">Codigo Postal</Label>
               </ContenedorDiv>
             </ContenedorCiudad>
 
             <ContenedorCiudad>
-              <ContenedorDiv>
-                <Label>Celular de contacto</Label>
-                <ContenedorInput>
-                  <Input
-                    placeholder="Celular"
-                    type="number"
-                    name="celular"
-                    value={input.celular}
-                    onChange={(e) => handleChange(e)}
-                    required
-                  />
-                </ContenedorInput>
+              <ContenedorDiv className="grupo-checkout">
+                <Input
+                  className="input-checkout"
+                  placeholder=" "
+                  type="number"
+                  name="celular"
+                  value={input.celular}
+                  onChange={(e) => handleChange(e)}
+                  required
+                />
+                <span className="barra-checkout"></span>
+                <Label className="label-checkout">Celular de contacto</Label>
               </ContenedorDiv>
-              <ContenedorDiv>
-                <Label>E-Mail de contacto</Label>
-                <ContenedorInput>
-                  <Input
-                    placeholder="E-mail"
-                    name="mail"
-                    id="emailAddress"
-                    type="email"
-                    value={input.mail}
-                    onChange={(e) => handleChange(e)}
-                    required
-                  />
-                </ContenedorInput>
+              <ContenedorDiv className="grupo-checkout">
+                <Input
+                  className="input-checkout"
+                  placeholder=" "
+                  name="mail"
+                  id="emailAddress"
+                  type="email"
+                  value={input.mail}
+                  onChange={(e) => handleChange(e)}
+                  required
+                />
+                <span className="barra-checkout"></span>
+                <Label className="label-checkout">E-Mail de contacto</Label>
               </ContenedorDiv>
             </ContenedorCiudad>
 

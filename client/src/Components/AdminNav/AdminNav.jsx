@@ -34,6 +34,10 @@ export default function AdminNav({ setCartas }) {
     setCartas(usuarios);
   }, [usuarios]);
 
+  useEffect(() => {
+    setCartas(pedidos);
+  }, [pedidos]);
+
   return (
     <div className="side-bar">
       <ul className="menu">
