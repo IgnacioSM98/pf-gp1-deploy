@@ -204,6 +204,7 @@ function Checkout({ contacto }) {
 
   function handleSubmit(e) {
     e.preventDefault();
+    console.log(input, carrito);
     setFlag(true);
   }
 

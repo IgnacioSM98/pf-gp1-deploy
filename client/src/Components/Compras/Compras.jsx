@@ -13,7 +13,11 @@ export default function Compras() {
 
   return (
     <>
-      <p>HOLAAA</p>
+      {pedidos?.map((pedido) => (
+        <ul>
+          <li>{pedido.id}</li>
+        </ul>
+      ))}
     </>
   );
 }
