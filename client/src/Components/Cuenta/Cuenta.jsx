@@ -219,7 +219,7 @@ function Cuenta() {
           </Categoria>
 
           <Categoria>
-            <Secciones>Productos recomendados</Secciones>
+            {/* <Secciones>Productos recomendados</Secciones> */}
           </Categoria>
         </Categorias>
       </Informacion>
