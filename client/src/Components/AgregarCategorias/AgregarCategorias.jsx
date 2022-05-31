@@ -50,8 +50,10 @@ export default function AgregarCategorias({
 
   useEffect(() => {
     setSelectedValue(detalle.categoria);
+  }, [detalle]);
+  useEffect(() => {
     setPost({ ...post, probando: true });
-  });
+  }, []);
 
   var categorias = useSelector((state) => state.categorias);
 
