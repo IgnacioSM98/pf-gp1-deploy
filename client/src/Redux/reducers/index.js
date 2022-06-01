@@ -395,6 +395,21 @@ export default function rootReducer(state = initialState, action) {
         pedidos: pedidosAux,
       };
 
+    case "ORDER_BY_STOCK": {
+      let sortStock = action.payload === "Menor a Mayor"
+          ? state.productos.sort((a, b) => {
+              if (a.stock > b.stock) return 1;
+              if (a.stock < b.stock ) return -1;
+              return 0;
+            })
+          : state.productos.sort((a, b) => {
+              if (a.stock > b.stock) return -1;
+              if (a.stock < b.stock ) return 1;
+              return 0;
+            });
+      return { ...state, productos: sortStock };
+    }
+      
     case "POST_USUARIO":
       let usuariosAux = [...state.usuarios];
 
@@ -403,7 +418,7 @@ export default function rootReducer(state = initialState, action) {
         ...state,
         usuarios: usuariosAux,
       };
-
+      
     default:
       return state;
   }

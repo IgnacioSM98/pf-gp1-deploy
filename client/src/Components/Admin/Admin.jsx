@@ -1,13 +1,15 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 import styled from "styled-components";
+import { getPedidos } from "../../Redux/actions";
 import {
   ItemCompra,
   Pedidos,
   AdminProductos,
   EliminarCategoria,
+  Pedido,
 } from "../index";
 import Usuarios from "../Usuarios/Usuarios";
 
@@ -145,10 +147,14 @@ const Secciones = styled.p`
   font-weight: 600;
 `;
 
-const Items = styled.div`
+const ContainerPedidos = styled.div`
+  height: 80vh;
+
+  padding-top: 20px;
+
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  grid-auto-flow: dense;
+  // grid-auto-flow: dense;
   grid-gap: 20px 12px;
 
   // justify-content: center;
@@ -165,8 +171,14 @@ const Items = styled.div`
 `;
 
 function Cuenta() {
-  const carrito = useSelector((state) => state.carrito);
+  const pedidos = useSelector((state) => state.pedidos);
   const [detalle, setDetalle] = useState("principal");
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(getPedidos());
+  }, []);
 
   return (
     <Container>
@@ -254,17 +266,16 @@ function Cuenta() {
             <Categoria>
               <Secciones>Pedidos a Despachar</Secciones>
 
-              {carrito[0] && (
-                <Items>
-                  {carrito.map((el) => {
-                    return <ItemCompra key={el.id} producto={el} />;
-                  })}
-                </Items>
-              )}
-            </Categoria>
-
-            <Categoria>
-              {/* <Secciones>Productos recomendados</Secciones> */}
+              <ContainerPedidos>
+                {pedidos &&
+                  pedidos
+                    .filter(
+                      (pedido) =>
+                        pedido.Estado === "Creado" ||
+                        pedido.Estado === "En preparación"
+                    )
+                    ?.map((e) => <Pedido key={e.id} producto={e} />)}
+              </ContainerPedidos>
             </Categoria>
           </Categorias>
         )}
