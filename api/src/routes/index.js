@@ -353,6 +353,7 @@ router.post("/ratings/crear/:productoid", async (req, res) => {
 router.post("/crear", async (req, res) => {
   try {
     const {
+      id,
       nombre,
       apellido,
       dni,
@@ -363,6 +364,7 @@ router.post("/crear", async (req, res) => {
       isAdmin,
     } = req.body;
     const usuario = await Usuario.create({
+      id: id,
       nombre: nombre,
       apellido: apellido,
       dni: dni,
@@ -651,8 +653,9 @@ router.put("/admin/pedido/:id", async (req, res) => {
 router.put("/admin/usuario/:id", async (req, res) => {
   try {
     const id = req.params.id;
-    const pedido = await Pedido.findByPk(id);
+    const usuario = await Usuario.findByPk(id);
     const {
+      uid,
       nombre,
       apellido,
       dni,
@@ -662,38 +665,41 @@ router.put("/admin/usuario/:id", async (req, res) => {
       mail,
       isAdmin,
     } = req.body;
-
+    if (uid) {
+      usuario.id = uid;
+      usuario.save();
+    }
     if (nombre) {
-      pedido.nombre = nombre;
-      pedido.save();
+      usuario.nombre = nombre;
+      usuario.save();
     }
     if (apellido) {
-      pedido.apellido = apellido;
-      pedido.save();
+      usuario.apellido = apellido;
+      usuario.save();
     }
     if (dni) {
-      pedido.dni = dni;
-      pedido.save();
+      usuario.dni = dni;
+      usuario.save();
     }
     if (direccion) {
-      pedido.direccion = direccion;
-      pedido.save();
+      usuario.direccion = direccion;
+      usuario.save();
     }
     if (contraseña) {
-      pedido.contraseña = contraseña;
-      pedido.save();
+      usuario.contraseña = contraseña;
+      usuario.save();
     }
     if (telefono) {
-      pedido.telefono = telefono;
-      pedido.save();
+      usuario.telefono = telefono;
+      usuario.save();
     }
     if (mail) {
-      pedido.mail = mail;
-      pedido.save();
+      usuario.mail = mail;
+      usuario.save();
     }
     if (isAdmin) {
-      pedido.isAdmin = isAdmin;
-      pedido.save();
+      usuario.isAdmin = isAdmin;
+      usuario.save();
     }
     res.status(200).send(id);
   } catch (error) {
