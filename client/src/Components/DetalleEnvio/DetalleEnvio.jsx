@@ -262,6 +262,7 @@ export default function DetalleEnvio() {
             <OpcionEstado value="Entregado">Entregado</OpcionEstado>
           </ModificarEstados>
           <Boton type="submit">Actualizar Estado</Boton>
+          
         </Formulario>
       )}
 
@@ -378,7 +379,7 @@ export default function DetalleEnvio() {
               : "Retiro en sucursal"}
           </Titulo>
           <Parrafo>
-            Codigo de{" "}
+            Codigo {" "}
             {detalle.Tipo_de_envio === "domicilio"
               ? "para entrega:"
               : "para retiro:"}{" "}
@@ -396,12 +397,13 @@ export default function DetalleEnvio() {
             {user === "admin" ? "Detalle de Producto" : "Compraste"}
           </Titulo>
           {detalle?.productos?.map((el) => {
-            <>
+            return <div key={el?.compra?.productoId}>
               <Link to={`/productos/${el?.compra?.productoId}`}>
                 <Producto>{el?.nombre}</Producto>
               </Link>
               <Producto>Cantidad: {el?.compra?.cantidad}</Producto>
-            </>;
+              <hr style={{ width:"90%" , margin:"auto", marginTop: "2px"}} />
+            </div>;
           })}
         </Compra>
       </div>
