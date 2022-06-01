@@ -4,6 +4,7 @@ import { useParams } from "react-router-dom";
 import { getDetalleEnvio, actualizarEstadoEnvio } from "../../Redux/actions";
 import styled from "styled-components";
 import Swal from "sweetalert2";
+import Loader from "../Loader/Loader";
 
 const Container = styled.div`
   width: 90%;
@@ -183,7 +184,7 @@ export default function DetalleEnvio() {
   useEffect(() => {
     dispatch(getDetalleEnvio(id));
   }, []);
-console.log(detalle)
+  console.log(detalle);
   let [input, setInput] = useState({
     estado: "",
   });
@@ -199,11 +200,13 @@ console.log(detalle)
     dispatch(actualizarEstadoEnvio(id, input));
   };
 
-  return (
+  return detalle.id ? (
     <Container>
-      {user === "admin" && <h1 style={{ position: "absolute", top: "8%", left: "160px" }}>
-        {`Pedido numero: #2022${detalle.id}`}
-      </h1>}
+      {user === "admin" && (
+        <h1 style={{ position: "absolute", top: "8%", left: "160px" }}>
+          {`Pedido numero: #2022${detalle.id}`}
+        </h1>
+      )}
 
       {user === "admin" && (
         <Formulario onSubmit={handleSubmit} action="">
@@ -312,9 +315,9 @@ console.log(detalle)
                 <Linea
                   active={
                     detalle?.Estado !==
-                    "En punto de entrega/poder del correo" || "Entregado"
-                    ? false
-                    : true
+                      "En punto de entrega/poder del correo" || "Entregado"
+                      ? false
+                      : true
                   }
                 ></Linea>
                 <ImagenEstados
@@ -324,9 +327,9 @@ console.log(detalle)
                 <ParrafoLi
                   active={
                     detalle?.Estado !==
-                    "En punto de entrega/poder del correo" || "Entregado"
-                    ? false
-                    : true
+                      "En punto de entrega/poder del correo" || "Entregado"
+                      ? false
+                      : true
                   }
                 >
                   En punto de entrega/poder del correo
@@ -334,14 +337,14 @@ console.log(detalle)
               </EstadosLi>
               <EstadosLi>
                 <Circulo
-                  active={detalle?.Estado !== "Entregado" ? false: true}
+                  active={detalle?.Estado !== "Entregado" ? false : true}
                 ></Circulo>
                 <ImagenEstados
                   src="https://i.ibb.co/Z2NPGQ0/Asset-210.png"
                   alt=""
                 />
                 <ParrafoLi
-                  active={detalle?.Estado !== "Entregado" ? false: true}
+                  active={detalle?.Estado !== "Entregado" ? false : true}
                 >
                   Entregado
                 </ParrafoLi>
@@ -350,8 +353,16 @@ console.log(detalle)
           </Opciones>
         </Estado>
         <Domicilio className="domicilio">
-          <Titulo>Domicilio de {detalle.Tipo_de_envio === "domicilio" ? "entrega" : "punto de retiro" }</Titulo>
-          <LogoGPS src="https://i.ibb.co/PC2BbmZ/Asset-960.png" alt="Imagen logo GPS" />
+          <Titulo>
+            Domicilio de{" "}
+            {detalle.Tipo_de_envio === "domicilio"
+              ? "entrega"
+              : "punto de retiro"}
+          </Titulo>
+          <LogoGPS
+            src="https://i.ibb.co/PC2BbmZ/Asset-960.png"
+            alt="Imagen logo GPS"
+          />
           {/* <Parrafo>{detalle.Direccion_de_envio}</Parrafo> */}
           {/* el domicilio tendria que ser un objeto en el modelo para poder recibir, ciudad, CP y provincia? */}
           {/* <Parrafo>{`${detalle?.Direccion_de_envio.Calle} ${detalle?.Direccion_de_envio.Altura} ${detalle?.Direccion_de_envio.Piso}`}</Parrafo>
@@ -362,9 +373,16 @@ console.log(detalle)
           </Lugar> */}
         </Domicilio>
         <Codigo className="codigo">
-          <Titulo>{detalle.Tipo_de_envio === "domicilio" ? " Entrega en domicilio" : "Retiro en sucursal" }</Titulo>
+          <Titulo>
+            {detalle.Tipo_de_envio === "domicilio"
+              ? " Entrega en domicilio"
+              : "Retiro en sucursal"}
+          </Titulo>
           <Parrafo>Codigo de Retiro: #2022{detalle?.id}</Parrafo>
-          <LogoCodigo src="https://i.ibb.co/vkjfvPY/Asset-930.png" alt="Imagen de una pizarra" />
+          <LogoCodigo
+            src="https://i.ibb.co/vkjfvPY/Asset-930.png"
+            alt="Imagen de una pizarra"
+          />
         </Codigo>
       </Envio>
       <div>
@@ -382,5 +400,7 @@ console.log(detalle)
         </Compra>
       </div>
     </Container>
+  ) : (
+    <Loader />
   );
 }
