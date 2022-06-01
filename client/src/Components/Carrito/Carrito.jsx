@@ -5,7 +5,7 @@ import styled from "styled-components";
 import { quitarItem } from "../../Redux/actions";
 import Swal from "sweetalert2";
 import { MercadoPagoIntegracion, Footer, ScrollToTop } from "../index";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const Container = styled.div`
   display: flex;
@@ -16,13 +16,13 @@ const Container = styled.div`
   // padding-top: 120px;
 
   width: 100%;
-  height: 100vh;
+  min-height: 90vh;
 `;
 
 const Productos = styled.div`
   position: relative;
-  margin-top: 20px;
-  margin-bottom: 0px;
+  margin-top: 10px;
+  margin-bottom: 10px;
   width: 90%;
   height: 153px;
   padding: 5px;
@@ -113,9 +113,10 @@ const ContenedorCompra = styled.div`
   // margin-bottom: 2rem;
   width: 33%;
 
-  position: absolute;
-  bottom: 10px;
-  right: 10px;
+  position: relative;
+  // bottom: 10px;
+  // right: 10px;
+  margin: 20px;
 `;
 
 const ContenedorMonto = styled.div`
@@ -157,8 +158,9 @@ const Boton = styled.button`
   border-radius: 6px;
   border: none;
   // margin-top: 1rem;
-  width: 60%;
+  width: 50%;
 
+  cursor: pointer;
   // box-shadow: 0 2px 2px 0 black, 1px 1px 1px 1px darkgray;
 `;
 
@@ -168,6 +170,7 @@ function Carrito({ contacto }) {
   }, []);
 
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const [precioTotal, setPrecioTotal] = useState(0);
   const carrito = useSelector((state) => state.carrito);
@@ -236,18 +239,32 @@ function Carrito({ contacto }) {
           );
         })}
 
-        <ContenedorCompra>
-          <ContenedorMonto>
-            <Label left={0}>Monto Total:</Label>
-            <Label right={0}>${precioTotal}</Label>
-          </ContenedorMonto>
-          <ContenedorBotones>
-            <Link to="/checkout">
-              <Boton>Continuar compra</Boton>
-            </Link>
-          </ContenedorBotones>
-        </ContenedorCompra>
+        {carrito[0] ? (
+          <ContenedorCompra>
+            <ContenedorMonto>
+              <Label left={0}>Monto Total:</Label>
+              <Label right={0}>${precioTotal}</Label>
+            </ContenedorMonto>
+            <ContenedorBotones>
+              {/* <Link to="/checkout"> */}
+              <Boton onClick={() => navigate("/checkout")}>Checkout</Boton>
+              {/* </Link> */}
+            </ContenedorBotones>
+          </ContenedorCompra>
+        ) : (
+          <p
+            style={{
+              fontSize: "20px",
+              fontWeight: 600,
+              position: "absolute",
+              top: "50%",
+            }}
+          >
+            ¡Arrancá añadiendo productos a tu carrito!
+          </p>
+        )}
       </Container>
+
       <Footer contacto={contacto} />
       <ScrollToTop />
     </>
