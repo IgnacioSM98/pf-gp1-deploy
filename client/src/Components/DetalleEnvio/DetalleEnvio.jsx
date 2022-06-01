@@ -186,15 +186,17 @@ export default function DetalleEnvio() {
   let dispatch = useDispatch();
   let { id } = useParams();
   let detalle = useSelector((state) => state.detalleEnvio);
-  const userMail = useSelector((state) => state.userInfo.email);
+  const userMail = useSelector((state) => state.userInfo);
   const user = useSelector((state) => state.userInfo?.visualizacion);
   const query = new URLSearchParams(useLocation().search);
   const status = query.get("status");
-
+  const usuarioMail = userMail?.email;
   useEffect(() => {
     dispatch(getDetalleEnvio(id));
-    dispatch(enviarMail(userMail));
   }, []);
+  useEffect(() => {
+    dispatch(enviarMail(usuarioMail));
+  }, [usuarioMail]);
 
   useEffect(() => {
     if (Object.keys(detalle).length > 0) {
