@@ -195,7 +195,9 @@ export default function DetalleEnvio() {
     dispatch(getDetalleEnvio(id));
   }, []);
   useEffect(() => {
-    dispatch(enviarMail(usuarioMail));
+    if (usuarioMail !== undefined) {
+      dispatch(enviarMail(usuarioMail));
+    }
   }, [usuarioMail]);
 
   useEffect(() => {
