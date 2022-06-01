@@ -95,13 +95,13 @@ function Pedidos() {
       </h1>
 
       {/* <Crear>Crear</Crear> */}
-
-      <Container>
-        <Select onChange={(e) => setSelected(e.target.value)}>
+      <Select onChange={(e) => setSelected(e.target.value)}>
           <option value="Ordenar por estado">Ordenar por estado</option>
           <option value="ASC">Menor a Mayor</option>
           <option value="DES">Mayor a Menor</option>
         </Select>
+      <Container>
+       
 
         {pedidos &&
           pedidos
