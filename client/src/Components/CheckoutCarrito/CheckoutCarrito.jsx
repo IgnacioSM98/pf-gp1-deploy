@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 import { Footer, ScrollToTop, MercadoPagoIntegracion, QR } from "../index";
+import { getUsuarios, postPedido } from "../../Redux/actions/index";
 import "./CheckoutCarrito.css";
 
 const Contenedor = styled.div`
@@ -171,8 +172,26 @@ const Monto = styled.label`
 
 function Checkout({ contacto }) {
   const carrito = useSelector((state) => state.carrito);
+  const usuarios = useSelector((state) => state.usuarios);
+  const dispatch = useDispatch();
   const [precioTotal, setPrecioTotal] = useState(0);
   const [flag, setFlag] = useState(false);
+  const userInfo = useSelector((state) => state.userInfo);
+  const [userId, setUserId] = useState();
+
+  useEffect(() => {
+    dispatch(getUsuarios());
+  }, []);
+
+  useEffect(() => {
+    if (usuarios.length > 0) {
+      const usuario = usuarios.find(
+        (usuario) => usuario.mail === userInfo.email
+      );
+
+      setUserId(usuario.id);
+    }
+  }, [usuarios]);
 
   useEffect(() => {
     let precio = 0;
@@ -185,14 +204,14 @@ function Checkout({ contacto }) {
   }, [carrito, setPrecioTotal]);
 
   const [input, setInput] = useState({
-    calle: "Guatemala",
-    altura: "5600",
-    piso: "5",
-    ciudad: "CABA",
-    provincia: "Buenos Aires",
-    codigoPostal: "1425",
-    celular: "1130118875",
-    mail: "igna@gmail.com",
+    calle: "",
+    altura: "",
+    piso: "",
+    ciudad: "",
+    provincia: "",
+    codigoPostal: "",
+    celular: "",
+    mail: "",
   });
 
   function handleChange(e) {
@@ -203,8 +222,29 @@ function Checkout({ contacto }) {
   }
 
   function handleSubmit(e) {
+    const datos = {
+      idUser: userId,
+      fecha: Date.now(),
+      pago_total: precioTotal,
+      tipo_de_pago: "tarjeta",
+      tipo_de_envio: "domicilio",
+      direccion_de_envio: {
+        calle: input.calle,
+        altura: input.altura,
+        piso: input.piso,
+        ciudad: input.ciudad,
+        cp: input.codigoPostal,
+        provincia: input.provincia,
+      },
+      estado: "Creado",
+      idProductos: carrito.map((item) => {
+        return { id: item.id, cantidad: item.cantidad };
+      }),
+    };
+
     e.preventDefault();
     setFlag(true);
+    dispatch(postPedido(datos));
   }
 
   return (
@@ -325,7 +365,7 @@ function Checkout({ contacto }) {
               </ContenedorDiv>
             </ContenedorCiudad>
 
-            <Boton type="submit" value="Continuar" />
+            {!flag && <Boton type="submit" value="Continuar" />}
 
             {flag && <MercadoPagoIntegracion carrito={carrito} input={input} />}
             {/* <QR /> */}

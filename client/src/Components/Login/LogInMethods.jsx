@@ -6,7 +6,7 @@ import "./LogInMethods.css";
 import styled from "styled-components";
 import google from "./Google.png";
 import { useNavigate } from "react-router-dom";
-import { getUser, setUserInfo } from "../../Redux/actions";
+import { getUser, setUserInfo, postUsuario } from "../../Redux/actions";
 import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
 
@@ -177,12 +177,20 @@ export default function Login({ setUser }) {
             displayName: nombre,
           })
           .then(() => {
-            console.log(res);
+            // console.log(res.user);
             const user = { ...res.user };
+            const body = {
+              id: res.user.uid,
+              nombre,
+              apellido,
+              contraseña: pass,
+              mail,
+            };
 
             user.displayName = `${nombre} ${apellido}`;
             user.rol = "user";
             user.visualizacion = "user";
+            user.email = res.user.email;
 
             localStorage.setItem("user", JSON.stringify(user));
 
@@ -190,6 +198,8 @@ export default function Login({ setUser }) {
 
             setUser(user);
             dispatch(getUser(mail));
+
+            dispatch(postUsuario(body));
             navigate(-1);
           });
       })
@@ -203,7 +213,7 @@ export default function Login({ setUser }) {
       .auth()
       .signInWithEmailAndPassword(mail, pass)
       .then(async (res) => {
-        const user = { ...res.user };
+        const user = { ...res.user.multiFactor.user };
 
         await axios
           .get("https://proyecto-final-gp1.herokuapp.com/usuarios")
@@ -212,8 +222,11 @@ export default function Login({ setUser }) {
               res.data.filter((usuario) => usuario.mail === user.email)[0]
           )
           .then((res) => {
+            // console.log(user, "aca?");
+            // user.displayName = res.user.displayName;
             user.rol = res.isAdmin ? "admin" : "user";
             user.visualizacion = res.isAdmin ? "admin" : "user";
+            // user.email = res.user.email;
           })
           .catch((err) => {
             user.rol = "user";

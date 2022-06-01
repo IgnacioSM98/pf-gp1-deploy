@@ -101,6 +101,15 @@ export function postProducto(payload) {
   };
 }
 
+export function postPedido(body) {
+  return function (dispatch) {
+    axios.post(`${urlBase}${pedido}${crear}`, body).then((res) => {
+      // console.log(res, "aca?");
+      dispatch({ type: "POST_PRODUCTO", payload: res.data });
+    });
+  };
+}
+
 export function putProducto(id, body) {
   return function (dispatch) {
     axios.put(`${urlBase}${admin}${id}`, body).then((res) => {
@@ -150,6 +159,14 @@ export function postReviews(id, payload) {
     });
   };
 }
+export function enviarConsulta(payload) {
+  return async function (dispatch) {
+    await axios.post(`${urlBase}usuario/contacto`, payload);
+    return dispatch({
+      type: "ENVIAR_CONSULTA",
+    });
+  };
+}
 
 export const setSort = (value) => (dispatch) => {
   dispatch({ type: "SET_SORT", payload: value });
@@ -175,6 +192,7 @@ export function restarCarrito(idProducto, cantidad) {
 }
 
 export function quitarItem(idProducto) {
+  // console.log(idProducto, "xd?");
   return function (dispatch) {
     dispatch({ type: "QUITAR_ITEM", payload: idProducto });
   };
@@ -214,6 +232,14 @@ export function getUsuarios() {
   };
 }
 
+export function postUsuario(body) {
+  return function (dispatch) {
+    axios
+      .post(`${urlBase}crear`, body)
+      .then((res) => dispatch({ type: "POST_USUARIO", payload: res.data }));
+  };
+}
+
 export function changeUserMode(userInfo) {
   const user = { ...userInfo };
 
@@ -250,11 +276,11 @@ export function getDetalleEnvio(id) {
   };
 }
 
-export function actualizarEstadoEnvio(id, payload) {
+export function actualizarEstadoEnvio(id, payload, productos) {
   return async function (dispatch) {
-    await axios.put(`${urlBase}${admin}${pedido}${id}`, payload);
-    return dispatch({
-      type: "ACTUALIZAR_ESTADO",
+    await axios.put(`${urlBase}${admin}${pedido}${id}`, payload).then((res) => {
+      res.data.productos = productos;
+      dispatch({ type: "ACTUALIZAR_ESTADO", payload: res.data });
     });
   };
 }
@@ -269,4 +295,21 @@ export function eliminarDeFavoritos(productoFav) {
   return function (dispatch) {
     dispatch({ type: "ELIMINAR_DE_FAVORITOS", payload: productoFav });
   };
+}
+
+export function enviarMail(userMail) {
+  // const user = { ...userInfo };
+  // const usuario = user.multiFactor.user.email;
+  return async function (dispatch) {
+    await axios
+      .post(`${urlBase}usuario/confirmacion`, { mail: userMail })
+      .catch((err) => {
+        console.log(err);
+      });
+    dispatch({ type: "ENVIAR_MAIL", payload: userMail });
+  };
+}
+
+export function orderByStock(payload) {
+  return { type: "ORDER_BY_STOCK", payload };
 }

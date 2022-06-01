@@ -108,8 +108,9 @@ const SelectorImagen = styled.input`
 const Imagen = styled.img`
   height: 300px;
   width: 90%;
-  object-fit: cover;
-  background-color: grey;
+  object-fit: contain;
+  background-color: white;
+  border: 1px solid black;
   z-index: 2;
   border-radius: 5px;
 `;
@@ -239,7 +240,7 @@ export default function CrearProducto() {
       precio: detalle.precio,
       imagen: detalle.imagen,
       stock: detalle.stock,
-      categorias: detalle.categorias?.map((categoria) => categoria.nombre),
+      categorias: detalle.categoria,
     });
 
     setImageSelected(detalle.imagen);
@@ -367,22 +368,6 @@ export default function CrearProducto() {
     });
   }, [post.imagen]);
 
-  // function handleSelectCategorias(e) {
-  //   if (!post.categorias.includes(e.target.value))
-  //     setPost({
-  //       ...post,
-  //       categorias: [...post.categorias, e.target.value],
-  //     });
-
-  //   setErrors(
-  //     validate({
-  //       ...post,
-  //       categorias: [...post.categorias, e.target.value],
-  //       loading,
-  //     })
-  //   );
-  // }
-
   function handleSubmit(e) {
     e.preventDefault();
 
@@ -394,7 +379,6 @@ export default function CrearProducto() {
       if (Object.values(errors).length > 0) {
         setStateModalProd(!stateModalProd);
       } else {
-        console.log(post, "uno");
         dispatch(postProducto(post));
         setStateModalProd(!stateModalProd);
       }
@@ -488,6 +472,7 @@ export default function CrearProducto() {
                 post={post}
                 setPost={setPost}
                 setErrors={setErrors}
+                detalle={detalle}
               />
               {errors.categorias && <Errors>{errors.categorias}</Errors>}
             </Input>

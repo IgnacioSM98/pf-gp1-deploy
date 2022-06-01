@@ -28,10 +28,11 @@ const Page = styled.button`
   }
 `;
 
-export default function Paginado({ pages, setPageSelected }) {
+export default function Paginado({ pages, setPageSelected, pageSelected }) {
   const handleOnClick = (e) => {
     e.preventDefault();
     setPageSelected(e.target.value);
+
     // window.scrollTo(0, 0);
   };
 
@@ -43,13 +44,23 @@ export default function Paginado({ pages, setPageSelected }) {
       i = i + 1;
       arrayAux.push(i);
     } while (i < pages);
+
     return arrayAux;
   };
 
   return (
     <Pages>
-      {getArray(pages).map((page) => (
-        <Page key={page} onClick={(e) => handleOnClick(e)} value={page}>
+      {getArray(pages).map((page, index) => (
+        <Page
+          style={
+            index + 1 === Number(pageSelected)
+              ? { backgroundColor: "#36885ed1" }
+              : null
+          }
+          key={page}
+          onClick={(e) => handleOnClick(e)}
+          value={page}
+        >
           {page}
         </Page>
       ))}

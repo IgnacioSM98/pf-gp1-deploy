@@ -9,7 +9,6 @@ export default function MercadoPagoIntegracion({ carrito, input }) {
       items: carrito?.map((item) => {
         return {
           currency_id: "ARS",
-          picture_url: item.imagen,
           quantity: item.cantidad,
           title: item.nombre,
           unit_price: item.precio,
