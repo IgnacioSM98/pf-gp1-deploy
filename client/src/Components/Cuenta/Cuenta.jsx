@@ -3,7 +3,14 @@ import CarritoItem from "../Carrito/CarritoItem";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
-import { ItemCompra, Compras } from "../index";
+import {
+  ItemCompra,
+  Compras,
+  Favoritos,
+  Notificaciones,
+  Seguridad,
+  Contacto,
+} from "../index";
 import Perfil from "./Perfil.jsx";
 import Reseñas from "./Reseñas";
 
@@ -161,9 +168,13 @@ const Items = styled.div`
 
 function Cuenta() {
   const componentes = {
-    compras: Compras,
     perfil: Perfil,
+    compras: Compras,
     reseñas: Reseñas,
+    favoritos: Favoritos,
+    notificaciones: Notificaciones,
+    seguridad: Seguridad,
+    contacto: Contacto,
   };
 
   const carrito = useSelector((state) => state.carrito);
