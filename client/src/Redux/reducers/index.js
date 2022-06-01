@@ -1,3 +1,5 @@
+import axios from "axios";
+
 const initialState = {
   productos: [],
   productosFiltrados: [],
@@ -368,6 +370,31 @@ export default function rootReducer(state = initialState, action) {
       };
 
     case "AÑADIR_A_FAVORITOS":
+      const usuarioFiltrado = state.usuarios.filter(
+        (u) => u.mail == state.userInfo.email
+      );
+
+      const idProducto = action.payload.id;
+      const idUsuario = usuarioFiltrado && usuarioFiltrado[0].id;
+      console.log(usuarioFiltrado, "ACAAAAAAAAAAA");
+
+      const favorites = axios.get(
+        `https://proyecto-final-gp1.herokuapp.com/favoritos/wishlist/${idUsuario}`
+      );
+
+      if (
+        favorites.data &&
+        favorites.data.find((fav) => fav.id == state.productos.id)
+      ) {
+      } else {
+        axios
+          .post("https://proyecto-final-gp1.herokuapp.com/favoritos/wishlist", {
+            idProducto: idProducto,
+            idUsuario: idUsuario,
+          })
+          .then((response) => console.log(response));
+      }
+
       const newFavorites = [...state.favoritos, action.payload];
       return {
         ...state,
@@ -375,10 +402,26 @@ export default function rootReducer(state = initialState, action) {
       };
 
     case "ELIMINAR_DE_FAVORITOS":
+      const usuarioFiltradoid = state.usuarios.filter(
+        (u) => u.mail == state.userInfo.email
+      );
+      console.log(action.payload);
+
+      const idProductoEliminar = action.payload;
+      const idUsuarioEliminar = usuarioFiltradoid[0]?.id;
+
       const favoritosFiltrados = state.favoritos.filter(
         (e) => e.id !== action.payload
       );
-      // console.log("FAVORITOS FILTRADOS", action.payload);
+
+      console.log(idProductoEliminar, idUsuarioEliminar, "HOLAAAAAAA");
+
+      axios
+        .delete("https://proyecto-final-gp1.herokuapp.com/favoritos/wishlist", {
+          idUsuario: idUsuarioEliminar,
+          idProducto: idProductoEliminar,
+        })
+        .catch((error) => console.log(error));
 
       return {
         ...state,
