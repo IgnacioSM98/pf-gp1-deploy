@@ -249,6 +249,7 @@ export default function rootReducer(state = initialState, action) {
       }
 
     case "QUITAR_ITEM":
+      console.log(action.payload, "aca?");
       const data = state.carrito?.filter(
         (item) => item.id !== action.payload.id
       );

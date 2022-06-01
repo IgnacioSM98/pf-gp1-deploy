@@ -184,6 +184,7 @@ function Checkout({ contacto }) {
   }, []);
 
   useEffect(() => {
+    console.log(usuarios, "xd?");
     if (usuarios.length > 0) {
       const usuario = usuarios.find(
         (usuario) => usuario.mail === userInfo.email

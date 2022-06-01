@@ -192,6 +192,7 @@ export function restarCarrito(idProducto, cantidad) {
 }
 
 export function quitarItem(idProducto) {
+  console.log(idProducto, "xd?");
   return function (dispatch) {
     dispatch({ type: "QUITAR_ITEM", payload: idProducto });
   };
