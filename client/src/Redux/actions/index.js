@@ -232,6 +232,14 @@ export function getUsuarios() {
   };
 }
 
+export function postUsuario(body) {
+  return function (dispatch) {
+    axios
+      .post(`${urlBase}crear`, body)
+      .then((res) => dispatch({ type: "POST_USUARIO", payload: res.data }));
+  };
+}
+
 export function changeUserMode(userInfo) {
   const user = { ...userInfo };
 
@@ -270,7 +278,7 @@ export function getDetalleEnvio(id) {
 
 export function actualizarEstadoEnvio(id, payload) {
   return async function (dispatch) {
-    await axios.put(`${urlBase}${admin}${pedido}${id}`, payload).then((res) =>
+    axios.put(`${urlBase}${admin}${pedido}${id}`, payload).then((res) =>
       // dispatch(getDetalleEnvio(id));
       dispatch({ type: "ACTUALIZAR_ESTADO", payload: res.data })
     );

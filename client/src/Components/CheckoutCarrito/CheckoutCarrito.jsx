@@ -184,7 +184,6 @@ function Checkout({ contacto }) {
   }, []);
 
   useEffect(() => {
-    console.log(usuarios, "xd?");
     if (usuarios.length > 0) {
       const usuario = usuarios.find(
         (usuario) => usuario.mail === userInfo.email
@@ -366,7 +365,7 @@ function Checkout({ contacto }) {
               </ContenedorDiv>
             </ContenedorCiudad>
 
-            <Boton type="submit" value="Continuar" />
+            {!flag && <Boton type="submit" value="Continuar" />}
 
             {flag && <MercadoPagoIntegracion carrito={carrito} input={input} />}
             {/* <QR /> */}
