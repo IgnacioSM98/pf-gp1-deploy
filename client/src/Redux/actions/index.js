@@ -192,6 +192,7 @@ export function restarCarrito(idProducto, cantidad) {
 }
 
 export function quitarItem(idProducto) {
+  console.log(idProducto, "xd?");
   return function (dispatch) {
     dispatch({ type: "QUITAR_ITEM", payload: idProducto });
   };
@@ -228,6 +229,14 @@ export function getUsuarios() {
     } catch (error) {
       console.log(error);
     }
+  };
+}
+
+export function postUsuario(body) {
+  return function (dispatch) {
+    axios
+      .post(`${urlBase}crear`, body)
+      .then((res) => dispatch({ type: "POST_USUARIO", payload: res.data }));
   };
 }
 
@@ -269,7 +278,7 @@ export function getDetalleEnvio(id) {
 
 export function actualizarEstadoEnvio(id, payload) {
   return async function (dispatch) {
-    await axios.put(`${urlBase}${admin}${pedido}${id}`, payload).then((res) =>
+    axios.put(`${urlBase}${admin}${pedido}${id}`, payload).then((res) =>
       // dispatch(getDetalleEnvio(id));
       dispatch({ type: "ACTUALIZAR_ESTADO", payload: res.data })
     );

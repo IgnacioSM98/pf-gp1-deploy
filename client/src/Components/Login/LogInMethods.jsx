@@ -6,7 +6,7 @@ import "./LogInMethods.css";
 import styled from "styled-components";
 import google from "./Google.png";
 import { useNavigate } from "react-router-dom";
-import { getUser, setUserInfo } from "../../Redux/actions";
+import { getUser, setUserInfo, postUsuario } from "../../Redux/actions";
 import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
 
@@ -177,8 +177,15 @@ export default function Login({ setUser }) {
             displayName: nombre,
           })
           .then(() => {
-            console.log(res, "aca");
+            console.log(res.user);
             const user = { ...res.user };
+            const body = {
+              id: res.user.uid,
+              nombre,
+              apellido,
+              contraseña: pass,
+              mail,
+            };
 
             user.displayName = `${nombre} ${apellido}`;
             user.rol = "user";
@@ -191,6 +198,8 @@ export default function Login({ setUser }) {
 
             setUser(user);
             dispatch(getUser(mail));
+
+            dispatch(postUsuario(body));
             navigate(-1);
           });
       })

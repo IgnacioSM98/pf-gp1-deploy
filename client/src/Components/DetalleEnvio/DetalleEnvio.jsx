@@ -4,6 +4,7 @@ import {
   getDetalleEnvio,
   actualizarEstadoEnvio,
   enviarMail,
+  quitarItem,
 } from "../../Redux/actions";
 import { useParams, Link, useLocation } from "react-router-dom";
 import styled from "styled-components";
@@ -195,6 +196,14 @@ export default function DetalleEnvio() {
     dispatch(enviarMail(userMail));
   }, []);
 
+  useEffect(() => {
+    if (Object.keys(detalle).length > 0) {
+      detalle.productos.map((producto) => {
+        dispatch(quitarItem({ id: producto.compra.productoId }));
+      });
+    }
+  }, [detalle]);
+
   let [input, setInput] = useState({
     estado: "",
   });
@@ -261,7 +270,6 @@ export default function DetalleEnvio() {
             <OpcionEstado value="Entregado">Entregado</OpcionEstado>
           </ModificarEstados>
           <Boton type="submit">Actualizar Estado</Boton>
-          
         </Formulario>
       )}
 
@@ -380,7 +388,7 @@ export default function DetalleEnvio() {
               : "Retiro en sucursal"}
           </Titulo>
           <Parrafo>
-            Codigo {" "}
+            Codigo{" "}
             {detalle.Tipo_de_envio === "domicilio"
               ? "para entrega:"
               : "para retiro:"}{" "}
@@ -404,7 +412,9 @@ export default function DetalleEnvio() {
                   <Producto>{el?.nombre}</Producto>
                 </Link>
                 <Producto>Cantidad: {el?.compra?.cantidad}</Producto>{" "}
-                <hr style={{ width:"90%" , margin:"auto", marginTop: "2px"}} />
+                <hr
+                  style={{ width: "90%", margin: "auto", marginTop: "2px" }}
+                />
               </div>
             );
           })}

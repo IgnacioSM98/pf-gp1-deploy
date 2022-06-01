@@ -249,6 +249,7 @@ export default function rootReducer(state = initialState, action) {
       }
 
     case "QUITAR_ITEM":
+      console.log(action.payload, "aca?");
       const data = state.carrito?.filter(
         (item) => item.id !== action.payload.id
       );
@@ -408,6 +409,16 @@ export default function rootReducer(state = initialState, action) {
             });
       return { ...state, productos: sortStock };
     }
+      
+    case "POST_USUARIO":
+      let usuariosAux = [...state.usuarios];
+
+      usuariosAux = usuariosAux.concat(action.payload);
+      return {
+        ...state,
+        usuarios: usuariosAux,
+      };
+      
     default:
       return state;
   }
