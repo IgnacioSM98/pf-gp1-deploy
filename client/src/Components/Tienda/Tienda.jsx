@@ -221,7 +221,7 @@ function Shop({ contacto }) {
   }, [resVis]);
 
   useEffect(() => {
-    setPages(Math.ceil(productos.length / 9));
+    setPages(Math.ceil(productos.filter(filterStock).length / 9));
   }, [productos]);
 
   useEffect(() => {
@@ -233,12 +233,13 @@ function Shop({ contacto }) {
 
     setResVis(0);
     setFlag(true);
+    setPageSelected(1);
 
     if (!value) {
       setFlag(false);
     }
 
-    const arrayAux = productos.filter((producto) => {
+    const arrayAux = productos.filter(filterStock).filter((producto) => {
       const name = producto.nombre.toLowerCase();
       const isVisible = name.includes(value.toLowerCase());
 
@@ -248,6 +249,7 @@ function Shop({ contacto }) {
         return producto;
       }
     });
+
     dispatch(getProductosFiltrados(arrayAux));
   }
 
@@ -256,24 +258,9 @@ function Shop({ contacto }) {
   };
 
   const filterPerPages = (producto, i) => {
-    // if (admin === "admin") {
-    //   if (Number(pageSelected) === 1) {
-    //     if (i >= 8 * (pageSelected - 1) && i <= 8 * pageSelected - 1) {
-    //       return producto;
-    //     }
-    //   } else {
-    //     if (
-    //       i >= 8 * (pageSelected - 1) &&
-    //       i <= 9 * pageSelected - pageSelected
-    //     ) {
-    //       return producto;
-    //     }
-    //   }
-    // } else {
     if (i >= 9 * (pageSelected - 1) && i <= 9 * pageSelected - 1) {
       return producto;
     }
-    // }
   };
 
   const filterDropdown = (producto) => {
@@ -336,7 +323,6 @@ function Shop({ contacto }) {
             {flag && productosFiltrados.length === 0 && (
               <p>No se encontraron resultados</p>
             )}
-
             {/* {admin === "admin" && <AgregarProducto />} */}
 
             {productosFiltrados &&
@@ -365,7 +351,11 @@ function Shop({ contacto }) {
           </ProductosTienda>
 
           {pages > 0 ? (
-            <Paginado pages={pages} setPageSelected={setPageSelected} />
+            <Paginado
+              pages={pages}
+              setPageSelected={setPageSelected}
+              pageSelected={pageSelected}
+            />
           ) : null}
         </div>
       </ContenedorFiltrosPro>
