@@ -269,11 +269,10 @@ export function getDetalleEnvio(id) {
 
 export function actualizarEstadoEnvio(id, payload) {
   return async function (dispatch) {
-    await axios.put(`${urlBase}${admin}${pedido}${id}`, payload);
-    dispatch(getDetalleEnvio(id));
-    return dispatch({
-      type: "ACTUALIZAR_ESTADO",
-    });
+    await axios.put(`${urlBase}${admin}${pedido}${id}`, payload).then((res) =>
+      // dispatch(getDetalleEnvio(id));
+      dispatch({ type: "ACTUALIZAR_ESTADO", payload: res.data })
+    );
   };
 }
 
@@ -289,11 +288,11 @@ export function eliminarDeFavoritos(productoFav) {
   };
 }
 
-export function enviarMail(userInfo) {
-  const user = { ...userInfo };
-  const usuario = user.multiFactor.user.email;
+export function enviarMail(userMail) {
+  // const user = { ...userInfo };
+  // const usuario = user.multiFactor.user.email;
   return async function (dispatch) {
-    await axios.post(`${urlBase}usuario/confirmacion`, { mail: usuario });
-    return dispatch({ type: "ENVIAR_MAIL", payload: usuario });
+    await axios.post(`${urlBase}usuario/confirmacion`, { mail: userMail });
+    dispatch({ type: "ENVIAR_MAIL", payload: userMail });
   };
 }

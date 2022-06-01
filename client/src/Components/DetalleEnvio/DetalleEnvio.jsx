@@ -185,14 +185,14 @@ export default function DetalleEnvio() {
   let dispatch = useDispatch();
   let { id } = useParams();
   let detalle = useSelector((state) => state.detalleEnvio);
-  const usermail = useSelector((state) => state.userInfo);
+  const userMail = useSelector((state) => state.userInfo.email);
   const user = useSelector((state) => state.userInfo?.visualizacion);
   const query = new URLSearchParams(useLocation().search);
   const status = query.get("status");
 
   useEffect(() => {
     dispatch(getDetalleEnvio(id));
-    dispatch(enviarMail(usermail));
+    dispatch(enviarMail(userMail));
   }, []);
 
   let [input, setInput] = useState({
@@ -204,7 +204,6 @@ export default function DetalleEnvio() {
       estado: e.target.value,
     });
   };
-  console.log(input);
 
   let handleSubmit = (e) => {
     e.preventDefault();
@@ -361,12 +360,14 @@ export default function DetalleEnvio() {
             src="https://i.ibb.co/PC2BbmZ/Asset-960.png"
             alt="Imagen logo GPS"
           />
-          <Parrafo>{`${detalle?.Direccion_de_envio?.calle} ${detalle?.Direccion_de_envio?.altura} ${detalle?.Direccion_de_envio?.piso}`}</Parrafo>
+          {detalle && (
+            <Parrafo>{`${detalle?.Direccion_de_envio?.calle} ${detalle?.Direccion_de_envio?.altura} ${detalle?.Direccion_de_envio?.piso}`}</Parrafo>
+          )}
           <Lugar>
             <ParrafoLugar>{`${detalle?.Direccion_de_envio?.ciudad} `}</ParrafoLugar>
             <ParrafoLugar>
               {" "}
-              {`(${detalle?.Direccion_de_envio?.CP}), `}
+              {`(${detalle?.Direccion_de_envio?.cp}), `}
             </ParrafoLugar>
             <ParrafoLugar>{` ${detalle?.Direccion_de_envio?.provincia}`}</ParrafoLugar>
           </Lugar>
@@ -396,12 +397,14 @@ export default function DetalleEnvio() {
             {user === "admin" ? "Detalle de Producto" : "Compraste"}
           </Titulo>
           {detalle?.productos?.map((el) => {
-            <>
-              <Link to={`/productos/${el?.compra?.productoId}`}>
-                <Producto>{el?.nombre}</Producto>
-              </Link>
-              <Producto>Cantidad: {el?.compra?.cantidad}</Producto>
-            </>;
+            return (
+              <>
+                <Link to={`/productos/${el?.compra?.productoId}`}>
+                  <Producto>{el?.nombre}</Producto>
+                </Link>
+                <Producto>Cantidad: {el?.compra?.cantidad}</Producto>{" "}
+              </>
+            );
           })}
         </Compra>
       </div>

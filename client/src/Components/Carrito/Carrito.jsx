@@ -174,6 +174,7 @@ function Carrito({ contacto }) {
 
   const [precioTotal, setPrecioTotal] = useState(0);
   const carrito = useSelector((state) => state.carrito);
+  const userInfo = useSelector((state) => state.userInfo);
 
   function handleQuit(props) {
     Swal.fire({
@@ -213,6 +214,14 @@ function Carrito({ contacto }) {
     setPrecioTotal(precio);
   }, [carrito, setPrecioTotal]);
 
+  const handleOnClick = () => {
+    if (userInfo) {
+      navigate("/checkout");
+    } else {
+      navigate("/login");
+    }
+  };
+
   return (
     <>
       <Container>
@@ -247,7 +256,7 @@ function Carrito({ contacto }) {
             </ContenedorMonto>
             <ContenedorBotones>
               {/* <Link to="/checkout"> */}
-              <Boton onClick={() => navigate("/checkout")}>Checkout</Boton>
+              <Boton onClick={handleOnClick}>Checkout</Boton>
               {/* </Link> */}
             </ContenedorBotones>
           </ContenedorCompra>
