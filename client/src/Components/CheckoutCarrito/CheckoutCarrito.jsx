@@ -12,7 +12,7 @@ const Contenedor = styled.div`
   justify-content: center;
   width: 100%;
 
-  height: 90vh;
+  height: 100vh;
   padding-top: 5%;
   background-image: url("https://media.diepresse.com/images/uploads/8/7/c/5486716/QATAR-COFFEE-CULTURE_1535388239909509.jpg");
   background-size: cover;
@@ -24,8 +24,8 @@ const Formulario = styled.form`
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 90%;
-  max-width: 1300px;
+  width: 95%;
+  max-width: 1500px;
   height: 80%;
   padding: 10px;
   margin-bottom: 2rem;
