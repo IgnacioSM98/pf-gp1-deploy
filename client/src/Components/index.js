@@ -36,10 +36,10 @@ import Usuarios from "./Usuarios/Usuarios";
 import Pedido from "./Pedidos/Pedido";
 import AdminProductos from "./Admin/AdminProductos";
 import Perfil from "./Cuenta/Perfil";
-import Favoritos from "./Favoritos/Favoritos";
-import Notificaciones from "./Notificaciones/Notificaciones";
-import Seguridad from "./Seguridad/Seguridad";
-import Contacto from "./Contacto/Contacto";
+import Favoritos from "./Cuenta/Favoritos/Favoritos";
+import Notificaciones from "./Cuenta/Notificaciones/Notificaciones";
+import Seguridad from "./Cuenta/Notificaciones/Seguridad/Seguridad";
+import Contacto from "./Cuenta/Contacto/Contacto";
 
 export {
   Home,
