@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { ItemCompra, Compras } from "../index";
 import Perfil from "./Perfil.jsx";
+import Favoritos from "./Favoritos";
 
 const Container = styled.div`
   display: flex;
@@ -162,6 +163,7 @@ function Cuenta() {
   const componentes = {
     compras: Compras,
     perfil: Perfil,
+    favoritos: Favoritos,
   };
 
   const carrito = useSelector((state) => state.carrito);
