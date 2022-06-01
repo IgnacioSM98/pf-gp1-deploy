@@ -12,7 +12,6 @@ import {
   Contacto,
 } from "../index";
 import Perfil from "./Perfil.jsx";
-import Favoritos from "./Favoritos";
 import Reseñas from "./Reseñas";
 
 const Container = styled.div`
