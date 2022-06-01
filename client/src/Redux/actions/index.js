@@ -85,6 +85,30 @@ export function getReviews(id) {
   };
 }
 
+export function getAllReviews() {
+  return async function (dispatch) {
+    try {
+      const resp = await axios.get(`${urlBase}ratings/`);
+
+      if (resp) {
+        dispatch({ type: "GET_ALL_REVIEWS", payload: resp.data });
+      }
+    } catch (err) {
+      console.log(err, "error AllReviews");
+    }
+  };
+}
+
+export function deleteReview(id){
+  return async function (dispatch) {
+    await axios.delete(`${urlBase}ratings/${id}`)
+    dispatch(getAllReviews())
+    return dispatch({
+      type: "DELETE_REVIEW"
+    })
+  }
+}
+
 export function postProducto(payload) {
   return async function (dispatch) {
     // let json = await axios.post(`${urlBase}${admin}${crear}`, payload);
