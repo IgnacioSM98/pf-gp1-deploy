@@ -45,7 +45,7 @@ const ContenedorInfo = styled.div`
   width: 100%;
   height: 100%;
 
-  padding-top: 30px;
+  // padding-top: 30px;
   justify-content: start;
   // align-items: center;
   text-align: start;
@@ -90,25 +90,36 @@ export default function ItemCompra({ producto }) {
   }
 
   return (
-    <Container>
-      {/* <ProductLink to={`/productos/${producto.id}`}> */}
-      {/* <Imagen src={producto.imagen} alt={producto.nombre} /> */}
-      {/* </ProductLink> */}
+    <Link
+      style={{ color: "black", textDecoration: "none" }}
+      to={`/pedido/${producto.id}`}
+    >
+      <Container>
+        {/* <ProductLink to={`/productos/${producto.id}`}> */}
+        {/* <Imagen src={producto.imagen} alt={producto.nombre} /> */}
+        {/* </ProductLink> */}
 
-      <ContenedorInfo>
-        {/* <span style={{ fontSize: "12px" }}>Comprado el 20 de Mayo</span> */}
+        <ContenedorInfo>
+          {/* <span style={{ fontSize: "12px" }}>Comprado el 20 de Mayo</span> */}
 
-        <Nombre>{`Pedido: #${producto.id}`}</Nombre>
+          <Nombre>{`Pedido: #${producto.id}`}</Nombre>
 
-        <span style={{ fontSize: "12px", paddingTop: "35px" }}>
-          Llegó el 26 de Mayo
-        </span>
+          <span style={{ fontSize: "12px", paddingTop: "35px" }}>
+            {/* Llegó el 26 de Mayo */}
+            Estado: {producto.Estado}
+          </span>
 
-        {/* <div style={{ position: "absolute", bottom: "25px" }}>
+          <span style={{ fontSize: "12px" }}>
+            {/* Llegó el 26 de Mayo */}
+            Tipo de Envío: {producto.Tipo_de_envio}
+          </span>
+
+          {/* <div style={{ position: "absolute", bottom: "25px" }}>
           <Stars puntaje={item.puntaje}></Stars>
         </div> */}
-        {/* </ProductLink> */}
-      </ContenedorInfo>
-    </Container>
+          {/* </ProductLink> */}
+        </ContenedorInfo>
+      </Container>
+    </Link>
   );
 }

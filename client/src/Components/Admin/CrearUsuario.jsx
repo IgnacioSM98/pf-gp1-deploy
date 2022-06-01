@@ -133,6 +133,7 @@ export default function CrearUsuario({ setCrear, setEditar, editarUsuario }) {
             <Button
               onClick={() => {
                 editarUsuario ? putUsuario(usuario) : postUsuario(usuario);
+                editarUsuario ? setEditar(false) : setCrear(false);
               }}
             >
               {editarUsuario ? "Editar" : "Confirmar"}

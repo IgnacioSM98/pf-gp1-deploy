@@ -148,6 +148,10 @@ const ModificarEstados = styled.select`
   border: 1px solid black;
   border-radius: 8px;
   // box-shadow: 6px 6px 12px #8080807a;
+
+  position: absolute;
+  top: 8%;
+  right: 150px;
 `;
 
 const OpcionEstado = styled.option`
@@ -185,10 +189,40 @@ export default function DetalleEnvio() {
   let dispatch = useDispatch();
   let { id } = useParams();
   let detalle = useSelector((state) => state.detalleEnvio);
+
   const userMail = useSelector((state) => state.userInfo.email);
   const user = useSelector((state) => state.userInfo?.visualizacion);
   const query = new URLSearchParams(useLocation().search);
+
   const status = query.get("status");
+
+  const changeEstado = () => {
+    Swal.fire({
+      title: "Cambiar Estado",
+      text: `¿Estas seguro de cambiar el estado de este pedido de ${detalle.Estado} a ${input.estado}?`,
+      icon: "warning",
+      iconColor: "grey",
+      color: "#222",
+      showCancelButton: true,
+      cancelButtonText: "No",
+      confirmButtonColor: "green",
+      cancelButtonColor: "darkgrey",
+      confirmButtonText: "Si",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        Swal.fire({
+          text: "El pedido se actualizó con éxito",
+          icon: "success",
+          iconColor: "green",
+          color: "#222",
+          showConfirmButton: false,
+          timer: "1500",
+          toast: true,
+        });
+        dispatch(actualizarEstadoEnvio(id, input, detalle.productos));
+      }
+    });
+  };
 
   useEffect(() => {
     dispatch(getDetalleEnvio(id));
@@ -205,66 +239,57 @@ export default function DetalleEnvio() {
     });
   };
 
-  let handleSubmit = (e) => {
-    e.preventDefault();
-    dispatch(actualizarEstadoEnvio(id, input));
-  };
+  // let handleSubmit = (e) => {
+  //   e.preventDefault();
+  //   dispatch(actualizarEstadoEnvio(id, input));
+  // };
 
   return (
     <Container>
-      {user === "admin" && (
-        <h1 style={{ position: "absolute", top: "8%", left: "250px" }}>
-          {`Pedido numero: #2022${detalle.id}`}
-        </h1>
-      )}
+      <h1 style={{ position: "absolute", top: "8%", left: "150px" }}>
+        {`Pedido numero: #${detalle.id}`}
+      </h1>
 
       {user === "admin" && (
-        <Formulario onSubmit={handleSubmit}>
-          <ModificarEstados onChange={handleInputChange}>
-            <option name="estados">Modificar estado</option>
-            <OpcionEstado
-              // onClick={() => {
-              //   Swal.fire({
-              //     title: "Cambiar Estado",
-              //     text: "¿Estas seguro de cambiar el estado de este pedido de (Estado actual) a (Proximo estado)?",
-              //     icon: "warning",
-              //     iconColor: "grey",
-              //     color: "#222",
-              //     showCancelButton: true,
-              //     cancelButtonText: "No",
-              //     confirmButtonColor: "green",
-              //     cancelButtonColor: "darkgrey",
-              //     confirmButtonText: "Si",
-              //   }).then((result) => {
-              //     if (result.isConfirmed) {
-              //       Swal.fire({
-              //         text: "El pedido se actualizó con éxito",
-              //         icon: "success",
-              //         iconColor: "green",
-              //         color: "#222",
-              //         showConfirmButton: false,
-              //         timer: "1500",
-              //         toast: true,
-              //       });
-              //       // dispatch(quitarItem(props));
-              //     }
-              //   });
-              // }}
-              value="En preparación"
-            >
-              En preparación
-            </OpcionEstado>
-            <OpcionEstado value="En camino">En camino</OpcionEstado>
-            <OpcionEstado value="En punto de entrega/poder del correo">
-              En punto de entrega/poder del correo
-            </OpcionEstado>
-            <OpcionEstado value="Entregado">Entregado</OpcionEstado>
-          </ModificarEstados>
-          <Boton type="submit">Actualizar Estado</Boton>
-          
-        </Formulario>
+        // <Formulario onSubmit={handleSubmit}>
+        <ModificarEstados onChange={handleInputChange}>
+          <option name="estados">Modificar estado</option>
+          <OpcionEstado
+            disabled={detalle.Estado === "En preparación" ? true : false}
+            onClick={changeEstado}
+            value="En preparación"
+          >
+            En preparación
+          </OpcionEstado>
+          <OpcionEstado
+            disabled={detalle.Estado === "En camino" ? true : false}
+            onClick={changeEstado}
+            value="En camino"
+          >
+            En camino
+          </OpcionEstado>
+          <OpcionEstado
+            disabled={
+              detalle.Estado === "En punto de entrega/poder del correo"
+                ? true
+                : false
+            }
+            onClick={changeEstado}
+            value="En punto de entrega/poder del correo"
+          >
+            En punto de entrega/poder del correo
+          </OpcionEstado>
+          <OpcionEstado
+            disabled={detalle.Estado === "Entregado" ? true : false}
+            onClick={changeEstado}
+            value="Entregado"
+          >
+            Entregado
+          </OpcionEstado>
+        </ModificarEstados>
+        //* <Boton type="submit">Actualizar Estado</Boton> */
+        // </Formulario>
       )}
-
       <Envio className="envio">
         <Estado className="Estado">
           <Titulo>Estado de envio</Titulo>
@@ -380,7 +405,7 @@ export default function DetalleEnvio() {
               : "Retiro en sucursal"}
           </Titulo>
           <Parrafo>
-            Codigo {" "}
+            Codigo{" "}
             {detalle.Tipo_de_envio === "domicilio"
               ? "para entrega:"
               : "para retiro:"}{" "}
@@ -395,16 +420,29 @@ export default function DetalleEnvio() {
       <div>
         <Compra className="compra">
           <Titulo>
-            {user === "admin" ? "Detalle de Producto" : "Compraste"}
+            {user === "admin" ? "Detalle de Pedido" : "Compraste"}
           </Titulo>
+
           {detalle?.productos?.map((el) => {
             return (
               <div key={el?.compra?.productoId}>
-                <Link to={`/productos/${el?.compra?.productoId}`}>
+                <Link
+                  style={{ color: "black", textDecoration: "none" }}
+                  to={`/productos/${el?.compra?.productoId}`}
+                >
                   <Producto>{el?.nombre}</Producto>
+                  <Producto>Cantidad: {el?.compra?.cantidad}</Producto>{" "}
                 </Link>
-                <Producto>Cantidad: {el?.compra?.cantidad}</Producto>{" "}
-                <hr style={{ width:"90%" , margin:"auto", marginTop: "2px"}} />
+
+                <div
+                  style={{
+                    height: "0.5px",
+                    width: "85%",
+                    margin: "auto",
+                    marginTop: "2px",
+                    backgroundColor: "grey",
+                  }}
+                />
               </div>
             );
           })}
