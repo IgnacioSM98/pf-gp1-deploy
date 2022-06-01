@@ -204,14 +204,14 @@ function Checkout({ contacto }) {
   }, [carrito, setPrecioTotal]);
 
   const [input, setInput] = useState({
-    calle: "Guatemala",
-    altura: "5600",
-    piso: "5",
-    ciudad: "CABA",
-    provincia: "Buenos Aires",
-    codigoPostal: "1425",
-    celular: "1130118875",
-    mail: "igna@gmail.com",
+    calle: "",
+    altura: "",
+    piso: "",
+    ciudad: "",
+    provincia: "",
+    codigoPostal: "",
+    celular: "",
+    mail: "",
   });
 
   function handleChange(e) {
