@@ -296,3 +296,7 @@ export function enviarMail(userMail) {
     dispatch({ type: "ENVIAR_MAIL", payload: userMail });
   };
 }
+
+export function orderByStock(payload) {
+  return { type: "ORDER_BY_STOCK", payload };
+}
