@@ -36,6 +36,11 @@ import Usuarios from "./Usuarios/Usuarios";
 import Pedido from "./Pedidos/Pedido";
 import AdminProductos from "./Admin/AdminProductos";
 import Perfil from "./Cuenta/Perfil";
+import Favoritos from "./Favoritos/Favoritos";
+import Notificaciones from "./Notificaciones/Notificaciones";
+import Seguridad from "./Seguridad/Seguridad";
+import Contacto from "./Contacto/Contacto";
+
 export {
   Home,
   Blog,
@@ -75,4 +80,8 @@ export {
   Compras,
   AdminProductos,
   Perfil,
+  Favoritos,
+  Notificaciones,
+  Seguridad,
+  Contacto,
 };
