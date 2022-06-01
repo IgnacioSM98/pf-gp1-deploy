@@ -40,6 +40,7 @@ import Favoritos from "./Cuenta/Favoritos/Favoritos";
 import Notificaciones from "./Cuenta/Notificaciones/Notificaciones";
 import Seguridad from "./Cuenta/Notificaciones/Seguridad/Seguridad";
 import Contacto from "./Cuenta/Contacto/Contacto";
+import AdminReseñas from "./Admin/AdminReseñas";
 
 export {
   Home,
@@ -84,4 +85,5 @@ export {
   Notificaciones,
   Seguridad,
   Contacto,
+  AdminReseñas
 };

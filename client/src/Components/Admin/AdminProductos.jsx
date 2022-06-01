@@ -100,6 +100,7 @@ export default function AdminProductos() {
     dispatch(getProductos());
   }, []);
 
+
 const [order , setOrder] = useState("")
 
 let handleByStock = (e) => {
