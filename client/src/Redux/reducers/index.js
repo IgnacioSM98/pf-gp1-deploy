@@ -395,6 +395,15 @@ export default function rootReducer(state = initialState, action) {
         pedidos: pedidosAux,
       };
 
+    case "POST_USUARIO":
+      let usuariosAux = [...state.usuarios];
+
+      usuariosAux = usuariosAux.concat(action.payload);
+      return {
+        ...state,
+        usuarios: usuariosAux,
+      };
+
     default:
       return state;
   }
