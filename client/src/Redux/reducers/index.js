@@ -365,12 +365,6 @@ export default function rootReducer(state = initialState, action) {
         ...state,
       };
 
-    case "GET_PEDIDOS":
-      return {
-        ...state,
-        pedidos: action.payload,
-      };
-
     case "AÑADIR_A_FAVORITOS":
       const newFavorites = [...state.favoritos, action.payload];
       return {
@@ -387,6 +381,16 @@ export default function rootReducer(state = initialState, action) {
       return {
         ...state,
         favoritos: favoritosFiltrados,
+      };
+
+    case "POST_PEDIDO":
+      let pedidosAux = [...state.pedidos];
+
+      pedidosAux = pedidosAux.concat(action.payload);
+
+      return {
+        ...state,
+        pedidos: pedidosAux,
       };
 
     default:
