@@ -365,7 +365,7 @@ function Checkout({ contacto }) {
               </ContenedorDiv>
             </ContenedorCiudad>
 
-            <Boton type="submit" value="Continuar" />
+            {!flag && <Boton type="submit" value="Continuar" />}
 
             {flag && <MercadoPagoIntegracion carrito={carrito} input={input} />}
             {/* <QR /> */}

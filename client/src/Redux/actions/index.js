@@ -192,6 +192,7 @@ export function restarCarrito(idProducto, cantidad) {
 }
 
 export function quitarItem(idProducto) {
+  console.log(idProducto, "xd?");
   return function (dispatch) {
     dispatch({ type: "QUITAR_ITEM", payload: idProducto });
   };
@@ -228,6 +229,14 @@ export function getUsuarios() {
     } catch (error) {
       console.log(error);
     }
+  };
+}
+
+export function postUsuario(body) {
+  return function (dispatch) {
+    axios
+      .post(`${urlBase}crear`, body)
+      .then((res) => dispatch({ type: "POST_USUARIO", payload: res.data }));
   };
 }
 
@@ -299,4 +308,8 @@ export function enviarMail(userMail) {
       });
     dispatch({ type: "ENVIAR_MAIL", payload: userMail });
   };
+}
+
+export function orderByStock(payload) {
+  return { type: "ORDER_BY_STOCK", payload };
 }
