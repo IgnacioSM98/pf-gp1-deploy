@@ -9,6 +9,7 @@ import {
 import { useParams, Link, useLocation } from "react-router-dom";
 import styled from "styled-components";
 import Swal from "sweetalert2";
+import Loader from "../Loader/Loader";
 
 const Container = styled.div`
   width: 90%;
@@ -230,6 +231,10 @@ export default function DetalleEnvio() {
   useEffect(() => {
     dispatch(getDetalleEnvio(id));
   }, []);
+  
+  let [input, setInput] = useState({
+    estado: "",
+  });
 
   useEffect(() => {
     if (usuarioMail !== undefined) {
@@ -258,11 +263,14 @@ export default function DetalleEnvio() {
     changeEstado(e.target.value);
   };
 
-  return (
+  return detalle.id ? (
     <Container>
-      <h1 style={{ position: "absolute", top: "8%", left: "150px" }}>
-        {`Pedido numero: #${detalle.id}`}
-      </h1>
+      {user === "admin" && (
+        <h1 style={{ position: "absolute", top: "8%", left: "160px" }}>
+          {`Pedido numero: #2022${detalle.id}`}
+        </h1>
+      )}
+
 
       {user === "admin" && (
         // <Formulario onSubmit={handleSubmit}>
@@ -354,9 +362,8 @@ export default function DetalleEnvio() {
                 ></Circulo>
                 <Linea
                   active={
-                    detalle?.Estado !== "En punto de entrega/poder del correo"
-                      ? false
-                      : true
+                    detalle?.Estado !==
+                      "En punto de entrega/poder del correo" || "Entregado"
                   }
                 ></Linea>
                 <ImagenEstados
@@ -365,9 +372,8 @@ export default function DetalleEnvio() {
                 />
                 <ParrafoLi
                   active={
-                    detalle?.Estado !== "En punto de entrega/poder del correo"
-                      ? false
-                      : true
+                    detalle?.Estado !==
+                      "En punto de entrega/poder del correo" || "Entregado"
                   }
                 >
                   En punto de entrega/poder del correo
@@ -419,6 +425,7 @@ export default function DetalleEnvio() {
               ? " Entrega en domicilio"
               : "Retiro en sucursal"}
           </Titulo>
+
           <Parrafo>
             Codigo{" "}
             {detalle.Tipo_de_envio === "domicilio"
@@ -426,6 +433,7 @@ export default function DetalleEnvio() {
               : "para retiro:"}{" "}
             #2022{detalle?.id}
           </Parrafo>
+          
           <LogoCodigo
             src="https://i.ibb.co/vkjfvPY/Asset-930.png"
             alt="Imagen de una pizarra"
@@ -463,5 +471,7 @@ export default function DetalleEnvio() {
         </Compra>
       </div>
     </Container>
+  ) : (
+    <Loader />
   );
 }
