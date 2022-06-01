@@ -177,12 +177,13 @@ export default function Login({ setUser }) {
             displayName: nombre,
           })
           .then(() => {
-            console.log(res);
+            console.log(res, "aca");
             const user = { ...res.user };
 
             user.displayName = `${nombre} ${apellido}`;
             user.rol = "user";
             user.visualizacion = "user";
+            user.email = res.user.email;
 
             localStorage.setItem("user", JSON.stringify(user));
 
@@ -203,7 +204,7 @@ export default function Login({ setUser }) {
       .auth()
       .signInWithEmailAndPassword(mail, pass)
       .then(async (res) => {
-        const user = { ...res.user };
+        const user = { ...res.user.multiFactor.user };
 
         await axios
           .get("https://proyecto-final-gp1.herokuapp.com/usuarios")
@@ -212,8 +213,11 @@ export default function Login({ setUser }) {
               res.data.filter((usuario) => usuario.mail === user.email)[0]
           )
           .then((res) => {
+            console.log(user, "aca?");
+            // user.displayName = res.user.displayName;
             user.rol = res.isAdmin ? "admin" : "user";
             user.visualizacion = res.isAdmin ? "admin" : "user";
+            // user.email = res.user.email;
           })
           .catch((err) => {
             user.rol = "user";

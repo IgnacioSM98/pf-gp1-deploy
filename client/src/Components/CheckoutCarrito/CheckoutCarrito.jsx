@@ -227,8 +227,15 @@ function Checkout({ contacto }) {
       fecha: Date.now(),
       pago_total: precioTotal,
       tipo_de_pago: "tarjeta",
-      tipo_de_envio: "eh?",
-      direccion_de_envio: `${input.calle} ${input.altura}`,
+      tipo_de_envio: "domicilio",
+      direccion_de_envio: {
+        calle: input.calle,
+        altura: input.altura,
+        piso: input.piso,
+        ciudad: input.ciudad,
+        cp: input.codigoPostal,
+        provincia: input.provincia,
+      },
       estado: "Creado",
       idProductos: carrito.map((item) => {
         return { id: item.id, cantidad: item.cantidad };

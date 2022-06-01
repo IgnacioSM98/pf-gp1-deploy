@@ -296,7 +296,7 @@ export default function Producto({
 
         <div className="descripcion">
           <p>
-            {descripcion.length > 210
+            {descripcion?.length > 210
               ? descripcion.slice(0, 210) + " (Ver más)"
               : descripcion}
           </p>

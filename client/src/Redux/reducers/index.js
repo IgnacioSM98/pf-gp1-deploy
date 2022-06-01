@@ -363,6 +363,7 @@ export default function rootReducer(state = initialState, action) {
     case "ACTUALIZAR_ESTADO":
       return {
         ...state,
+        detalleEnvio: action.payload,
       };
 
     case "AÑADIR_A_FAVORITOS":
