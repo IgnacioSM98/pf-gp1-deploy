@@ -29,7 +29,7 @@ import Checkout from "./CheckoutCarrito/CheckoutCarrito";
 import Reseñas from "./Reseñas/Reseñas";
 import ItemCompra from "./Compra/ItemCompra";
 import QR from "./QR/QR";
-import Compras from "./Compras/Compras";
+import Compras from "./Cuenta/Compras/Compras";
 import Admin from "./Admin/Admin";
 import Pedidos from "./Pedidos/Pedidos";
 import Usuarios from "./Usuarios/Usuarios";
@@ -38,7 +38,7 @@ import AdminProductos from "./Admin/AdminProductos";
 import Perfil from "./Cuenta/Perfil";
 import Favoritos from "./Cuenta/Favoritos/Favoritos";
 import Notificaciones from "./Cuenta/Notificaciones/Notificaciones";
-import Seguridad from "./Cuenta/Notificaciones/Seguridad/Seguridad";
+import Seguridad from "./Cuenta/Seguridad/Seguridad";
 import Contacto from "./Cuenta/Contacto/Contacto";
 
 export {

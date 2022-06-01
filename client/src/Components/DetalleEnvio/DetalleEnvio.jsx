@@ -230,6 +230,7 @@ export default function DetalleEnvio() {
   useEffect(() => {
     dispatch(getDetalleEnvio(id));
   }, []);
+
   useEffect(() => {
     if (usuarioMail !== undefined) {
       dispatch(enviarMail(usuarioMail));
@@ -239,6 +240,7 @@ export default function DetalleEnvio() {
   useEffect(() => {
     if (Object.keys(detalle).length > 0) {
       detalle.productos.map((producto) => {
+        console.log(producto.compra);
         dispatch(quitarItem({ id: producto.compra.productoId }));
       });
     }

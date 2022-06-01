@@ -185,6 +185,10 @@ function Cuenta() {
     setComponente(e.target.value);
   };
 
+  useEffect(() => {
+    setComponente("perfil");
+  }, []);
+
   return (
     <Container>
       <Options>
