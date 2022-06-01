@@ -451,7 +451,6 @@ export default function DetalleEnvio() {
                     marginTop: "2px",
                     backgroundColor: "grey",
                   }}
-                <Producto>Cantidad: {el?.compra?.cantidad}</Producto>{" "}
                 />
               </div>
             );
