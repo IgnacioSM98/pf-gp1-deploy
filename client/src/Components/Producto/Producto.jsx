@@ -223,7 +223,7 @@ export default function Producto({
     } else {
       dispatch(añadirAFavoritos(producto));
     }
-    console.log(favoritos);
+    // console.log(favoritos);
   }
 
   return (

@@ -249,7 +249,7 @@ export default function rootReducer(state = initialState, action) {
       }
 
     case "QUITAR_ITEM":
-      console.log(action.payload, "aca?");
+      // console.log(action.payload, "aca?");
       const data = state.carrito?.filter(
         (item) => item.id !== action.payload.id
       );
@@ -378,7 +378,7 @@ export default function rootReducer(state = initialState, action) {
       const favoritosFiltrados = state.favoritos.filter(
         (e) => e.id !== action.payload
       );
-      console.log("FAVORITOS FILTRADOS", action.payload);
+      // console.log("FAVORITOS FILTRADOS", action.payload);
 
       return {
         ...state,
@@ -396,20 +396,21 @@ export default function rootReducer(state = initialState, action) {
       };
 
     case "ORDER_BY_STOCK": {
-      let sortStock = action.payload === "Menor a Mayor"
+      let sortStock =
+        action.payload === "Menor a Mayor"
           ? state.productos.sort((a, b) => {
               if (a.stock > b.stock) return 1;
-              if (a.stock < b.stock ) return -1;
+              if (a.stock < b.stock) return -1;
               return 0;
             })
           : state.productos.sort((a, b) => {
               if (a.stock > b.stock) return -1;
-              if (a.stock < b.stock ) return 1;
+              if (a.stock < b.stock) return 1;
               return 0;
             });
       return { ...state, productos: sortStock };
     }
-      
+
     case "POST_USUARIO":
       let usuariosAux = [...state.usuarios];
 
@@ -418,7 +419,7 @@ export default function rootReducer(state = initialState, action) {
         ...state,
         usuarios: usuariosAux,
       };
-      
+
     default:
       return state;
   }

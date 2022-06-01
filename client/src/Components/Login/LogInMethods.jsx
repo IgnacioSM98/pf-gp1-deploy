@@ -177,7 +177,7 @@ export default function Login({ setUser }) {
             displayName: nombre,
           })
           .then(() => {
-            console.log(res.user);
+            // console.log(res.user);
             const user = { ...res.user };
             const body = {
               id: res.user.uid,
@@ -222,7 +222,7 @@ export default function Login({ setUser }) {
               res.data.filter((usuario) => usuario.mail === user.email)[0]
           )
           .then((res) => {
-            console.log(user, "aca?");
+            // console.log(user, "aca?");
             // user.displayName = res.user.displayName;
             user.rol = res.isAdmin ? "admin" : "user";
             user.visualizacion = res.isAdmin ? "admin" : "user";

@@ -104,7 +104,7 @@ export function postProducto(payload) {
 export function postPedido(body) {
   return function (dispatch) {
     axios.post(`${urlBase}${pedido}${crear}`, body).then((res) => {
-      console.log(res, "aca?");
+      // console.log(res, "aca?");
       dispatch({ type: "POST_PRODUCTO", payload: res.data });
     });
   };
@@ -192,7 +192,7 @@ export function restarCarrito(idProducto, cantidad) {
 }
 
 export function quitarItem(idProducto) {
-  console.log(idProducto, "xd?");
+  // console.log(idProducto, "xd?");
   return function (dispatch) {
     dispatch({ type: "QUITAR_ITEM", payload: idProducto });
   };
