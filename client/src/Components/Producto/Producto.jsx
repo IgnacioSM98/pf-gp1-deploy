@@ -226,7 +226,6 @@ export default function Producto({
     } else {
       dispatch(añadirAFavoritos(producto));
     }
-  }
 
   return (
     <LinkProduct to={`/productos/${id}`}>

@@ -40,8 +40,20 @@ const Option = s.option`
     // border-width: 0;
 `;
 
-export default function AgregarCategorias({ setPost, post, setErrors }) {
+export default function AgregarCategorias({
+  setPost,
+  post,
+  setErrors,
+  detalle,
+}) {
   const [selectedValue, setSelectedValue] = useState([]);
+
+  useEffect(() => {
+    setSelectedValue(detalle.categoria);
+  }, [detalle]);
+  useEffect(() => {
+    setPost({ ...post, probando: true });
+  }, []);
 
   var categorias = useSelector((state) => state.categorias);
 
@@ -89,10 +101,10 @@ export default function AgregarCategorias({ setPost, post, setErrors }) {
 
   return (
     <Container>
-      {selectedValue[0] ? (
+      {selectedValue ? (
         <div style={{ margin: 1, lineHeight: "25px" }}>
           <div>
-            {selectedValue.map((selected) => (
+            {selectedValue?.map((selected) => (
               <Button
                 value={selected.nombre}
                 key={selected.id}
@@ -119,7 +131,7 @@ export default function AgregarCategorias({ setPost, post, setErrors }) {
               <Option
                 value={categoria.nombre}
                 key={categoria.id}
-                disabled={selectedValue.length > 2 ? true : false}
+                disabled={selectedValue?.length > 2 ? true : false}
               >
                 {categoria.nombre}
               </Option>

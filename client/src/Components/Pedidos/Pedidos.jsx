@@ -67,7 +67,7 @@ function Pedidos() {
           textAlign: "start",
         }}
       >
-        Administrador de Categorias
+        Administrador de Pedidos
       </h1>
 
       {/* <Crear>Crear</Crear> */}

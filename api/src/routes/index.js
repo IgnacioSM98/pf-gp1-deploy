@@ -1,4 +1,5 @@
 const { Router } = require("express");
+const nodemailer = require("nodemailer");
 const { mercadopago } = require("mercadopago");
 // Importar todos los routers;
 // Ejemplo: const authRouter = require('./auth.js');
@@ -178,10 +179,19 @@ router.get("/usuario/ratings/:usuarioid", async (req, res) => {
 
 router.get("/pedidos", async (req, res) => {
   try {
-    const pedidos = await Pedido.findAll();
+    const pedidos = await Pedido.findAll({
+      include: [
+        {
+          model: Producto,
+          attributes: ["nombre"],
+          through: { attributes: ["cantidad", "productoId"] },
+        },
+      ],
+    });
 
     res.status(200).send(pedidos);
   } catch (error) {
+    console.log(error);
     res.status(400).send(error);
   }
 });
@@ -191,6 +201,13 @@ router.get("/pedidos", async (req, res) => {
 router.get("/pedidos/usuario/:id", async (req, res) => {
   try {
     const pedidos = await Pedido.findAll({
+      include: [
+        {
+          model: Producto,
+          attributes: ["nombre"],
+          through: { attributes: ["cantidad", "productoId"] },
+        },
+      ],
       where: { usuarioId: req.params.id },
     });
 
@@ -206,7 +223,15 @@ router.get("/pedido/:id", async (req, res) => {
   const { id } = req.params;
 
   try {
-    const pedido = await Pedido.findByPk(id);
+    const pedido = await Pedido.findByPk(id, {
+      include: [
+        {
+          model: Producto,
+          attributes: ["nombre"],
+          through: { attributes: ["cantidad", "productoId"] },
+        },
+      ],
+    });
 
     res.status(200).send(pedido);
   } catch (error) {
@@ -328,6 +353,7 @@ router.post("/ratings/crear/:productoid", async (req, res) => {
 router.post("/crear", async (req, res) => {
   try {
     const {
+      id,
       nombre,
       apellido,
       dni,
@@ -338,6 +364,7 @@ router.post("/crear", async (req, res) => {
       isAdmin,
     } = req.body;
     const usuario = await Usuario.create({
+      id: id,
       nombre: nombre,
       apellido: apellido,
       dni: dni,
@@ -626,8 +653,9 @@ router.put("/admin/pedido/:id", async (req, res) => {
 router.put("/admin/usuario/:id", async (req, res) => {
   try {
     const id = req.params.id;
-    const pedido = await Pedido.findByPk(id);
+    const usuario = await Usuario.findByPk(id);
     const {
+      uid,
       nombre,
       apellido,
       dni,
@@ -637,38 +665,41 @@ router.put("/admin/usuario/:id", async (req, res) => {
       mail,
       isAdmin,
     } = req.body;
-
+    if (uid) {
+      usuario.id = uid;
+      usuario.save();
+    }
     if (nombre) {
-      pedido.nombre = nombre;
-      pedido.save();
+      usuario.nombre = nombre;
+      usuario.save();
     }
     if (apellido) {
-      pedido.apellido = apellido;
-      pedido.save();
+      usuario.apellido = apellido;
+      usuario.save();
     }
     if (dni) {
-      pedido.dni = dni;
-      pedido.save();
+      usuario.dni = dni;
+      usuario.save();
     }
     if (direccion) {
-      pedido.direccion = direccion;
-      pedido.save();
+      usuario.direccion = direccion;
+      usuario.save();
     }
     if (contraseña) {
-      pedido.contraseña = contraseña;
-      pedido.save();
+      usuario.contraseña = contraseña;
+      usuario.save();
     }
     if (telefono) {
-      pedido.telefono = telefono;
-      pedido.save();
+      usuario.telefono = telefono;
+      usuario.save();
     }
     if (mail) {
-      pedido.mail = mail;
-      pedido.save();
+      usuario.mail = mail;
+      usuario.save();
     }
     if (isAdmin) {
-      pedido.isAdmin = isAdmin;
-      pedido.save();
+      usuario.isAdmin = isAdmin;
+      usuario.save();
     }
     res.status(200).send(id);
   } catch (error) {
@@ -835,6 +866,30 @@ router.post("/admin/despachar", (req, res) => {
     to: mail,
     subject: "Hello ✔",
     text: "Producto siendo despachado!",
+  };
+  transporter.sendMail(mailOptions, (error, info) => {
+    if (error) {
+      res.status(500).send(error.message);
+    } else {
+      res.status(200).jsonp(req.body);
+    }
+  });
+});
+
+router.post("/usuario/contacto", (req, res) => {
+  const { mail, subject, text } = req.body;
+  var transporter = nodemailer.createTransport({
+    service: "gmail",
+    auth: {
+      user: "henrypfg1@gmail.com",
+      pass: "qdhkyjhhfujyogoa",
+    },
+  });
+  var mailOptions = {
+    from: '"CONTACTO DE USUARIO" <henrypfg1@gmail.com>',
+    to: "henrypfg1@gmail.com",
+    subject: `${subject} usuario ${mail}`,
+    text: text,
   };
   transporter.sendMail(mailOptions, (error, info) => {
     if (error) {

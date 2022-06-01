@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { deleteCategoria, getCategorias } from "../../Redux/actions";
 import styled from "styled-components";
+import CrearCat from "../Admin/CrearCat/CrearCat";
 
 const Categoria = styled.div`
   display: flex;
@@ -45,20 +46,14 @@ const Crear = styled.button`
 export default function EliminarCategoria() {
   const dispatch = useDispatch();
   const categorias = useSelector((state) => state.categorias);
-  const [categoria, setCategoria] = useState();
+  const [categoria, setCategoria] = useState(false);
 
   useEffect(() => {
     dispatch(getCategorias());
   }, [dispatch]);
 
-  function handleSelectCategorias(e) {
-    const seleccionada = e.target.value;
-    setCategoria(seleccionada);
-  }
-
-  function handleSubmit(e) {
-    e.preventDefault();
-    // dispatch(deleteCategoria(categoria));
+  function handleClick() {
+    setCategoria(true);
   }
 
   return (
@@ -75,25 +70,25 @@ export default function EliminarCategoria() {
         Administrador de Categorias
       </h1>
 
-      <Crear>Crear</Crear>
-
-      <form onSubmit={handleSubmit}>
-        {categorias &&
-          categorias.map((d) => (
-            <Categoria key={d.id}>
-              <span>{d.nombre}</span>
-
-              <Button
-                onClick={() => {
-                  dispatch(deleteCategoria(d.id));
-                  dispatch(getCategorias());
-                }}
-              >
-                🗑
-              </Button>
-            </Categoria>
-          ))}
-      </form>
+      <Crear onClick={handleClick}>Crear</Crear>
+      {categoria ? (
+        <CrearCat setCategoria={setCategoria} />
+      ) : (
+        categorias &&
+        categorias.map((d) => (
+          <Categoria key={d.id}>
+            <span>{d.nombre}</span>
+            <Button
+              onClick={() => {
+                dispatch(deleteCategoria(d.id));
+                dispatch(getCategorias());
+              }}
+            >
+              🗑
+            </Button>
+          </Categoria>
+        ))
+      )}
     </div>
   );
 }

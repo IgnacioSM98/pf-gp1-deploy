@@ -43,8 +43,6 @@ export default function CrearUsuario({ setCrear, setEditar, editarUsuario }) {
     setUsuario({ ...usuario, [e.target.name]: e.target.value });
   };
 
-  console.log(editarUsuario);
-
   return (
     <>
       <h1
@@ -135,6 +133,7 @@ export default function CrearUsuario({ setCrear, setEditar, editarUsuario }) {
             <Button
               onClick={() => {
                 editarUsuario ? putUsuario(usuario) : postUsuario(usuario);
+                editarUsuario ? setEditar(false) : setCrear(false);
               }}
             >
               {editarUsuario ? "Editar" : "Confirmar"}
