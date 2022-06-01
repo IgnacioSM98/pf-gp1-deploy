@@ -261,7 +261,7 @@ export default function NavBar({ contacto, setUser }) {
             Mi Cuenta
           </UserButton>
 
-          {!userInfo?.rol === "admin" && (
+          {userInfo?.rol !== "admin" && (
             <UserButton to="/carrito" onClick={() => setMenu(!userMenu)}>
               Carrito
             </UserButton>

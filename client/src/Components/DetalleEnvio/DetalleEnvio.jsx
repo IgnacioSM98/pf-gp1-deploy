@@ -197,10 +197,10 @@ export default function DetalleEnvio() {
   const status = query.get("status");
   const usuarioMail = userMail?.email;
 
-  const changeEstado = () => {
+  function changeEstado(estado) {
     Swal.fire({
       title: "Cambiar Estado",
-      text: `¿Estas seguro de cambiar el estado de este pedido de ${detalle.Estado} a ${input.estado}?`,
+      text: `¿Estas seguro de cambiar el estado de este pedido de ${detalle.Estado} a ${estado}?`,
       icon: "warning",
       iconColor: "grey",
       color: "#222",
@@ -209,21 +209,23 @@ export default function DetalleEnvio() {
       confirmButtonColor: "green",
       cancelButtonColor: "darkgrey",
       confirmButtonText: "Si",
-    }).then((result) => {
-      if (result.isConfirmed) {
-        Swal.fire({
-          text: "El pedido se actualizó con éxito",
-          icon: "success",
-          iconColor: "green",
-          color: "#222",
-          showConfirmButton: false,
-          timer: "1500",
-          toast: true,
-        });
-        dispatch(actualizarEstadoEnvio(id, input, detalle.productos));
-      }
-    });
-  };
+    })
+      .then((result) => {
+        if (result.isConfirmed) {
+          Swal.fire({
+            text: "El pedido se actualizó con éxito",
+            icon: "success",
+            iconColor: "green",
+            color: "#222",
+            showConfirmButton: false,
+            timer: "1500",
+            toast: true,
+          });
+          dispatch(actualizarEstadoEnvio(id, { estado }, detalle.productos));
+        }
+      })
+      .catch((err) => console.log(err));
+  }
 
   useEffect(() => {
     dispatch(getDetalleEnvio(id));
@@ -242,20 +244,17 @@ export default function DetalleEnvio() {
     }
   }, [detalle]);
 
-  let [input, setInput] = useState({
-    estado: "",
-  });
+  // let [input, setInput] = useState({
+  //   estado: "",
+  // });
 
   let handleInputChange = (e) => {
-    setInput({
-      estado: e.target.value,
-    });
-  };
+    // setInput({
+    //   estado: e.target.value,
+    // });
 
-  // let handleSubmit = (e) => {
-  //   e.preventDefault();
-  //   dispatch(actualizarEstadoEnvio(id, input));
-  // };
+    changeEstado(e.target.value);
+  };
 
   return (
     <Container>
@@ -267,16 +266,17 @@ export default function DetalleEnvio() {
         // <Formulario onSubmit={handleSubmit}>
         <ModificarEstados onChange={handleInputChange}>
           <option name="estados">Modificar estado</option>
+
           <OpcionEstado
             disabled={detalle.Estado === "En preparación" ? true : false}
-            onClick={changeEstado}
+            // onClick={() => changeEstado()}
             value="En preparación"
           >
             En preparación
           </OpcionEstado>
           <OpcionEstado
             disabled={detalle.Estado === "En camino" ? true : false}
-            onClick={changeEstado}
+            // onClick={() => changeEstado()}
             value="En camino"
           >
             En camino
@@ -287,14 +287,14 @@ export default function DetalleEnvio() {
                 ? true
                 : false
             }
-            onClick={changeEstado}
+            // onClick={() => changeEstado()}
             value="En punto de entrega/poder del correo"
           >
             En punto de entrega/poder del correo
           </OpcionEstado>
           <OpcionEstado
             disabled={detalle.Estado === "Entregado" ? true : false}
-            onClick={changeEstado}
+            // onClick={() => changeEstado()}
             value="Entregado"
           >
             Entregado
@@ -302,7 +302,6 @@ export default function DetalleEnvio() {
         </ModificarEstados>
         //* <Boton type="submit">Actualizar Estado</Boton> */
         // </Formulario>
-
       )}
       <Envio className="envio">
         <Estado className="Estado">
