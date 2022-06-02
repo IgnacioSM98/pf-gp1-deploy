@@ -337,3 +337,23 @@ export function enviarMail(userMail) {
 export function orderByStock(payload) {
   return { type: "ORDER_BY_STOCK", payload };
 }
+
+export function mailAdmin(userMail, estado) {
+  return async function (dispatch) {
+    if (estado === "En camino") {
+      await axios
+        .post(`${urlBase}${admin}despachar`, { mail: userMail })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
+    if (estado === "En punto de entrega/poder del correo") {
+      await axios
+        .post(`${urlBase}${admin}correo`, { mail: userMail })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
+    dispatch({ type: "ENVIAR_MAIL", payload: userMail });
+  };
+}

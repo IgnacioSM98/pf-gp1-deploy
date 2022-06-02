@@ -5,6 +5,7 @@ import {
   actualizarEstadoEnvio,
   enviarMail,
   quitarItem,
+  mailAdmin,
 } from "../../Redux/actions";
 import { useParams, Link, useLocation } from "react-router-dom";
 import styled from "styled-components";
@@ -198,6 +199,20 @@ export default function DetalleEnvio() {
   const status = query.get("status");
   const usuarioMail = userMail?.email;
 
+  useEffect(() => {
+    dispatch(getDetalleEnvio(id));
+  }, []);
+
+  let [input, setInput] = useState({
+    estado: "",
+  });
+
+  useEffect(() => {
+    if (usuarioMail !== undefined) {
+      dispatch(enviarMail(usuarioMail));
+    }
+  }, [usuarioMail]);
+
   function changeEstado(estado) {
     Swal.fire({
       title: "Cambiar Estado",
@@ -223,24 +238,11 @@ export default function DetalleEnvio() {
             toast: true,
           });
           dispatch(actualizarEstadoEnvio(id, { estado }, detalle.productos));
+          //dispatch(mailAdmin())
         }
       })
       .catch((err) => console.log(err));
   }
-
-  useEffect(() => {
-    dispatch(getDetalleEnvio(id));
-  }, []);
-  
-  let [input, setInput] = useState({
-    estado: "",
-  });
-
-  useEffect(() => {
-    if (usuarioMail !== undefined) {
-      dispatch(enviarMail(usuarioMail));
-    }
-  }, [usuarioMail]);
 
   useEffect(() => {
     if (Object.keys(detalle).length > 0) {
@@ -270,7 +272,6 @@ export default function DetalleEnvio() {
           {`Pedido numero: #2022${detalle.id}`}
         </h1>
       )}
-
 
       {user === "admin" && (
         // <Formulario onSubmit={handleSubmit}>
@@ -433,7 +434,7 @@ export default function DetalleEnvio() {
               : "para retiro:"}{" "}
             #2022{detalle?.id}
           </Parrafo>
-          
+
           <LogoCodigo
             src="https://i.ibb.co/vkjfvPY/Asset-930.png"
             alt="Imagen de una pizarra"
