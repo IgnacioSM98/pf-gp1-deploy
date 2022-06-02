@@ -121,22 +121,19 @@ export default function Consultas() {
       })
     );
   }
-  function sweetAlert(props) {
+  function sweetAlert() {
     Swal.fire({
-      title: "Eliminar producto",
-      text: "¿Estas seguro de eliminar este producto de tu carrito?",
-      icon: "warning",
-      iconColor: "red",
+      title: "Mensaje Siendo enviado",
+      text: "Gracias por su aporte",
+      icon: "success",
+      iconColor: "green",
       color: "#222",
-      showCancelButton: true,
-      cancelButtonText: "No",
-      confirmButtonColor: "red",
-      cancelButtonColor: "darkgrey",
-      confirmButtonText: "Si",
+      confirmButtonColor: "green",
+      confirmButtonText: "Ok",
     }).then((result) => {
       if (result.isConfirmed) {
         Swal.fire({
-          text: "El producto se eliminó con éxito",
+          text: "Mensaje enviado!",
           icon: "success",
           iconColor: "green",
           color: "#222",
@@ -157,7 +154,7 @@ export default function Consultas() {
   }
   return (
     <>
-      <Titulo>Consultanos!</Titulo>
+      <Titulo>Consultanos o Reclamanos!</Titulo>
       <Container>
         <Form onSubmit={(e) => handleSubmit(e)}>
           <Input>
@@ -199,7 +196,7 @@ export default function Consultas() {
             <label>Consulta:</label>
             {errors.text && <Errors>{errors.text}</Errors>}
           </Input>
-          <Button type="submit">¡Enviar Consulta!</Button>
+          <Button type="submit">¡Enviar!</Button>
         </Form>
       </Container>
     </>
