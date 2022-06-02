@@ -1,0 +1,61 @@
+*,
+::before,
+::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.form-notificaciones {
+  background-color: white;
+  width: 30%;
+  padding: 10px 0;
+  border-radius: 10px;
+  box-shadow: 0 0 6px 0 rgba(255, 255, 255, 0.8);
+  margin: auto;
+}
+
+.grupo-notificaciones {
+  display: flex;
+
+  margin: 45px 0px 0px 0px;
+  width: 320px;
+}
+
+.label-notificaciones {
+  color: #49454567;
+  font-size: 16px;
+  margin-right: 5px;
+  transition: 0.3s ease all;
+  pointer-events: none;
+}
+
+.input-notificaciones{
+    border-radius: 5px;
+    width: 15px;
+    height: 15px;
+}
+
+@media screen and (max-width: 1100px) {
+  .form-notificaciones {
+    width: 50%;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .form-notificaciones {
+    width: 60%;
+  }
+}
+
+@media screen and (max-width: 450%) {
+  .form-notificaciones {
+    width: 80%;
+  }
+}
+
+@media screen and (max-width: 300px) {
+  .form-notificaciones {
+    width: 90%;
+  }
+}
