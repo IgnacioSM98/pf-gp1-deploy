@@ -1,13 +1,17 @@
-import React, { useState } from "react";
-import { useDispatch } from "react-redux";
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { getCategorias, postCategoria } from "../../../Redux/actions";
 
 export default function CrearCat({ setCategoria }) {
-  const [input, setInput] = useState("");
+  const [input, setInput] = useState({ nombre: "" });
+  const categorias = useSelector((state) => state.categorias);
   const dispatch = useDispatch();
 
+  useEffect(() => {}, [categorias]);
+
   function handleChange(e) {
-    setInput(e.target.value);
+    setInput({ id: categorias.length + 1, nombre: e.target.value });
+    console.log(input);
   }
 
   function handleSubmit(e) {
@@ -22,9 +26,9 @@ export default function CrearCat({ setCategoria }) {
       <input
         id="crear-categoria"
         name="crear-categoria"
-        placeholder="Escribir nueva categoria"
+        placeholder=" "
         type="text"
-        value={input}
+        value={input.nombre}
         onChange={(e) => handleChange(e)}
       />
       <button onClick={(e) => handleSubmit(e)}>Agregar</button>
