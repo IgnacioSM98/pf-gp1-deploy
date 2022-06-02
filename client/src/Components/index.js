@@ -35,7 +35,7 @@ import Pedidos from "./Pedidos/Pedidos";
 import Usuarios from "./Usuarios/Usuarios";
 import Pedido from "./Pedidos/Pedido";
 import AdminProductos from "./Admin/AdminProductos";
-import Perfil from "./Cuenta/Perfil";
+import Perfil from "./Cuenta/AjustesPerfil/Perfil.jsx";
 import Favoritos from "./Cuenta/Favoritos/Favoritos";
 import Notificaciones from "./Cuenta/Notificaciones/Notificaciones";
 import Seguridad from "./Cuenta/Seguridad/Seguridad";
@@ -85,5 +85,5 @@ export {
   Notificaciones,
   Seguridad,
   Contacto,
-  AdminReseñas
+  AdminReseñas,
 };

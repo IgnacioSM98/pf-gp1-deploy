@@ -11,8 +11,8 @@ import {
   Seguridad,
   Contacto,
 } from "../index";
-import Perfil from "./Perfil.jsx";
-import Reseñas from "./Reseñas";
+import Perfil from "./AjustesPerfil/Perfil";
+import Reseñas from "./Reseñas/Reseñas";
 
 const Container = styled.div`
   display: flex;

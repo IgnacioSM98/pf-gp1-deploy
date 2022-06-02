@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getUsuarios } from "../../Redux/actions";
+import { getUsuarios } from "../../../Redux/actions";
 import "./Perfil.css";
 import putPerfil from "./putPerfil";
 

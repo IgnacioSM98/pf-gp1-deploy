@@ -74,7 +74,7 @@ export function filtrarCategorias(payload) {
 export function getReviews(id) {
   return async function (dispatch) {
     try {
-      const resp = await axios.get(`${urlBase}ratings/${id}`);
+      const resp = await axios.get(`${urlBase}ratings/usuario/${id}`);
 
       if (resp) {
         dispatch({ type: "GET_REVIEWS", payload: resp.data });
@@ -99,14 +99,14 @@ export function getAllReviews() {
   };
 }
 
-export function deleteReview(id){
+export function deleteReview(id) {
   return async function (dispatch) {
-    await axios.delete(`${urlBase}ratings/${id}`)
-    dispatch(getAllReviews())
+    await axios.delete(`${urlBase}ratings/${id}`);
+    dispatch(getAllReviews());
     return dispatch({
-      type: "DELETE_REVIEW"
-    })
-  }
+      type: "DELETE_REVIEW",
+    });
+  };
 }
 
 export function postProducto(payload) {
