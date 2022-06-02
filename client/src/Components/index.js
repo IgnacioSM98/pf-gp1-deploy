@@ -41,6 +41,7 @@ import Notificaciones from "./Cuenta/Notificaciones/Notificaciones";
 import Seguridad from "./Cuenta/Seguridad/Seguridad";
 import Contacto from "./Cuenta/Contacto/Contacto";
 import AdminReseñas from "./Admin/AdminReseñas";
+import Consultas from "./Cuenta/Consultas/Consultas";
 
 export {
   Home,
@@ -86,4 +87,5 @@ export {
   Seguridad,
   Contacto,
   AdminReseñas,
+  Consultas,
 };

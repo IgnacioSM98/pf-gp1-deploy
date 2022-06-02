@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import CarritoItem from "../Carrito/CarritoItem";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
@@ -10,6 +9,7 @@ import {
   Notificaciones,
   Seguridad,
   Contacto,
+  Consultas,
 } from "../index";
 import Perfil from "./AjustesPerfil/Perfil";
 import Reseñas from "./Reseñas/Reseñas";
@@ -175,6 +175,7 @@ function Cuenta() {
     notificaciones: Notificaciones,
     seguridad: Seguridad,
     contacto: Contacto,
+    consultas: Consultas,
   };
 
   const carrito = useSelector((state) => state.carrito);
@@ -216,6 +217,9 @@ function Cuenta() {
           </Boton>
           <Boton onClick={handleOnClick} value="contacto">
             Contacto
+          </Boton>
+          <Boton onClick={handleOnClick} value="consultas">
+            Consultanos!
           </Boton>
         </Botones>
 
