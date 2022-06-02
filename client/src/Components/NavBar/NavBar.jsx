@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
+import { FaBars } from "react-icons/fa";
 import Usuario from "../Usuario/Usuario";
 import {
   getUser,
@@ -21,11 +22,32 @@ const Container = styled.div`
   z-index: 20;
   height: 50px;
   background-color: #000000f0;
+  @media screen and (max-width: 960px) {
+    position: absolute;
+    top: 0;
+    width: 100%;
+    height: ${(props) => (props.open ? "25vh" : "5vh")};
+    justify-content: space-around;
+    flex-direction: column;
+    align-items: center;
+    transition: 0.5s all ease;
+  }
+`;
+const Menu = styled.div`
+  @media screen and (max-width: 960px) {
+    top: 70px;
+    display: ${(props) => (props.open ? "flex" : "none  ")};
+    flex-direction: column;
+    align-items: center;
+  }
 `;
 
 const NavLink = styled(Link)`
   text-decoration: none;
   color: white;
+  media screen and (max-width: 960px) {
+    width: 100%;
+  }
 `;
 
 const UserButton = styled(Link)`
@@ -73,6 +95,14 @@ const Span = styled.span`
   font-size: 13px;
   text-shadow: 1px 1px black;
   cursor: pointer;
+  @media screen and (max-width: 960px) {
+    width: 100%;
+    margin: 0;
+    height: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
 `;
 
 const Login = styled.div`
@@ -83,6 +113,14 @@ const Login = styled.div`
   font-size: 13px;
   color: white;
   right: 20px;
+  @media screen and (max-width: 960px) {
+    position: absolute;
+    right: 20px;
+    top: 0;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+  }
 `;
 
 const Button = styled.button`
@@ -98,11 +136,28 @@ const Button = styled.button`
   text-shadow: 1px 1px black;
   cursor: pointer;
 `;
+const MobileIcon = styled.div`
+  display: none;
+  font-size: 2em;
+  @media screen and (max-width: 960px) {
+    position: absolute;
+    left: 20px;
+    top: 5px;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    svg {
+      fill: white;
+      margin-left: 0.5rem;
+    }
+  }
+`;
 
 export default function NavBar({ contacto, setUser }) {
   const carrito = useSelector((state) => state.carrito);
   const dispatch = useDispatch();
   const [userMenu, setMenu] = useState(false);
+  const [showMobileMenu, setShowMobileMenu] = useState(false);
 
   const countCarrito = carrito?.filter((cv, i) => {
     return i === carrito.findIndex((e) => e.id === cv.id);
@@ -162,32 +217,40 @@ export default function NavBar({ contacto, setUser }) {
   // }, []);
 
   return (
-    <Container onMouseLeave={() => setMenu(false)}>
-      <NavLink to={"/"} onClick={() => setMenu(false)}>
-        <Span>Home</Span>
-      </NavLink>
+    <Container open={showMobileMenu} onMouseLeave={() => setMenu(false)}>
+      <MobileIcon
+        onClick={() => {
+          setShowMobileMenu(!showMobileMenu);
+        }}
+      >
+        <FaBars />
+      </MobileIcon>
+      <Menu open={showMobileMenu}>
+        <NavLink to={"/"} onClick={() => setMenu(false)}>
+          <Span>Home</Span>
+        </NavLink>
 
-      {/* <NavLink to="/">
+        {/* <NavLink to="/">
         <Span>About</Span>
       </NavLink> */}
 
-      <NavLink to={"tienda"} onClick={() => setMenu(false)}>
-        <Span>Tienda</Span>
-      </NavLink>
+        <NavLink to={"tienda"} onClick={() => setMenu(false)}>
+          <Span>Tienda</Span>
+        </NavLink>
 
-      <Span
-        onClick={() => {
-          scrollToSection(contacto);
-          setMenu(false);
-        }}
-      >
-        Contacto
-      </Span>
+        <Span
+          onClick={() => {
+            scrollToSection(contacto);
+            setMenu(false);
+          }}
+        >
+          Contacto
+        </Span>
 
-      {/* <NavLink to="/blog">
+        {/* <NavLink to="/blog">
         <Span>Blog</Span>
       </NavLink> */}
-
+      </Menu>
       <Login>
         <NavLink
           to={"/carrito"}
