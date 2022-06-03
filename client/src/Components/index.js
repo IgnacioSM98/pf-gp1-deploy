@@ -29,17 +29,18 @@ import Checkout from "./CheckoutCarrito/CheckoutCarrito";
 import Reseñas from "./Reseñas/Reseñas";
 import ItemCompra from "./Compra/ItemCompra";
 import QR from "./QR/QR";
-import Compras from "./Compras/Compras";
+import Compras from "./Cuenta/Compras/Compras";
 import Admin from "./Admin/Admin";
 import Pedidos from "./Pedidos/Pedidos";
 import Usuarios from "./Usuarios/Usuarios";
 import Pedido from "./Pedidos/Pedido";
 import AdminProductos from "./Admin/AdminProductos";
-import Perfil from "./Cuenta/Perfil";
+import Perfil from "./Cuenta/AjustesPerfil/Perfil.jsx";
 import Favoritos from "./Cuenta/Favoritos/Favoritos";
 import Notificaciones from "./Cuenta/Notificaciones/Notificaciones";
-import Seguridad from "./Cuenta/Notificaciones/Seguridad/Seguridad";
-import Contacto from "./Cuenta/Contacto/Contacto";
+import Seguridad from "./Cuenta/Seguridad/Seguridad";
+import AdminReseñas from "./Admin/AdminReseñas";
+import Consultas from "./Cuenta/Consultas/Consultas";
 
 export {
   Home,
@@ -83,5 +84,6 @@ export {
   Favoritos,
   Notificaciones,
   Seguridad,
-  Contacto,
+  AdminReseñas,
+  Consultas,
 };

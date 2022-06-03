@@ -28,6 +28,13 @@ const Input = styled.input`
   // background-color: #8080806e;
 `;
 
+const Select = styled.select`
+  border: 1px solid #222;
+  border-radius: 2px;
+  padding: 10px;
+  margin: 2px;
+`;
+
 const Button = styled.button`
   border: 1px solid #222;
   border-radius: 5px;
@@ -113,13 +120,27 @@ export default function CrearUsuario({ setCrear, setEditar, editarUsuario }) {
             placeholder="Telefono"
           />
 
-          <Input
+          {/* <Input
             type="text"
             name="isAdmin"
             value={usuario.isAdmin}
             onChange={(e) => handleInputs(e)}
             placeholder="Admin"
-          />
+      />*/}
+          <Select
+            name="isAdmin"
+            value={usuario.isAdmin}
+            onChange={(e) => {
+              handleInputs(e);
+            }}
+            placeholder="Admin"
+          >
+            <option disabled value="DEFAULT">
+              Admin
+            </option>
+            <option value="true">Si</option>
+            <option value="false">No</option>
+          </Select>
 
           <div>
             <Button

@@ -10,6 +10,7 @@ import {
   AdminProductos,
   EliminarCategoria,
   Pedido,
+  AdminReseñas,
 } from "../index";
 import Usuarios from "../Usuarios/Usuarios";
 
@@ -264,6 +265,8 @@ function Cuenta() {
         {detalle === "pedidos" && <Pedidos />}
 
         {detalle === "productos" && <AdminProductos />}
+
+        {detalle === "reseñas" && <AdminReseñas />}
 
         {detalle === "principal" && (
           <Categorias>

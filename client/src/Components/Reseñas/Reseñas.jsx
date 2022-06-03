@@ -153,7 +153,6 @@ export default function Reseñas({ id, setReseñas }) {
   const [reviewsFiltradas, setReviews] = useState(reviews);
   const [selected, setSelected] = useState("todas");
   const [cantidad, setCantidad] = useState(2);
-
   const observer = useRef();
 
   const ultimaReseña = useCallback(

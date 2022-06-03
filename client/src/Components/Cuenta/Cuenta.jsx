@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import CarritoItem from "../Carrito/CarritoItem";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
@@ -9,10 +8,10 @@ import {
   Favoritos,
   Notificaciones,
   Seguridad,
-  Contacto,
+  Consultas,
 } from "../index";
-import Perfil from "./Perfil.jsx";
-import Reseñas from "./Reseñas";
+import Perfil from "./AjustesPerfil/Perfil";
+import Reseñas from "./Reseñas/Reseñas";
 
 const Container = styled.div`
   display: flex;
@@ -174,7 +173,7 @@ function Cuenta() {
     favoritos: Favoritos,
     notificaciones: Notificaciones,
     seguridad: Seguridad,
-    contacto: Contacto,
+    consultas: Consultas,
   };
 
   const carrito = useSelector((state) => state.carrito);
@@ -184,6 +183,10 @@ function Cuenta() {
   const handleOnClick = (e) => {
     setComponente(e.target.value);
   };
+
+  useEffect(() => {
+    setComponente("perfil");
+  }, []);
 
   return (
     <Container>
@@ -210,8 +213,8 @@ function Cuenta() {
           <Boton onClick={handleOnClick} value="seguridad">
             Seguridad
           </Boton>
-          <Boton onClick={handleOnClick} value="contacto">
-            Contacto
+          <Boton onClick={handleOnClick} value="consultas">
+            Consultanos!
           </Boton>
         </Botones>
 

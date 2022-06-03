@@ -10,7 +10,9 @@ import {
   restarCarrito,
   añadirAFavoritos,
   eliminarDeFavoritos,
+  getUsuarios,
 } from "../../Redux/actions";
+import axios from "axios";
 
 const LinkProduct = styled(Link)`
   text-decoration: none;
@@ -176,6 +178,7 @@ export default function Producto({
   );
 
   useEffect(() => {
+    dispatch(getUsuarios());
     setFlag(cantidadCarrito?.cantidad ? true : false);
     setCantidad(cantidadCarrito?.cantidad ? cantidadCarrito.cantidad : 1);
   }, [cantidadCarrito]);
@@ -223,7 +226,6 @@ export default function Producto({
     } else {
       dispatch(añadirAFavoritos(producto));
     }
-    // console.log(favoritos);
   }
 
   return (

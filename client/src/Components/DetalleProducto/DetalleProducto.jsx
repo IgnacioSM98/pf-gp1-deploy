@@ -350,7 +350,7 @@ export default function DetalleProducto() {
   const filterCategorias = (producto) => {
     for (const categoria of detalle.categoria) {
       if (
-        producto.categoria.find(
+        producto?.categoria?.find(
           (cate) => cate.nombre.toLowerCase() === categoria.nombre.toLowerCase()
         )
       ) {

@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getPedidos } from "../../Redux/actions";
 import styled from "styled-components";
@@ -49,14 +49,38 @@ const Crear = styled.button`
   cursor: pointer;
 `;
 
+let Select = styled.select`
+  margin-bottom: 3em;
+  width: 150px;
+  height: 30px;
+  border-radius: 8px;
+  background-color: rgb(182, 182, 182);
+  font-weight: bold;
+  text-align: center;
+`;
+
 function Pedidos() {
   const dispatch = useDispatch();
-
+  const [selected, setSelected] = useState("");
   const pedidos = useSelector((state) => state.pedidos);
 
   useEffect(() => {
     dispatch(getPedidos());
   }, []);
+
+  const sortPedidos = (a, b) => {
+    if (selected === "ASC") {
+      if (a.Estado > b.Estado) return 1;
+      if (b.Estado > a.Estado) return -1;
+    } else {
+      if (a.Estado > b.Estado) return -1;
+      if (b.Estado > a.Estado) return 1;
+    }
+
+    if (selected === "DEFAULT") {
+      return a;
+    }
+  };
 
   return (
     <>
@@ -73,9 +97,18 @@ function Pedidos() {
       </h1>
 
       {/* <Crear>Crear</Crear> */}
-
+      <Select onChange={(e) => setSelected(e.target.value)}>
+          <option value="Ordenar por estado">Ordenar por estado</option>
+          <option value="ASC">Menor a Mayor</option>
+          <option value="DES">Mayor a Menor</option>
+        </Select>
       <Container>
-        {pedidos && pedidos.map((e) => <Pedido key={e.id} producto={e} />)}
+       
+
+        {pedidos &&
+          pedidos
+            ?.sort(sortPedidos)
+            .map((e) => <Pedido key={e.id} producto={e} />)}
       </Container>
     </>
   );

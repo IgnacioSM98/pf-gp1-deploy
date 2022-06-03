@@ -74,7 +74,7 @@ export function filtrarCategorias(payload) {
 export function getReviews(id) {
   return async function (dispatch) {
     try {
-      const resp = await axios.get(`${urlBase}ratings/${id}`);
+      const resp = await axios.get(`${urlBase}ratings/usuario/${id}`);
 
       if (resp) {
         dispatch({ type: "GET_REVIEWS", payload: resp.data });
@@ -82,6 +82,30 @@ export function getReviews(id) {
     } catch (err) {
       console.log(err, "error reviews");
     }
+  };
+}
+
+export function getAllReviews() {
+  return async function (dispatch) {
+    try {
+      const resp = await axios.get(`${urlBase}ratings/`);
+
+      if (resp) {
+        dispatch({ type: "GET_ALL_REVIEWS", payload: resp.data });
+      }
+    } catch (err) {
+      console.log(err, "error AllReviews");
+    }
+  };
+}
+
+export function deleteReview(id) {
+  return async function (dispatch) {
+    await axios.delete(`${urlBase}ratings/${id}`);
+    dispatch(getAllReviews());
+    return dispatch({
+      type: "DELETE_REVIEW",
+    });
   };
 }
 
@@ -312,4 +336,33 @@ export function enviarMail(userMail) {
 
 export function orderByStock(payload) {
   return { type: "ORDER_BY_STOCK", payload };
+}
+
+export function mailAdmin(userId, estado) {
+  console.log(userId, estado, "mirar aca!");
+  return async function (dispatch) {
+    if (estado === { estado: "En preparación" }) {
+      await axios
+        .post(`${urlBase}usuario/confirmacion`, userId)
+        .catch((err) => {
+          console.log(err);
+        });
+    }
+    if (estado === { estado: "En camino" }) {
+      await axios.post(`${urlBase}${admin}despachar`, userId).catch((err) => {
+        console.log(err);
+      });
+    }
+    if (estado === { estado: "En punto de entrega/poder del correo" }) {
+      await axios.post(`${urlBase}${admin}correo`, userId).catch((err) => {
+        console.log(err);
+      });
+    }
+    if (estado === { estado: "Entregado" }) {
+      await axios.post(`${urlBase}${admin}entrega`, userId).catch((err) => {
+        console.log(err);
+      });
+    }
+    dispatch({ type: "ENVIAR_MAIL" });
+  };
 }
