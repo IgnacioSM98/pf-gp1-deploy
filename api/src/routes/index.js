@@ -828,8 +828,10 @@ router.post("/pagar", (req, res) => {
 
 // Metodo de envio de mail automatico al confirmar la compra y el despacho
 
-router.post("/usuario/confirmacion", (req, res) => {
-  const { mail } = req.body;
+router.post("/usuario/confirmacion", async (req, res) => {
+  const { userId } = req.body;
+
+  const usuario = await Usuario.findByPk(userId);
   var transporter = nodemailer.createTransport({
     service: "gmail",
     auth: {
@@ -839,7 +841,7 @@ router.post("/usuario/confirmacion", (req, res) => {
   });
   var mailOptions = {
     from: '"Henry Grupo 1 👻" <henrypfg1@gmail.com>',
-    to: mail,
+    to: usuario.mail,
     subject: "Hello ✔",
     text: "Compra confirmada",
   };
@@ -852,8 +854,11 @@ router.post("/usuario/confirmacion", (req, res) => {
   });
 });
 
-router.post("/admin/despachar", (req, res) => {
-  const { mail } = req.body;
+router.post("/admin/despachar", async (req, res) => {
+  const { userId } = req.body;
+
+  const usuario = await Usuario.findByPk(userId);
+
   var transporter = nodemailer.createTransport({
     service: "gmail",
     auth: {
@@ -863,9 +868,61 @@ router.post("/admin/despachar", (req, res) => {
   });
   var mailOptions = {
     from: '"Henry Grupo 1 👻" <henrypfg1@gmail.com>',
-    to: mail,
+    to: usuario.mail,
     subject: "Hello ✔",
     text: "Producto siendo despachado!",
+  };
+  transporter.sendMail(mailOptions, (error, info) => {
+    if (error) {
+      res.status(500).send(error.message);
+    } else {
+      res.status(200).jsonp(req.body);
+    }
+  });
+});
+
+router.post("/admin/correo", async (req, res) => {
+  const { userId } = req.body;
+
+  const usuario = await Usuario.findByPk(userId);
+  var transporter = nodemailer.createTransport({
+    service: "gmail",
+    auth: {
+      user: "henrypfg1@gmail.com",
+      pass: "qdhkyjhhfujyogoa",
+    },
+  });
+  var mailOptions = {
+    from: '"Henry Grupo 1 👻" <henrypfg1@gmail.com>',
+    to: usuario.mail,
+    subject: "Hello ✔",
+    text: "El producto se encuentra en el punto de entrega!",
+  };
+  transporter.sendMail(mailOptions, (error, info) => {
+    if (error) {
+      res.status(500).send(error.message);
+    } else {
+      res.status(200).jsonp(req.body);
+    }
+  });
+});
+
+router.post("/admin/entrega", async (req, res) => {
+  const { userId } = req.body;
+
+  const usuario = await Usuario.findByPk(userId);
+  var transporter = nodemailer.createTransport({
+    service: "gmail",
+    auth: {
+      user: "henrypfg1@gmail.com",
+      pass: "qdhkyjhhfujyogoa",
+    },
+  });
+  var mailOptions = {
+    from: '"Henry Grupo 1 👻" <henrypfg1@gmail.com>',
+    to: usuario.mail,
+    subject: "Hello ✔",
+    text: "El producto fue entregado por favor deja tu opinión del producto!",
   };
   transporter.sendMail(mailOptions, (error, info) => {
     if (error) {
