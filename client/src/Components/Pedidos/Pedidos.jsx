@@ -18,13 +18,15 @@ const Container = styled.div`
   // align-items: center;
 
   width: 100%;
-  height: auto;
+  height: 75vh;
 
-  margin: 15px;
+  // margin: 15px;
   padding: 5px;
   // border: 1px solid darkgrey;
-  border-radius: 8px;
+  // border-radius: 8px;
   // box-shadow: 0 2px 2px 0 darkgrey, 0 2px 2px 0 #222;
+
+  overflow-x: scroll;
 `;
 
 const Crear = styled.button`

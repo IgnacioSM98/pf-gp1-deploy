@@ -141,14 +141,16 @@ const Categoria = styled.div`
 
 const Secciones = styled.p`
   display: flex;
-  margin-left: 2rem;
+  // margin-left: 2rem;
+
+  padding-bottom: 20px;
   font-size: 20px;
   font-family: Poppins;
   font-weight: 600;
 `;
 
 const ContainerPedidos = styled.div`
-  height: 80vh;
+  height: 75vh;
 
   padding-top: 20px;
 
@@ -161,13 +163,15 @@ const ContainerPedidos = styled.div`
   // align-items: center;
 
   width: 100%;
-  height: auto;
+  // height: auto;
 
-  margin: 15px;
+  // margin: 15px;
   padding: 5px;
   // border: 1px solid darkgrey;
   border-radius: 8px;
   // box-shadow: 0 2px 2px 0 darkgrey, 0 2px 2px 0 #222;
+
+  overflow-x: scroll;
 `;
 
 function Cuenta() {
@@ -264,7 +268,7 @@ function Cuenta() {
         {detalle === "principal" && (
           <Categorias>
             <Categoria>
-              <Secciones>Pedidos a Despachar</Secciones>
+              <Secciones>{`Pedidos a Despachar (totales: ${pedidos.length})`}</Secciones>
 
               <ContainerPedidos>
                 {pedidos &&
