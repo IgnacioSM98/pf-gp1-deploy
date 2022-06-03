@@ -337,3 +337,32 @@ export function enviarMail(userMail) {
 export function orderByStock(payload) {
   return { type: "ORDER_BY_STOCK", payload };
 }
+
+export function mailAdmin(userId, estado) {
+  console.log(userId, estado, "mirar aca!");
+  return async function (dispatch) {
+    if (estado === { estado: "En preparación" }) {
+      await axios
+        .post(`${urlBase}usuario/confirmacion`, userId)
+        .catch((err) => {
+          console.log(err);
+        });
+    }
+    if (estado === { estado: "En camino" }) {
+      await axios.post(`${urlBase}${admin}despachar`, userId).catch((err) => {
+        console.log(err);
+      });
+    }
+    if (estado === { estado: "En punto de entrega/poder del correo" }) {
+      await axios.post(`${urlBase}${admin}correo`, userId).catch((err) => {
+        console.log(err);
+      });
+    }
+    if (estado === { estado: "Entregado" }) {
+      await axios.post(`${urlBase}${admin}entrega`, userId).catch((err) => {
+        console.log(err);
+      });
+    }
+    dispatch({ type: "ENVIAR_MAIL" });
+  };
+}
