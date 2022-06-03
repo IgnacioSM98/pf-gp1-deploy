@@ -207,11 +207,11 @@ export default function DetalleEnvio() {
     estado: "",
   });
 
-  useEffect(() => {
+  /*useEffect(() => {
     if (usuarioMail !== undefined) {
       dispatch(enviarMail(usuarioMail));
     }
-  }, [usuarioMail]);
+  }, [usuarioMail]);*/
 
   function changeEstado(estado) {
     Swal.fire({
@@ -238,7 +238,9 @@ export default function DetalleEnvio() {
             toast: true,
           });
           dispatch(actualizarEstadoEnvio(id, { estado }, detalle.productos));
-          //dispatch(mailAdmin())
+          if (detalle.usuarioId !== undefined) {
+            dispatch(mailAdmin(detalle.usuarioId, { estado }));
+          }
         }
       })
       .catch((err) => console.log(err));
