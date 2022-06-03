@@ -18,12 +18,26 @@ const Contacto = styled.div`
   width: 100%;
   max-width: 1800px;
   justify-content: space-evenly;
+  @media screen and (max-width: 960px) {
+    top: 70px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
 `;
 
 const Categoria = styled.div`
   display: flex;
   flex-direction: column;
   align-items: flex-start;
+  @media screen and (max-width: 960px) {
+    width: 100%;
+    margin: 0;
+    height: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
 `;
 
 const Title = styled.p`

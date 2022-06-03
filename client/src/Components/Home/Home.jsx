@@ -35,6 +35,10 @@ const Image = styled.img`
   opacity: 0.5;
 
   // margin-top: 50px;
+  @media screen and (max-width: 960px) {
+    display: flex;
+    height: 30vh;
+  }
 `;
 
 const Text = styled.div`
@@ -44,6 +48,12 @@ const Text = styled.div`
   left: 30%;
   right: 30%;
   width: 40%;
+  @media screen and (max-width: 960px) {
+    bottom: 20vh;
+    top: 7vh;
+    left: 25%;
+    right: 25%;
+  }
 `;
 
 const Title = styled.p`
@@ -62,6 +72,13 @@ const P = styled.p`
   font-weight: 700;
   padding: 0px 0px 20px 0px;
   color: black;
+  @media screen and (max-width: 500px) {
+    width: 100%;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
 `;
 
 const Header = styled.div`
@@ -70,6 +87,10 @@ const Header = styled.div`
   position: relative;
   z-index: 1;
   background-color: Black;
+  @media screen and (max-width: 960px) {
+    display: flex;
+    height: 30vh;
+  }
 `;
 
 export default function Home({ contacto }) {
