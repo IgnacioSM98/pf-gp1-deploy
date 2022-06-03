@@ -8,7 +8,6 @@ import {
   Favoritos,
   Notificaciones,
   Seguridad,
-  Contacto,
   Consultas,
 } from "../index";
 import Perfil from "./AjustesPerfil/Perfil";
@@ -174,7 +173,6 @@ function Cuenta() {
     favoritos: Favoritos,
     notificaciones: Notificaciones,
     seguridad: Seguridad,
-    contacto: Contacto,
     consultas: Consultas,
   };
 
@@ -214,9 +212,6 @@ function Cuenta() {
           </Boton>
           <Boton onClick={handleOnClick} value="seguridad">
             Seguridad
-          </Boton>
-          <Boton onClick={handleOnClick} value="contacto">
-            Contacto
           </Boton>
           <Boton onClick={handleOnClick} value="consultas">
             Consultanos!
