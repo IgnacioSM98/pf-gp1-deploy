@@ -6,7 +6,9 @@ import styled from "styled-components";
 import { getProductos, orderByStock } from "../../Redux/actions";
 import "./AdminProductos.css";
 
-const Container = styled.div``;
+const Container = styled.div`
+  width: 100%;
+`;
 
 const Crear = styled.button`
   // top: 660px;
@@ -29,25 +31,43 @@ const Crear = styled.button`
 `;
 
 let Select = styled.select`
-margin-bottom: 3em;
-width: 150px;
-height: 30px;
-border-radius: 8px;
-background-color: rgb(182, 182, 182);
-font-weight: bold;
-text-align: center;
-`
+  top: 0;
+  right: 100px;
+  position: absolute;
+
+  margin-bottom: 3em;
+  width: 150px;
+  height: 30px;
+  border: none;
+  border-radius: 8px;
+  background-color: white;
+  font-weight: bold;
+  text-align: center;
+`;
+
+const Option = styled.option`
+  border-radius: 8px;
+  background-color: white;
+`;
 
 let ProdAdmin = styled.div`
   display: flex;
   flex-direction: row;
-  gap: 0.5em;
-  width: 350px;
-  height: 160px;
-  border: 1px solid black;
+  // gap: 0.5em;
+  width: 98%;
+  height: 150px;
+  // border: 1px solid black;
   position: relative;
-  margin-bottom: 10px;
+  // margin-bottom: 10px;
   border-radius: 8px;
+
+  -webkit-box-shadow: 1px 3px 10px rgba(0, 0, 0, 0.26);
+  box-shadow: 1px 3px 10px rgba(0, 0, 0, 0.26);
+
+  &: hover {
+    border: 1px solid black;
+    box-shadow: none;
+  }
 `;
 let ContenedorImagen = styled.div`
   margin: 10px;
@@ -62,7 +82,7 @@ let Imagen = styled.img`
 
 let ContenedorDatos = styled.div`
   margin: 2px;
-  width: 300px;
+  width: 80%;
   height: 100px;
   display: flex;
   flex-direction: column;
@@ -70,15 +90,20 @@ let ContenedorDatos = styled.div`
   margin-top: 0.5em;
 `;
 let Titulo = styled.h3``;
+
 let Stock = styled.p`
-  font-size: 18px;
-  font-weight: semi-bold;
+  position: absolute;
+  bottom: 15px;
+
+  font-size: 15px;
+  font-weight: 600;
   color: ${(props) => (props.alerta ? "red" : "black")};
 `;
+
 let Boton = styled.button`
   position: absolute;
-  top: 80px;
-  left: 230px;
+  bottom: 10px;
+  right: 10px;
   width: 80px;
   height: 30px;
   background: white;
@@ -86,8 +111,13 @@ let Boton = styled.button`
   color: black;
   border-radius: 4px;
   font-size: 16px;
-  margin: 40px 0px 0px 0px;
   cursor: pointer;
+
+  &: hover {
+    color: white;
+    background-color: #37563d;
+    border: none;
+  }
 `;
 
 export default function AdminProductos() {
@@ -95,18 +125,16 @@ export default function AdminProductos() {
   const productos = useSelector((state) => state.productos);
   const dispatch = useDispatch();
 
-
   useEffect(() => {
     dispatch(getProductos());
   }, []);
 
+  const [order, setOrder] = useState("");
 
-const [order , setOrder] = useState("")
-
-let handleByStock = (e) => {
-  dispatch(orderByStock(e.target.value))
-  setOrder(e.target.value)
-}
+  let handleByStock = (e) => {
+    dispatch(orderByStock(e.target.value));
+    setOrder(e.target.value);
+  };
 
   return (
     <Container>
@@ -121,11 +149,13 @@ let handleByStock = (e) => {
       >
         Administrador de Productos
       </h1>
+
       <Select onChange={handleByStock}>
-        <option value="Ordenar por stock">Ordenar por stock</option>
-        <option value="Menor a Mayor">Menor a Mayor</option>
-        <option value="Mayor a Menor">Mayor a Menor</option>
+        <Option value="Ordenar por stock">Ordenar por stock</Option>
+        <Option value="Menor a Mayor">Menor a Mayor</Option>
+        <Option value="Mayor a Menor">Mayor a Menor</Option>
       </Select>
+
       <Crear
         onClick={(e) => {
           e.preventDefault();
@@ -134,29 +164,27 @@ let handleByStock = (e) => {
       >
         Crear
       </Crear>
+
       <div className="grupo-productos">
         {productos?.map((el) => (
-          <ProdAdmin key={el.id}>
-            <Link to={`/productos/${el.id}`}>
+          <Link
+            key={el.id}
+            style={{ color: "black", textDecoration: "none" }}
+            to={`/productos/${el.id}`}
+          >
+            <ProdAdmin>
               <ContenedorImagen>
                 <Imagen src={el.imagen} alt="" />
               </ContenedorImagen>
-            </Link>
-            <ContenedorDatos>
-              <Titulo>{el.nombre}</Titulo>
-              <Stock alerta={el?.stock > 4 ? false : true}>
-                Stock:
-                {el.stock}
-              </Stock>
-            </ContenedorDatos>
-            <Boton onClick={() => navigate(`/edit/${el.id}`)}>Editar</Boton>
-            {/* imagen={el.imagen}
-          nombre={el.nombre}
-          precio={el.precio}
-          stock={el.stock}
-          descripcion=
-          categorias={el.categoria} */}
-          </ProdAdmin>
+              <ContenedorDatos>
+                <Titulo>{el.nombre}</Titulo>
+                <Stock alerta={el?.stock > 4 ? false : true}>
+                  {`Stock: ${el.stock}`}
+                </Stock>
+              </ContenedorDatos>
+              <Boton onClick={() => navigate(`/edit/${el.id}`)}>Editar</Boton>
+            </ProdAdmin>
+          </Link>
         ))}
       </div>
     </Container>

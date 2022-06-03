@@ -18,11 +18,12 @@ const Container = styled.div`
   padding: 20px;
 
   // box-shadow: 0 1px 1px 0 darkgrey, 0 1px 2px 0 #222;
-  -webkit-box-shadow: 7px 8px 18px 2px rgba(0, 0, 0, 0.1);
-  box-shadow: 1px 3px 18px 1px rgba(0, 0, 0, 0.1);
+  -webkit-box-shadow: 1px 3px 10px rgba(0, 0, 0, 0.26);
+  box-shadow: 1px 3px 10px rgba(0, 0, 0, 0.26);
 
   &: hover {
     border: 1px solid black;
+    box-shadow: none;
   }
 `;
 
@@ -79,26 +80,12 @@ export default function ItemCompra({ producto }) {
     (state) => state.productos.filter((item) => item.id === producto.id)[0]
   );
 
-  {
-    /* <p>{`Numero de Pedido: ${e.id}`}</p>
-            <p>{`Estado: ${e.Estado}`}</p>
-            <p>{`Fecha de Compra: ${e.fecha}`}</p>
-            <p>{`Monto: $${e.pago_total}`}</p>
-            <p>{`Tipo de Pago: ${e.Tipo_de_pago}`}</p>
-            <p>{`Tipo de Envio: ${e.Tipo_de_envio}`}</p>
-            <p>{`Dirección de Envío: ${e.Direccion_de_envio}`}</p> */
-  }
-
   return (
     <Link
       style={{ color: "black", textDecoration: "none" }}
       to={`/pedido/${producto.id}`}
     >
       <Container>
-        {/* <ProductLink to={`/productos/${producto.id}`}> */}
-        {/* <Imagen src={producto.imagen} alt={producto.nombre} /> */}
-        {/* </ProductLink> */}
-
         <ContenedorInfo>
           {/* <span style={{ fontSize: "12px" }}>Comprado el 20 de Mayo</span> */}
 
