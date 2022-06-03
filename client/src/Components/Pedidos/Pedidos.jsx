@@ -57,6 +57,9 @@ let Select = styled.select`
   background-color: rgb(182, 182, 182);
   font-weight: bold;
   text-align: center;
+
+  position: absolute;
+  top: 0;
 `;
 
 function Pedidos() {
@@ -98,13 +101,11 @@ function Pedidos() {
 
       {/* <Crear>Crear</Crear> */}
       <Select onChange={(e) => setSelected(e.target.value)}>
-          <option value="Ordenar por estado">Ordenar por estado</option>
-          <option value="ASC">Menor a Mayor</option>
-          <option value="DES">Mayor a Menor</option>
-        </Select>
+        <option value="Ordenar por estado">Ordenar por estado</option>
+        <option value="ASC">Menor a Mayor</option>
+        <option value="DES">Mayor a Menor</option>
+      </Select>
       <Container>
-       
-
         {pedidos &&
           pedidos
             ?.sort(sortPedidos)

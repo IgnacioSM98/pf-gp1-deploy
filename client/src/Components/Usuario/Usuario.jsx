@@ -11,6 +11,7 @@ const Container = styled.div`
 const P = styled.p`
   font-weight: bold;
   color: white;
+  margin: 0;
 `;
 
 const Image = styled.img`

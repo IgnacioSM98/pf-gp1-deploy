@@ -22,10 +22,12 @@ const Container = styled.div`
   z-index: 20;
   height: 50px;
   background-color: #000000f0;
+
   @media screen and (max-width: 960px) {
-    position: absolute;
+    position: fixed;
     top: 0;
     width: 100%;
+
     height: ${(props) => (props.open ? "25vh" : "5vh")};
     justify-content: space-around;
     flex-direction: column;
@@ -95,6 +97,7 @@ const Span = styled.span`
   font-size: 13px;
   text-shadow: 1px 1px black;
   cursor: pointer;
+
   @media screen and (max-width: 960px) {
     width: 100%;
     margin: 0;
@@ -113,6 +116,7 @@ const Login = styled.div`
   font-size: 13px;
   color: white;
   right: 20px;
+
   @media screen and (max-width: 960px) {
     position: absolute;
     right: 20px;
@@ -227,7 +231,7 @@ export default function NavBar({ contacto, setUser }) {
       </MobileIcon>
       <Menu open={showMobileMenu}>
         <NavLink to={"/"} onClick={() => setMenu(false)}>
-          <Span>Home</Span>
+          <Span>Inicio</Span>
         </NavLink>
 
         {/* <NavLink to="/">
