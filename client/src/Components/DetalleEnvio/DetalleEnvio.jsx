@@ -68,7 +68,7 @@ const Circulo = styled.div`
 
 const Linea = styled.div`
   width: 1.5px;
-  height: 40px;
+  height: 35px;
   background-color: ${(props) => (props.active ? "green" : "#bbb9b9")};
   position: absolute;
   top: 31px;
@@ -366,7 +366,9 @@ export default function DetalleEnvio() {
                 <Linea
                   active={
                     detalle?.Estado !==
-                      "En punto de entrega/poder del correo" || "Entregado"
+                    "En punto de entrega/poder del correo"
+                    ? false
+                    : true
                   }
                 ></Linea>
                 <ImagenEstados
@@ -376,7 +378,9 @@ export default function DetalleEnvio() {
                 <ParrafoLi
                   active={
                     detalle?.Estado !==
-                      "En punto de entrega/poder del correo" || "Entregado"
+                    "En punto de entrega/poder del correo"
+                    ? false
+                    : true
                   }
                 >
                   En punto de entrega/poder del correo
