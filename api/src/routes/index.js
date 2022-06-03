@@ -950,27 +950,31 @@ router.post("/admin/entrega", async (req, res) => {
 });
 
 router.post("/usuario/contacto", (req, res) => {
-  const { mail, subject, text } = req.body;
-  var transporter = nodemailer.createTransport({
-    service: "gmail",
-    auth: {
-      user: "henrypfg1@gmail.com",
-      pass: "qdhkyjhhfujyogoa",
-    },
-  });
-  var mailOptions = {
-    from: '"CONTACTO DE USUARIO" <henrypfg1@gmail.com>',
-    to: "henrypfg1@gmail.com",
-    subject: `${subject} usuario ${mail}`,
-    text: text,
-  };
-  transporter.sendMail(mailOptions, (error, info) => {
-    if (error) {
-      res.status(500).send(error.message);
-    } else {
-      res.status(200).jsonp(req.body);
-    }
-  });
+  try {
+    const { mail, subject, text } = req.body;
+    var transporter = nodemailer.createTransport({
+      service: "gmail",
+      auth: {
+        user: "henrypfg1@gmail.com",
+        pass: "qdhkyjhhfujyogoa",
+      },
+    });
+    var mailOptions = {
+      from: '"CONTACTO DE USUARIO" <henrypfg1@gmail.com>',
+      to: "henrypfg1@gmail.com",
+      subject: `${subject} usuario ${mail}`,
+      text: text,
+    };
+    transporter.sendMail(mailOptions, (error, info) => {
+      if (error) {
+        res.status(500).send(error.message);
+      } else {
+        res.status(200).jsonp(req.body);
+      }
+    });
+  } catch (err) {
+    console.log(err.message);
+  }
 });
 
 module.exports = router;
