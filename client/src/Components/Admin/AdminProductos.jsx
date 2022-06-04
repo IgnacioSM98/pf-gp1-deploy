@@ -89,7 +89,10 @@ let ContenedorDatos = styled.div`
   text-align: left;
   margin-top: 0.5em;
 `;
-let Titulo = styled.h3``;
+let Titulo = styled.p`
+  font-size: 20px;
+  font-weight: 600;
+`;
 
 let Stock = styled.p`
   position: absolute;
