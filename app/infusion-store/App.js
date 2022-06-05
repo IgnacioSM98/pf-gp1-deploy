@@ -4,6 +4,7 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { NavigationContainer } from "@react-navigation/native";
 import MaterialCommunityIcons from "react-native-vector-icons/Ionicons";
 import Tienda from "./Tienda";
+import Home from "./Componentes/Home/Home";
 
 const WorldScreen = (props) => {
   return (
@@ -24,14 +25,15 @@ export default function App() {
       >
         <Tab.Screen
           name="Inicio"
+          component={Home}
           options={{
             tabBarIcon: ({ color, size }) => (
               <MaterialCommunityIcons name="home" color={color} size={21} />
             ),
           }}
-        >
-          {(props) => <WorldScreen {...props} name="home" />}
-        </Tab.Screen>
+        />
+
+        {/* {(props) => <WorldScreen {...props} name="home" />} */}
 
         <Tab.Screen
           name="Tienda"
