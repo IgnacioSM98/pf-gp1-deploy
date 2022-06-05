@@ -3,6 +3,7 @@ import { StyleSheet, Text, View } from "react-native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { NavigationContainer } from "@react-navigation/native";
 import MaterialCommunityIcons from "react-native-vector-icons/Ionicons";
+import Tienda from "./Tienda";
 
 const WorldScreen = (props) => {
   return (
@@ -34,6 +35,7 @@ export default function App() {
 
         <Tab.Screen
           name="Tienda"
+          component={Tienda}
           options={{
             tabBarIcon: ({ color, size }) => (
               <MaterialCommunityIcons
@@ -44,7 +46,7 @@ export default function App() {
             ),
           }}
         >
-          {(props) => <WorldScreen {...props} name="store" />}
+          {/* {(props) => <WorldScreen {...props} name="store" />} */}
         </Tab.Screen>
 
         <Tab.Screen
