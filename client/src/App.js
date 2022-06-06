@@ -20,6 +20,7 @@ import {
   DetalleEnvio,
   Checkout,
   Compras,
+  NotFound,
 } from "./Components/index";
 import { Routes, Route } from "react-router-dom";
 import { useDispatch } from "react-redux";
@@ -85,6 +86,7 @@ function App() {
               <Login user={user} setUser={setUser} contacto={contacto} />
             }
           />
+          <Route path="*" element={<NotFound />} />
           {/*<Route exact path="/user/reviews" element={"user reviews"} />
         <Route exact path="/admin/cambiar/:id" element={"change something"} />*/}
         </Routes>
