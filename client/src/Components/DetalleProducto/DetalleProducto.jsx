@@ -4,8 +4,9 @@ import { useLocation, useParams } from "react-router-dom";
 import {
   clearDetail,
   getDetail,
-  getReviews,
+  getProductReviews,
   agregarCarrito,
+  getAllReviews,
   // getProductos,
 } from "../../Redux/actions";
 import {
@@ -257,6 +258,10 @@ export default function DetalleProducto() {
   );
 
   useEffect(() => {
+    dispatch(getProductReviews(id));
+  }, []);
+
+  useEffect(() => {
     // if (productos.length === 0) dispatch(getProductos());
 
     setRelacionados(productos);
@@ -338,7 +343,7 @@ export default function DetalleProducto() {
 
   useEffect(() => {
     dispatch(getDetail(id));
-    dispatch(getReviews(id));
+    dispatch(getProductReviews(id));
 
     window.scrollTo(0, 0);
 
@@ -363,6 +368,7 @@ export default function DetalleProducto() {
 
   return detalle && Object.keys(detalle)[0] ? (
     <Container>
+      {console.log(reviews)}
       <Details>
         <Image src={detalle.imagen} alt={`Imagen ${detalle.nombre}`} />
         <Body>

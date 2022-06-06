@@ -6,21 +6,20 @@ import Stars from "../../Stars/Stars";
 
 export default function Reseñas() {
   const user = useSelector((state) => state.userInfo);
-  const usuarios = useSelector((state) => state.usuarios);
   const id = user.uid;
   const reseñas = useSelector((state) => state.reviews);
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(getReviews(id));
-    console.log(user);
-    console.log(usuarios);
   }, []);
 
   useEffect(() => {}, [reseñas]);
 
   return (
     <div>
+      {console.log(id)}
+      {console.log(reseñas)}
       {reseñas?.map((review) => {
         <div key={review.id}>
           <Stars rating={review.puntaje} />
