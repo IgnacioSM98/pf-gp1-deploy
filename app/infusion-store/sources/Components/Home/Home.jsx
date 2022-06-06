@@ -12,9 +12,10 @@ import axios from "axios";
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 24,
-    marginTop: 10,
+    padding: 2,
+    marginTop: 50,
   },
+
   loading: {
     position: "absolute",
     left: 0,
@@ -25,15 +26,22 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
 
+  containerProductos: {
+    backgroundColor: "grey",
+    height: 250,
+  },
+
   containerProducto: {
-    justifyContent: "center",
+    // justifyContent: "center",
     width: 150,
+    height: "90%",
     margin: 10,
   },
 
   imagen: {
     width: 100,
     height: 100,
+
     resizeMode: "contain",
   },
 });
@@ -53,26 +61,29 @@ export default function Home() {
   return (
     <View style={styles.container}>
       {loading ? (
-        <ActivityIndicator
-          style={styles.loading}
-          size="large"
-          color="#00ff00"
-        />
+        <ActivityIndicator style={styles.loading} size="large" color="red" />
       ) : (
-        <FlatList
-          data={productos.slice(0, 6)}
-          keyExtractor={({ id }, index) => id}
-          horizontal
-          renderItem={({ item }) => (
-            <View style={styles.containerProducto}>
-              {/* <Text>{item.id}</Text> */}
-              <Image source={item.imagen} style={styles.imagen} />
-              <Text>{item.nombre}</Text>
-              <Text>{item.precio}</Text>
-              <Text>{item.descripcion}</Text>
-            </View>
-          )}
-        />
+        <View>
+          <Text>Carrousel</Text>
+
+          <Text>Productos Destacados</Text>
+          <FlatList
+            data={productos.slice(0, 6)}
+            keyExtractor={({ id }, index) => id}
+            style={styles.containerProductos}
+            horizontal
+            renderItem={({ item }) => (
+              <View style={styles.containerProducto}>
+                {/* <Text>{item.id}</Text> */}
+
+                <Image source={{ uri: item.imagen }} style={styles.imagen} />
+                <Text>{item.nombre}</Text>
+                <Text>{item.precio}</Text>
+                <Text>{item.descripcion.slice(0, 100)}</Text>
+              </View>
+            )}
+          />
+        </View>
       )}
     </View>
   );

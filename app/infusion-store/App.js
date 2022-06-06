@@ -1,10 +1,9 @@
 import { StatusBar } from "expo-status-bar";
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, Text, View, Vibration, Platform } from "react-native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { NavigationContainer } from "@react-navigation/native";
 import MaterialCommunityIcons from "react-native-vector-icons/Ionicons";
-import Tienda from "./Tienda";
-import Home from "./Componentes/Home/Home";
+import { Tienda, Home } from "./sources/Components/index.js";
 
 const WorldScreen = (props) => {
   return (
@@ -15,6 +14,18 @@ const WorldScreen = (props) => {
 };
 
 const Tab = createBottomTabNavigator();
+
+// const vibrate = () => {
+//   if (Platform.OS === "ios") {
+//     console.log(Platform.OS);
+//     // this logic works in android too. you could omit the else statement
+//     const interval = setInterval(() => Vibration.vibrate(), 1000);
+//     // it will vibrate for 5 seconds
+//     setTimeout(() => clearInterval(interval), 5000);
+//   } else {
+//     Vibration.vibrate(5000);
+//   }
+// };
 
 export default function App() {
   return (
