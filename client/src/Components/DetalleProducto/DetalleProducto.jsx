@@ -25,6 +25,12 @@ const Container = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  @media screen and (max-width: 960px) {
+    width: 100%;
+    justify-content: space-around;
+    flex-direction: column;
+    align-items: center;
+  }
 `;
 
 const Details = styled.div`
@@ -33,6 +39,13 @@ const Details = styled.div`
   margin: 0px 40px 0px 40px;
   height: 650px;
   justify-content: center;
+  @media screen and (max-width: 500px) {
+    width: 100%;
+    height: 100vh;
+    justify-content: flex-start;
+    flex-direction: column;
+    align-items: center;
+  }
 `;
 
 const Reviews = styled.div`
@@ -40,6 +53,9 @@ const Reviews = styled.div`
   width: 95%;
   align-items: center;
   height: 222px;
+  @media screen and (max-width: 500px) {
+    width: 95%;
+  }
 `;
 
 const RelacionadosContainer = styled.div`
@@ -59,6 +75,14 @@ const Image = styled.img`
   // margin: 50px;
   object-fit: contain;
   margin-top: 90px;
+  @media screen and (max-width: 960px) {
+    height: 35vh;
+    width: 45%;
+  }
+  @media screen and (max-width: 600px) {
+    height: 30vh;
+    width: 36%;
+  }
 `;
 
 const Body = styled.div`
@@ -71,6 +95,13 @@ const Body = styled.div`
   width: 40%;
   max-width: 666px;
   margin: 90px 10% 0px 20px;
+  @media screen and (max-width: 960px) {
+    width: 90%;
+  }
+  @media screen and (max-width: 500px) {
+    margin: 20px;
+    width: 80%;
+  }
 `;
 
 const Nombre = styled.p`
@@ -91,6 +122,9 @@ const Descripcion = styled.p`
   width: 80%;
   height: 200px;
   color: #000000b5;
+  @media screen and (max-width: 960px) {
+    height: auto;
+  }
 `;
 
 const Precio = styled.p`
@@ -99,9 +133,12 @@ const Precio = styled.p`
 `;
 
 const Cuotas = styled.p`
-  margin: 10px 0px;
+  margin: 10px 10px;
   font-size: 14px;
   color: #000000b5;
+  @media screen and (max-width: 500px) {
+    margin: 10px 5px;
+  }
 `;
 
 const Unidades = styled.p`
@@ -151,6 +188,11 @@ const Bottom = styled.div`
   position: absolute;
   bottom: 40px;
   width: 100%;
+  @media screen and (max-width: 960px) {
+    margin-top: 30px;
+    position: relative;
+    height: auto;
+  }
 `;
 
 const Bar = styled.div`
@@ -165,6 +207,11 @@ const Pagos = styled.div`
   display: flex;
   align-items: unset;
   margin: 10px 0px;
+  @media screen and (max-width: 960px) {
+    margin: 0px;
+    width: 100%;
+    align-items: center;
+  }
 `;
 
 const Cards = styled.div`
@@ -471,7 +518,6 @@ export default function DetalleProducto() {
       <Bar style={{ width: "100%" }} />
       <Reviews>
         {/* Acá sólo se valida que esté la sesión iniciada */}
-        {user && <CrearReview id={id} />}
         <ProductReviews setReseñas={setReseñas} />
         {reseñas && <Reseñas setReseñas={setReseñas} />}
       </Reviews>
