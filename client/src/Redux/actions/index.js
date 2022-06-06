@@ -85,6 +85,20 @@ export function getReviews(id) {
   };
 }
 
+export function getProductReviews(id) {
+  return async function (dispatch) {
+    try {
+      const resp = await axios.get(`${urlBase}ratings/${id}`);
+
+      if (resp) {
+        dispatch({ type: "GET_PRODUCT_REVIEWS", payload: resp.data });
+      }
+    } catch (err) {
+      console.log(err, "error reviews");
+    }
+  };
+}
+
 export function getAllReviews() {
   return async function (dispatch) {
     try {

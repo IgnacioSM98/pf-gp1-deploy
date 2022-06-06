@@ -169,13 +169,19 @@ export default function rootReducer(state = initialState, action) {
         ...state,
         reviews: action.payload,
       };
-      case "GET_ALL_REVIEWS":
-        return {
-          ...state,
-          reviews: action.payload,
-        };
-    case "DELETE_REVIEW": 
-    return {...state}
+    case "GET_ALL_REVIEWS":
+      return {
+        ...state,
+        reviews: action.payload,
+      };
+
+    case "GET_PRODUCT_REVIEWS":
+      return {
+        ...state,
+        reviews: action.payload,
+      };
+    case "DELETE_REVIEW":
+      return { ...state };
     case "SET_CARRITO":
       return {
         ...state,
