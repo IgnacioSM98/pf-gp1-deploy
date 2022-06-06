@@ -2,8 +2,9 @@ import { StatusBar } from "expo-status-bar";
 import { StyleSheet, Text, View, Vibration, Platform } from "react-native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { NavigationContainer } from "@react-navigation/native";
-import MaterialCommunityIcons from "react-native-vector-icons/Ionicons";
+// import MaterialCommunityIcons from "react-native-vector-icons/Ionicons";
 import { Tienda, Home } from "./sources/Components/index.js";
+import { FontAwesome5, Ionicons } from "@expo/vector-icons";
 
 const WorldScreen = (props) => {
   return (
@@ -39,7 +40,7 @@ export default function App() {
           component={Home}
           options={{
             tabBarIcon: ({ color, size }) => (
-              <MaterialCommunityIcons name="home" color={color} size={21} />
+              <Ionicons name="home" color={color} size={21} />
             ),
           }}
         />
@@ -51,11 +52,13 @@ export default function App() {
           component={Tienda}
           options={{
             tabBarIcon: ({ color, size }) => (
-              <MaterialCommunityIcons
-                name="logo-apple-appstore"
-                color={color}
-                size={21}
-              />
+              // <MaterialCommunityIcons
+              //   name="heart-sharp"
+              //   // name="logo-google-playstore"
+              //   color={color}
+              //   size={21}
+              // />
+              <FontAwesome5 name="store" size={19} color="grey" />
             ),
           }}
         >
@@ -66,11 +69,7 @@ export default function App() {
           name="Cuenta"
           options={{
             tabBarIcon: ({ color, size }) => (
-              <MaterialCommunityIcons
-                name="person-circle-outline"
-                color={color}
-                size={21}
-              />
+              <Ionicons name="person-circle-outline" color={color} size={26} />
             ),
           }}
         >
