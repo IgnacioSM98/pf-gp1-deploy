@@ -16,12 +16,19 @@ const Reviews = styled.div`
   display: flex;
   // flex-direction: row;
   width: 100%;
+  @media screen and (max-width: 500px) {
+    width: 95%;
+    flex-direction: inherit;
+  }
 `;
 
 const Titulo = styled.div`
   margin-left: 10px;
   font-size: 20px;
   font-weight: 600;
+  @media screen and (max-width: 500px) {
+    font-size: 15px;
+  }
 `;
 
 const Button = styled.button`
@@ -34,6 +41,9 @@ const Button = styled.button`
   text-decoration: underline;
 
   cursor: pointer;
+  @media screen and (max-width: 500px) {
+    margin-left: 3px;
+  }
 `;
 
 export default function Producto({ setReseñas }) {
