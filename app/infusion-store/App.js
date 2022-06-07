@@ -1,18 +1,9 @@
-import { StatusBar } from "expo-status-bar";
-import { StyleSheet, Text, View, Vibration, Platform } from "react-native";
+// import { StatusBar } from "expo-status-bar";
+// import { StyleSheet, Text, View, Vibration, Platform } from "react-native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { NavigationContainer } from "@react-navigation/native";
-// import MaterialCommunityIcons from "react-native-vector-icons/Ionicons";
-import { Tienda, Home } from "./sources/Components/index.js";
+import { Tienda, Home, Cuenta } from "./sources/Components/index.js";
 import { FontAwesome5, Ionicons } from "@expo/vector-icons";
-
-const WorldScreen = (props) => {
-  return (
-    <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
-      <Text>This is a {props.name}!</Text>
-    </View>
-  );
-};
 
 const Tab = createBottomTabNavigator();
 
@@ -45,36 +36,25 @@ export default function App() {
           }}
         />
 
-        {/* {(props) => <WorldScreen {...props} name="home" />} */}
-
         <Tab.Screen
           name="Tienda"
           component={Tienda}
           options={{
             tabBarIcon: ({ color, size }) => (
-              // <MaterialCommunityIcons
-              //   name="heart-sharp"
-              //   // name="logo-google-playstore"
-              //   color={color}
-              //   size={21}
-              // />
               <FontAwesome5 name="store" size={19} color="grey" />
             ),
           }}
-        >
-          {/* {(props) => <WorldScreen {...props} name="store" />} */}
-        </Tab.Screen>
+        />
 
         <Tab.Screen
           name="Cuenta"
+          component={Cuenta}
           options={{
             tabBarIcon: ({ color, size }) => (
               <Ionicons name="person-circle-outline" color={color} size={26} />
             ),
           }}
-        >
-          {(props) => <WorldScreen {...props} name="account" />}
-        </Tab.Screen>
+        />
       </Tab.Navigator>
     </NavigationContainer>
   );
