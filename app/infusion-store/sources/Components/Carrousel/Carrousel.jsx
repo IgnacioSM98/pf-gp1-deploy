@@ -12,17 +12,6 @@ import {
 } from "react-native";
 import { imagenes } from "./Data";
 
-// const imagenes = [
-//   require("./CarouselImagenes/imagen01.png"),
-//   require("./CarouselImagenes/imagen02.png"),
-//   require("./CarouselImagenes/imagen03.png"),
-//   require("./CarouselImagenes/imagen04.png"),
-//   require("./CarouselImagenes/imagen05.png"),
-//   require("./CarouselImagenes/imagen06.png"),
-//   require("./CarouselImagenes/imagen07.png"),
-//   require("./CarouselImagenes/imagen08.png"),
-// ];
-
 const width = Dimensions.get("window").width;
 const height = Dimensions.get("window").height;
 
@@ -43,13 +32,12 @@ export default function Carousel() {
         renderItem={({ item, index }) => {
           return (
             <View style={{ width: ANCHO_CONTENEDOR }}>
-              {console.log(item, "Aca deberia haber una URL")}
               <View>
                 <Image
                   key={index}
                   source={{
                     uri:
-                      imagenes[item] ||
+                      item ||
                       "https://educacion30.b-cdn.net/wp-content/uploads/2018/02/mistake.jpg",
                   }}
                   style={styles.image}
