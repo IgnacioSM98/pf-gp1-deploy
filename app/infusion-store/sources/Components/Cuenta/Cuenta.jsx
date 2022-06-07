@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components/native";
-import { View, Text, Pressable } from "react-native";
+import { Text } from "react-native";
 
 const Container = styled.View`
   padding-top: 10%;
