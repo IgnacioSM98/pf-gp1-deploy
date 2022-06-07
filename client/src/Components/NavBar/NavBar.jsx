@@ -1,8 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
+import { FaBars } from "react-icons/fa";
 import Usuario from "../Usuario/Usuario";
-import { getUser, setUserInfo } from "../../Redux/actions";
+import {
+  getUser,
+  setCarrito,
+  setUserInfo,
+  changeUserMode,
+} from "../../Redux/actions";
 import { useSelector, useDispatch } from "react-redux";
 import { app } from "../../firebase";
 
@@ -16,11 +22,34 @@ const Container = styled.div`
   z-index: 20;
   height: 50px;
   background-color: #000000f0;
+
+  @media screen and (max-width: 960px) {
+    position: fixed;
+    top: 0;
+    width: 100%;
+
+    height: ${(props) => (props.open ? "25vh" : "5vh")};
+    justify-content: space-around;
+    flex-direction: column;
+    align-items: center;
+    transition: 0.5s all ease;
+  }
+`;
+const Menu = styled.div`
+  @media screen and (max-width: 960px) {
+    top: 70px;
+    display: ${(props) => (props.open ? "flex" : "none  ")};
+    flex-direction: column;
+    align-items: center;
+  }
 `;
 
 const NavLink = styled(Link)`
   text-decoration: none;
   color: white;
+  media screen and (max-width: 960px) {
+    width: 100%;
+  }
 `;
 
 const UserButton = styled(Link)`
@@ -34,13 +63,24 @@ const UserButton = styled(Link)`
   font-weight: 500;
 `;
 
+const ChangeMode = styled.span`
+  color: white;
+  background-color: transparent;
+  text-decoration: none;
+  border: none;
+  cursor: pointer;
+  // width: 100%;
+  margin-bottom: 7px;
+  font-weight: 500;
+`;
+
 const UserMenu = styled.div`
   position: absolute;
-  bottom: -100px;
+  bottom: -120px;
   color: white;
   right: 0;
   background-color: #000000f0;
-  height: 100px;
+  height: 120px;
   width: 170px;
   border-radius: 0px 0px 0px 10px;
   display: flex;
@@ -57,6 +97,15 @@ const Span = styled.span`
   font-size: 13px;
   text-shadow: 1px 1px black;
   cursor: pointer;
+
+  @media screen and (max-width: 960px) {
+    width: 100%;
+    margin: 0;
+    height: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
 `;
 
 const Login = styled.div`
@@ -67,6 +116,15 @@ const Login = styled.div`
   font-size: 13px;
   color: white;
   right: 20px;
+
+  @media screen and (max-width: 960px) {
+    position: absolute;
+    right: 20px;
+    top: 0;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+  }
 `;
 
 const Button = styled.button`
@@ -82,21 +140,41 @@ const Button = styled.button`
   text-shadow: 1px 1px black;
   cursor: pointer;
 `;
+const MobileIcon = styled.div`
+  display: none;
+  font-size: 2em;
+  @media screen and (max-width: 960px) {
+    position: absolute;
+    left: 20px;
+    top: 5px;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    svg {
+      fill: white;
+      margin-left: 0.5rem;
+    }
+  }
+`;
 
-export default function NavBar({ contacto, user, setUser }) {
+export default function NavBar({ contacto, setUser }) {
   const carrito = useSelector((state) => state.carrito);
   const dispatch = useDispatch();
   const [userMenu, setMenu] = useState(false);
-  const countCarrito = carrito.filter((cv, i) => {
+  const [showMobileMenu, setShowMobileMenu] = useState(false);
+
+  const countCarrito = carrito?.filter((cv, i) => {
     return i === carrito.findIndex((e) => e.id === cv.id);
   }).length;
-  const admin = useSelector((state) => state.user);
+
+  const userInfo = useSelector((state) => state.userInfo);
 
   const logOut = () => {
     localStorage.removeItem("user");
     app.auth().signOut();
     dispatch(getUser());
 
+    // Deslogeamos el usuario de la cache
     dispatch(setUserInfo());
 
     app.auth().onAuthStateChanged((user) => {
@@ -113,45 +191,70 @@ export default function NavBar({ contacto, user, setUser }) {
   };
 
   useEffect(() => {
-    // console.log("aca esta vacio user", user);
-    if (!user) {
-      dispatch(setUserInfo(localStorage.getItem("user")));
+    // Recuperamos el carrito del local storage
+    dispatch(
+      setCarrito(
+        localStorage.getItem("carrito")
+          ? JSON.parse(localStorage.getItem("carrito"))
+          : []
+      )
+    );
+  }, [dispatch]);
 
-      const userAux = JSON.parse(localStorage.getItem("user"));
-
-      setUser(userAux);
-    } else {
-      dispatch(getUser(user.email));
+  useEffect(() => {
+    // Cada vez que se actualice el carrito lo guardamos en caché
+    if (carrito) {
+      localStorage.setItem("carrito", JSON.stringify(carrito));
     }
-  }, []);
+  }, [carrito]);
+
+  // useEffect(() => {
+  //   if (!user) {
+  //     // dispatch(setUserInfo(JSON.parse(localStorage.getItem("user"))));
+
+  //     const userAux = JSON.parse(localStorage.getItem("user"));
+
+  //     setUser(userAux);
+  //   } else {
+  //     dispatch(getUser(user.email));
+  //   }
+  // }, []);
 
   return (
-    <Container onMouseLeave={() => setMenu(false)}>
-      <NavLink to={"/"} onClick={() => setMenu(false)}>
-        <Span>Home</Span>
-      </NavLink>
+    <Container open={showMobileMenu} onMouseLeave={() => setMenu(false)}>
+      <MobileIcon
+        onClick={() => {
+          setShowMobileMenu(!showMobileMenu);
+        }}
+      >
+        <FaBars />
+      </MobileIcon>
+      <Menu open={showMobileMenu}>
+        <NavLink to={"/"} onClick={() => setMenu(false)}>
+          <Span>Inicio</Span>
+        </NavLink>
 
-      {/* <NavLink to="/">
+        {/* <NavLink to="/">
         <Span>About</Span>
       </NavLink> */}
 
-      <NavLink to={"tienda"} onClick={() => setMenu(false)}>
-        <Span>Tienda</Span>
-      </NavLink>
+        <NavLink to={"tienda"} onClick={() => setMenu(false)}>
+          <Span>Tienda</Span>
+        </NavLink>
 
-      <Span
-        onClick={() => {
-          scrollToSection(contacto);
-          setMenu(false);
-        }}
-      >
-        Contacto
-      </Span>
+        <Span
+          onClick={() => {
+            scrollToSection(contacto);
+            setMenu(false);
+          }}
+        >
+          Contacto
+        </Span>
 
-      {/* <NavLink to="/blog">
+        {/* <NavLink to="/blog">
         <Span>Blog</Span>
       </NavLink> */}
-
+      </Menu>
       <Login>
         <NavLink
           to={"/carrito"}
@@ -176,7 +279,7 @@ export default function NavBar({ contacto, user, setUser }) {
           </svg>
         </NavLink>
 
-        {user && Object.entries(user).length !== 0 ? (
+        {userInfo && Object.entries(userInfo).length !== 0 ? (
           <button
             title="Cuenta"
             style={{
@@ -189,7 +292,7 @@ export default function NavBar({ contacto, user, setUser }) {
               setMenu(!userMenu);
             }}
           >
-            <Usuario user={user} setUser={setUser} />
+            <Usuario user={userInfo} />
           </button>
         ) : (
           <NavLink to={"/login"}>
@@ -201,18 +304,36 @@ export default function NavBar({ contacto, user, setUser }) {
 
       {userMenu && (
         <UserMenu onMouseLeave={() => setMenu(false)}>
-          {admin && (
-            <UserButton to="/" onClick={() => setMenu(!userMenu)}>
-              {user ? "Modo Admin" : "Modo Invitado"}
+          {userInfo?.rol === "admin" && (
+            <ChangeMode
+              // to="/"
+              onClick={() => {
+                setMenu(!userMenu);
+                dispatch(changeUserMode(userInfo));
+              }}
+            >
+              {userInfo?.visualizacion !== "admin"
+                ? "Modo Admin"
+                : "Modo Invitado"}
+            </ChangeMode>
+          )}
+
+          {userInfo?.rol === "admin" && (
+            <UserButton to="/admin" onClick={() => setMenu(!userMenu)}>
+              Panel Administracion
             </UserButton>
           )}
 
           <UserButton to="/cuenta" onClick={() => setMenu(!userMenu)}>
             Mi Cuenta
           </UserButton>
-          <UserButton to="/carrito" onClick={() => setMenu(!userMenu)}>
-            Carrito
-          </UserButton>
+
+          {userInfo?.rol !== "admin" && (
+            <UserButton to="/carrito" onClick={() => setMenu(!userMenu)}>
+              Carrito
+            </UserButton>
+          )}
+
           <UserButton
             to="/"
             onClick={(e) => {

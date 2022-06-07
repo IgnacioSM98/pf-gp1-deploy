@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import s from "styled-components";
+import validate from "../CrearProducto/validaciones";
 
 const Container = s.div`
     display: flex;
@@ -39,12 +40,28 @@ const Option = s.option`
     // border-width: 0;
 `;
 
-export default function AgregarCategorias({ setPost, post }) {
+export default function AgregarCategorias({
+  setPost,
+  post,
+  setErrors,
+  detalle,
+}) {
   const [selectedValue, setSelectedValue] = useState([]);
+
+  useEffect(() => {
+    if (detalle.categoria) setSelectedValue(detalle.categoria);
+  }, [detalle]);
+
+  useEffect(() => {
+    setPost({ ...post, probando: true });
+    // eslint-disable-next-line
+  }, []);
 
   var categorias = useSelector((state) => state.categorias);
 
   useEffect(() => {
+    //supuestameente esto no funca
+    // eslint-disable-next-line
     categorias = categorias.sort(function (a, b) {
       var x = a.nombre.toLowerCase();
       var y = b.nombre.toLowerCase();
@@ -53,17 +70,21 @@ export default function AgregarCategorias({ setPost, post }) {
     });
   }, [categorias]);
 
+  useEffect(() => {
+    console.log(selectedValue);
+    setErrors(validate({ ...post, categorias: selectedValue }));
+    // eslint-disable-next-line
+  }, [selectedValue]);
+
   const handleChange = ({ target }) => {
     const categoria = categorias?.filter(
       (categoria) => categoria.nombre === target.value
     )[0];
 
-    if (
-      !selectedValue.filter((selected) => selected.nombre === target.value)[0]
-    ) {
+    if (!selectedValue.find((selected) => selected.nombre === target.value)) {
       setSelectedValue((prevValue) => [...prevValue, categoria]);
 
-      setPost({ ...post, categorias: [...selectedValue] });
+      setPost({ ...post, categorias: [...selectedValue, categoria] });
     }
   };
 
@@ -84,10 +105,10 @@ export default function AgregarCategorias({ setPost, post }) {
 
   return (
     <Container>
-      {selectedValue[0] ? (
+      {selectedValue ? (
         <div style={{ margin: 1, lineHeight: "25px" }}>
           <div>
-            {selectedValue.map((selected) => (
+            {selectedValue?.map((selected) => (
               <Button
                 value={selected.nombre}
                 key={selected.id}
@@ -108,15 +129,17 @@ export default function AgregarCategorias({ setPost, post }) {
         onChange={(e) => handleChange(e)}
       >
         {categorias[0] ? (
-          categorias.map((categoria) => (
-            <Option
-              value={categoria.nombre}
-              key={categoria.id}
-              disabled={selectedValue.length > 2 ? true : false}
-            >
-              {categoria.nombre}
-            </Option>
-          ))
+          categorias
+            .filter((categoria) => categoria.nombre)
+            .map((categoria) => (
+              <Option
+                value={categoria.nombre}
+                key={categoria.id}
+                disabled={selectedValue?.length > 2 ? true : false}
+              >
+                {categoria.nombre}
+              </Option>
+            ))
         ) : (
           <Option>Loading...</Option>
         )}

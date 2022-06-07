@@ -42,7 +42,7 @@
   position: absolute;
   top: -14px;
   font-size: 12px;
-  color: rgb(8, 206, 114);
+  color: #36885ed1;
 }
 
 .input-login:not(:placeholder-shown) ~ .label-login {
@@ -50,11 +50,6 @@
   top: -14px;
   font-size: 12px;
 }
-/* .input-login:not(:placeholder-shown) ~ .label-login {
-  position: absolute;
-  top: -14px;
-  font-size: 12px;
-} */
 
 .label-login {
   color: #49454567;
@@ -82,7 +77,7 @@
   width: 0;
   bottom: 0;
   position: absolute;
-  background: linear-gradient(to left, white, rgb(8, 206, 114));
+  background: linear-gradient(to left, white, #36885ed1);
   transition: 0.3s ease all;
   left: 0%;
 }

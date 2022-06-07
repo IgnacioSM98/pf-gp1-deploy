@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { Boton, Producto } from "../index";
+import { Boton, Producto, UseOnScreen } from "../index";
 import styled from "styled-components";
 import "./Home.css";
 import Footer from "../Footer/Footer";
@@ -35,6 +35,10 @@ const Image = styled.img`
   opacity: 0.5;
 
   // margin-top: 50px;
+  @media screen and (max-width: 960px) {
+    display: flex;
+    height: 30vh;
+  }
 `;
 
 const Text = styled.div`
@@ -44,6 +48,12 @@ const Text = styled.div`
   left: 30%;
   right: 30%;
   width: 40%;
+  @media screen and (max-width: 960px) {
+    bottom: 20vh;
+    top: 7vh;
+    left: 25%;
+    right: 25%;
+  }
 `;
 
 const Title = styled.p`
@@ -62,6 +72,13 @@ const P = styled.p`
   font-weight: 700;
   padding: 0px 0px 20px 0px;
   color: black;
+  @media screen and (max-width: 500px) {
+    width: 100%;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
 `;
 
 const Header = styled.div`
@@ -70,6 +87,10 @@ const Header = styled.div`
   position: relative;
   z-index: 1;
   background-color: Black;
+  @media screen and (max-width: 960px) {
+    display: flex;
+    height: 30vh;
+  }
 `;
 
 export default function Home({ contacto }) {
@@ -78,11 +99,12 @@ export default function Home({ contacto }) {
   const location = useLocation();
   const [destacados, setDestacados] = useState();
   const [width, setWidth] = useState(window.innerWidth);
+  const isVisible = UseOnScreen(contacto);
 
   useEffect(() => {
     localStorage.removeItem("productos");
     dispatch(getProductos());
-  }, []);
+  }, [dispatch]);
 
   useEffect(() => {
     localStorage.setItem("productos", JSON.stringify(productos));
@@ -125,6 +147,7 @@ export default function Home({ contacto }) {
                   stock={producto.stock}
                   descripcion={producto.descripcion}
                   location={location}
+                  producto={producto}
                 />
               );
             })}
@@ -144,7 +167,7 @@ export default function Home({ contacto }) {
       </Categoria> */}
 
       <Footer contacto={contacto} />
-      <ScrollToTop />
+      {isVisible && <ScrollToTop />}
     </Container>
   );
 }

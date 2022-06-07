@@ -1,5 +1,4 @@
 import axios from "axios";
-import Producto from "../../Components/Reviews/Reviews";
 
 const urlBase = "https://proyecto-final-gp1.herokuapp.com/";
 const productos = "productos";
@@ -7,6 +6,7 @@ const categorias = "categorias";
 const crear = "crear";
 const admin = "admin/";
 const ratings = "ratings/";
+const pedido = "pedido/";
 
 export function getProductos() {
   return async function (dispatch) {
@@ -28,8 +28,6 @@ export function getProductosFiltrados(productosFiltrados) {
 
 export function getDetail(id) {
   return function (dispatch) {
-    // console.log(urlBase + "producto" + "/" + id);
-
     axios(`${urlBase}producto/${id}`).then((res) =>
       dispatch({ type: "GET_DETAIL", payload: res.data })
     );
@@ -76,7 +74,7 @@ export function filtrarCategorias(payload) {
 export function getReviews(id) {
   return async function (dispatch) {
     try {
-      const resp = await axios.get(`${urlBase}ratings/${id}`);
+      const resp = await axios.get(`${urlBase}ratings/usuario/${id}`);
 
       if (resp) {
         dispatch({ type: "GET_REVIEWS", payload: resp.data });
@@ -87,6 +85,44 @@ export function getReviews(id) {
   };
 }
 
+export function getProductReviews(id) {
+  return async function (dispatch) {
+    try {
+      const resp = await axios.get(`${urlBase}ratings/${id}`);
+
+      if (resp) {
+        dispatch({ type: "GET_PRODUCT_REVIEWS", payload: resp.data });
+      }
+    } catch (err) {
+      console.log(err, "error reviews");
+    }
+  };
+}
+
+export function getAllReviews() {
+  return async function (dispatch) {
+    try {
+      const resp = await axios.get(`${urlBase}ratings/`);
+
+      if (resp) {
+        dispatch({ type: "GET_ALL_REVIEWS", payload: resp.data });
+      }
+    } catch (err) {
+      console.log(err, "error AllReviews");
+    }
+  };
+}
+
+export function deleteReview(id) {
+  return async function (dispatch) {
+    await axios.delete(`${urlBase}ratings/${id}`);
+    dispatch(getAllReviews());
+    return dispatch({
+      type: "DELETE_REVIEW",
+    });
+  };
+}
+
 export function postProducto(payload) {
   return async function (dispatch) {
     // let json = await axios.post(`${urlBase}${admin}${crear}`, payload);
@@ -94,7 +130,18 @@ export function postProducto(payload) {
     // dispatch({ type: "POST_PRODUCTO", payload: json.data });
 
     axios.post(`${urlBase}${admin}${crear}`, payload).then((res) => {
-      // console.log(res, "uwu");
+      dispatch({
+        type: "POST_PRODUCTO",
+        payload: res.data,
+        categorias: payload.categorias,
+      });
+    });
+  };
+}
+
+export function postPedido(body) {
+  return function (dispatch) {
+    axios.post(`${urlBase}${pedido}${crear}`, body).then((res) => {
       dispatch({ type: "POST_PRODUCTO", payload: res.data });
     });
   };
@@ -149,14 +196,34 @@ export function postReviews(id, payload) {
     });
   };
 }
+export function enviarConsulta(payload) {
+  return async function (dispatch) {
+    await axios.post(`${urlBase}usuario/contacto`, payload);
+    return dispatch({
+      type: "ENVIAR_CONSULTA",
+    });
+  };
+}
 
 export const setSort = (value) => (dispatch) => {
   dispatch({ type: "SET_SORT", payload: value });
 };
 
+export function setCarrito(carrito) {
+  return function (dispatch) {
+    dispatch({ type: "SET_CARRITO", payload: carrito });
+  };
+}
+
 export function agregarCarrito(idProducto, cantidad) {
   return function (dispatch) {
     dispatch({ type: "AGREGAR_CARRITO", payload: { idProducto, cantidad } });
+  };
+}
+
+export function restarCarrito(idProducto, cantidad) {
+  return function (dispatch) {
+    dispatch({ type: "RESTAR_CARRITO", payload: { idProducto, cantidad } });
   };
 }
 
@@ -185,5 +252,133 @@ export function setUserInfo(user) {
     } catch (err) {
       console.log(err);
     }
+  };
+}
+
+export function getUsuarios() {
+  return function (dispatch) {
+    try {
+      axios(`${urlBase}usuarios`).then((res) =>
+        dispatch({ type: "GET_USUARIOS", payload: res.data })
+      );
+    } catch (error) {
+      console.log(error);
+    }
+  };
+}
+
+export function postUsuario(body) {
+  return function (dispatch) {
+    axios
+      .post(`${urlBase}crear`, body)
+      .then((res) => dispatch({ type: "POST_USUARIO", payload: res.data }));
+  };
+}
+
+export function changeUserMode(userInfo) {
+  const user = { ...userInfo };
+
+  user.visualizacion = user.visualizacion === "admin" ? "user" : "admin";
+
+  return function (dispatch) {
+    try {
+      dispatch({
+        type: "CHANGE_MODE",
+        payload: user,
+      });
+    } catch (err) {
+      console.log(err);
+    }
+  };
+}
+
+export function getPedidos() {
+  return function (dispatch) {
+    try {
+      axios(`${urlBase}pedidos`).then((res) =>
+        dispatch({ type: "GET_PEDIDOS", payload: res.data })
+      );
+    } catch (error) {
+      console.log(error);
+    }
+  };
+}
+
+export function getDetalleEnvio(id) {
+  return async function (dispatch) {
+    let envio = await axios.get(`${urlBase}${pedido}${id}`);
+    return dispatch({ type: "GET_DETALLE_ENVIO", payload: envio?.data });
+  };
+}
+
+export function actualizarEstadoEnvio(id, payload, productos) {
+  return async function (dispatch) {
+    await axios.put(`${urlBase}${admin}${pedido}${id}`, payload).then((res) => {
+      res.data.productos = productos;
+      dispatch({ type: "ACTUALIZAR_ESTADO", payload: res.data });
+    });
+  };
+}
+
+export function añadirAFavoritos(productoFav) {
+  return function (dispatch) {
+    dispatch({ type: "AÑADIR_A_FAVORITOS", payload: productoFav });
+  };
+}
+
+export function eliminarDeFavoritos(productoFav) {
+  return function (dispatch) {
+    dispatch({ type: "ELIMINAR_DE_FAVORITOS", payload: productoFav });
+  };
+}
+
+export function enviarMail(userMail) {
+  // const user = { ...userInfo };
+  // const usuario = user.multiFactor.user.email;
+  return async function (dispatch) {
+    await axios
+      .post(`${urlBase}usuario/confirmacion`, { mail: userMail })
+      .catch((err) => {
+        console.log(err);
+      });
+    dispatch({ type: "ENVIAR_MAIL", payload: userMail });
+  };
+}
+
+export function orderByStock(payload) {
+  return { type: "ORDER_BY_STOCK", payload };
+}
+
+export function mailAdmin(userId, { estado }) {
+  return async function (dispatch) {
+    if (estado === "En preparación") {
+      await axios
+        .post(`${urlBase}usuario/confirmacion`, { userId: userId })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
+    if (estado === "En camino") {
+      await axios
+        .post(`${urlBase}${admin}despachar`, { userId: userId })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
+    if (estado === "En punto de entrega/poder del correo") {
+      await axios
+        .post(`${urlBase}${admin}correo`, { userId: userId })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
+    if (estado === "Entregado") {
+      await axios
+        .post(`${urlBase}${admin}entrega`, { userId: userId })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
+    dispatch({ type: "ENVIAR_MAIL" });
   };
 }

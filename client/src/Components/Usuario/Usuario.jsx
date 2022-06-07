@@ -11,6 +11,7 @@ const Container = styled.div`
 const P = styled.p`
   font-weight: bold;
   color: white;
+  margin: 0;
 `;
 
 const Image = styled.img`
@@ -19,6 +20,13 @@ const Image = styled.img`
   border-radius: 50px;
   margin: 6px;
   border: 1px solid white;
+  color: black;
+  background-color: beige;
+  font-weight: 600;
+  // padding: 5px;
+  object-fit: cover;
+  line-height: 22px;
+  text-align: center;
 `;
 
 const Letter = styled.button`
@@ -31,13 +39,13 @@ const Letter = styled.button`
   font-weight: 600;
 `;
 
-export default function Usuario({ user, setUser }) {
+export default function Usuario({ user }) {
   return (
     <Container>
       {user.displayName && <P>{user.displayName.split(" ")[0]}</P>}
 
       {user.photoURL ? (
-        <Image src={user.photoURL} alt="Profile Picture" />
+        <Image src={user.photoURL} alt={user.displayName.slice(0, 1)} />
       ) : (
         <Letter>{user.displayName.slice(0, 1)}</Letter>
       )}

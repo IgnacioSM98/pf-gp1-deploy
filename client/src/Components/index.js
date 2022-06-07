@@ -22,14 +22,37 @@ import Modal from "./Modal/Modal";
 import EliminarCategoria from "./EliminarCategoria/EliminarCategoria.jsx";
 import AgregarProducto from "./AgregarProducto/AgregarProducto";
 import Relacionado from "./Relacionado/Relacionado";
+import MercadoPagoIntegracion from "./MercadoPagoIntegracion/MercadoPagoIntegracion";
+import Loading from "./Loading/Loading";
+import DetalleEnvio from "./DetalleEnvio/DetalleEnvio";
+import Checkout from "./CheckoutCarrito/CheckoutCarrito";
+import Reseñas from "./Reseñas/Reseñas";
+import ItemCompra from "./Compra/ItemCompra";
+import QR from "./QR/QR";
+import Compras from "./Cuenta/Compras/Compras";
+import Admin from "./Admin/Admin";
+import Pedidos from "./Pedidos/Pedidos";
+import Usuarios from "./Usuarios/Usuarios";
+import Pedido from "./Pedidos/Pedido";
+import AdminProductos from "./Admin/AdminProductos";
+import Perfil from "./Cuenta/AjustesPerfil/Perfil.jsx";
+import Favoritos from "./Cuenta/Favoritos/Favoritos";
+import Notificaciones from "./Cuenta/Notificaciones/Notificaciones";
+import Seguridad from "./Cuenta/Seguridad/Seguridad";
+import AdminReseñas from "./Admin/AdminReseñas";
+import Consultas from "./Cuenta/Consultas/Consultas";
+import NotFound from "./NotFound/NotFound";
+import UseOnScreen from "./UseOnScreen/UseOnScreen";
 
 export {
   Home,
   Blog,
   Carrito,
   Cuenta,
+  Admin,
   Tienda,
   CrearProducto,
+  Pedidos,
   NavBar,
   Footer,
   StarRating,
@@ -47,5 +70,24 @@ export {
   Filtros,
   AgregarProducto,
   Modal,
+  Reseñas,
+  Loading,
   Relacionado,
+  Pedido,
+  Usuarios,
+  MercadoPagoIntegracion,
+  DetalleEnvio,
+  Checkout,
+  ItemCompra,
+  QR,
+  Compras,
+  AdminProductos,
+  Perfil,
+  Favoritos,
+  Notificaciones,
+  Seguridad,
+  AdminReseñas,
+  Consultas,
+  NotFound,
+  UseOnScreen,
 };

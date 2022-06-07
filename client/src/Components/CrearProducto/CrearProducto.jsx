@@ -12,8 +12,7 @@ import "./CrearProducto.css";
 import styled from "styled-components";
 import validate from "./validaciones.js";
 import { useParams } from "react-router-dom";
-import { Modal } from "../index";
-// import EliminarCategoria from "../EliminarCategoria/EliminarCategoria";
+import { Modal, Loading } from "../index";
 import AgregarCategorias from "../AgregarCategorias/AgregarCategorias";
 
 const Container = styled.div`
@@ -43,6 +42,12 @@ const Form = styled.form`
   border-radius: 10px;
   box-shadow: 0 0 6px 0 rgba(255, 255, 255, 0.8);
   height: 100%;
+  @media screen and (max-width: 560px) {
+    width: 100%;
+    border: none;
+    display: flex;
+    flex-direction: column;
+  }
 `;
 
 const Left = styled.div`
@@ -56,6 +61,15 @@ const Left = styled.div`
   border: 2px solid black;
   border-radius: 8px;
   justify-content: space-evenly;
+  @media screen and (max-width: 960px) {
+    width: 40%;
+    border: none;
+  }
+  @media screen and (max-width: 560px) {
+    margin-top: 80vh;
+    width: 70%;
+    border: none;
+  }
 `;
 
 const Right = styled.div`
@@ -69,6 +83,15 @@ const Right = styled.div`
   border: 2px solid black;
   border-radius: 8px;
   position: relative;
+  @media screen and (max-width: 960px) {
+    width: 40%;
+    border: none;
+  }
+  @media screen and (max-width: 560px) {
+    margin-top: 0;
+    width: 70%;
+    border: none;
+  }
 `;
 
 const Input = styled.div`
@@ -79,6 +102,10 @@ const Input = styled.div`
 
   margin: 30px;
   width: 80%;
+  @media screen and (max-width: 960px) {
+    margin: 15px;
+    width: 100%;
+  }
 `;
 
 const Errors = styled.span`
@@ -103,14 +130,20 @@ const SelectorImagen = styled.input`
   color: transparent;
   // background-color: red;
   z-index: 0;
+  border-radius: 5px;
+  @media screen and (max-width: 960px) {
+    width: 100%;
+  }
 `;
 
 const Imagen = styled.img`
   height: 300px;
   width: 90%;
-  object-fit: cover;
-  background-color: grey;
+  object-fit: contain;
+  background-color: white;
+  border: 1px solid black;
   z-index: 2;
+  border-radius: 5px;
 `;
 
 const Button = styled.button`
@@ -134,12 +167,13 @@ const Button = styled.button`
   margin: 40px 0px 0px 0px;
   margin: auto;
   cursor: pointer;
-`;
-
-const SelectCat = styled.select`
-  height: 30px;
-  border: 1px solid black;
-  border-radius: 6px;
+  @media screen and (max-width: 960px) {
+    height: 30px;
+  }
+  @media screen and (max-width: 560px) {
+    margin-top: 15px;
+    position: revert;
+  }
 `;
 
 const CrearCat = styled.div`
@@ -149,6 +183,12 @@ const CrearCat = styled.div`
   left: 10%;
   right: 10%;
   // padding-bottom: 3em;
+  @media screen and (max-width: 960px) {
+    width: 100%;
+  }
+  @media screen and (max-width: 560px) {
+    position: revert;
+  }
 `;
 
 const TitCat = styled.h3`
@@ -198,19 +238,18 @@ export default function CrearProducto() {
   const [stateModalProd, setStateModalProd] = useState(false);
   const [stateModalCat, setStateModalCat] = useState(false);
   const [stateModalPut, setStateModalPut] = useState(false);
+  const [stateModalImg, setStateModalImg] = useState(false);
 
   const [categorias, setCategorias] = useState([]),
     [errors, setErrors] = useState({}),
     [post, setPost] = useState({
       nombre: "",
       descripcion: "",
-      //precio: 0,
       imagen: "",
-      //stock: 0,
       categorias: [],
     }),
+    [loading, setLoading] = useState(false),
     [categoria, setCategoria] = useState({ nombre: "" }),
-    [cambio, setCambio] = useState(false),
     [imageSelected, setImageSelected] = useState();
 
   useEffect(() => {
@@ -226,16 +265,16 @@ export default function CrearProducto() {
         categorias: [],
       });
     }
-  }, []);
+  }, [dispatch, id]);
 
   useEffect(() => {
     setPost({
-      ...post,
       nombre: detalle.nombre,
       descripcion: detalle.descripcion,
       precio: detalle.precio,
       imagen: detalle.imagen,
       stock: detalle.stock,
+      categorias: detalle.categoria,
     });
 
     setImageSelected(detalle.imagen);
@@ -249,27 +288,38 @@ export default function CrearProducto() {
     setCategorias(categorías);
   }, [categorías]);
 
-  function handleOpenCategoria(e) {
-    e.preventDefault();
-    cambio ? setCambio(false) : setCambio(true);
-  }
-
   function handleInputCambio(e) {
-    if (e.target.key === "Enter") {
+    // Cada vez que escribo se actualiza el state de categoria
+    setCategoria({
+      id: categorias.length + 1,
+      nombre: e.target.value,
+    });
+
+    // Pero si damos enter se guarda
+    if (e.key === "Enter") {
       handleSub(e);
-      setCategoria({
-        id: categorias.length + 1,
-        nombre: e.target.value,
-      });
-      setCategorias([...categorias, categoria]);
-      console.log(post.categorias);
+
+      setCategorias([
+        ...categorias,
+        {
+          id: categorias.length + 1,
+          nombre: e.target.value,
+        },
+      ]);
     }
   }
 
   function handleSub(e) {
     e.preventDefault();
-    dispatch(postCategoria(categoria));
-    setStateModalCat(!stateModalCat);
+
+    const inputNewCat = document.getElementById("crear-categoria");
+
+    if (inputNewCat.value) {
+      dispatch(postCategoria(categoria));
+      setStateModalCat(!stateModalCat);
+    } else {
+      errors.crearCategoria = "Debe crear una categoria";
+    }
   }
 
   function handleInputChange(e) {
@@ -283,9 +333,9 @@ export default function CrearProducto() {
         validate({
           ...post,
           [e.target.name]: Number(e.target.value),
+          loading,
         })
       );
-      console.log(errors);
     } else {
       setPost({
         ...post,
@@ -296,13 +346,14 @@ export default function CrearProducto() {
         validate({
           ...post,
           [e.target.name]: e.target.value,
+          loading,
         })
       );
-      console.log(errors);
     }
   }
 
   function handleImageChange(changeEvent) {
+    setLoading(true);
     const reader = new FileReader();
 
     reader.onload = function (onLoadEvent) {
@@ -312,12 +363,6 @@ export default function CrearProducto() {
     reader.readAsDataURL(changeEvent.target.files[0]);
   }
 
-  useEffect(() => {
-    if (imageSelected) {
-      uploadImagen();
-    }
-  }, [imageSelected]);
-
   function uploadImagen() {
     const formData = new FormData();
 
@@ -326,33 +371,40 @@ export default function CrearProducto() {
 
     axios
       .post("http://api.cloudinary.com/v1_1/henrypfinal/image/upload", formData)
-      .then((res) => setPost({ ...post, imagen: res.data.secure_url }));
+      .then((res) => {
+        setPost({ ...post, imagen: res.data.secure_url });
+        setLoading(false);
+      })
+      .catch((err) => {
+        setLoading(false);
+        setStateModalImg(true);
+        setImageSelected();
+      });
   }
 
   useEffect(() => {
-    setErrors({ ...errors, imagen: null });
+    if (imageSelected) {
+      uploadImagen();
+    }
+    // eslint-disable-next-line
+  }, [imageSelected]);
+
+  useEffect(() => {
+    // Eliminamos el error del state de errores
+    setErrors(() => {
+      const state = { ...errors };
+      delete state.imagen;
+      return state;
+    });
+    // eslint-disable-next-line
   }, [post.imagen]);
-
-  function handleSelectCategorias(e) {
-    if (!post.categorias.includes(e.target.value))
-      setPost({
-        ...post,
-        categorias: [...post.categorias, e.target.value],
-      });
-
-    setErrors(
-      validate({
-        ...post,
-        categorias: [...post.categorias, e.target.value],
-      })
-    );
-  }
 
   function handleSubmit(e) {
     e.preventDefault();
 
     if (id) {
       dispatch(putProducto(id, post));
+
       setStateModalPut(!stateModalPut);
     } else {
       if (Object.values(errors).length > 0) {
@@ -413,13 +465,13 @@ export default function CrearProducto() {
               />
               <span className="barra"></span>
               <label className="label">Descripción</label>
-              {errors.descripción && <Errors>{errors.descripción}</Errors>}
+              {errors.descripcion && <Errors>{errors.descripcion}</Errors>}
             </Input>
 
             <Input>
               <input
                 className="input-create"
-                type="text"
+                type="number"
                 min="0"
                 value={post.precio}
                 name="precio"
@@ -447,25 +499,33 @@ export default function CrearProducto() {
             </Input>
 
             <Input>
-              <AgregarCategorias post={post} setPost={setPost} />
-              {errors.categorías && <Errors>{errors.categorías}</Errors>}
+              <AgregarCategorias
+                post={post}
+                setPost={setPost}
+                setErrors={setErrors}
+                detalle={detalle}
+              />
+              {errors.categorias && <Errors>{errors.categorias}</Errors>}
             </Input>
           </Left>
 
           <Right>
-            <Input>
+            <Input style={{ cursor: loading ? "wait" : "auto" }}>
               <input
                 className="input-create"
                 type="text"
                 placeholder="Imagen desde URL o archivo local"
                 value={post.imagen}
                 name="imagen"
+                disabled={loading ? true : false}
+                style={{ cursor: loading ? "wait" : "auto" }}
                 onChange={(e) => {
                   handleInputChange(e);
                   setImageSelected(e.target.value);
                 }}
               />
-              <div style={{ margin: "20px 0px" }}>
+
+              <div style={{ margin: "20px 0px", position: "relative" }}>
                 <SelectorImagen
                   className="input-create"
                   type="file"
@@ -473,11 +533,13 @@ export default function CrearProducto() {
                   placeholder=" "
                   onChange={(e) => {
                     handleImageChange(e);
+
                     setImageSelected(post.imagen);
                   }}
                 />
 
                 <Imagen src={imageSelected} />
+                {loading && <Loading />}
               </div>
 
               {errors.imagen && <Errors>{errors.imagen}</Errors>}
@@ -487,6 +549,8 @@ export default function CrearProducto() {
               <TitCat>Crear Categoría</TitCat>
               <div className="form-create">
                 <InCat
+                  id="crear-categoria"
+                  name="crear-categoria"
                   placeholder="Escribir nueva categoria"
                   type="text"
                   onKeyDown={(e) => handleInputCambio(e)}
@@ -503,6 +567,7 @@ export default function CrearProducto() {
             )}
           </Right>
         </Form>
+
         <Modal state={stateModalProd} setStateModal={setStateModalProd}>
           {Object.values(errors).length > 0 ? (
             <ParrafoAlerta>Por favor rellenar todos los campos</ParrafoAlerta>
@@ -510,12 +575,19 @@ export default function CrearProducto() {
             <ParrafoOk>¡Producto creado con éxito!</ParrafoOk>
           )}
         </Modal>
+
         <Modal state={stateModalCat} setStateModal={setStateModalCat}>
           <ParrafoCat>¡Categoría creada con éxito!</ParrafoCat>
         </Modal>
 
         <Modal state={stateModalPut} setStateModal={setStateModalPut}>
           <ParrafoOk>¡Cambios realizados con éxito!</ParrafoOk>
+        </Modal>
+
+        <Modal state={stateModalImg} setStateModal={setStateModalImg}>
+          <ParrafoOk>
+            Ocurrió un error al añadir la imagen, por favor intente nuevamente
+          </ParrafoOk>
         </Modal>
       </Container>
     </>

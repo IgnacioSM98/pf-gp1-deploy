@@ -1,3 +1,5 @@
+import axios from "axios";
+
 const initialState = {
   productos: [],
   productosFiltrados: [],
@@ -8,6 +10,10 @@ const initialState = {
   carrito: [],
   user: false,
   userInfo: {},
+  pedidos: [],
+  usuarios: [],
+  detalleEnvio: {},
+  favoritos: [],
 };
 
 export default function rootReducer(state = initialState, action) {
@@ -29,6 +35,7 @@ export default function rootReducer(state = initialState, action) {
       if (action.payload !== "DEFAULT") {
         const filteredAux = [...state.productosFiltrados];
 
+        // eslint-disable-next-line
         filteredAux.sort((a, b) => {
           if (action.payload === "A-Z")
             return a.nombre > b.nombre ? 1 : b.nombre > a.nombre ? -1 : 0;
@@ -65,6 +72,19 @@ export default function rootReducer(state = initialState, action) {
         ...state,
         categorias: action.payload,
       };
+
+    case "GET_USUARIOS":
+      return {
+        ...state,
+        usuarios: action.payload,
+      };
+
+    case "GET_PEDIDOS":
+      return {
+        ...state,
+        pedidos: action.payload,
+      };
+
     case "DELETE_CATEGORIA":
       return {
         ...state,
@@ -94,7 +114,8 @@ export default function rootReducer(state = initialState, action) {
       const productosConCategoria =
         action.payload === "all"
           ? productos
-          : productos.filter((e) => {
+          : // eslint-disable-next-line
+            productos.filter((e) => {
               let names = e.categorias.map((c) => c.name);
               if (names.includes(action.payload)) return e;
             });
@@ -141,7 +162,7 @@ export default function rootReducer(state = initialState, action) {
       };
     case "CREAR_REVIEW":
       return {
-        ...state
+        ...state,
       };
 
     case "GET_REVIEWS":
@@ -149,17 +170,74 @@ export default function rootReducer(state = initialState, action) {
         ...state,
         reviews: action.payload,
       };
+    case "GET_ALL_REVIEWS":
+      return {
+        ...state,
+        reviews: action.payload,
+      };
+
+    case "GET_PRODUCT_REVIEWS":
+      return {
+        ...state,
+        reviews: action.payload,
+      };
+    case "DELETE_REVIEW":
+      return { ...state };
+    case "SET_CARRITO":
+      return {
+        ...state,
+        carrito: action.payload,
+      };
 
     case "AGREGAR_CARRITO":
-      const newCarrito = [...state.carrito];
-      const indexCarrito = state.carrito.findIndex(
+      let addCarrito = [];
+
+      if (state.carrito !== null) {
+        addCarrito = [...state.carrito];
+      }
+
+      let indexCarritoAdd = state.carrito?.findIndex(
+        (carrito) => Number(carrito.id) === Number(action.payload.idProducto)
+      );
+
+      if (indexCarritoAdd !== -1) {
+        addCarrito[indexCarritoAdd].cantidad = action.payload.cantidad;
+
+        return {
+          ...state,
+          carrito: addCarrito,
+        };
+      } else {
+        const productoSeleccionado = state.productos.find(
+          (producto) =>
+            Number(producto.id) === Number(action.payload.idProducto)
+        );
+
+        return {
+          ...state,
+          carrito: [
+            ...state.carrito,
+            {
+              id: productoSeleccionado.id,
+              nombre: productoSeleccionado.nombre,
+              precio: productoSeleccionado.precio,
+              imagen: productoSeleccionado.imagen,
+              cantidad: action.payload.cantidad,
+            },
+          ],
+        };
+      }
+
+    case "RESTAR_CARRITO":
+      var newCarrito = [...state.carrito];
+
+      var indexCarrito = state.carrito.findIndex(
         (carrito) => Number(carrito.id) === Number(action.payload.idProducto)
       );
 
       if (indexCarrito !== -1) {
-        console.log(indexCarrito);
         newCarrito[indexCarrito].cantidad =
-          newCarrito[indexCarrito].cantidad + 1;
+          newCarrito[indexCarrito].cantidad - 1;
         return {
           ...state,
           carrito: newCarrito,
@@ -186,7 +264,7 @@ export default function rootReducer(state = initialState, action) {
       }
 
     case "QUITAR_ITEM":
-      const data = state.carrito.filter(
+      const data = state.carrito?.filter(
         (item) => item.id !== action.payload.id
       );
       return {
@@ -198,6 +276,8 @@ export default function rootReducer(state = initialState, action) {
       let prodAux = [...state.productos];
 
       localStorage.removeItem("productos");
+
+      action.payload.categoria = action.categorias;
 
       prodAux = prodAux.concat(action.payload);
 
@@ -214,8 +294,8 @@ export default function rootReducer(state = initialState, action) {
 
       localStorage.removeItem("productos");
 
+      // eslint-disable-next-line
       prods.find((prod) => {
-        // console.log(prod, "aca");
         if (prod.id === action.payload.id) {
           if (action.payload.nombre) {
             prod.nombre = action.payload.nombre;
@@ -236,6 +316,7 @@ export default function rootReducer(state = initialState, action) {
       });
 
       localStorage.setItem("productos", JSON.stringify(prods));
+
       return {
         ...state,
         productos: prods,
@@ -264,6 +345,7 @@ export default function rootReducer(state = initialState, action) {
       };
 
     case "GET_USER":
+      // eslint-disable-next-line
       const usuario = action.payload.find((usuario) => {
         if (usuario.mail === action.mail) {
           return usuario.isAdmin;
@@ -282,6 +364,116 @@ export default function rootReducer(state = initialState, action) {
         ...state,
         userInfo: action.payload,
       };
+
+    case "CHANGE_MODE":
+      return {
+        ...state,
+        userInfo: action.payload,
+      };
+
+    case "GET_DETALLE_ENVIO":
+      return {
+        ...state,
+        detalleEnvio: action.payload,
+      };
+
+    case "ACTUALIZAR_ESTADO":
+      return {
+        ...state,
+        detalleEnvio: action.payload,
+      };
+
+    case "AÑADIR_A_FAVORITOS":
+      const usuarioFiltrado = state.usuarios.filter(
+        (u) => u.mail === state.userInfo.email
+      );
+
+      const idProducto = action.payload.id;
+      const idUsuario = usuarioFiltrado && usuarioFiltrado[0].id;
+
+      const favorites = axios.get(
+        `https://proyecto-final-gp1.herokuapp.com/favoritos/wishlist/${idUsuario}`
+      );
+
+      if (
+        favorites.data &&
+        favorites.data.find((fav) => fav.id === state.productos.id)
+      ) {
+      } else {
+        axios.post(
+          "https://proyecto-final-gp1.herokuapp.com/favoritos/wishlist",
+          {
+            idProducto: idProducto,
+            idUsuario: idUsuario,
+          }
+        );
+      }
+
+      const newFavorites = [...state.favoritos, action.payload];
+      return {
+        ...state,
+        favoritos: newFavorites,
+      };
+
+    case "ELIMINAR_DE_FAVORITOS":
+      const usuarioFiltradoid = state.usuarios.filter(
+        (u) => u.mail === state.userInfo.email
+      );
+
+      const idProductoEliminar = action.payload;
+      const idUsuarioEliminar = usuarioFiltradoid[0]?.id;
+
+      const favoritosFiltrados = state.favoritos.filter(
+        (e) => e.id !== action.payload
+      );
+
+      axios
+        .delete("https://proyecto-final-gp1.herokuapp.com/favoritos/wishlist", {
+          idUsuario: idUsuarioEliminar,
+          idProducto: idProductoEliminar,
+        })
+        .catch((error) => console.log(error));
+
+      return {
+        ...state,
+        favoritos: favoritosFiltrados,
+      };
+
+    case "POST_PEDIDO":
+      let pedidosAux = [...state.pedidos];
+
+      pedidosAux = pedidosAux.concat(action.payload);
+
+      return {
+        ...state,
+        pedidos: pedidosAux,
+      };
+
+    case "ORDER_BY_STOCK": {
+      let sortStock =
+        action.payload === "Menor a Mayor"
+          ? state.productos.sort((a, b) => {
+              if (a.stock > b.stock) return 1;
+              if (a.stock < b.stock) return -1;
+              return 0;
+            })
+          : state.productos.sort((a, b) => {
+              if (a.stock > b.stock) return -1;
+              if (a.stock < b.stock) return 1;
+              return 0;
+            });
+      return { ...state, productos: sortStock };
+    }
+
+    case "POST_USUARIO":
+      let usuariosAux = [...state.usuarios];
+
+      usuariosAux = usuariosAux.concat(action.payload);
+      return {
+        ...state,
+        usuarios: usuariosAux,
+      };
+
     default:
       return state;
   }

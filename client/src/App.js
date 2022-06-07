@@ -1,6 +1,10 @@
 import "./App.css";
 import { useEffect, useRef, useState } from "react";
-import { getCategorias } from "./Redux/actions/index";
+import {
+  getCategorias,
+  getProductos,
+  setUserInfo,
+} from "./Redux/actions/index";
 import {
   Home,
   Tienda,
@@ -10,7 +14,12 @@ import {
   CrearProducto,
   NavBar,
   Login,
+  Admin,
   DetalleProducto,
+  EliminarCategoria,
+  DetalleEnvio,
+  Checkout,
+  NotFound,
 } from "./Components/index";
 import { Routes, Route } from "react-router-dom";
 import { useDispatch } from "react-redux";
@@ -21,7 +30,10 @@ function App() {
   const [user, setUser] = useState();
 
   useEffect(() => {
+    // Si sacamos el GET PRUDUCTOS de acá se rompe Redux al POST PRODUCTO nuevo
+    dispatch(getProductos());
     dispatch(getCategorias());
+    dispatch(setUserInfo(JSON.parse(localStorage.getItem("user"))));
   }, [dispatch]);
 
   return (
@@ -30,24 +42,50 @@ function App() {
       <div className="App">
         <Routes>
           <Route exact path={"/"} element={<Home contacto={contacto} />} />
+
           <Route exact path="/productos/:id" element={<DetalleProducto />} />
+
           <Route
             exact
             path={"/tienda"}
             element={<Tienda contacto={contacto} />}
           />
+
           <Route exact path="/productos/:id" element={<DetalleProducto />} />
+
           <Route exact path="/edit/:id" element={<CrearProducto />} />
-          <Route exact path="/carrito" element={<Carrito />} />
+
+          <Route
+            exact
+            path="/carrito"
+            element={<Carrito contacto={contacto} />}
+          />
+
           <Route exact path="/blog" element={<Blog contacto={contacto} />} />
+
           <Route exact path="/cuenta" element={<Cuenta />} />
-          {/* <Route exact path="/admin" element={"admin"} /> */}
+
+          <Route
+            exact
+            path="/checkout"
+            element={<Checkout contacto={contacto} />}
+          />
+          <Route exact path="/admin" element={<Admin />} />
+          <Route exact path="/pedido/:id" element={<DetalleEnvio />} />
+          <Route
+            exact
+            path="/admin/eliminar/categorias"
+            element={<EliminarCategoria />}
+          />
           <Route exact path="/admin/crear" element={<CrearProducto />} />
           <Route
             exact
             path="/login"
-            element={<Login user={user} setUser={setUser} />}
+            element={
+              <Login user={user} setUser={setUser} contacto={contacto} />
+            }
           />
+          <Route path="*" element={<NotFound />} />
           {/*<Route exact path="/user/reviews" element={"user reviews"} />
         <Route exact path="/admin/cambiar/:id" element={"change something"} />*/}
         </Routes>
