@@ -6,14 +6,16 @@ import {
   View,
   Image,
   StyleSheet,
+  SafeAreaView,
 } from "react-native";
 import axios from "axios";
+import Carousel from "../Carousel/Carousel";
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 2,
-    marginTop: 50,
+    marginTop: 20,
   },
 
   loading: {
@@ -41,7 +43,6 @@ const styles = StyleSheet.create({
   imagen: {
     width: 100,
     height: 100,
-
     resizeMode: "contain",
   },
 });
@@ -64,8 +65,7 @@ export default function Home() {
         <ActivityIndicator style={styles.loading} size="large" color="red" />
       ) : (
         <View>
-          <Text>Carrousel</Text>
-
+          <Carousel />
           <Text>Productos Destacados</Text>
           <FlatList
             data={productos.slice(0, 6)}
