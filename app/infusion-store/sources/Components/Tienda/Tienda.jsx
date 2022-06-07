@@ -45,6 +45,8 @@ const styles = StyleSheet.create({
 const Tienda = () => {
   const [isLoading, setLoading] = useState(true);
   const [data, setData] = useState([]);
+  const [cantidad, setCantidad] = useState(4);
+
 
   useEffect(() => {
     fetch("https://proyecto-final-gp1.herokuapp.com/productos")
@@ -54,7 +56,13 @@ const Tienda = () => {
       })
       .catch((error) => console.error(error))
       .finally(() => setLoading(false));
-  }, []);
+  }, [cantidad]);
+
+  const handleMore = () => {
+    cantidad < data.length && setCantidad(cantidad + 2);
+  };
+
+  console.log(cantidad);
 
   return (
     <View style={styles.container}>
@@ -66,7 +74,10 @@ const Tienda = () => {
         />
       ) : (
         <FlatList
-          data={data}
+          data={data.slice(0, cantidad)}
+          onEndReachedThreshold={0.1}
+          onEndReached={handleMore}
+          keyExtractor={(item) => item.id}
           renderItem={({ item }) => (
             <View style={styles.contProd}>
               <Image source={{ uri: item.imagen }} style={styles.img} />
