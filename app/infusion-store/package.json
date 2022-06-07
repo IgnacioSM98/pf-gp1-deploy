@@ -20,6 +20,7 @@
     "react-native": "^0.68.2",
     "react-native-axios": "^0.17.1",
     "react-native-web": "0.17.7",
+    "styled-components": "^5.3.5",
     "webpack-dev-server": "~3.11.0"
   },
   "devDependencies": {
