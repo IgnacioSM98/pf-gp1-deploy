@@ -42,6 +42,12 @@ const Form = styled.form`
   border-radius: 10px;
   box-shadow: 0 0 6px 0 rgba(255, 255, 255, 0.8);
   height: 100%;
+  @media screen and (max-width: 560px) {
+    width: 100%;
+    border: none;
+    display: flex;
+    flex-direction: column;
+  }
 `;
 
 const Left = styled.div`
@@ -55,6 +61,15 @@ const Left = styled.div`
   border: 2px solid black;
   border-radius: 8px;
   justify-content: space-evenly;
+  @media screen and (max-width: 960px) {
+    width: 40%;
+    border: none;
+  }
+  @media screen and (max-width: 560px) {
+    margin-top: 80vh;
+    width: 70%;
+    border: none;
+  }
 `;
 
 const Right = styled.div`
@@ -68,6 +83,15 @@ const Right = styled.div`
   border: 2px solid black;
   border-radius: 8px;
   position: relative;
+  @media screen and (max-width: 960px) {
+    width: 40%;
+    border: none;
+  }
+  @media screen and (max-width: 560px) {
+    margin-top: 0;
+    width: 70%;
+    border: none;
+  }
 `;
 
 const Input = styled.div`
@@ -78,6 +102,10 @@ const Input = styled.div`
 
   margin: 30px;
   width: 80%;
+  @media screen and (max-width: 960px) {
+    margin: 15px;
+    width: 100%;
+  }
 `;
 
 const Errors = styled.span`
@@ -103,6 +131,9 @@ const SelectorImagen = styled.input`
   // background-color: red;
   z-index: 0;
   border-radius: 5px;
+  @media screen and (max-width: 960px) {
+    width: 100%;
+  }
 `;
 
 const Imagen = styled.img`
@@ -136,6 +167,13 @@ const Button = styled.button`
   margin: 40px 0px 0px 0px;
   margin: auto;
   cursor: pointer;
+  @media screen and (max-width: 960px) {
+    height: 30px;
+  }
+  @media screen and (max-width: 560px) {
+    margin-top: 15px;
+    position: revert;
+  }
 `;
 
 const SelectCat = styled.select`
@@ -151,6 +189,12 @@ const CrearCat = styled.div`
   left: 10%;
   right: 10%;
   // padding-bottom: 3em;
+  @media screen and (max-width: 960px) {
+    width: 100%;
+  }
+  @media screen and (max-width: 560px) {
+    position: revert;
+  }
 `;
 
 const TitCat = styled.h3`
