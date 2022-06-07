@@ -22,10 +22,8 @@ export default async function putUsuario({
     isAdmin: isAdmin,
   };
 
-  const resp = await axios.put(
+  await axios.put(
     `https://proyecto-final-gp1.herokuapp.com/admin/usuario/${id}`,
     usuario
   );
-
-  console.log(resp);
 }

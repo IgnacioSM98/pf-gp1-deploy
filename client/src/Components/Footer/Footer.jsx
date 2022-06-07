@@ -81,38 +81,23 @@ export default function Footer({ contacto }) {
         }}
       >
         <Bar />
-        <Title ref={contacto}>Contactanos</Title>
+        <Title>Contactanos</Title>
         <Bar />
       </div>
 
       <Contacto>
         <Categoria>
           <SubTitle>Mercancia</SubTitle>
-          {/* <Item>Remeras</Item>
-          <Item>Gorras</Item> */}
           <Item>Proximamente</Item>
-          {/* <Item>Mascaras</Item> */}
         </Categoria>
-
-        {/* <Categoria>
-          <SubTitle>Franquicia</SubTitle>
-          <Item>Coffee Outlet</Item>
-          <Item>Coffee Vending Machine</Item>
-          <Item>Contact us</Item>
-        </Categoria> */}
 
         <Categoria>
           <SubTitle>Sobre Nosotros</SubTitle>
-          {/* <Item>Promociones</Item> */}
           <Item>Proximamente</Item>
-          {/* <Item>Customer care</Item> */}
-          {/* <Item>Legal information</Item> */}
-          {/* <Item>Achievements</Item> */}
-          {/* <Item>Careers</Item> */}
         </Categoria>
 
         <Categoria>
-          <SubTitle>Seguinos</SubTitle>
+          <SubTitle ref={contacto}>Seguinos</SubTitle>
           <div>
             <Icon
               url="https://instagram.com/infusion.store.pf"
@@ -137,13 +122,6 @@ export default function Footer({ contacto }) {
               target="_blank"
               style={{ height: 25, width: 25, margin: 5 }}
             />
-
-            {/* <Icon
-              url="https://pinterest.com/jaketrent"
-              fgColor="black"
-              bgColor="white"
-              style={{ height: 25, width: 25, margin: 5 }}
-            /> */}
           </div>
         </Categoria>
       </Contacto>

@@ -11,7 +11,6 @@ export default function CrearCat({ setCategoria }) {
 
   function handleChange(e) {
     setInput({ id: categorias.length + 1, nombre: e.target.value });
-    console.log(input);
   }
 
   function handleSubmit(e) {

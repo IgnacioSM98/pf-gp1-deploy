@@ -13,7 +13,6 @@ const initialState = {
   pedidos: [],
   usuarios: [],
   detalleEnvio: {},
-  pedidos: [],
   favoritos: [],
 };
 
@@ -36,6 +35,7 @@ export default function rootReducer(state = initialState, action) {
       if (action.payload !== "DEFAULT") {
         const filteredAux = [...state.productosFiltrados];
 
+        // eslint-disable-next-line
         filteredAux.sort((a, b) => {
           if (action.payload === "A-Z")
             return a.nombre > b.nombre ? 1 : b.nombre > a.nombre ? -1 : 0;
@@ -114,7 +114,8 @@ export default function rootReducer(state = initialState, action) {
       const productosConCategoria =
         action.payload === "all"
           ? productos
-          : productos.filter((e) => {
+          : // eslint-disable-next-line
+            productos.filter((e) => {
               let names = e.categorias.map((c) => c.name);
               if (names.includes(action.payload)) return e;
             });
@@ -263,7 +264,6 @@ export default function rootReducer(state = initialState, action) {
       }
 
     case "QUITAR_ITEM":
-      // console.log(action.payload, "aca?");
       const data = state.carrito?.filter(
         (item) => item.id !== action.payload.id
       );
@@ -294,6 +294,7 @@ export default function rootReducer(state = initialState, action) {
 
       localStorage.removeItem("productos");
 
+      // eslint-disable-next-line
       prods.find((prod) => {
         if (prod.id === action.payload.id) {
           if (action.payload.nombre) {
@@ -344,6 +345,7 @@ export default function rootReducer(state = initialState, action) {
       };
 
     case "GET_USER":
+      // eslint-disable-next-line
       const usuario = action.payload.find((usuario) => {
         if (usuario.mail === action.mail) {
           return usuario.isAdmin;
@@ -383,12 +385,11 @@ export default function rootReducer(state = initialState, action) {
 
     case "AÑADIR_A_FAVORITOS":
       const usuarioFiltrado = state.usuarios.filter(
-        (u) => u.mail == state.userInfo.email
+        (u) => u.mail === state.userInfo.email
       );
 
       const idProducto = action.payload.id;
       const idUsuario = usuarioFiltrado && usuarioFiltrado[0].id;
-      console.log(usuarioFiltrado, "ACAAAAAAAAAAA");
 
       const favorites = axios.get(
         `https://proyecto-final-gp1.herokuapp.com/favoritos/wishlist/${idUsuario}`
@@ -396,15 +397,16 @@ export default function rootReducer(state = initialState, action) {
 
       if (
         favorites.data &&
-        favorites.data.find((fav) => fav.id == state.productos.id)
+        favorites.data.find((fav) => fav.id === state.productos.id)
       ) {
       } else {
-        axios
-          .post("https://proyecto-final-gp1.herokuapp.com/favoritos/wishlist", {
+        axios.post(
+          "https://proyecto-final-gp1.herokuapp.com/favoritos/wishlist",
+          {
             idProducto: idProducto,
             idUsuario: idUsuario,
-          })
-          .then((response) => console.log(response));
+          }
+        );
       }
 
       const newFavorites = [...state.favoritos, action.payload];
@@ -415,9 +417,8 @@ export default function rootReducer(state = initialState, action) {
 
     case "ELIMINAR_DE_FAVORITOS":
       const usuarioFiltradoid = state.usuarios.filter(
-        (u) => u.mail == state.userInfo.email
+        (u) => u.mail === state.userInfo.email
       );
-      console.log(action.payload);
 
       const idProductoEliminar = action.payload;
       const idUsuarioEliminar = usuarioFiltradoid[0]?.id;
@@ -425,8 +426,6 @@ export default function rootReducer(state = initialState, action) {
       const favoritosFiltrados = state.favoritos.filter(
         (e) => e.id !== action.payload
       );
-
-      console.log(idProductoEliminar, idUsuarioEliminar, "HOLAAAAAAA");
 
       axios
         .delete("https://proyecto-final-gp1.herokuapp.com/favoritos/wishlist", {

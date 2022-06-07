@@ -29,27 +29,7 @@ const Container = styled.div`
   overflow-x: scroll;
 `;
 
-const Crear = styled.button`
-  // top: 660px;
-  top: 0;
-  right: 0;
-  position: absolute;
-  width: 80px;
-  background: #37563d;
-
-  display: block;
-
-  height: 30px;
-  border: none;
-  color: white;
-  border-radius: 4px;
-  font-size: 16px;
-  margin: 40px 0px 0px 0px;
-  margin: auto;
-  cursor: pointer;
-`;
-
-let Select = styled.select`
+const Select = styled.select`
   margin-bottom: 3em;
   width: 150px;
   height: 30px;
@@ -69,7 +49,7 @@ function Pedidos() {
 
   useEffect(() => {
     dispatch(getPedidos());
-  }, []);
+  }, [dispatch]);
 
   const sortPedidos = (a, b) => {
     if (selected === "ASC") {

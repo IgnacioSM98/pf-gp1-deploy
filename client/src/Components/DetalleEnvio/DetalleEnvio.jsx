@@ -1,13 +1,12 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   getDetalleEnvio,
   actualizarEstadoEnvio,
-  enviarMail,
   quitarItem,
   mailAdmin,
 } from "../../Redux/actions";
-import { useParams, Link, useLocation } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 import styled from "styled-components";
 import Swal from "sweetalert2";
 import Loader from "../Loader/Loader";
@@ -162,26 +161,6 @@ const OpcionEstado = styled.option`
   font-weight: bold;
 `;
 
-const Formulario = styled.form`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-
-  position: absolute;
-  top: 8%;
-  right: 300px;
-`;
-
-const Boton = styled.button`
-  width: 50%;
-  height: 30px;
-  border-radius: 20px;
-  margin: 0.5em;
-  background: black;
-  color: white;
-  cursor: pointer;
-`;
-
 const Producto = styled.p`
   margin: 0.5em 0em 0em 1.8em;
   text-align: left;
@@ -192,26 +171,11 @@ export default function DetalleEnvio() {
   let dispatch = useDispatch();
   let { id } = useParams();
   let detalle = useSelector((state) => state.detalleEnvio);
-  const userMail = useSelector((state) => state.userInfo);
   const user = useSelector((state) => state.userInfo?.visualizacion);
-  const query = new URLSearchParams(useLocation().search);
-
-  const status = query.get("status");
-  const usuarioMail = userMail?.email;
 
   useEffect(() => {
     dispatch(getDetalleEnvio(id));
-  }, []);
-
-  let [input, setInput] = useState({
-    estado: "",
-  });
-
-  /*useEffect(() => {
-    if (usuarioMail !== undefined) {
-      dispatch(enviarMail(usuarioMail));
-    }
-  }, [usuarioMail]);*/
+  }, [dispatch, id]);
 
   function changeEstado(estado) {
     Swal.fire({
@@ -248,22 +212,14 @@ export default function DetalleEnvio() {
 
   useEffect(() => {
     if (Object.keys(detalle).length > 0) {
+      // eslint-disable-next-line
       detalle.productos.map((producto) => {
-        console.log(producto.compra);
         dispatch(quitarItem({ id: producto.compra.productoId }));
       });
     }
-  }, [detalle]);
+  }, [dispatch, detalle]);
 
-  // let [input, setInput] = useState({
-  //   estado: "",
-  // });
-
-  let handleInputChange = (e) => {
-    // setInput({
-    //   estado: e.target.value,
-    // });
-
+  const handleInputChange = (e) => {
     changeEstado(e.target.value);
   };
 
@@ -282,14 +238,12 @@ export default function DetalleEnvio() {
 
           <OpcionEstado
             disabled={detalle.Estado === "En preparación" ? true : false}
-            // onClick={() => changeEstado()}
             value="En preparación"
           >
             En preparación
           </OpcionEstado>
           <OpcionEstado
             disabled={detalle.Estado === "En camino" ? true : false}
-            // onClick={() => changeEstado()}
             value="En camino"
           >
             En camino
@@ -300,20 +254,17 @@ export default function DetalleEnvio() {
                 ? true
                 : false
             }
-            // onClick={() => changeEstado()}
             value="En punto de entrega/poder del correo"
           >
             En punto de entrega/poder del correo
           </OpcionEstado>
           <OpcionEstado
             disabled={detalle.Estado === "Entregado" ? true : false}
-            // onClick={() => changeEstado()}
             value="Entregado"
           >
             Entregado
           </OpcionEstado>
         </ModificarEstados>
-        //* <Boton type="submit">Actualizar Estado</Boton> */
         // </Formulario>
       )}
       <Envio className="envio">
@@ -365,10 +316,9 @@ export default function DetalleEnvio() {
                 ></Circulo>
                 <Linea
                   active={
-                    detalle?.Estado !==
-                    "En punto de entrega/poder del correo"
-                    ? false
-                    : true
+                    detalle?.Estado !== "En punto de entrega/poder del correo"
+                      ? false
+                      : true
                   }
                 ></Linea>
                 <ImagenEstados
@@ -377,10 +327,9 @@ export default function DetalleEnvio() {
                 />
                 <ParrafoLi
                   active={
-                    detalle?.Estado !==
-                    "En punto de entrega/poder del correo"
-                    ? false
-                    : true
+                    detalle?.Estado !== "En punto de entrega/poder del correo"
+                      ? false
+                      : true
                   }
                 >
                   En punto de entrega/poder del correo

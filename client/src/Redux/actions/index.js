@@ -142,7 +142,6 @@ export function postProducto(payload) {
 export function postPedido(body) {
   return function (dispatch) {
     axios.post(`${urlBase}${pedido}${crear}`, body).then((res) => {
-      // console.log(res, "aca?");
       dispatch({ type: "POST_PRODUCTO", payload: res.data });
     });
   };
@@ -223,14 +222,12 @@ export function agregarCarrito(idProducto, cantidad) {
 }
 
 export function restarCarrito(idProducto, cantidad) {
-  // console.log(idProducto, cantidad);
   return function (dispatch) {
     dispatch({ type: "RESTAR_CARRITO", payload: { idProducto, cantidad } });
   };
 }
 
 export function quitarItem(idProducto) {
-  // console.log(idProducto, "xd?");
   return function (dispatch) {
     dispatch({ type: "QUITAR_ITEM", payload: idProducto });
   };
@@ -353,7 +350,6 @@ export function orderByStock(payload) {
 }
 
 export function mailAdmin(userId, { estado }) {
-  console.log(userId, estado, "mirar aca!");
   return async function (dispatch) {
     if (estado === "En preparación") {
       await axios

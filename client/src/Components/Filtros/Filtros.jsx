@@ -1,7 +1,7 @@
 import React from "react";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { setSort, getCategorias } from "../../Redux/actions";
+import { setSort } from "../../Redux/actions";
 import styled from "styled-components";
 
 const Select = styled.select`
@@ -13,28 +13,8 @@ const Select = styled.select`
 `;
 
 export default function Filtros({ setSelected }) {
-  const [typesOfDiets, setDiets] = useState([]);
   const dispatch = useDispatch();
-  const productos = useSelector((state) => state.productos);
   const categorias = useSelector((state) => state.categorias);
-
-  // useEffect(() => {
-  //   if (productos.length > 0) {
-  //     const typesAux = productos?.map((food) => {
-  //       return food.diets?.map((diet) => {
-  //         return diet.charAt(0).toUpperCase() + diet.slice(1);
-  //       });
-  //     });
-
-  //     setDiets([...new Set(typesAux.flat())]);
-  //   }
-  // }, [productos]);
-
-  //   useEffect(() => {
-  //     if (typesOfDiets.length > 0) {
-  //         dispatch(getCategorias(typesOfDiets));
-  //     }
-  //   }, [typesOfDiets]);
 
   useEffect(() => {
     if (categorias.length > 0) {

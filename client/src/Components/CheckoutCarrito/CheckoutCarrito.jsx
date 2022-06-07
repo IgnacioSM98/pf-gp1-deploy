@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
-import { Footer, ScrollToTop, MercadoPagoIntegracion, QR } from "../index";
+import { MercadoPagoIntegracion } from "../index";
 import { getUsuarios, postPedido } from "../../Redux/actions/index";
 import "./CheckoutCarrito.css";
 
@@ -77,8 +77,6 @@ const ContenedorCiudad = styled.div`
 `;
 
 const Input = styled.input``;
-
-const ContenedorInput = styled.div``;
 
 const Label = styled.label``;
 
@@ -170,7 +168,7 @@ const Monto = styled.label`
   font-family: Poppins;
 `;
 
-function Checkout({ contacto }) {
+function Checkout() {
   const carrito = useSelector((state) => state.carrito);
   const usuarios = useSelector((state) => state.usuarios);
   const dispatch = useDispatch();
@@ -181,7 +179,7 @@ function Checkout({ contacto }) {
 
   useEffect(() => {
     dispatch(getUsuarios());
-  }, []);
+  }, [dispatch]);
 
   useEffect(() => {
     if (usuarios.length > 0) {
@@ -191,7 +189,7 @@ function Checkout({ contacto }) {
 
       setUserId(usuario.id);
     }
-  }, [usuarios]);
+  }, [usuarios, userInfo.email]);
 
   useEffect(() => {
     let precio = 0;

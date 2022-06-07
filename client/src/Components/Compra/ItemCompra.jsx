@@ -1,8 +1,5 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import styled from "styled-components";
-// import { agregarCarrito, restarCarrito } from "../../Redux/actions";
-// import { useDispatch } from "react-redux";
-import { Link } from "react-router-dom";
 import { Stars } from "../index";
 import { useSelector } from "react-redux";
 
@@ -63,14 +60,6 @@ const Nombre = styled.p`
   // width: 260px;
 
   text-align: start;
-`;
-
-const ProductLink = styled(Link)`
-  height: auto;
-  width: auto;
-
-  color: black;
-  font-size: 18px;
 `;
 
 export default function ItemCompra({ producto }) {

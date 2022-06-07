@@ -1,9 +1,6 @@
 import React, { useState, useEffect } from "react";
-import { useSelector } from "react-redux";
-import { Link } from "react-router-dom";
 import styled from "styled-components";
 import {
-  ItemCompra,
   Compras,
   Favoritos,
   Notificaciones,
@@ -138,33 +135,6 @@ const Categoria = styled.div`
   width: 100%;
 `;
 
-const Secciones = styled.p`
-  display: flex;
-  margin-left: 2rem;
-  font-size: 20px;
-  font-family: Poppins;
-  font-weight: 600;
-`;
-
-const Items = styled.div`
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  grid-auto-flow: dense;
-  grid-gap: 20px 12px;
-
-  // justify-content: center;
-  // align-items: center;
-
-  width: 100%;
-  height: auto;
-
-  margin: 15px;
-  padding: 5px;
-  // border: 1px solid darkgrey;
-  border-radius: 8px;
-  // box-shadow: 0 2px 2px 0 darkgrey, 0 2px 2px 0 #222;
-`;
-
 function Cuenta() {
   const componentes = {
     perfil: Perfil,
@@ -176,7 +146,6 @@ function Cuenta() {
     consultas: Consultas,
   };
 
-  const carrito = useSelector((state) => state.carrito);
   const [componente, setComponente] = useState();
   var ComponenteDinamico = componentes[componente];
 

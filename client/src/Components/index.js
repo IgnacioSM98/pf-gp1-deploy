@@ -42,6 +42,7 @@ import Seguridad from "./Cuenta/Seguridad/Seguridad";
 import AdminReseñas from "./Admin/AdminReseñas";
 import Consultas from "./Cuenta/Consultas/Consultas";
 import NotFound from "./NotFound/NotFound";
+import UseOnScreen from "./UseOnScreen/UseOnScreen";
 
 export {
   Home,
@@ -88,4 +89,5 @@ export {
   AdminReseñas,
   Consultas,
   NotFound,
+  UseOnScreen,
 };

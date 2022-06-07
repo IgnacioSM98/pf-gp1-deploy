@@ -6,8 +6,6 @@ import {
   getDetail,
   getProductReviews,
   agregarCarrito,
-  getAllReviews,
-  // getProductos,
 } from "../../Redux/actions";
 import {
   CrearReview,
@@ -18,7 +16,6 @@ import {
 import styled from "styled-components";
 import cards from "../../Images/Cards/index";
 import { Relacionado } from "../index";
-import { setUserInfo } from "../../Redux/actions";
 
 const Container = styled.div`
   // height: 100vh;
@@ -248,18 +245,6 @@ const Span = styled.span`
   cursor: pointer;
 `;
 
-const FormRev = styled.button`
-  color: ${(props) => (props.color ? props.color : "white")};
-  font-weight: bold;
-  background-color: ${(props) => (props.backcolor ? props.backcolor : "black")};
-  border: none;
-  border-radius: 8px;
-  margin: 5px;
-  width: 200px;
-  padding: 2%;
-  cursor: pointer;
-`;
-
 const Titulo = styled.span`
   text-align: initial;
   margin: 7px 10px 0px 10px;
@@ -281,18 +266,13 @@ export default function DetalleProducto() {
   const dispatch = useDispatch();
   const location = useLocation();
 
-  // useEffect(() => {
-  //   dispatch(setUserInfo(localStorage.getItem("user")));
-  // }, []);
-
   // Recuperamos el tipo de visualización/permiso del usuario
   const user = useSelector((state) => state.userInfo?.visualizacion);
 
   // Validamos si hay sesion iniciada
   // const user = localStorage.getItem("user") ? true : false;
 
-  const [carrito, setCarrito] = useState(true),
-    [cantidad, setCantidad] = useState(0),
+  const [cantidad, setCantidad] = useState(0),
     [boton, setBoton] = useState({ suma: false, resta: true }),
     [relacionados, setRelacionados] = useState([]),
     [reseñas, setReseñas] = useState(false);
@@ -306,20 +286,11 @@ export default function DetalleProducto() {
 
   useEffect(() => {
     dispatch(getProductReviews(id));
-  }, []);
+  }, [dispatch, id]);
 
   useEffect(() => {
-    // if (productos.length === 0) dispatch(getProductos());
-
     setRelacionados(productos);
   }, [productos]);
-
-  const cantidadTotal =
-    cantidad + (carritoCantidad?.cantidad ? carritoCantidad?.cantidad : 0);
-
-  useEffect(() => {
-    setCarrito(cantidadTotal === detalle.stock ? true : false);
-  }, [carritoCantidad, detalle]);
 
   // Creamos la variable a utilizar
   var rating = 0;
@@ -397,7 +368,7 @@ export default function DetalleProducto() {
     return () => {
       dispatch(clearDetail());
     };
-  }, [id]);
+  }, [dispatch, id]);
 
   const filterCategorias = (producto) => {
     for (const categoria of detalle.categoria) {
@@ -411,11 +382,8 @@ export default function DetalleProducto() {
     }
   };
 
-  // style={reseñas ? { overflowY: "hidden" } : { overflowY: "auto" }}
-
   return detalle && Object.keys(detalle)[0] ? (
     <Container>
-      {console.log(reviews)}
       <Details>
         <Image src={detalle.imagen} alt={`Imagen ${detalle.nombre}`} />
         <Body>
@@ -506,7 +474,6 @@ export default function DetalleProducto() {
                   disabled={cantidad === 0 ? true : false}
                   color={cantidad === 0 ? "black" : "white"}
                   backcolor={cantidad === 0 ? "#00000045" : "black"}
-                  // borders={carrito ? "none" : null}
                 >
                   Agregar
                 </Boton>
@@ -531,6 +498,7 @@ export default function DetalleProducto() {
             relacionados
               .filter(filterCategorias)
               .slice(0, 10)
+              // eslint-disable-next-line
               .map((relacionado) => {
                 if (Number(relacionado.id) !== Number(id)) {
                   return (

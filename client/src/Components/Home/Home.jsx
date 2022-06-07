@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { Boton, Producto } from "../index";
+import { Boton, Producto, UseOnScreen } from "../index";
 import styled from "styled-components";
 import "./Home.css";
 import Footer from "../Footer/Footer";
@@ -99,11 +99,12 @@ export default function Home({ contacto }) {
   const location = useLocation();
   const [destacados, setDestacados] = useState();
   const [width, setWidth] = useState(window.innerWidth);
+  const isVisible = UseOnScreen(contacto);
 
   useEffect(() => {
     localStorage.removeItem("productos");
     dispatch(getProductos());
-  }, []);
+  }, [dispatch]);
 
   useEffect(() => {
     localStorage.setItem("productos", JSON.stringify(productos));
@@ -166,7 +167,7 @@ export default function Home({ contacto }) {
       </Categoria> */}
 
       <Footer contacto={contacto} />
-      <ScrollToTop />
+      {isVisible && <ScrollToTop />}
     </Container>
   );
 }

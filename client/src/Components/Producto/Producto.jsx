@@ -1,4 +1,4 @@
-import React, { Children, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./producto.css";
 import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
@@ -12,7 +12,6 @@ import {
   eliminarDeFavoritos,
   getUsuarios,
 } from "../../Redux/actions";
-import axios from "axios";
 
 const LinkProduct = styled(Link)`
   text-decoration: none;
@@ -44,14 +43,6 @@ const Popup = styled.div`
   background-color: #36885ed1;
   color: white;
   cursor: auto;
-`;
-
-const Botones = styled.div`
-  display: flex;
-  width: 100%;
-  position: relative;
-  align-items: center;
-  justify-content: space-between;
 `;
 
 const Cantidad = styled.button`
@@ -181,6 +172,7 @@ export default function Producto({
     dispatch(getUsuarios());
     setFlag(cantidadCarrito?.cantidad ? true : false);
     setCantidad(cantidadCarrito?.cantidad ? cantidadCarrito.cantidad : 1);
+    // eslint-disable-next-line
   }, [cantidadCarrito]);
 
   const handleEdit = () => {
@@ -221,7 +213,7 @@ export default function Producto({
   function handleFav(e) {
     e.preventDefault();
 
-    if (favoritos.find((fav) => fav.id == id)) {
+    if (favoritos.find((fav) => fav.id === id)) {
       dispatch(eliminarDeFavoritos(id));
     } else {
       dispatch(añadirAFavoritos(producto));
@@ -240,7 +232,7 @@ export default function Producto({
         }}
       >
         <ContenedorFav>
-          {favoritos.find((fav) => fav.id == id) ? (
+          {favoritos.find((fav) => fav.id === id) ? (
             <p onClick={(e) => handleFav(e)}>♥</p>
           ) : (
             <label onClick={(e) => handleFav(e)}>♡</label>

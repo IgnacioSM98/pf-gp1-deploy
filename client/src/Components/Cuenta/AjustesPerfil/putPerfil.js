@@ -20,7 +20,7 @@ export default async function putPerfil({
     mail: mail,
   };
 
-  const resp = await axios.put(
+  await axios.put(
     `https://proyecto-final-gp1.herokuapp.com/admin/usuario/${id}`,
     usuario
   );

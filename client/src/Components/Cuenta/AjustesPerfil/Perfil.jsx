@@ -14,16 +14,15 @@ export default function Perfil() {
 
   useEffect(() => {
     dispatch(getUsuarios());
-  }, []);
+  }, [dispatch]);
 
   useEffect(() => {
     setUsuario(usuarios.find((u) => u.mail === mail));
-  }, [usuarios]);
+  }, [usuarios, mail]);
 
   useEffect(() => {
     if (usuario) {
       setInputs({
-        ...inputs,
         id: usuario.id,
         nombre: usuario.nombre,
         apellido: usuario.apellido,

@@ -199,7 +199,7 @@ export default function NavBar({ contacto, setUser }) {
           : []
       )
     );
-  }, []);
+  }, [dispatch]);
 
   useEffect(() => {
     // Cada vez que se actualice el carrito lo guardamos en caché

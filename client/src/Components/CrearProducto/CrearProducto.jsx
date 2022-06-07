@@ -176,12 +176,6 @@ const Button = styled.button`
   }
 `;
 
-const SelectCat = styled.select`
-  height: 30px;
-  border: 1px solid black;
-  border-radius: 6px;
-`;
-
 const CrearCat = styled.div`
   position: absolute;
   bottom: 15%;
@@ -251,14 +245,11 @@ export default function CrearProducto() {
     [post, setPost] = useState({
       nombre: "",
       descripcion: "",
-      //precio: 0,
       imagen: "",
-      //stock: 0,
       categorias: [],
     }),
     [loading, setLoading] = useState(false),
     [categoria, setCategoria] = useState({ nombre: "" }),
-    // [cambio, setCambio] = useState(false),
     [imageSelected, setImageSelected] = useState();
 
   useEffect(() => {
@@ -274,11 +265,10 @@ export default function CrearProducto() {
         categorias: [],
       });
     }
-  }, []);
+  }, [dispatch, id]);
 
   useEffect(() => {
     setPost({
-      ...post,
       nombre: detalle.nombre,
       descripcion: detalle.descripcion,
       precio: detalle.precio,
@@ -297,11 +287,6 @@ export default function CrearProducto() {
   useEffect(() => {
     setCategorias(categorías);
   }, [categorías]);
-
-  // function handleOpenCategoria(e) {
-  //   e.preventDefault();
-  //   cambio ? setCambio(false) : setCambio(true);
-  // }
 
   function handleInputCambio(e) {
     // Cada vez que escribo se actualiza el state de categoria
@@ -378,12 +363,6 @@ export default function CrearProducto() {
     reader.readAsDataURL(changeEvent.target.files[0]);
   }
 
-  useEffect(() => {
-    if (imageSelected) {
-      uploadImagen();
-    }
-  }, [imageSelected]);
-
   function uploadImagen() {
     const formData = new FormData();
 
@@ -404,12 +383,20 @@ export default function CrearProducto() {
   }
 
   useEffect(() => {
+    if (imageSelected) {
+      uploadImagen();
+    }
+    // eslint-disable-next-line
+  }, [imageSelected]);
+
+  useEffect(() => {
     // Eliminamos el error del state de errores
     setErrors(() => {
       const state = { ...errors };
       delete state.imagen;
       return state;
     });
+    // eslint-disable-next-line
   }, [post.imagen]);
 
   function handleSubmit(e) {

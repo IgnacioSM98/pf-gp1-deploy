@@ -1,10 +1,6 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import styled from "styled-components";
-// import { agregarCarrito, restarCarrito } from "../../Redux/actions";
-// import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
-import { Stars } from "../index";
-import { useSelector } from "react-redux";
 
 const Container = styled.div`
   display: flex;
@@ -24,19 +20,6 @@ const Container = styled.div`
   &: hover {
     border: 1px solid black;
     box-shadow: none;
-  }
-`;
-
-const Imagen = styled.img`
-  height: 160px;
-  width: 200px;
-  object-fit: contain;
-  background-color: white;
-  border-radius: 10px;
-  margin: 25px 10px;
-
-  &: hover {
-    // border: 1px solid black;
   }
 `;
 
@@ -67,19 +50,7 @@ const Nombre = styled.p`
   text-align: start;
 `;
 
-const ProductLink = styled(Link)`
-  height: auto;
-  width: auto;
-
-  color: black;
-  font-size: 18px;
-`;
-
 export default function ItemCompra({ producto }) {
-  const item = useSelector(
-    (state) => state.productos.filter((item) => item.id === producto.id)[0]
-  );
-
   return (
     <Link
       style={{ color: "black", textDecoration: "none" }}
@@ -87,24 +58,15 @@ export default function ItemCompra({ producto }) {
     >
       <Container>
         <ContenedorInfo>
-          {/* <span style={{ fontSize: "12px" }}>Comprado el 20 de Mayo</span> */}
-
           <Nombre>{`Pedido: #${producto.id}`}</Nombre>
 
           <span style={{ fontSize: "12px", paddingTop: "35px" }}>
-            {/* Llegó el 26 de Mayo */}
             Estado: {producto.Estado}
           </span>
 
           <span style={{ fontSize: "12px" }}>
-            {/* Llegó el 26 de Mayo */}
             Tipo de Envío: {producto.Tipo_de_envio}
           </span>
-
-          {/* <div style={{ position: "absolute", bottom: "25px" }}>
-          <Stars puntaje={item.puntaje}></Stars>
-        </div> */}
-          {/* </ProductLink> */}
         </ContenedorInfo>
       </Container>
     </Link>

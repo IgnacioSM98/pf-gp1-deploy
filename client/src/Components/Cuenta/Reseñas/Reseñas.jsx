@@ -1,7 +1,6 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getReviews, getUsuarios } from "../../../Redux/actions";
-//import "./Reseñas.css";
+import { getReviews } from "../../../Redux/actions";
 import Stars from "../../Stars/Stars";
 
 export default function Reseñas() {
@@ -12,21 +11,22 @@ export default function Reseñas() {
 
   useEffect(() => {
     dispatch(getReviews(id));
-  }, []);
+  }, [dispatch, id]);
 
   useEffect(() => {}, [reseñas]);
 
   return (
     <div>
-      {console.log(id)}
-      {console.log(reseñas)}
-      {reseñas?.map((review) => {
-        <div key={review.id}>
-          <Stars rating={review.puntaje} />
-          <h3>{review.titulo}</h3>
-          <p>{review.comentario}</p>
-        </div>;
-      })}
+      {
+        // eslint-disable-next-line
+        reseñas?.map((review) => {
+          <div key={review.id}>
+            <Stars rating={review.puntaje} />
+            <h3>{review.titulo}</h3>
+            <p>{review.comentario}</p>
+          </div>;
+        })
+      }
     </div>
   );
 }

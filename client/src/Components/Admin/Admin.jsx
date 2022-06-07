@@ -5,7 +5,6 @@ import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 import { getPedidos } from "../../Redux/actions";
 import {
-  ItemCompra,
   Pedidos,
   AdminProductos,
   EliminarCategoria,
@@ -183,7 +182,7 @@ function Cuenta() {
 
   useEffect(() => {
     dispatch(getPedidos());
-  }, []);
+  }, [dispatch]);
 
   return (
     <Container>

@@ -21,10 +21,5 @@ export default async function postUsuario({
     isAdmin: isAdmin,
   };
 
-  const resp = await axios.post(
-    "https://proyecto-final-gp1.herokuapp.com/crear",
-    usuario
-  );
-
-  console.log(resp);
+  await axios.post("https://proyecto-final-gp1.herokuapp.com/crear", usuario);
 }

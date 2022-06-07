@@ -1,27 +1,20 @@
-import { useState, useEffect } from "react";
-import { app } from "../../firebase";
-import LogedIn from "./LogedIn";
+import { useEffect } from "react";
+import { UseOnScreen, Footer, ScrollToTop } from "../index";
 import LogInMethods from "./LogInMethods";
-import Footer from "../Footer/Footer";
-import ScrollToTop from "../ScrollToTop/ScrollToTop";
 
 export default function Login({ contacto, setUser }) {
-  useEffect(() => {
-    //   app.auth().onAuthStateChanged((user) => {
-    //     console.log("hola, login", user);
-    //     setUser(user);
-    //   });
+  const isVisible = UseOnScreen(contacto);
 
+  useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
 
   return (
     <>
-      {/* {user ? <LogedIn user={user} /> :  */}
       <LogInMethods setUser={setUser} />
 
       <Footer contacto={contacto} />
-      <ScrollToTop />
+      {isVisible && <ScrollToTop />}
     </>
   );
 }

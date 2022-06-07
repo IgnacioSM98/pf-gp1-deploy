@@ -19,7 +19,6 @@ import {
   EliminarCategoria,
   DetalleEnvio,
   Checkout,
-  Compras,
   NotFound,
 } from "./Components/index";
 import { Routes, Route } from "react-router-dom";

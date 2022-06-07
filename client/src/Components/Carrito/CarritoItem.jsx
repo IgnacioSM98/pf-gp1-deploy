@@ -110,9 +110,9 @@ export default function CarritoItem({ producto, setPrecioTotal }) {
   useEffect(() => {
     setCantidad(producto.cantidad);
     setSemiTotal(producto.precio * producto.cantidad);
-  }, []);
+  }, [producto.cantidad, producto.precio]);
 
-  function handleSuma(e) {
+  function handleSuma() {
     if (cantidad >= 1) {
       setCantidad(cantidad + 1);
       setSemiTotal(producto.precio * (cantidad + 1));

@@ -39,6 +39,7 @@ export default function MercadoPagoIntegracion({ carrito, input }) {
 
       form.appendChild(script);
     }
+    // eslint-disable-next-line
   }, []);
 
   useEffect(() => {

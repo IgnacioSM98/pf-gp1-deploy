@@ -1,8 +1,7 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
-// import Producto from "../Producto/Producto";
 import { getProductos, orderByStock } from "../../Redux/actions";
 import "./AdminProductos.css";
 
@@ -130,13 +129,10 @@ export default function AdminProductos() {
 
   useEffect(() => {
     dispatch(getProductos());
-  }, []);
-
-  const [order, setOrder] = useState("");
+  }, [dispatch]);
 
   let handleByStock = (e) => {
     dispatch(orderByStock(e.target.value));
-    setOrder(e.target.value);
   };
 
   return (

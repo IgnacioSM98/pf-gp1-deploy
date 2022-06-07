@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useLocation, useNavigate } from "react-router-dom";
-import { getProductos, getProductosFiltrados } from "../../Redux/actions/index";
+import { getProductosFiltrados } from "../../Redux/actions/index";
 import {
   Producto,
   Paginado,
   Footer,
   Filtros,
   ScrollToTop,
-  AgregarProducto,
+  UseOnScreen,
 } from "../index";
 import "./Tienda.css";
 import styled from "styled-components";
@@ -154,15 +154,6 @@ const Buscador = styled.input`
   margin-top: 2em;
 `;
 
-const Tienda = styled.h1`
-  margin-top: 29px;
-  padding: 30px;
-  color: #222;
-  font-size: 50px;
-  font-family: Poppins;
-  text-shadow: 0px 1px 1px #222, 1px -1px 0 darkgrey;
-`;
-
 const Crear = styled.button`
   // top: 660px;
   // top: 0;
@@ -211,8 +202,9 @@ function Shop({ contacto }) {
 
   const location = useLocation();
 
+  const isVisible = UseOnScreen(contacto);
+
   useEffect(() => {
-    // if (productos.length === 0) dispatch(getProductos());
     window.scrollTo(0, 0);
   }, []);
 
@@ -226,6 +218,7 @@ function Shop({ contacto }) {
 
   useEffect(() => {
     setPages(Math.ceil(productosFiltrados.filter(filterDropdown).length / 9));
+    // eslint-disable-next-line
   }, [selected]);
 
   function onChangeHandle(e) {
@@ -239,6 +232,7 @@ function Shop({ contacto }) {
       setFlag(false);
     }
 
+    // eslint-disable-next-line
     const arrayAux = productos.filter(filterStock).filter((producto) => {
       const name = producto.nombre.toLowerCase();
       const isVisible = name.includes(value.toLowerCase());
@@ -361,7 +355,7 @@ function Shop({ contacto }) {
       </ContenedorFiltrosPro>
 
       <Footer contacto={contacto} />
-      <ScrollToTop />
+      {isVisible && <ScrollToTop />}
     </Container>
   );
 }

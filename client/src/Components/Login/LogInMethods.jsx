@@ -1,5 +1,4 @@
 import { useState, useRef } from "react";
-import GoogleButton from "react-google-button";
 import { app, authentication } from "../../firebase";
 import { signInWithPopup, GoogleAuthProvider } from "firebase/auth";
 import "./LogInMethods.css";
@@ -7,7 +6,7 @@ import styled from "styled-components";
 import google from "./Google.png";
 import { useNavigate } from "react-router-dom";
 import { getUser, setUserInfo, postUsuario } from "../../Redux/actions";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import axios from "axios";
 
 const Container = styled.div`
@@ -149,7 +148,7 @@ export default function Login({ setUser }) {
             user.rol = res.isAdmin ? "admin" : "user";
             user.visualizacion = res.isAdmin ? "admin" : "user";
           })
-          .catch((err) => {
+          .catch(() => {
             user.rol = "user";
             user.visualizacion = "user";
           });
@@ -177,7 +176,6 @@ export default function Login({ setUser }) {
             displayName: nombre,
           })
           .then(() => {
-            // console.log(res.user);
             const user = { ...res.user };
             const body = {
               id: res.user.uid,
@@ -222,13 +220,10 @@ export default function Login({ setUser }) {
               res.data.filter((usuario) => usuario.mail === user.email)[0]
           )
           .then((res) => {
-            // console.log(user, "aca?");
-            // user.displayName = res.user.displayName;
             user.rol = res.isAdmin ? "admin" : "user";
             user.visualizacion = res.isAdmin ? "admin" : "user";
-            // user.email = res.user.email;
           })
-          .catch((err) => {
+          .catch(() => {
             user.rol = "user";
             user.visualizacion = "user";
           });
@@ -275,8 +270,6 @@ export default function Login({ setUser }) {
         errors.login.contraseña = "Y ahora tu contraseña";
       }
     }
-
-    // console.log(errors);
 
     return errors;
   };

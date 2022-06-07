@@ -3,8 +3,6 @@ import { useSelector } from "react-redux";
 import styled from "styled-components";
 import FavoritosItem from "./FavoritosItem";
 
-const Container = styled.div``;
-
 const Productos = styled.div`
   position: relative;
   margin-top: 10px;
@@ -19,7 +17,6 @@ const Productos = styled.div`
 export default function Favoritos() {
   const fav = useSelector((state) => state.favoritos);
 
-  console.log(fav, "hola");
   return (
     <div>
       {fav.length > 0 ? (

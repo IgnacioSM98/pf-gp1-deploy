@@ -4,8 +4,8 @@ import CarritoItem from "./CarritoItem";
 import styled from "styled-components";
 import { quitarItem } from "../../Redux/actions";
 import Swal from "sweetalert2";
-import { MercadoPagoIntegracion, Footer, ScrollToTop } from "../index";
-import { Link, useNavigate } from "react-router-dom";
+import { Footer, ScrollToTop, UseOnScreen } from "../index";
+import { useNavigate } from "react-router-dom";
 
 const Container = styled.div`
   display: flex;
@@ -175,6 +175,7 @@ function Carrito({ contacto }) {
   const [precioTotal, setPrecioTotal] = useState(0);
   const carrito = useSelector((state) => state.carrito);
   const userInfo = useSelector((state) => state.userInfo);
+  const isVisible = UseOnScreen(contacto);
 
   function handleQuit(props) {
     Swal.fire({
@@ -275,7 +276,7 @@ function Carrito({ contacto }) {
       </Container>
 
       <Footer contacto={contacto} />
-      <ScrollToTop />
+      {isVisible && <ScrollToTop />}
     </>
   );
 }

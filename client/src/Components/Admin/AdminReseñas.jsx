@@ -57,7 +57,7 @@ export default function AdminReseñas() {
   let reviews = useSelector((state) => state.reviews);
   useEffect(() => {
     dispatch(getAllReviews());
-  }, []);
+  }, [dispatch]);
 
   return (
     <>

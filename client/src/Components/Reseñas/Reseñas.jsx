@@ -108,11 +108,6 @@ const ComentarioReview = styled.span`
   width: 100%;
 `;
 
-const Calificacion = styled.span`
-  height: 60px;
-  width: 100%;
-`;
-
 const Botones = styled.div`
   display: flex;
 
@@ -232,7 +227,6 @@ export default function Reseñas({ id, setReseñas }) {
           </Boton>
         </Botones>
         <TodasLasReseñas>
-          {console.log(reviewsFiltradas)}
           {reviewsFiltradas.slice(0, cantidad).map((review, index) => {
             return cantidad === index + 1 ? (
               <Review ref={ultimaReseña} key={review.id}>

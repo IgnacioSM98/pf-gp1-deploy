@@ -49,15 +49,19 @@ export default function AgregarCategorias({
   const [selectedValue, setSelectedValue] = useState([]);
 
   useEffect(() => {
-    setSelectedValue(detalle.categoria);
+    if (detalle.categoria) setSelectedValue(detalle.categoria);
   }, [detalle]);
+
   useEffect(() => {
     setPost({ ...post, probando: true });
+    // eslint-disable-next-line
   }, []);
 
   var categorias = useSelector((state) => state.categorias);
 
   useEffect(() => {
+    //supuestameente esto no funca
+    // eslint-disable-next-line
     categorias = categorias.sort(function (a, b) {
       var x = a.nombre.toLowerCase();
       var y = b.nombre.toLowerCase();
@@ -67,7 +71,9 @@ export default function AgregarCategorias({
   }, [categorias]);
 
   useEffect(() => {
+    console.log(selectedValue);
     setErrors(validate({ ...post, categorias: selectedValue }));
+    // eslint-disable-next-line
   }, [selectedValue]);
 
   const handleChange = ({ target }) => {
@@ -75,9 +81,7 @@ export default function AgregarCategorias({
       (categoria) => categoria.nombre === target.value
     )[0];
 
-    if (
-      !selectedValue.filter((selected) => selected.nombre === target.value)[0]
-    ) {
+    if (!selectedValue.find((selected) => selected.nombre === target.value)) {
       setSelectedValue((prevValue) => [...prevValue, categoria]);
 
       setPost({ ...post, categorias: [...selectedValue, categoria] });
