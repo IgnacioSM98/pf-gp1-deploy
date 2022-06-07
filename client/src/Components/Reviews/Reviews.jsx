@@ -18,7 +18,7 @@ const Reviews = styled.div`
   width: 100%;
   @media screen and (max-width: 500px) {
     width: 95%;
-    flex-direction: inherit;
+    flex-direction: row;
   }
 `;
 
