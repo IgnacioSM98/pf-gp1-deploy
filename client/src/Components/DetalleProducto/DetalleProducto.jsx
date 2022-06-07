@@ -518,6 +518,7 @@ export default function DetalleProducto() {
       <Bar style={{ width: "100%" }} />
       <Reviews>
         {/* Acá sólo se valida que esté la sesión iniciada */}
+        {user && <CrearReview id={id} />}
         <ProductReviews setReseñas={setReseñas} />
         {reseñas && <Reseñas setReseñas={setReseñas} />}
       </Reviews>
