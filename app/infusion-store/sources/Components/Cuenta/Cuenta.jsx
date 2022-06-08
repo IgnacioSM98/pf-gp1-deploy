@@ -11,7 +11,7 @@ const Button = styled.Pressable`
   padding-top: 10%;
 `;
 
-export default function Cuenta() {
+export default function Cuenta({ setIsAuthenticated }) {
   const [option, setOption] = useState(null);
 
   useFocusEffect(
@@ -54,7 +54,7 @@ export default function Cuenta() {
             <Text>Contacto</Text>
           </Button>
 
-          <Button onPress={() => setOption("cerrar sesión")}>
+          <Button onPress={() => setIsAuthenticated(false)}>
             <Text>Cerrar Sesión</Text>
           </Button>
         </View>
