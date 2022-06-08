@@ -1,12 +1,16 @@
-// import { StatusBar } from "expo-status-bar";
-// import { StyleSheet, Text, View, Vibration, Platform } from "react-native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { NavigationContainer } from "@react-navigation/native";
-import { Login, Home, Tienda, Cuenta } from "./sources/Components/index.js";
+import {
+  Login,
+  Home,
+  Tienda,
+  Cuenta,
+  NavBar,
+} from "./sources/Components/index.js";
 import { useState, useEffect } from "react";
 import { FontAwesome5, Ionicons } from "@expo/vector-icons";
-import { Button } from "react-native";
 import * as LocalAuthentication from "expo-local-authentication";
+import { View, Text } from "react-native";
 
 const Tab = createBottomTabNavigator();
 
@@ -48,6 +52,8 @@ export default function App() {
 
   return (
     <>
+      <NavBar />
+
       {isAuthenticated ? (
         <NavigationContainer>
           <Tab.Navigator

@@ -27,38 +27,41 @@ const styles = StyleSheet.create({
 
     margin: 0,
     marginBottom: 10,
+
+    borderRadius: 1,
   },
 });
 
 export default function Carousel() {
   return (
-    <SafeAreaView>
-      <FlatList
-        data={imagenes}
-        keyExtractor={(item) => item}
-        horizontal
-        showsHorizontalScrollIndicator={false}
-        decelerationRate={0}
-        snapToInterval={ANCHO_CONTENEDOR}
-        scrollEventThrottle={16}
-        renderItem={({ item, index }) => {
-          return (
-            <View style={{ width: ANCHO_CONTENEDOR, height: ALTO_CONTENEDOR }}>
-              <View>
-                <Image
-                  key={index}
-                  source={{
-                    uri:
-                      item ||
-                      "https://educacion30.b-cdn.net/wp-content/uploads/2018/02/mistake.jpg",
-                  }}
-                  style={styles.image}
-                />
-              </View>
+    // <SafeAreaView>
+    <FlatList
+      data={imagenes}
+      style={{ borderRadius: 4 }}
+      keyExtractor={(item) => item}
+      horizontal
+      showsHorizontalScrollIndicator={false}
+      decelerationRate={0}
+      snapToInterval={ANCHO_CONTENEDOR}
+      scrollEventThrottle={16}
+      renderItem={({ item, index }) => {
+        return (
+          <View style={{ width: ANCHO_CONTENEDOR, height: ALTO_CONTENEDOR }}>
+            <View>
+              <Image
+                key={index}
+                source={{
+                  uri:
+                    item ||
+                    "https://educacion30.b-cdn.net/wp-content/uploads/2018/02/mistake.jpg",
+                }}
+                style={styles.image}
+              />
             </View>
-          );
-        }}
-      />
-    </SafeAreaView>
+          </View>
+        );
+      }}
+    />
+    // </SafeAreaView>
   );
 }

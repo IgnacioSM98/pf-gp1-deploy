@@ -17,7 +17,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 2,
-    marginTop: 20,
+    marginTop: 2,
   },
 
   loading: {
@@ -61,7 +61,7 @@ const styles = StyleSheet.create({
   },
 });
 
-const width = Dimensions.get("window").width;
+// const width = Dimensions.get("window").width;
 const ANCHO_CONTENEDOR = 150;
 // const ESPACIO_LATERAL = (width - 150) / 2;
 
