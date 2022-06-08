@@ -30,7 +30,7 @@ const Crear = styled.button`
   cursor: pointer;
 `;
 
-let Select = styled.select`
+const Select = styled.select`
   top: 0;
   right: 100px;
   position: absolute;
