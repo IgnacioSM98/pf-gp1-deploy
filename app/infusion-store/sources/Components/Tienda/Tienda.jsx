@@ -20,7 +20,8 @@ const styles = StyleSheet.create({
     width: "100%",
     flex: 1,
     padding: 2,
-    marginTop: Platform.OS === "ios" ? "10%" : 0,
+    // marginTop: Platform.OS === "ios" ? "10%" : 0,
+    marginTop: 2,
   },
 
   loading: {
