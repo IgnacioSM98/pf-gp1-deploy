@@ -76,15 +76,15 @@ const H1 = styled.h1`
   }
 `;
 
-  margin-bottom: 3em;
-  width: 150px;
-  height: 30px;
-  border: none;
-  border-radius: 8px;
-  background-color: white;
-  font-weight: bold;
-  text-align: center;
-`;
+  //margin-bottom: 3em;
+  //width: 150px;
+  //height: 30px;
+  //border: none;
+  //border-radius: 8px;
+  //background-color: white;
+  //font-weight: bold;
+  //text-align: center;
+//`;
 
 const Option = styled.option`
   border-radius: 8px;
