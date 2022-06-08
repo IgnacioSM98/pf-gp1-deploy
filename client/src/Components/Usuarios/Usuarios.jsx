@@ -14,6 +14,9 @@ const Container = styled.div`
   width: 100%;
 
   text-align: start;
+  @media screen and (max-width: 560px) {
+    justify-content: space-evenly;
+  }
 `;
 
 const Usuario = styled.div`
@@ -33,10 +36,22 @@ const Apellido = styled.span`
 
 const Correo = styled.span`
   width: 42%;
+  @media screen and (max-width: 840px) {
+    display: none;
+  }
+  @media screen and (max-width: 560px) {
+    display: none;
+  }
 `;
 
 const Telefono = styled.span`
   width: 15%;
+  @media screen and (max-width: 960px) {
+    display: none;
+  }
+  @media screen and (max-width: 560px) {
+    display: none;
+  }
 `;
 
 const Button = styled.button`
@@ -70,6 +85,9 @@ const Crear = styled.button`
   margin: 40px 0px 0px 0px;
   margin: auto;
   cursor: pointer;
+  @media screen and (max-width: 560px) {
+    margin-top: 25px;
+  }
 `;
 
 export default function Usuarios() {

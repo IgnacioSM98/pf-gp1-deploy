@@ -18,6 +18,9 @@ const Container = styled.div`
   padding: 5px;
 
   overflow-x: scroll;
+  @media screen and (max-width: 1530px) {
+    margin-top: 30px;
+  }
 `;
 
 // const Crear = styled.button`
@@ -44,6 +47,34 @@ const Select = styled.select`
   top: 0;
   right: 0;
   position: absolute;
+  width: 80px;
+  background: #37563d;
+
+  display: block;
+
+  height: 30px;
+  border: none;
+  color: white;
+  border-radius: 4px;
+  font-size: 16px;
+  margin: 40px 0px 0px 0px;
+  margin: auto;
+  cursor: pointer;
+`;
+const H1 = styled.h1`
+  fontsize: "20px";
+  fontfamily: "Poppins";
+  fontweight: 600;
+  paddingbottom: "20px";
+  textalign: "start";
+  float: left;
+  @media screen and (max-width: 1530px) {
+    display: none;
+  }
+  @media screen and (max-width: 560px) {
+    display: none;
+  }
+`;
 
   margin-bottom: 3em;
   width: 150px;
@@ -85,17 +116,7 @@ function Pedidos() {
 
   return (
     <>
-      <h1
-        style={{
-          fontSize: "20px",
-          fontFamily: "Poppins",
-          fontWeight: 600,
-          paddingBottom: "20px",
-          textAlign: "start",
-        }}
-      >
-        Administrador de Pedidos
-      </h1>
+      <H1>Administrador de Pedidos</H1>
 
       {/* <Crear>Crear</Crear> */}
       <Select onChange={(e) => setSelected(e.target.value)}>
