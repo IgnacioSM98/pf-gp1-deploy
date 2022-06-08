@@ -12,6 +12,9 @@ const Container = styled.div`
   justify-content: space-around;
   align-items: start;
   position: relative;
+  @media screen and (max-width: 960px) {
+    width: 90%;
+  }
 `;
 
 const Formulario = styled.form`
@@ -109,12 +112,12 @@ export default function CrearReview({ id }) {
   let handleSubmit = (e) => {
     e.preventDefault();
     dispatch(postReviews(id, input));
-    setStateModalOpinion(!stateModalOpinion)
+    setStateModalOpinion(!stateModalOpinion);
     setInput({
       puntaje: "",
       comentario: "",
       titulo: "",
-    })
+    });
   };
 
   return (

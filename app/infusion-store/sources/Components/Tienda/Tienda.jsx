@@ -13,6 +13,8 @@ import {
   Platform,
 } from "react-native";
 
+import { Producto } from "../index";
+
 const styles = StyleSheet.create({
   container: {
     width: "100%",
@@ -99,13 +101,16 @@ const Tienda = () => {
           ref={scrollRef}
           keyExtractor={(item) => item.id}
           renderItem={({ item }) => (
-            <View style={styles.contProd}>
-              <Image source={{ uri: item.imagen }} style={styles.img} />
-              <Text>{item.nombre}</Text>
-              <Text>{item.precio}</Text>
-              <Text>{item.stock}</Text>
-              <Text>{item.descripcion}</Text>
-            </View>
+            <Producto
+              // id={item.id}
+              imagen={{ uri: item.imagen }}
+              nombre={item.nombre}
+              precio={item.precio}
+              stock={item.stock}
+              descripcion={item.descripcion}
+              // categorias={item.categoria}
+             
+            />
           )}
         />
       )}

@@ -55,9 +55,22 @@ const Reviews = styled.div`
   height: 222px;
   @media screen and (max-width: 500px) {
     width: 95%;
+    height: auto;
+    justify-content: flex-start;
+    flex-direction: column;
+    align-items: center;
   }
 `;
-
+const ContainerReviews = styled.div`
+  @media screen and (max-width: 500px) {
+    display: flex;
+    flex_direction: row;
+    width: 95%;
+    justify-content: center;
+    align-items: center;
+    height: 222px;
+  }
+`;
 const RelacionadosContainer = styled.div`
   display: flex;
   flex-direction: column;
@@ -415,7 +428,6 @@ export default function DetalleProducto() {
 
   return detalle && Object.keys(detalle)[0] ? (
     <Container>
-      {console.log(reviews)}
       <Details>
         <Image src={detalle.imagen} alt={`Imagen ${detalle.nombre}`} />
         <Body>
@@ -519,8 +531,10 @@ export default function DetalleProducto() {
       <Reviews>
         {/* Acá sólo se valida que esté la sesión iniciada */}
         {user && <CrearReview id={id} />}
-        <ProductReviews setReseñas={setReseñas} />
-        {reseñas && <Reseñas setReseñas={setReseñas} />}
+        <ContainerReviews>
+          <ProductReviews setReseñas={setReseñas} />
+          {reseñas && <Reseñas setReseñas={setReseñas} />}
+        </ContainerReviews>
       </Reviews>
       <Bar style={{ width: "100%" }} />
 
