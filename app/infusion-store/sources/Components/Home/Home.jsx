@@ -7,6 +7,8 @@ import {
   Image,
   StyleSheet,
   SafeAreaView,
+  Animated,
+  Dimensions,
 } from "react-native";
 import axios from "axios";
 import { Carrousel } from "../index";
@@ -28,28 +30,46 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
 
-  containerProductos: {
-    backgroundColor: "grey",
-    height: 250,
+  productosTitulo: {
+    fontSize: 18,
+    fontFamily: "Roboto",
+    color: "#222",
+    fontWeight: "700",
+    marginBottom: 10,
+    marginTop: 70,
   },
 
-  containerProducto: {
-    // justifyContent: "center",
-    width: 150,
-    height: "90%",
-    margin: 10,
+  containerProductos: {
+    // backgroundColor: "grey",
+    height: 250,
+    // borderBottomWidth: 1,
+    // borderTopWidth: 1,
   },
+
+  // containerProducto: {
+  //   // justifyContent: "center",
+  //   width: 150,
+  //   height: "90%",
+  //   margin: 10,
+  //   transform: [{ translateY }],
+  // },
 
   imagen: {
-    width: 100,
+    width: 150,
     height: 100,
     resizeMode: "contain",
   },
 });
 
+const width = Dimensions.get("window").width;
+const ANCHO_CONTENEDOR = 150;
+// const ESPACIO_LATERAL = (width - 150) / 2;
+
 export default function Home() {
   const [productos, setProductos] = useState([]);
   const [loading, setLoading] = useState(true);
+
+  const scrollX = React.useRef(new Animated.Value(0)).current;
 
   useEffect(() => {
     axios
@@ -66,20 +86,60 @@ export default function Home() {
       ) : (
         <View>
           <Carrousel />
-          <Text>Productos Destacados</Text>
-          <FlatList
-            data={productos.slice(0, 6)}
+          <Text style={styles.productosTitulo}>Productos Destacados</Text>
+          <Animated.FlatList
+            onScroll={Animated.event(
+              [{ nativeEvent: { contentOffset: { x: scrollX } } }],
+              { useNativeDriver: false }
+            )}
+            data={productos.slice(0, 8)}
             keyExtractor={({ id }, index) => id}
+            showsHorizontalScrollIndicator={false}
+            contentContainerStyle={{
+              marginHorizontal: 15,
+            }}
+            decelerationRate={0}
+            snapToInterval={ANCHO_CONTENEDOR}
+            scrollEventThrottle={16}
             style={styles.containerProductos}
             horizontal
-            renderItem={({ item }) => (
-              <View style={styles.containerProducto}>
-                <Image source={{ uri: item.imagen }} style={styles.imagen} />
-                <Text>{item.nombre}</Text>
-                <Text>{item.precio}</Text>
-                <Text>{item.descripcion.slice(0, 100)}</Text>
-              </View>
-            )}
+            renderItem={({ item, index }) => {
+              const inputRange = [
+                (index - 1) * ANCHO_CONTENEDOR,
+                index * ANCHO_CONTENEDOR,
+                (index + 1) * ANCHO_CONTENEDOR,
+              ];
+
+              const outputRange = [-2, -8, 0];
+
+              const translateY = scrollX.interpolate({
+                inputRange,
+                outputRange,
+              });
+
+              return (
+                <Animated.View
+                  style={{
+                    width: 150,
+                    height: "80%",
+                    margin: 15,
+                    // shadowColor: "#000",
+                    // shadowOffset: {
+                    //   width: 4,
+                    //   height: 0,
+                    // },
+                    // shadowOpacity: 0.2,
+                    // shadowRadius: 8,
+                    transform: [{ translateY }],
+                  }}
+                >
+                  <Image source={{ uri: item.imagen }} style={styles.imagen} />
+                  <Text>{item.nombre}</Text>
+                  <Text>{item.precio}</Text>
+                  <Text>{item.descripcion.slice(0, 100)}</Text>
+                </Animated.View>
+              );
+            }}
           />
         </View>
       )}
