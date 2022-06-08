@@ -18,8 +18,6 @@ export default function Reseñas() {
 
   return (
     <div>
-      {console.log(id)}
-      {console.log(reseñas)}
       {reseñas?.map((review) => {
         <div key={review.id}>
           <Stars rating={review.puntaje} />
