@@ -4,6 +4,7 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { NavigationContainer } from "@react-navigation/native";
 import { Tienda, Home, Cuenta } from "./sources/Components/index.js";
 import { FontAwesome5, Ionicons } from "@expo/vector-icons";
+import { Button } from "react-native";
 
 const Tab = createBottomTabNavigator();
 
@@ -41,7 +42,7 @@ export default function App() {
           component={Tienda}
           options={{
             tabBarIcon: ({ color, size }) => (
-              <FontAwesome5 name="store" size={19} color="grey" />
+              <FontAwesome5 name="store" size={19} color={color} />
             ),
           }}
         />
