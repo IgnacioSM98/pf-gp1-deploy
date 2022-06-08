@@ -16,7 +16,19 @@ const width = Dimensions.get("window").width;
 const height = Dimensions.get("window").height;
 
 const ANCHO_CONTENEDOR = width;
+const ALTO_CONTENEDOR = height * 0.23;
 const ESPACIO = 10;
+
+const styles = StyleSheet.create({
+  image: {
+    width: ANCHO_CONTENEDOR,
+    height: ALTO_CONTENEDOR,
+    resizeMode: "cover",
+
+    margin: 0,
+    marginBottom: 10,
+  },
+});
 
 export default function Carousel() {
   return (
@@ -31,7 +43,7 @@ export default function Carousel() {
         scrollEventThrottle={16}
         renderItem={({ item, index }) => {
           return (
-            <View style={{ width: ANCHO_CONTENEDOR }}>
+            <View style={{ width: ANCHO_CONTENEDOR, height: ALTO_CONTENEDOR }}>
               <View>
                 <Image
                   key={index}
@@ -50,13 +62,3 @@ export default function Carousel() {
     </SafeAreaView>
   );
 }
-
-const styles = StyleSheet.create({
-  image: {
-    width: "100%",
-    height: 210,
-    resizeMode: "cover",
-    margin: 0,
-    marginBottom: 10,
-  },
-});
