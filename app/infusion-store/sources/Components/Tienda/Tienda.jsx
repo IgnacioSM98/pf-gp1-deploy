@@ -1,4 +1,7 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback, useRef } from "react";
+import { InteractionManager } from "react-native";
+import { useFocusEffect } from "@react-navigation/native";
+
 import {
   ActivityIndicator,
   FlatList,
@@ -45,8 +48,26 @@ const styles = StyleSheet.create({
 const Tienda = () => {
   const [isLoading, setLoading] = useState(true);
   const [data, setData] = useState([]);
-  const [cantidad, setCantidad] = useState(4);
+  const [cantidad, setCantidad] = useState(8);
 
+  const scrollRef = useRef();
+
+  useFocusEffect(
+    useCallback(() => {
+      const unsubscribe = () => {
+        InteractionManager.runAfterInteractions(() => {
+          scrollRef?.current?.scrollToIndex({
+            index: 0,
+            animated: true,
+          });
+        });
+
+        setCantidad(8);
+      };
+
+      return () => unsubscribe();
+    }, [])
+  );
 
   useEffect(() => {
     fetch("https://proyecto-final-gp1.herokuapp.com/productos")
@@ -59,10 +80,8 @@ const Tienda = () => {
   }, [cantidad]);
 
   const handleMore = () => {
-    cantidad < data.length && setCantidad(cantidad + 2);
+    cantidad < data.length && setCantidad(cantidad + 8);
   };
-
-  console.log(cantidad);
 
   return (
     <View style={styles.container}>
@@ -77,6 +96,7 @@ const Tienda = () => {
           data={data.slice(0, cantidad)}
           onEndReachedThreshold={0.1}
           onEndReached={handleMore}
+          ref={scrollRef}
           keyExtractor={(item) => item.id}
           renderItem={({ item }) => (
             <View style={styles.contProd}>
