@@ -133,6 +133,9 @@ const ContenedorCantidad = styled.div`
   @media screen and (max-width: 1200px) {
     width: 100px;
   }
+  @media screen and (max-width: 1000px) {
+    width: 95px;
+  }
   @media screen and (max-width: 800px) {
     width: 90px;
   }

@@ -187,8 +187,6 @@ const ContenedorCompra = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  // margin-top: auto;
-  // margin-left: auto;
   height: 130px;
   padding: 10px;
   border: 1px solid darkgrey;
@@ -201,6 +199,24 @@ const ContenedorCompra = styled.div`
   // bottom: 10px;
   // right: 10px;
   margin: 20px;
+  @media screen and (max-width: 1200px) {
+    height: 100%;
+  }
+  @media screen and (max-width: 1000px) {
+    height: 90%;
+  }
+  @media screen and (max-width: 800px) {
+    heigth: 80%;
+  }
+  @media screen and (max-width: 600px) {
+    height: 70%;
+  }
+  @media screen and (max-width: 500px) {
+    height: 50%;
+  }
+  @media screen and (max-width: 300px) {
+    height: 40%;
+  }
 `;
 
 const ContenedorMonto = styled.div`
@@ -282,22 +298,17 @@ const Boton = styled.button`
   // box-shadow: 0 2px 2px 0 black, 1px 1px 1px 1px darkgray;
   @media screen and (max-width: 1200px) {
     font-size: 22px;
-    size: 100%;
   }
   @media screen and (max-width: 800px) {
-    size: 75%;
     font-size: 17px;
   }
   @media screen and (max-width: 600px) {
-    size: 50%;
     font-size: 11px;
   }
   @media screen and (max-width: 450px) {
-    size: 40%;
     font-size: 8px;
   }
   @media screen and (max-width: 300px) {
-    size: 25%;
     font-size: 6px;
   }
 `;
