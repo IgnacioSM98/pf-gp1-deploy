@@ -2,9 +2,11 @@
 // import { StyleSheet, Text, View, Vibration, Platform } from "react-native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { NavigationContainer } from "@react-navigation/native";
-import { Tienda, Home, Cuenta } from "./sources/Components/index.js";
+import { Login, Home, Tienda, Cuenta } from "./sources/Components/index.js";
+import { useState, useEffect } from "react";
 import { FontAwesome5, Ionicons } from "@expo/vector-icons";
 import { Button } from "react-native";
+import * as LocalAuthentication from "expo-local-authentication";
 
 const Tab = createBottomTabNavigator();
 
@@ -21,42 +23,78 @@ const Tab = createBottomTabNavigator();
 // };
 
 export default function App() {
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [isBiometricAvailable, setIsBiometricAvailable] = useState(false);
+
+  useEffect(() => {
+    (async () => {
+      const compatable = await LocalAuthentication.hasHardwareAsync();
+      setIsBiometricAvailable(compatable);
+    })();
+  });
+
+  const onAuth = () => {
+    if (isBiometricAvailable) {
+      LocalAuthentication.authenticateAsync({
+        promptMessage: "Authenticate with Touch ID",
+        fallbackLabel: "Enter Password",
+      }).then((result) => {
+        setIsAuthenticated(result.success);
+      });
+    } else {
+      //google Sign in
+    }
+  };
+
   return (
-    <NavigationContainer>
-      <Tab.Navigator
-        initialRouteName="Store"
-        screenOptions={{ headerShown: false }}
-      >
-        <Tab.Screen
-          name="Inicio"
-          component={Home}
-          options={{
-            tabBarIcon: ({ color, size }) => (
-              <Ionicons name="home" color={color} size={21} />
-            ),
-          }}
-        />
+    <>
+      {isAuthenticated ? (
+        <NavigationContainer>
+          <Tab.Navigator
+            initialRouteName="Store"
+            screenOptions={{ headerShown: false }}
+          >
+            <Tab.Screen
+              name="Inicio"
+              component={Home}
+              options={{
+                tabBarIcon: ({ color, size }) => (
+                  <Ionicons name="home" color={color} size={21} />
+                ),
+              }}
+            />
 
-        <Tab.Screen
-          name="Tienda"
-          component={Tienda}
-          options={{
-            tabBarIcon: ({ color, size }) => (
-              <FontAwesome5 name="store" size={19} color={color} />
-            ),
-          }}
-        />
+            <Tab.Screen
+              name="Tienda"
+              component={Tienda}
+              options={{
+                tabBarIcon: ({ color, size }) => (
+                  <FontAwesome5 name="store" size={19} color={color} />
+                ),
+              }}
+            />
 
-        <Tab.Screen
-          name="Cuenta"
-          component={Cuenta}
-          options={{
-            tabBarIcon: ({ color, size }) => (
-              <Ionicons name="person-circle-outline" color={color} size={26} />
-            ),
-          }}
-        />
-      </Tab.Navigator>
-    </NavigationContainer>
+            <Tab.Screen
+              name="Cuenta"
+              // component={Cuenta}
+              children={() => (
+                <Cuenta setIsAuthenticated={setIsAuthenticated} />
+              )}
+              options={{
+                tabBarIcon: ({ color, size }) => (
+                  <Ionicons
+                    name="person-circle-outline"
+                    color={color}
+                    size={26}
+                  />
+                ),
+              }}
+            />
+          </Tab.Navigator>
+        </NavigationContainer>
+      ) : (
+        <Login onAuth={onAuth} />
+      )}
+    </>
   );
 }
