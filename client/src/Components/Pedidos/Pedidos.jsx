@@ -27,6 +27,9 @@ const Container = styled.div`
   // box-shadow: 0 2px 2px 0 darkgrey, 0 2px 2px 0 #222;
 
   overflow-x: scroll;
+  @media screen and (max-width: 1530px) {
+    margin-top: 30px;
+  }
 `;
 
 const Crear = styled.button`
@@ -47,6 +50,20 @@ const Crear = styled.button`
   margin: 40px 0px 0px 0px;
   margin: auto;
   cursor: pointer;
+`;
+const H1 = styled.h1`
+  fontsize: "20px";
+  fontfamily: "Poppins";
+  fontweight: 600;
+  paddingbottom: "20px";
+  textalign: "start";
+  float: left;
+  @media screen and (max-width: 1530px) {
+    display: none;
+  }
+  @media screen and (max-width: 560px) {
+    display: none;
+  }
 `;
 
 let Select = styled.select`
@@ -87,17 +104,7 @@ function Pedidos() {
 
   return (
     <>
-      <h1
-        style={{
-          fontSize: "20px",
-          fontFamily: "Poppins",
-          fontWeight: 600,
-          paddingBottom: "20px",
-          textAlign: "start",
-        }}
-      >
-        Administrador de Pedidos
-      </h1>
+      <H1>Administrador de Pedidos</H1>
 
       {/* <Crear>Crear</Crear> */}
       <Select onChange={(e) => setSelected(e.target.value)}>

@@ -23,6 +23,11 @@ const Container = styled.div`
   background-color: white;
   justify-content: center;
   // align-items: center;
+  @media screen and (max-width: 560px) {
+    height: auto;
+    display: flex;
+    flex-direction: column;
+  }
 `;
 
 const Informacion = styled.div`
@@ -30,6 +35,9 @@ const Informacion = styled.div`
   height: 100%;
   // padding-top: 40px;
   position: relative;
+  @media screen and (max-width: 960px) {
+    width: 100%;
+  }
 `;
 
 const Options = styled.div`
@@ -37,7 +45,7 @@ const Options = styled.div`
   flex-direction: column;
   // justify-content: space-between;
   width: 25%;
-  height: 80vh;
+  height: 60vh;
   background-color: white;
   border-radius: 10px;
   border: 2px solid black;
@@ -45,6 +53,9 @@ const Options = styled.div`
   margin-right: 3rem;
 
   position: relative;
+  @media screen and (max-width: 560px) {
+    width: 100%;
+  }
 `;
 
 const ContenedorTitulo = styled.div`
