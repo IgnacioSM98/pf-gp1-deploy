@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import { postReviews } from "../../Redux/actions";
 import { StarRating, Modal } from "../index";
@@ -94,12 +95,18 @@ const ParrafoOk = styled.p`
 
 export default function CrearReview({ id }) {
   let dispatch = useDispatch();
+  const usuarios = useSelector((state) => state.usuarios);
+  const user = useSelector((state) => state.userInfo);
+  const userId = user.uid;
   const [stateModalOpinion, setStateModalOpinion] = useState(false);
+
+  useEffect(() => {}, [user]);
 
   let [input, setInput] = useState({
     puntaje: "",
     comentario: "",
     titulo: "",
+    usuarioId: userId,
   });
 
   let handleInputChange = (e) => {
@@ -114,6 +121,7 @@ export default function CrearReview({ id }) {
     dispatch(postReviews(id, input));
     setStateModalOpinion(!stateModalOpinion);
     setInput({
+      ...input,
       puntaje: "",
       comentario: "",
       titulo: "",

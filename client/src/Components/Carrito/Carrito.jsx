@@ -20,14 +20,17 @@ const Container = styled.div`
 `;
 
 const Productos = styled.div`
+  display: flex;
   position: relative;
   margin-top: 10px;
   margin-bottom: 10px;
   width: 90%;
-  height: 153px;
+  height: auto;
   padding: 5px;
   border: 1px solid darkgrey;
   border-radius: 8px;
+  justify-content: space-around;
+  align-items: center;
 `;
 
 const Borrar = styled.button`
@@ -50,10 +53,28 @@ const Borrar = styled.button`
 `;
 
 const Titulo = styled.h2`
-  margin-top: 5rem;
+  margin-top: 7rem;
   font-size: 40px;
   font-family: Poppins;
   font-weight: 400;
+  @media screen and (max-width: 1200px) {
+    font-size: 40px;
+  }
+  @media screen and (max-width: 1000px) {
+    font-size: 35px;
+  }
+  @media screen and (max-width: 800px) {
+    font-size: 30px;
+  }
+  @media screen and (max-width: 600px) {
+    font-size: 20px;
+  }
+  @media screen and (max-width: 450px) {
+    font-size: 23px;
+  }
+  @media screen and (max-width: 300px) {
+    font-size: 15px;
+  }
 `;
 
 const Linea = styled.hr`
@@ -70,26 +91,89 @@ const ContenedorLinea = styled.div`
   height: 130px;
   // padding-top: 120px;
   flex-direction: row;
-  justify-content: space-around;
+  justify-content: space-between;
 `;
 
 const ContenedorOpciones = styled.div`
   display: flex;
   flex-direction: row;
-  // justify-content: space-around;
   margin-top: 4rem;
-  // margin-right: 30rem;
   width: 100%;
   position: relative;
+  justify-content: space-around;
+  align-items: center;
+`;
+
+const OpcionesProducto = styled.p`
+  font-size: 18px;
+  font-family: Poppins;
+  top: -23px;
+  @media screen and (max-width: 1200px) {
+    width: 200%;
+    heigth: auto;
+    font-size: 22px;
+  }
+  @media screen and (max-width: 1000px) {
+    width: 200%;
+    heigth: auto;
+    font-size: 19px;
+  }
+  @media screen and (max-width: 800px) {
+    width: 150%;
+    heigth: auto;
+    font-size: 17px;
+  }
+  @media screen and (max-width: 600px) {
+    font-size: 15px;
+    width: 60%;
+    heigth: auto;
+  }
+  @media screen and (max-width: 500px) {
+    font-size: 12px;
+    width: 50%;
+    heigth: auto;
+  }
+  @media screen and (max-width: 300px) {
+    font-size: 10px;
+    width: 40%;
+    heigth: auto;
+  }
 `;
 
 const Opciones = styled.p`
   font-size: 18px;
   font-family: Poppins;
-  position: absolute;
-  right: ${(props) => props.right};
-  left: ${(props) => props.left};
   top: -23px;
+  @media screen and (max-width: 1200px) {
+    width: 100%;
+    heigth: auto;
+    font-size: 22px;
+  }
+  @media screen and (max-width: 1000px) {
+    width: 90%;
+    heigth: auto;
+    font-size: 19px;
+  }
+  @media screen and (max-width: 800px) {
+    width: 75%;
+    heigth: auto;
+    font-size: 17px;
+  }
+  @media screen and (max-width: 600px) {
+    font-size: 15px;
+    width: 50%;
+    heigth: auto;
+  }
+  @media screen and (max-width: 450px) {
+    font-size: 12px;
+    width: 40%;
+    heigth: auto;
+  }
+  @media screen and (max-width: 300px) {
+    font-size: 10px;
+    width: 25%;
+    heigth: auto;
+  }
 `;
 
 const LineaOpciones = styled.hr`
@@ -103,20 +187,30 @@ const ContenedorCompra = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  // margin-top: auto;
-  // margin-left: auto;
   height: 130px;
   padding: 10px;
   border: 1px solid darkgrey;
   border-radius: 8px;
-  // margin-right: 5.4rem;
-  // margin-bottom: 2rem;
   width: 33%;
-
   position: relative;
-  // bottom: 10px;
-  // right: 10px;
   margin: 20px;
+  @media screen and (max-width: 1200px) {
+    heigth: 100%;
+  }
+  @media screen and (max-width: 800px) {
+    heigth: 90%;
+  }
+  @media screen and (max-width: 600px) {
+    heigth: 70%;
+  }
+  @media screen and (max-width: 450px) {
+    heigth: 60%;
+    width: 50%;
+  }
+  @media screen and (max-width: 300px) {
+    heigth: 40%;
+    width: 50%;
+  }
 `;
 
 const ContenedorMonto = styled.div`
@@ -125,10 +219,32 @@ const ContenedorMonto = styled.div`
   flex-direction: row;
   justify-content: space-evenly;
   position: relative;
+  heigth: auto;
+  @media screen and (max-width: 1200px) {
+    font-size: 22px;
+    size: 100%;
+  }
+  @media screen and (max-width: 800px) {
+    size: 75%;
+    font-size: 17px;
+  }
+  @media screen and (max-width: 600px) {
+    size: 50%;
+    font-size: 11px;
+  }
+  @media screen and (max-width: 450px) {
+    size: 40%;
+    font-size: 8px;
+  }
+  @media screen and (max-width: 300px) {
+    size: 25%;
+    font-size: 6px;
+  }
 `;
 
 const ContenedorBotones = styled.div`
   width: 100%;
+  heigth: auto;
   display: flex;
   flex-direction: row;
   justify-content: space-evenly;
@@ -147,6 +263,21 @@ const Label = styled.label`
   position: absolute;
   left: ${(props) => props.left};
   right: ${(props) => props.right};
+  @media screen and (max-width: 1200px) {
+    font-size: 22px;
+  }
+  @media screen and (max-width: 800px) {
+    font-size: 17px;
+  }
+  @media screen and (max-width: 600px) {
+    font-size: 11px;
+  }
+  @media screen and (max-width: 450px) {
+    font-size: 10px;
+  }
+  @media screen and (max-width: 300px) {
+    font-size: 9px;
+  }
 `;
 
 const Boton = styled.button`
@@ -157,11 +288,25 @@ const Boton = styled.button`
   padding: 9px;
   border-radius: 6px;
   border: none;
-  // margin-top: 1rem;
   width: 50%;
 
   cursor: pointer;
   // box-shadow: 0 2px 2px 0 black, 1px 1px 1px 1px darkgray;
+  @media screen and (max-width: 1200px) {
+    font-size: 13px;
+  }
+  @media screen and (max-width: 800px) {
+    font-size: 12px;
+  }
+  @media screen and (max-width: 600px) {
+    font-size: 11px;
+  }
+  @media screen and (max-width: 450px) {
+    font-size: 10px;
+  }
+  @media screen and (max-width: 300px) {
+    font-size: 9px;
+  }
 `;
 
 function Carrito({ contacto }) {
@@ -232,10 +377,10 @@ function Carrito({ contacto }) {
         </ContenedorLinea>
 
         <ContenedorOpciones>
-          <Opciones left={"10%"}>Producto</Opciones>
-          <Opciones right={"45.5%"}>Cantidad</Opciones>
-          <Opciones right={"25%"}>Precio Unitario</Opciones>
-          <Opciones right={"9%"}>Subtotal</Opciones>
+          <OpcionesProducto>Producto</OpcionesProducto>
+          <Opciones>Cantidad</Opciones>
+          <Opciones>Precio Unitario</Opciones>
+          <Opciones>Subtotal</Opciones>
         </ContenedorOpciones>
         <LineaOpciones />
 
