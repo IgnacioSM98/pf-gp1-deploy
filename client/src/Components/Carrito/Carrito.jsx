@@ -135,7 +135,7 @@ const OpcionesProducto = styled.p`
   }
   @media screen and (max-width: 300px) {
     font-size: 10px;
-    width: 50%;
+    width: 40%;
     heigth: auto;
   }
 `;
@@ -191,31 +191,25 @@ const ContenedorCompra = styled.div`
   padding: 10px;
   border: 1px solid darkgrey;
   border-radius: 8px;
-  // margin-right: 5.4rem;
-  // margin-bottom: 2rem;
   width: 33%;
-
   position: relative;
-  // bottom: 10px;
-  // right: 10px;
   margin: 20px;
   @media screen and (max-width: 1200px) {
-    height: 100%;
-  }
-  @media screen and (max-width: 1000px) {
-    height: 90%;
+    heigth: 100%;
   }
   @media screen and (max-width: 800px) {
-    heigth: 80%;
+    heigth: 90%;
   }
   @media screen and (max-width: 600px) {
-    height: 70%;
+    heigth: 70%;
   }
-  @media screen and (max-width: 500px) {
-    height: 50%;
+  @media screen and (max-width: 450px) {
+    heigth: 60%;
+    width: 50%;
   }
   @media screen and (max-width: 300px) {
-    height: 40%;
+    heigth: 40%;
+    width: 50%;
   }
 `;
 
@@ -225,6 +219,7 @@ const ContenedorMonto = styled.div`
   flex-direction: row;
   justify-content: space-evenly;
   position: relative;
+  heigth: auto;
   @media screen and (max-width: 1200px) {
     font-size: 22px;
     size: 100%;
@@ -249,6 +244,7 @@ const ContenedorMonto = styled.div`
 
 const ContenedorBotones = styled.div`
   width: 100%;
+  heigth: auto;
   display: flex;
   flex-direction: row;
   justify-content: space-evenly;
@@ -277,10 +273,10 @@ const Label = styled.label`
     font-size: 11px;
   }
   @media screen and (max-width: 450px) {
-    font-size: 8px;
+    font-size: 10px;
   }
   @media screen and (max-width: 300px) {
-    font-size: 6px;
+    font-size: 9px;
   }
 `;
 
@@ -297,19 +293,19 @@ const Boton = styled.button`
   cursor: pointer;
   // box-shadow: 0 2px 2px 0 black, 1px 1px 1px 1px darkgray;
   @media screen and (max-width: 1200px) {
-    font-size: 22px;
+    font-size: 13px;
   }
   @media screen and (max-width: 800px) {
-    font-size: 17px;
+    font-size: 12px;
   }
   @media screen and (max-width: 600px) {
     font-size: 11px;
   }
   @media screen and (max-width: 450px) {
-    font-size: 8px;
+    font-size: 10px;
   }
   @media screen and (max-width: 300px) {
-    font-size: 6px;
+    font-size: 9px;
   }
 `;
 
