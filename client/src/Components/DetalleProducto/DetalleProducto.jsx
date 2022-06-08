@@ -428,7 +428,6 @@ export default function DetalleProducto() {
 
   return detalle && Object.keys(detalle)[0] ? (
     <Container>
-      {console.log(reviews)}
       <Details>
         <Image src={detalle.imagen} alt={`Imagen ${detalle.nombre}`} />
         <Body>
