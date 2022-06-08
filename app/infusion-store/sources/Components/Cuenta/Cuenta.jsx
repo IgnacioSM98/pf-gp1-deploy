@@ -1,10 +1,10 @@
 import React, { useEffect, useState, useCallback } from "react";
 import styled from "styled-components/native";
 import { useFocusEffect } from "@react-navigation/native";
-import { Text, View } from "react-native";
+import { Platform, Text, View } from "react-native";
 
 const Container = styled.View`
-  padding-top: 10%;
+  margin-top: ${Platform.OS === "ios" ? "10%" : 0};
 `;
 
 const Button = styled.Pressable`

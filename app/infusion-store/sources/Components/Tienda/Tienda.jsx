@@ -20,7 +20,7 @@ const styles = StyleSheet.create({
     width: "100%",
     flex: 1,
     padding: 2,
-    marginTop: 10,
+    marginTop: Platform.OS === "ios" ? "10%" : 0,
   },
 
   loading: {
@@ -109,7 +109,6 @@ const Tienda = () => {
               stock={item.stock}
               descripcion={item.descripcion}
               // categorias={item.categoria}
-             
             />
           )}
         />
