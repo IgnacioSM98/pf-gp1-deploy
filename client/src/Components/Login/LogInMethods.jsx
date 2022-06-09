@@ -124,10 +124,6 @@ export default function Login({ setUser }) {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  useEffect(() => {
-    dispatch(getUsuarios());
-  }, []);
-
   const nombreRef = useRef(null);
   const apellidoRef = useRef(null);
   const emailRef = useRef(null);
