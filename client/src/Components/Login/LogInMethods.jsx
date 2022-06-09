@@ -12,7 +12,7 @@ import {
   postUsuario,
   getUsuarios,
 } from "../../Redux/actions";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import axios from "axios";
 
 const Container = styled.div`
@@ -110,6 +110,7 @@ const Form = styled.form`
 const Error = styled.p`
   position: absolute;
   bottom: -15px;
+  font-weigth: 600;
   left: 5px;
   color: #ff000091;
   font-size: 10px;
@@ -133,8 +134,6 @@ export default function Login({ setUser }) {
   const passRef = useRef(null);
   const emailLRef = useRef(null);
   const passLRef = useRef(null);
-
-  const usuarios = useSelector((state) => state.usuarios);
 
   const handleChange = (e) => {
     setFlag({
