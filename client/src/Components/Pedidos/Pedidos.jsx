@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getPedidos } from "../../Redux/actions";
 import styled from "styled-components";
-import { Pedido } from "../index";
+import { Pedido, BuscarPedido } from "../index";
 
 const Container = styled.div`
   height: 80vh;
@@ -72,14 +72,14 @@ const H1 = styled.h1`
   }
 `;
 
-  //margin-bottom: 3em;
-  //width: 150px;
-  //height: 30px;
-  //border: none;
-  //border-radius: 8px;
-  //background-color: white;
-  //font-weight: bold;
-  //text-align: center;
+//margin-bottom: 3em;
+//width: 150px;
+//height: 30px;
+//border: none;
+//border-radius: 8px;
+//background-color: white;
+//font-weight: bold;
+//text-align: center;
 //`;
 
 const Option = styled.option`
@@ -95,7 +95,7 @@ function Pedidos() {
   useEffect(() => {
     dispatch(getPedidos());
   }, []);
-
+  console.log(pedidos);
   const sortPedidos = (a, b) => {
     if (selected === "ASC") {
       if (a.Estado > b.Estado) return 1;
@@ -120,6 +120,7 @@ function Pedidos() {
         <Option value="ASC">Menor a Mayor</Option>
         <Option value="DES">Mayor a Menor</Option>
       </Select>
+      <BuscarPedido pedidos={pedidos} />
       <Container>
         {pedidos &&
           pedidos
