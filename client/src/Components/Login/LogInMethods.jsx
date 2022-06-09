@@ -113,7 +113,7 @@ const Error = styled.p`
   font-weigth: 600;
   left: 5px;
   color: #ff000091;
-  font-size: 10px;
+  font-size: 13px;
 `;
 
 export default function Login({ setUser }) {
