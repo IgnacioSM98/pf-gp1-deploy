@@ -180,7 +180,7 @@ export default function Producto({
   );
 
   useEffect(() => {
-    dispatch(getUsuarios());
+    // dispatch(getUsuarios());
     setFlag(cantidadCarrito?.cantidad ? true : false);
     setCantidad(cantidadCarrito?.cantidad ? cantidadCarrito.cantidad : 1);
   }, [cantidadCarrito]);
@@ -226,7 +226,6 @@ export default function Producto({
     if (favoritos.find((fav) => fav.id == id)) {
       dispatch(eliminarDeFavoritos(id));
     } else {
-      console.log("hola", producto);
       dispatch(añadirAFavoritos(producto));
     }
   }

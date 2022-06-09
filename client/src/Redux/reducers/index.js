@@ -422,7 +422,6 @@ export default function rootReducer(state = initialState, action) {
       const usuarioFiltradoid = state.usuarios.filter(
         (u) => u.mail == state.userInfo.email
       );
-      console.log(action.payload);
 
       const idProductoEliminar = action.payload;
       const idUsuarioEliminar = usuarioFiltradoid[0]?.id;
@@ -435,8 +434,10 @@ export default function rootReducer(state = initialState, action) {
 
       axios
         .delete("https://proyecto-final-gp1.herokuapp.com/favoritos/wishlist", {
-          idUsuario: idUsuarioEliminar,
-          idProducto: idProductoEliminar,
+          data: {
+            idUsuario: idUsuarioEliminar,
+            idProducto: idProductoEliminar,
+          },
         })
         .catch((error) => console.log(error));
 

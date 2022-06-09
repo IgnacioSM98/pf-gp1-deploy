@@ -17,7 +17,7 @@ const Container = styled.div`
 
   padding: 5px;
 
-  overflow-x: scroll;
+  overflow-y: scroll;
   @media screen and (max-width: 1530px) {
     margin-top: 30px;
   }
