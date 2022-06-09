@@ -175,7 +175,7 @@ const ContainerPedidos = styled.div`
 
   border-radius: 8px;
 
-  overflow-x: scroll;
+  overflow-y: scroll;
 `;
 
 function Cuenta() {

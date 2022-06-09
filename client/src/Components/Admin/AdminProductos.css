@@ -6,10 +6,7 @@
   grid-gap: 20px 12px;
   grid-auto-flow: dense;
   padding: 5px;
-  /* justify-content: space-evenly; */
-  /* flex-wrap: wrap; */
-  /* margin-top: 1em; */
-  overflow-x: scroll;
+  overflow-y: scroll;
 }
 
 .stock {
