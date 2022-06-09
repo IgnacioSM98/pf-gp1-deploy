@@ -47,19 +47,15 @@ const Select = styled.select`
   top: 0;
   right: 0;
   position: absolute;
-  width: 80px;
-  background: #37563d;
 
-  display: block;
-
+  margin-bottom: 3em;
+  width: 150px;
   height: 30px;
   border: none;
-  color: white;
-  border-radius: 4px;
-  font-size: 16px;
-  margin: 40px 0px 0px 0px;
-  margin: auto;
-  cursor: pointer;
+  border-radius: 8px;
+  background-color: white;
+  font-weight: bold;
+  text-align: center;
 `;
 const H1 = styled.h1`
   fontsize: "20px";
