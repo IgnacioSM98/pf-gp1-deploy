@@ -1,6 +1,6 @@
 {
   "expo": {
-    "name": "infusion-store",
+    "name": "Infusion Store",
     "slug": "infusion-store",
     "version": "1.0.0",
     "orientation": "portrait",
@@ -8,15 +8,13 @@
     "userInterfaceStyle": "light",
     "splash": {
       "image": "./assets/splash.png",
-      "resizeMode": "contain",
+      "resizeMode": "cover",
       "backgroundColor": "#ffffff"
     },
     "updates": {
       "fallbackToCacheTimeout": 0
     },
-    "assetBundlePatterns": [
-      "**/*"
-    ],
+    "assetBundlePatterns": ["**/*"],
     "ios": {
       "supportsTablet": true,
       "infoPlist.NSFaceIDUsageDescription": {
