@@ -166,22 +166,14 @@ const ContainerPedidos = styled.div`
 
   padding-top: 20px;
 
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  // grid-auto-flow: dense;
-  grid-gap: 20px 12px;
-
-  // justify-content: center;
-  // align-items: center;
+  display: flex;
+  flex-wrap: wrap;
 
   width: 100%;
-  // height: auto;
 
-  // margin: 15px;
   padding: 5px;
-  // border: 1px solid darkgrey;
+
   border-radius: 8px;
-  // box-shadow: 0 2px 2px 0 darkgrey, 0 2px 2px 0 #222;
 
   overflow-x: scroll;
 `;
@@ -282,7 +274,13 @@ function Cuenta() {
         {detalle === "principal" && (
           <Categorias>
             <Categoria>
-              <Secciones>{`Pedidos a Despachar (totales: ${pedidos.length})`}</Secciones>
+              <Secciones>{`Pedidos a Despachar (totales: ${
+                pedidos.filter(
+                  (pedido) =>
+                    pedido.Estado === "Creado" ||
+                    pedido.Estado === "En preparación"
+                ).length
+              })`}</Secciones>
 
               <ContainerPedidos>
                 {pedidos &&

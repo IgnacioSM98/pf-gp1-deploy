@@ -69,7 +69,7 @@ const H1 = styled.h1`
   }
 `;
 
-let Select = styled.select`
+const Select = styled.select`
   top: 0;
   right: 100px;
   position: absolute;

@@ -146,11 +146,12 @@ const MobileIcon = styled.div`
   @media screen and (max-width: 960px) {
     position: absolute;
     left: 20px;
-    top: 5px;
+    top: 25%;
     display: flex;
     align-items: center;
     cursor: pointer;
     svg {
+      height: 22px;
       fill: white;
       margin-left: 0.5rem;
     }
