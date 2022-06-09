@@ -324,6 +324,14 @@ export function actualizarEstadoEnvio(id, payload, productos) {
   };
 }
 
+export function getFavoritos(id) {
+  console.log(id, "uwuwnt");
+  return async function (dispatch) {
+    const favoritos = await axios.get(`${urlBase}favoritos/wishlist/${id}`);
+    dispatch({ type: "GET_FAVORITOS", payload: favoritos.data });
+  };
+}
+
 export function añadirAFavoritos(productoFav) {
   return function (dispatch) {
     dispatch({ type: "AÑADIR_A_FAVORITOS", payload: productoFav });

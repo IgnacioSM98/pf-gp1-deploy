@@ -13,7 +13,6 @@ const initialState = {
   pedidos: [],
   usuarios: [],
   detalleEnvio: {},
-  pedidos: [],
   favoritos: [],
 };
 
@@ -95,6 +94,12 @@ export default function rootReducer(state = initialState, action) {
       return {
         ...state,
         detalle: action.payload,
+      };
+
+    case "GET_FAVORITOS":
+      return {
+        ...state,
+        favoritos: action.payload,
       };
 
     case "CLEAR_DETAIL":

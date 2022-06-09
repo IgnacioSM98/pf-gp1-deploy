@@ -6,7 +6,7 @@ import styled from "styled-components";
 import "./Home.css";
 import Footer from "../Footer/Footer";
 import ScrollToTop from "../ScrollToTop/ScrollToTop";
-import { getProductos } from "../../Redux/actions";
+import { getProductos, getFavoritos } from "../../Redux/actions";
 
 const Container = styled.div`
   height: 100vh;
@@ -99,11 +99,16 @@ export default function Home({ contacto }) {
   const location = useLocation();
   const [destacados, setDestacados] = useState();
   const [width, setWidth] = useState(window.innerWidth);
+  const userInfo = useSelector((state) => state.userInfo);
 
   useEffect(() => {
     localStorage.removeItem("productos");
     dispatch(getProductos());
-  }, []);
+  }, [dispatch]);
+
+  useEffect(() => {
+    if (userInfo.uid) dispatch(getFavoritos(userInfo.uid));
+  }, [dispatch, userInfo]);
 
   useEffect(() => {
     localStorage.setItem("productos", JSON.stringify(productos));

@@ -1,6 +1,7 @@
-import React from "react";
-import { useSelector } from "react-redux";
+import React, { useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import styled from "styled-components";
+import { getFavoritos } from "../../../Redux/actions";
 import FavoritosItem from "./FavoritosItem";
 
 const Container = styled.div``;
@@ -18,8 +19,13 @@ const Productos = styled.div`
 
 export default function Favoritos() {
   const fav = useSelector((state) => state.favoritos);
+  const userInfo = useSelector((state) => state.userInfo);
+  const dispatch = useDispatch();
 
-  console.log(fav, "hola");
+  useEffect(() => {
+    dispatch(getFavoritos(userInfo.uid));
+  }, [dispatch, userInfo]);
+
   return (
     <div>
       {fav.length > 0 ? (

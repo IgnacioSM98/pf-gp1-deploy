@@ -226,6 +226,7 @@ export default function Producto({
     if (favoritos.find((fav) => fav.id == id)) {
       dispatch(eliminarDeFavoritos(id));
     } else {
+      console.log("hola", producto);
       dispatch(añadirAFavoritos(producto));
     }
   }
