@@ -11,20 +11,9 @@ import { useState, useEffect } from "react";
 import { FontAwesome5, Ionicons } from "@expo/vector-icons";
 import * as LocalAuthentication from "expo-local-authentication";
 import { View, Text } from "react-native";
+import { setData, getData } from "./sources/Functions/localStorage";
 
 const Tab = createBottomTabNavigator();
-
-// const vibrate = () => {
-//   if (Platform.OS === "ios") {
-//     console.log(Platform.OS);
-//     // this logic works in android too. you could omit the else statement
-//     const interval = setInterval(() => Vibration.vibrate(), 1000);
-//     // it will vibrate for 5 seconds
-//     setTimeout(() => clearInterval(interval), 5000);
-//   } else {
-//     Vibration.vibrate(5000);
-//   }
-// };
 
 export default function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(true);
@@ -34,6 +23,15 @@ export default function App() {
     (async () => {
       const compatable = await LocalAuthentication.hasHardwareAsync();
       setIsBiometricAvailable(compatable);
+
+      // Para guardar el usuario
+      // setData("user", "rodri");
+
+      // Para recuperar el usuario
+      const user = await getData("user");
+
+      // Usuario que inició sesión
+      console.log(user);
     })();
   });
 
