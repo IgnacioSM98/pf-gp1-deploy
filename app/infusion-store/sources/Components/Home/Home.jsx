@@ -32,7 +32,7 @@ const styles = StyleSheet.create({
 
   productosTitulo: {
     fontSize: 18,
-    fontFamily: "Roboto",
+    fontFamily: "Roboto" || "Al Nile",
     color: "#222",
     fontWeight: "700",
     marginBottom: 10,
@@ -40,10 +40,7 @@ const styles = StyleSheet.create({
   },
 
   containerProductos: {
-    // backgroundColor: "grey",
     height: 250,
-    // borderBottomWidth: 1,
-    // borderTopWidth: 1,
   },
 
   // containerProducto: {
@@ -58,12 +55,36 @@ const styles = StyleSheet.create({
     width: 150,
     height: 100,
     resizeMode: "contain",
+    padding: 10,
+    marginTop: 15,
+  },
+
+  nombre: {
+    fontSize: 15,
+    fontFamily: "notoserif" || "Al Nile",
+    color: "#222",
+    fontWeight: "700",
+    textAlign: "center",
+    margin: 10,
+  },
+
+  precio: {
+    fontSize: 15,
+    fontFamily: "monospace" || "Apple Color Emoji",
+    fontWeight: "700",
+    marginLeft: 15,
+    marginTop: 5,
+  },
+
+  descripcion: {
+    fontSize: 13,
+    textAlign: "center",
+    fontFamily: "notoserif" || "Al Nile",
   },
 });
 
 // const width = Dimensions.get("window").width;
 const ANCHO_CONTENEDOR = 150;
-// const ESPACIO_LATERAL = (width - 150) / 2;
 
 export default function Home() {
   const [productos, setProductos] = useState([]);
@@ -121,22 +142,27 @@ export default function Home() {
                 <Animated.View
                   style={{
                     width: 150,
-                    height: "80%",
+                    height: "75%",
                     margin: 15,
-                    // shadowColor: "#000",
-                    // shadowOffset: {
-                    //   width: 4,
-                    //   height: 0,
-                    // },
-                    // shadowOpacity: 0.2,
-                    // shadowRadius: 8,
+                    backgroundColor: "white",
+                    borderRadius: 10,
+
+                    shadowColor: "#000",
+                    shadowOffset: {
+                      width: 4,
+                      height: 0,
+                    },
+                    shadowOpacity: 0.2,
+                    shadowRadius: 8,
                     transform: [{ translateY }],
                   }}
                 >
                   <Image source={{ uri: item.imagen }} style={styles.imagen} />
-                  <Text>{item.nombre}</Text>
-                  <Text>{item.precio}</Text>
-                  <Text>{item.descripcion.slice(0, 100)}</Text>
+                  <Text style={styles.nombre}>{item.nombre}</Text>
+                  {/* <Text style={styles.descripcion}>
+                    {item.descripcion.slice(0, 100)}
+                  </Text> */}
+                  {/* <Text style={styles.precio}>${item.precio}</Text> */}
                 </Animated.View>
               );
             }}
