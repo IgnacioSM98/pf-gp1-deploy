@@ -15,6 +15,7 @@ import {
 import axios from "axios";
 
 const LinkProduct = styled(Link)`
+  margin: 0px 2px;
   text-decoration: none;
   width: 240px;
 `;
