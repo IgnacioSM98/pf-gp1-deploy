@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useCallback, useRef } from "react";
 import { InteractionManager } from "react-native";
 import { useFocusEffect } from "@react-navigation/native";
+import { NavBar } from "../index";
 
 import {
   ActivityIndicator,
@@ -87,34 +88,37 @@ const Tienda = () => {
   };
 
   return (
-    <View style={styles.container}>
-      {isLoading ? (
-        <ActivityIndicator
-          style={styles.loading}
-          size="large"
-          color="#00ff00"
-        />
-      ) : (
-        <FlatList
-          data={data.slice(0, cantidad)}
-          onEndReachedThreshold={0.1}
-          onEndReached={handleMore}
-          ref={scrollRef}
-          keyExtractor={(item) => item.id}
-          renderItem={({ item }) => (
-            <Producto
-              // id={item.id}
-              imagen={{ uri: item.imagen }}
-              nombre={item.nombre}
-              precio={item.precio}
-              stock={item.stock}
-              descripcion={item.descripcion}
-              // categorias={item.categoria}
-            />
-          )}
-        />
-      )}
-    </View>
+    <>
+      <NavBar />
+      <View style={styles.container}>
+        {isLoading ? (
+          <ActivityIndicator
+            style={styles.loading}
+            size="large"
+            color="#00ff00"
+          />
+        ) : (
+          <FlatList
+            data={data.slice(0, cantidad)}
+            onEndReachedThreshold={0.1}
+            onEndReached={handleMore}
+            ref={scrollRef}
+            keyExtractor={(item) => item.id}
+            renderItem={({ item }) => (
+              <Producto
+                // id={item.id}
+                imagen={{ uri: item.imagen }}
+                nombre={item.nombre}
+                precio={item.precio}
+                stock={item.stock}
+                descripcion={item.descripcion}
+                // categorias={item.categoria}
+              />
+            )}
+          />
+        )}
+      </View>
+    </>
   );
 };
 
