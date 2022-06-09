@@ -1,5 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { Text, View, StyleSheet, Image } from "react-native";
+import {
+  Text,
+  View,
+  StyleSheet,
+  Image,
+  TouchableWithoutFeedback,
+} from "react-native";
+
 
 const styles = StyleSheet.create({
   contProd: {
@@ -45,22 +52,27 @@ const styles = StyleSheet.create({
 });
 
 const Producto = (props) => {
+  const goToProduct = (idProd) => {
+      props.setDetalle(!props.detalle),
+      props.setIdProd(idProd)
+  };
+
   return (
-    <View style={styles.contProd}>
-      <View style={styles.contFoto}>
-        <Image source={props.imagen} style={styles.img} />
+    <TouchableWithoutFeedback onPress={() => goToProduct(props.id)}>
+      <View style={styles.contProd}>
+        <View style={styles.contFoto}>
+          <Image source={props.imagen} style={styles.img} />
+        </View>
+        <View style={styles.contDatos}>
+          <Text style={styles.nombre}>{props.nombre}</Text>
+          {/* <Text>Stock: {props.stock}</Text> */}
+          <Text>{props.descripcion.slice(0, 100)}</Text>
+          <Text style={styles.precio}>
+            {props.precio.toLocaleString("es-ES")}
+          </Text>
+        </View>
       </View>
-      <View style={styles.contDatos}>
-        <Text style={styles.nombre}>{props.nombre}</Text>
-        {/* <Text>Stock: {props.stock}</Text> */}
-
-        <Text>{props.descripcion.slice(0, 130)}</Text>
-
-        <Text style={styles.precio}>
-          $ {props.precio.toLocaleString("es-ES")}
-        </Text>
-      </View>
-    </View>
+    </TouchableWithoutFeedback>
   );
 };
 

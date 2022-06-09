@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useCallback, useRef } from "react";
-import { InteractionManager } from "react-native";
+import { Button, InteractionManager } from "react-native";
 import { useFocusEffect } from "@react-navigation/native";
 
 import {
@@ -14,6 +14,7 @@ import {
 } from "react-native";
 
 import { Producto } from "../index";
+import { DetalleProducto } from "../index";
 
 const styles = StyleSheet.create({
   container: {
@@ -52,7 +53,8 @@ const Tienda = () => {
   const [isLoading, setLoading] = useState(true);
   const [data, setData] = useState([]);
   const [cantidad, setCantidad] = useState(8);
-
+  const [detalle, setDetalle] = useState(false);
+  const [idProd, setIdProd] = useState();
   const scrollRef = useRef();
 
   useFocusEffect(
@@ -66,6 +68,8 @@ const Tienda = () => {
         });
 
         setCantidad(8);
+        setDetalle(false)
+        setIdProd()
       };
 
       return () => unsubscribe();
@@ -102,18 +106,26 @@ const Tienda = () => {
           ref={scrollRef}
           keyExtractor={(item) => item.id}
           renderItem={({ item }) => (
-            <Producto
-              // id={item.id}
-              imagen={{ uri: item.imagen }}
-              nombre={item.nombre}
-              precio={item.precio}
-              stock={item.stock}
-              descripcion={item.descripcion}
-              // categorias={item.categoria}
-            />
+            <View>
+              {!detalle && (
+                <Producto
+                  id={item.id}
+                  imagen={{ uri: item.imagen }}
+                  nombre={item.nombre}
+                  precio={item.precio}
+                  stock={item.stock}
+                  descripcion={item.descripcion}
+                  state={detalle}
+                  setDetalle={setDetalle}
+                  setIdProd={setIdProd}
+                  // categorias={item.categoria}
+                />
+              )}
+            </View>
           )}
         />
       )}
+      {detalle && <DetalleProducto id={idProd} />}
     </View>
   );
 };

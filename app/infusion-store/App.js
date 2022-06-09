@@ -80,6 +80,7 @@ export default function App() {
               }}
             />
 
+        
             <Tab.Screen
               name="Cuenta"
               // component={Cuenta}
