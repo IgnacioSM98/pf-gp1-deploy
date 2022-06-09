@@ -1,4 +1,4 @@
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import GoogleButton from "react-google-button";
 import { app, authentication } from "../../firebase";
 import { signInWithPopup, GoogleAuthProvider } from "firebase/auth";
@@ -6,7 +6,12 @@ import "./LogInMethods.css";
 import styled from "styled-components";
 import google from "./Google.png";
 import { useNavigate } from "react-router-dom";
-import { getUser, setUserInfo, postUsuario } from "../../Redux/actions";
+import {
+  getUser,
+  setUserInfo,
+  postUsuario,
+  getUsuarios,
+} from "../../Redux/actions";
 import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
 
@@ -118,12 +123,18 @@ export default function Login({ setUser }) {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
+  useEffect(() => {
+    dispatch(getUsuarios());
+  }, []);
+
   const nombreRef = useRef(null);
   const apellidoRef = useRef(null);
   const emailRef = useRef(null);
   const passRef = useRef(null);
   const emailLRef = useRef(null);
   const passLRef = useRef(null);
+
+  const usuarios = useSelector((state) => state.usuarios);
 
   const handleChange = (e) => {
     setFlag({
@@ -243,7 +254,11 @@ export default function Login({ setUser }) {
         navigate(-1);
       })
       .catch((err) => {
-        console.log(err);
+        setError({
+          ...error,
+          login: { contraseña: "usuario o contraseña no valido" },
+        });
+        console.log(error);
       });
   };
 
@@ -270,12 +285,10 @@ export default function Login({ setUser }) {
       if (!props.mailL) {
         errors.login.correo = "Ingresá tu correo";
       }
-
       if (!props.passL) {
         errors.login.contraseña = "Y ahora tu contraseña";
       }
     }
-
     // console.log(errors);
 
     return errors;
@@ -302,6 +315,7 @@ export default function Login({ setUser }) {
         logIn(mailL, passL);
       } else {
         setError(validateSubmit({ mailL, passL, type: false }));
+        console.log(error);
       }
     }
   };
@@ -313,7 +327,7 @@ export default function Login({ setUser }) {
           Bienvenido!
         </Titulo>
 
-        <Form onSubmit={handleSubmit}>
+        <Form onSubmit={(e) => handleSubmit(e)}>
           <p style={{ margin: "20px" }}>
             Para continuar conectado con nosotros ingresá con tu cuenta
           </p>
