@@ -232,7 +232,7 @@ export default function Reseñas({ id, setReseñas }) {
           </Boton>
         </Botones>
         <TodasLasReseñas>
-          {console.log(reviewsFiltradas)}
+          {/* {console.log(reviewsFiltradas)} */}
           {reviewsFiltradas.slice(0, cantidad).map((review, index) => {
             return cantidad === index + 1 ? (
               <Review ref={ultimaReseña} key={review.id}>

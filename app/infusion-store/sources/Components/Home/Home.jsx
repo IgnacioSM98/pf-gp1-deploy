@@ -110,9 +110,15 @@ export default function Home({ navigation }) {
         {loading ? (
           <ActivityIndicator style={styles.loading} size="large" color="red" />
         ) : (
-          <View>
-            <Carrousel />
+          <View
+            style={{
+              alignItems: "center",
+            }}
+          >
             <Bienvenida />
+            <Carrousel />
+
+            {/* <View> */}
             <Text style={styles.productosTitulo}>Productos Destacados</Text>
             <Animated.FlatList
               onScroll={Animated.event(
@@ -175,6 +181,7 @@ export default function Home({ navigation }) {
                 );
               }}
             />
+            {/* </View> */}
           </View>
         )}
       </View>

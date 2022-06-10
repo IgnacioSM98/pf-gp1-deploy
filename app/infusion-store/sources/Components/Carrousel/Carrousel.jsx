@@ -16,7 +16,7 @@ const width2 = Dimensions.get("window").width;
 const height2 = Dimensions.get("window").height;
 
 const ANCHO_CONTENEDOR = width2;
-const ALTO_CONTENEDOR = height2 * 0.25;
+const ALTO_CONTENEDOR = height2 * 0.2;
 // const ESPACIO = 10;
 
 const styles = StyleSheet.create({
@@ -68,7 +68,7 @@ export default function Carrousel() {
   });
 
   return (
-    <View>
+    <View style={{ width: width2 * 0.98 }}>
       <FlatList
         data={imagenes}
         ref={(ref) => {
@@ -126,6 +126,7 @@ export default function Carrousel() {
                 width: 7,
                 backgroundColor: "#595959",
                 margin: 8,
+                marginTop: 15,
                 borderRadius: 5,
               }}
             />
