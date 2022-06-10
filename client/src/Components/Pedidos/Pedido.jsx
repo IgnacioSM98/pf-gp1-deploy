@@ -27,18 +27,18 @@ const Container = styled.div`
   }
 `;
 
-const Imagen = styled.img`
-  height: 160px;
-  width: 200px;
-  object-fit: contain;
-  background-color: white;
-  border-radius: 10px;
-  margin: 25px 10px;
+// const Imagen = styled.img`
+//   height: 160px;
+//   width: 200px;
+//   object-fit: contain;
+//   background-color: white;
+//   border-radius: 10px;
+//   margin: 25px 10px;
 
-  &: hover {
-    // border: 1px solid black;
-  }
-`;
+//   &: hover {
+//     // border: 1px solid black;
+//   }
+// `;
 
 const ContenedorInfo = styled.div`
   display: flex;
@@ -68,21 +68,26 @@ const Nombre = styled.p`
 `;
 
 const ProductLink = styled(Link)`
-  height: auto;
-  width: auto;
+  height: 150px;
+  width: 50%;
+
+  margin: 0px 0px 10px 0px;
 
   color: black;
+  text-decoration: none;
   font-size: 18px;
+
+  position: relative;
 `;
 
 export default function ItemCompra({ producto }) {
-  const item = useSelector(
-    (state) => state.productos.filter((item) => item.id === producto.id)[0]
-  );
+  // const item = useSelector(
+  //   (state) => state.productos.filter((item) => item.id === producto.id)[0]
+  // );
 
   return (
-    <Link
-      style={{ color: "black", textDecoration: "none" }}
+    <ProductLink
+      // style={{ color: "black", textDecoration: "none" }}
       to={`/pedido/${producto.id}`}
     >
       <Container>
@@ -107,6 +112,6 @@ export default function ItemCompra({ producto }) {
           {/* </ProductLink> */}
         </ContenedorInfo>
       </Container>
-    </Link>
+    </ProductLink>
   );
 }

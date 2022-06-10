@@ -4,38 +4,36 @@ import {
   Login,
   Home,
   Tienda,
+  Favoritos,
   Cuenta,
-  NavBar,
 } from "./sources/Components/index.js";
 import { useState, useEffect } from "react";
 import { FontAwesome5, Ionicons } from "@expo/vector-icons";
 import * as LocalAuthentication from "expo-local-authentication";
 import { View, Text } from "react-native";
+import { setData, getData } from "./sources/Functions/localStorage";
 
 const Tab = createBottomTabNavigator();
 
-// const vibrate = () => {
-//   if (Platform.OS === "ios") {
-//     console.log(Platform.OS);
-//     // this logic works in android too. you could omit the else statement
-//     const interval = setInterval(() => Vibration.vibrate(), 1000);
-//     // it will vibrate for 5 seconds
-//     setTimeout(() => clearInterval(interval), 5000);
-//   } else {
-//     Vibration.vibrate(5000);
-//   }
-// };
-
 export default function App() {
-  const [isAuthenticated, setIsAuthenticated] = useState(true);
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [isBiometricAvailable, setIsBiometricAvailable] = useState(false);
 
   useEffect(() => {
     (async () => {
-      const compatable = await LocalAuthentication.hasHardwareAsync();
-      setIsBiometricAvailable(compatable);
+      const compatible = await LocalAuthentication.hasHardwareAsync();
+      setIsBiometricAvailable(compatible);
+
+      // Para guardar el usuario
+      // setData("user", "rodri");
+
+      // Para recuperar el usuario
+      const user = await getData("user");
+
+      // Usuario que inició sesión
+      console.log(isAuthenticated, "xd");
     })();
-  });
+  }, []);
 
   const onAuth = () => {
     if (isBiometricAvailable) {
@@ -52,8 +50,6 @@ export default function App() {
 
   return (
     <>
-      <NavBar />
-
       {isAuthenticated ? (
         <NavigationContainer>
           <Tab.Navigator
@@ -82,6 +78,16 @@ export default function App() {
 
         
             <Tab.Screen
+              name="Favs"
+              component={Favoritos}
+              options={{
+                tabBarIcon: ({ color, size }) => (
+                  <Ionicons name="heart-sharp" size={24} color="grey" />
+                ),
+              }}
+            />
+
+            <Tab.Screen
               name="Cuenta"
               // component={Cuenta}
               children={() => (
@@ -100,7 +106,7 @@ export default function App() {
           </Tab.Navigator>
         </NavigationContainer>
       ) : (
-        <Login onAuth={onAuth} />
+        <Login onAuth={onAuth} setIsAuthenticated={setIsAuthenticated} />
       )}
     </>
   );

@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useCallback, useRef } from "react";
 import { Button, InteractionManager } from "react-native";
 import { useFocusEffect } from "@react-navigation/native";
+import { NavBar } from "../index";
 
 import {
   ActivityIndicator,

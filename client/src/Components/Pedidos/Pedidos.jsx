@@ -2,54 +2,60 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getPedidos } from "../../Redux/actions";
 import styled from "styled-components";
-import { Pedido } from "../index";
+import { Pedido, BuscarPedido } from "../index";
 
 const Container = styled.div`
   height: 80vh;
 
   padding-top: 20px;
 
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  // grid-auto-flow: dense;
-  grid-gap: 20px 12px;
-
-  // justify-content: center;
-  // align-items: center;
+  display: flex;
+  flex-wrap: wrap;
 
   width: 100%;
   height: 75vh;
 
-  // margin: 15px;
   padding: 5px;
-  // border: 1px solid darkgrey;
-  // border-radius: 8px;
-  // box-shadow: 0 2px 2px 0 darkgrey, 0 2px 2px 0 #222;
 
-  overflow-x: scroll;
+  overflow-y: scroll;
   @media screen and (max-width: 1530px) {
     margin-top: 30px;
   }
 `;
 
-const Crear = styled.button`
-  // top: 660px;
+// const Crear = styled.button`
+//   // top: 660px;
+//   top: 0;
+//   right: 0;
+//   position: absolute;
+//   width: 80px;
+//   background: #37563d;
+
+//   display: block;
+
+//   height: 30px;
+//   border: none;
+//   color: white;
+//   border-radius: 4px;
+//   font-size: 16px;
+//   margin: 40px 0px 0px 0px;
+//   margin: auto;
+//   cursor: pointer;
+// `;
+
+const Select = styled.select`
   top: 0;
   right: 0;
   position: absolute;
-  width: 80px;
-  background: #37563d;
 
-  display: block;
-
+  margin-bottom: 3em;
+  width: 150px;
   height: 30px;
   border: none;
-  color: white;
-  border-radius: 4px;
-  font-size: 16px;
-  margin: 40px 0px 0px 0px;
-  margin: auto;
-  cursor: pointer;
+  border-radius: 8px;
+  background-color: white;
+  font-weight: bold;
+  text-align: center;
 `;
 const H1 = styled.h1`
   fontsize: "20px";
@@ -66,17 +72,19 @@ const H1 = styled.h1`
   }
 `;
 
-let Select = styled.select`
-  margin-bottom: 3em;
-  width: 150px;
-  height: 30px;
-  border-radius: 8px;
-  background-color: rgb(182, 182, 182);
-  font-weight: bold;
-  text-align: center;
+//margin-bottom: 3em;
+//width: 150px;
+//height: 30px;
+//border: none;
+//border-radius: 8px;
+//background-color: white;
+//font-weight: bold;
+//text-align: center;
+//`;
 
-  position: absolute;
-  top: 0;
+const Option = styled.option`
+  border-radius: 8px;
+  background-color: white;
 `;
 
 function Pedidos() {
@@ -87,7 +95,7 @@ function Pedidos() {
   useEffect(() => {
     dispatch(getPedidos());
   }, []);
-
+  console.log(pedidos);
   const sortPedidos = (a, b) => {
     if (selected === "ASC") {
       if (a.Estado > b.Estado) return 1;
@@ -108,10 +116,11 @@ function Pedidos() {
 
       {/* <Crear>Crear</Crear> */}
       <Select onChange={(e) => setSelected(e.target.value)}>
-        <option value="Ordenar por estado">Ordenar por estado</option>
-        <option value="ASC">Menor a Mayor</option>
-        <option value="DES">Mayor a Menor</option>
+        <Option value="Ordenar por estado">Ordenar por estado</Option>
+        <Option value="ASC">Menor a Mayor</Option>
+        <Option value="DES">Mayor a Menor</Option>
       </Select>
+      <BuscarPedido pedidos={pedidos} />
       <Container>
         {pedidos &&
           pedidos

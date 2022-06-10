@@ -11,10 +11,12 @@ import {
   añadirAFavoritos,
   eliminarDeFavoritos,
   getUsuarios,
+  getUser,
 } from "../../Redux/actions";
 import axios from "axios";
 
 const LinkProduct = styled(Link)`
+  margin: 0px 2px;
   text-decoration: none;
   width: 240px;
 `;
@@ -165,7 +167,7 @@ export default function Producto({
   const dispatch = useDispatch();
 
   const admin = useSelector((state) => state.userInfo?.visualizacion);
-
+  const user = useSelector((state) => state.userInfo);
   const favoritos = useSelector((state) => state.favoritos);
 
   const [showOptions, setOptions] = useState({ button: false, popup: false });
@@ -178,7 +180,7 @@ export default function Producto({
   );
 
   useEffect(() => {
-    dispatch(getUsuarios());
+    // dispatch(getUsuarios());
     setFlag(cantidadCarrito?.cantidad ? true : false);
     setCantidad(cantidadCarrito?.cantidad ? cantidadCarrito.cantidad : 1);
   }, [cantidadCarrito]);
@@ -239,14 +241,15 @@ export default function Producto({
           if (admin === "admin") setOptions({ popup: false, button: false });
         }}
       >
-        <ContenedorFav>
-          {favoritos.find((fav) => fav.id == id) ? (
-            <p onClick={(e) => handleFav(e)}>♥</p>
-          ) : (
-            <label onClick={(e) => handleFav(e)}>♡</label>
-          )}
-        </ContenedorFav>
-
+        {user && (
+          <ContenedorFav>
+            {favoritos.find((fav) => fav.id == id) ? (
+              <p onClick={(e) => handleFav(e)}>♥</p>
+            ) : (
+              <label onClick={(e) => handleFav(e)}>♡</label>
+            )}
+          </ContenedorFav>
+        )}
         <div className="container-foto">
           <img src={imagen} className="foto" alt="foto" />
         </div>

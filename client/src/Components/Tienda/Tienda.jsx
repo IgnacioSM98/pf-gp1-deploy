@@ -1,7 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useLocation, useNavigate } from "react-router-dom";
-import { getProductos, getProductosFiltrados } from "../../Redux/actions/index";
+import {
+  getFavoritos,
+  getProductos,
+  getProductosFiltrados,
+} from "../../Redux/actions/index";
 import {
   Producto,
   Paginado,
@@ -202,6 +206,7 @@ function Shop({ contacto }) {
   const productosFiltrados = useSelector((state) => state.productosFiltrados);
 
   const user = useSelector((state) => state.userInfo?.visualizacion);
+  const userInfo = useSelector((state) => state.userInfo);
 
   const [selected, setSelected] = useState("");
   const [pages, setPages] = useState(4);
@@ -215,6 +220,10 @@ function Shop({ contacto }) {
     // if (productos.length === 0) dispatch(getProductos());
     window.scrollTo(0, 0);
   }, []);
+
+  useEffect(() => {
+    if (userInfo.uid) dispatch(getFavoritos(userInfo.uid));
+  }, [dispatch, userInfo]);
 
   useEffect(() => {
     setPages(Math.ceil(resVis / 9));

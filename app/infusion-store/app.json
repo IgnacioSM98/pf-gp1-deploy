@@ -1,26 +1,19 @@
 {
   "expo": {
-    "name": "infusion-store",
+    "name": "Infusion Store",
     "slug": "infusion-store",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
-    "splash": {
-      "image": "./assets/splash.png",
-      "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
-    },
     "updates": {
       "fallbackToCacheTimeout": 0
     },
-    "assetBundlePatterns": [
-      "**/*"
-    ],
+    "assetBundlePatterns": ["**/*"],
     "ios": {
       "supportsTablet": true,
-      "infoPlist.NSFaceIDUsageDescription": {
-        "NSFaceIDUsageDescription": "Face ID is used to sign in to the app."
+      "infoPlist": {
+        "NSFaceIDUsageDescription": "This app will optionally use Face ID or Touch ID to save login"
       }
     },
     "android": {

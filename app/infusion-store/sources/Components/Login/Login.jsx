@@ -14,7 +14,6 @@ const styles = StyleSheet.create({
   },
 
   text: {
-    marginTop: 200,
     left: "35%",
     fontSize: 20,
   },
@@ -26,12 +25,19 @@ const styles = StyleSheet.create({
   },
 });
 
-export default function Login({ onAuth }) {
+export default function Login({ onAuth, setIsAuthenticated }) {
   return (
     <View>
       <Text style={styles.text}>Si ma re dulce</Text>
       <TouchableOpacity onPress={onAuth} style={styles.btn}>
         <Text style={styles.login}>Login</Text>
+      </TouchableOpacity>
+
+      <TouchableOpacity
+        onPress={() => setIsAuthenticated(true)}
+        style={styles.btn}
+      >
+        <Text style={styles.login}>Login De Pana</Text>
       </TouchableOpacity>
     </View>
   );
