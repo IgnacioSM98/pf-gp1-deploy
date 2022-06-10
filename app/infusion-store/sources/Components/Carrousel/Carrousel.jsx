@@ -74,7 +74,7 @@ export default function Carrousel() {
         ref={(ref) => {
           flatList = ref;
         }}
-        style={{ borderRadius: 10, marginTop: 40, marginHorizontal: 3 }}
+        style={{ borderRadius: 10, marginTop: 2, marginHorizontal: 3 }}
         keyExtractor={(item) => item}
         horizontal
         showsHorizontalScrollIndicator={false}
