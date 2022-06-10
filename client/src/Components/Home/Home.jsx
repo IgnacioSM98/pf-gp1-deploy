@@ -107,7 +107,7 @@ export default function Home({ contacto }) {
   }, [dispatch]);
 
   useEffect(() => {
-    if (userInfo.uid) dispatch(getFavoritos(userInfo.uid));
+    if (userInfo) dispatch(getFavoritos(userInfo.uid));
   }, [dispatch, userInfo]);
 
   useEffect(() => {
