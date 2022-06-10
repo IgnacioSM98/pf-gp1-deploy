@@ -16,14 +16,14 @@ const width2 = Dimensions.get("window").width;
 const height2 = Dimensions.get("window").height;
 
 const ANCHO_CONTENEDOR = width2;
-const ALTO_CONTENEDOR = height2 * 0.28;
-const ESPACIO = 10;
+const ALTO_CONTENEDOR = height2 * 0.25;
+// const ESPACIO = 10;
 
 const styles = StyleSheet.create({
   image: {
     width: ANCHO_CONTENEDOR,
     height: ALTO_CONTENEDOR,
-    resizeMode: "stretch",
+    resizeMode: "cover",
     // resizeMethod: "contain",
     // marginBottom: 10,
 
@@ -33,6 +33,7 @@ const styles = StyleSheet.create({
   contenedorPaginado: {
     flexDirection: "row",
     justifyContent: "center",
+    // backgroundColor: "red",
   },
 });
 
@@ -57,8 +58,8 @@ function infiniteScroll(dataList) {
 }
 
 export default function Carrousel() {
-  const scrollX = new Animated.Value(0);
-  let position = Animated.divide(scrollX, width);
+  const scrollX = new Animated.Value(0.01);
+  const position = Animated.divide(scrollX, width);
   const [dataList, setDataList] = useState();
 
   useEffect(() => {
@@ -107,9 +108,10 @@ export default function Carrousel() {
           { useNativeDriver: false }
         )}
       />
+
       <View style={styles.contenedorPaginado}>
         {imagenes.map((_, i) => {
-          let opacity = position.interpolate({
+          const opacity = position.interpolate({
             inputRange: [i - 1, i, i + 1],
             outputRange: [0.3, 1, 0.3],
             extrapolate: "clamp",
@@ -120,9 +122,9 @@ export default function Carrousel() {
               key={i}
               style={{
                 opacity,
-                height: 10,
-                width: 10,
-                background: "#595959",
+                height: 7,
+                width: 7,
+                backgroundColor: "#595959",
                 margin: 8,
                 borderRadius: 5,
               }}
