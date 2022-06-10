@@ -6,12 +6,12 @@ import styled from "styled-components";
 import { getPedidos } from "../../Redux/actions";
 import {
   ItemCompra,
+  Pedidos,
   AdminProductos,
   EliminarCategoria,
   Pedido,
   AdminReseñas,
 } from "../index";
-import Pedidos from "../Pedidos/Pedidos";
 import Usuarios from "../Usuarios/Usuarios";
 
 const Container = styled.div`
