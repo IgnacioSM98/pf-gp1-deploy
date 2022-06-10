@@ -76,6 +76,7 @@ export default function App() {
               }}
             />
 
+        
             <Tab.Screen
               name="Favs"
               component={Favoritos}
