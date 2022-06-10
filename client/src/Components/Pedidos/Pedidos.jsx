@@ -64,25 +64,44 @@ let Select = styled.select`
 
 function Pedidos() {
   const dispatch = useDispatch();
-  const [selected, setSelected] = useState("");
   const pedidos = useSelector((state) => state.pedidos);
+  const [renderizar, setRenderizar] = useState(pedidos);
 
   useEffect(() => {
     dispatch(getPedidos());
   }, []);
 
-  const sortPedidos = (a, b) => {
-    if (selected === "ASC") {
-      if (a.Estado > b.Estado) return 1;
-      if (b.Estado > a.Estado) return -1;
-    } else {
-      if (a.Estado > b.Estado) return -1;
-      if (b.Estado > a.Estado) return 1;
-    }
+  useEffect(() => {}, [renderizar]);
 
-    if (selected === "DEFAULT") {
-      return a;
+  const sortPedidos = (e) => {
+    if (e.target.value === "preparacion") {
+      let lista = pedidos.filter(
+        (pedido) => pedido.Estado === "En preparación"
+      );
+      setRenderizar(lista);
     }
+    if (e.target.value === "camino") {
+      let lista = pedidos.filter((pedido) => pedido.Estado === "En camino");
+      setRenderizar(lista);
+    }
+    if (e.target.value === "correo") {
+      let lista = pedidos.filter(
+        (pedido) => pedido.Estado === "En punto de entrega/poder del cartero"
+      );
+      setRenderizar(lista);
+    }
+    if (e.target.value === "entregado") {
+      let lista = pedidos.filter((pedido) => pedido.Estado === "Entregado");
+      setRenderizar(lista);
+    }
+    if (e.target.value === "default" || e.target.value === "todos") {
+      setRenderizar(pedidos);
+    }
+    if (e.target.value === "creado") {
+      let lista = pedidos.filter((pedido) => pedido.Estado === "Creado");
+      setRenderizar(lista);
+    }
+    return renderizar;
   };
 
   return (
@@ -99,17 +118,18 @@ function Pedidos() {
         Administrador de Pedidos
       </h1>
 
-      {/* <Crear>Crear</Crear> */}
-      <Select onChange={(e) => setSelected(e.target.value)}>
-        <option value="Ordenar por estado">Ordenar por estado</option>
-        <option value="ASC">Menor a Mayor</option>
-        <option value="DES">Mayor a Menor</option>
+      <Select onChange={(e) => sortPedidos(e)}>
+        <option value="default">Ordenar por estado</option>
+        <option value="todos">Todos</option>
+        <option value="creado">Creado</option>
+        <option value="preparacion">En preparacion</option>
+        <option value="camino">En camino</option>
+        <option value="correo">En punto de Entrega/Correo</option>
+        <option value="entregado">Entregado</option>
       </Select>
       <Container>
-        {pedidos &&
-          pedidos
-            ?.sort(sortPedidos)
-            .map((e) => <Pedido key={e.id} producto={e} />)}
+        {renderizar &&
+          renderizar.map((e) => <Pedido key={e.id} producto={e} />)}
       </Container>
     </>
   );

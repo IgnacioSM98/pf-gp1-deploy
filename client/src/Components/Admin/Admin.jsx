@@ -6,12 +6,12 @@ import styled from "styled-components";
 import { getPedidos } from "../../Redux/actions";
 import {
   ItemCompra,
-  Pedidos,
   AdminProductos,
   EliminarCategoria,
   Pedido,
   AdminReseñas,
 } from "../index";
+import Pedidos from "../Pedidos/Pedidos";
 import Usuarios from "../Usuarios/Usuarios";
 
 const Container = styled.div`
@@ -149,7 +149,6 @@ const Secciones = styled.p`
   font-family: Poppins;
   font-weight: 600;
 `;
-
 const ContainerPedidos = styled.div`
   height: 75vh;
 
@@ -174,7 +173,6 @@ const ContainerPedidos = styled.div`
 
   overflow-x: scroll;
 `;
-
 function Cuenta() {
   const pedidos = useSelector((state) => state.pedidos);
   const [detalle, setDetalle] = useState("principal");
@@ -272,7 +270,6 @@ function Cuenta() {
           <Categorias>
             <Categoria>
               <Secciones>{`Pedidos a Despachar (totales: ${pedidos.length})`}</Secciones>
-
               <ContainerPedidos>
                 {pedidos &&
                   pedidos
