@@ -249,7 +249,6 @@ export default function DetalleEnvio() {
   useEffect(() => {
     if (Object.keys(detalle).length > 0) {
       detalle.productos.map((producto) => {
-        console.log(producto.compra);
         dispatch(quitarItem({ id: producto.compra.productoId }));
       });
     }
@@ -365,10 +364,9 @@ export default function DetalleEnvio() {
                 ></Circulo>
                 <Linea
                   active={
-                    detalle?.Estado !==
-                    "En punto de entrega/poder del correo"
-                    ? false
-                    : true
+                    detalle?.Estado !== "En punto de entrega/poder del correo"
+                      ? false
+                      : true
                   }
                 ></Linea>
                 <ImagenEstados
@@ -377,10 +375,9 @@ export default function DetalleEnvio() {
                 />
                 <ParrafoLi
                   active={
-                    detalle?.Estado !==
-                    "En punto de entrega/poder del correo"
-                    ? false
-                    : true
+                    detalle?.Estado !== "En punto de entrega/poder del correo"
+                      ? false
+                      : true
                   }
                 >
                   En punto de entrega/poder del correo
