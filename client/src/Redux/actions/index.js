@@ -367,7 +367,7 @@ export function orderByStock(payload) {
 }
 
 export function mailAdmin(userId, { estado }) {
-  console.log(userId, estado, "mirar aca!");
+  // console.log(userId, estado, "mirar aca!");
   return async function (dispatch) {
     if (estado === "En preparación") {
       await axios
