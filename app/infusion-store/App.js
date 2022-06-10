@@ -12,14 +12,24 @@ import { FontAwesome5, Ionicons } from "@expo/vector-icons";
 import * as LocalAuthentication from "expo-local-authentication";
 import { View, Text } from "react-native";
 import { setData, getData } from "./sources/Functions/localStorage";
+import * as Font from "expo-font";
 
 const Tab = createBottomTabNavigator();
+
+const fetchFonts = async () => {
+  await Font.loadAsync({
+    Poppins: require("./assets/fonts/Poppins-Thin.ttf"),
+    PoppinsM: require("./assets/fonts/Poppins-Medium.ttf"),
+  });
+};
 
 export default function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [isBiometricAvailable, setIsBiometricAvailable] = useState(false);
 
   useEffect(() => {
+    fetchFonts();
+
     (async () => {
       const compatible = await LocalAuthentication.hasHardwareAsync();
       setIsBiometricAvailable(compatible);

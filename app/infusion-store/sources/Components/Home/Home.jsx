@@ -107,7 +107,14 @@ export default function Home() {
       ) : (
         <View>
           <Carrousel />
-          <Text style={styles.productosTitulo}>Productos Destacados</Text>
+          <Text
+            style={
+              (styles.productosTitulo,
+              { fontFamily: "PoppinsM", fontSize: 22, fontWeight: "100" })
+            }
+          >
+            Productos Destacados
+          </Text>
           <Animated.FlatList
             onScroll={Animated.event(
               [{ nativeEvent: { contentOffset: { x: scrollX } } }],
