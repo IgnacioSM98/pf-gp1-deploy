@@ -222,7 +222,7 @@ function Shop({ contacto }) {
   }, []);
 
   useEffect(() => {
-    if (userInfo.uid) dispatch(getFavoritos(userInfo.uid));
+    if (userInfo) dispatch(getFavoritos(userInfo.uid));
   }, [dispatch, userInfo]);
 
   useEffect(() => {
