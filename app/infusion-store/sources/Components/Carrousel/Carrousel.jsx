@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Image,
   View,
@@ -16,19 +16,18 @@ const width2 = Dimensions.get("window").width;
 const height2 = Dimensions.get("window").height;
 
 const ANCHO_CONTENEDOR = width2;
-const ALTO_CONTENEDOR = height2 * 0.23;
+const ALTO_CONTENEDOR = height2 * 0.28;
 const ESPACIO = 10;
 
 const styles = StyleSheet.create({
   image: {
     width: ANCHO_CONTENEDOR,
     height: ALTO_CONTENEDOR,
-    resizeMode: "cover",
+    resizeMode: "stretch",
+    // resizeMethod: "contain",
+    // marginBottom: 10,
 
-    margin: 0,
-    marginBottom: 10,
-
-    borderRadius: 1,
+    // borderRadius: 15,
   },
 
   contenedorPaginado: {
@@ -38,16 +37,43 @@ const styles = StyleSheet.create({
 });
 
 const { width, height } = Dimensions.get("window");
+let flatList;
 
-export default function Carousel() {
+function infiniteScroll(dataList) {
+  const numberOfData = dataList && dataList.length;
+  let scrollValue = 0,
+    scrolled = 0;
+
+  setInterval(function () {
+    scrolled++;
+    if (scrolled < numberOfData) scrollValue = scrollValue + width;
+    else {
+      scrollValue = 0;
+      scrolled = 0;
+    }
+    flatList &&
+      flatList.scrollToOffset({ animated: true, offset: scrollValue });
+  }, 3000);
+}
+
+export default function Carrousel() {
   const scrollX = new Animated.Value(0);
   let position = Animated.divide(scrollX, width);
+  const [dataList, setDataList] = useState();
+
+  useEffect(() => {
+    setDataList(imagenes);
+    infiniteScroll(dataList);
+  });
 
   return (
     <View>
       <FlatList
         data={imagenes}
-        style={{ borderRadius: 4 }}
+        ref={(ref) => {
+          flatList = ref;
+        }}
+        style={{ borderRadius: 10, marginTop: 40, marginHorizontal: 3 }}
         keyExtractor={(item) => item}
         horizontal
         showsHorizontalScrollIndicator={false}
@@ -56,7 +82,12 @@ export default function Carousel() {
         scrollEventThrottle={16}
         renderItem={({ item, index }) => {
           return (
-            <View style={{ width: ANCHO_CONTENEDOR, height: ALTO_CONTENEDOR }}>
+            <View
+              style={{
+                width: ANCHO_CONTENEDOR,
+                height: ALTO_CONTENEDOR,
+              }}
+            >
               <View>
                 <Image
                   key={index}
