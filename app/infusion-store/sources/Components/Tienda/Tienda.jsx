@@ -69,8 +69,8 @@ const Tienda = () => {
         });
 
         setCantidad(8);
-        setDetalle(false)
-        setIdProd()
+        setDetalle(false);
+        setIdProd();
       };
 
       return () => unsubscribe();
@@ -126,6 +126,7 @@ const Tienda = () => {
           )}
         />
       )}
+
       {detalle && <DetalleProducto id={idProd} />}
     </View>
   );
