@@ -1,20 +1,22 @@
-import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { NavigationContainer } from "@react-navigation/native";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import {
   Login,
   Home,
   Tienda,
   Favoritos,
   Cuenta,
+  DetalleProducto,
 } from "./sources/Components/index.js";
 import { useState, useEffect } from "react";
 import { FontAwesome5, Ionicons } from "@expo/vector-icons";
 import * as LocalAuthentication from "expo-local-authentication";
-import { View, Text } from "react-native";
 import { setData, getData } from "./sources/Functions/localStorage";
 import * as Font from "expo-font";
 
 const Tab = createBottomTabNavigator();
+const Stack = createNativeStackNavigator();
 
 const fetchFonts = async () => {
   await Font.loadAsync({
@@ -58,61 +60,62 @@ export default function App() {
     }
   };
 
+  const HomeTabs = () => {
+    return (
+      <Tab.Navigator
+        initialRouteName="Store"
+        screenOptions={{ headerShown: false }}
+      >
+        <Tab.Screen
+          name="Inicio"
+          component={Home}
+          options={{
+            tabBarIcon: ({ color, size }) => (
+              <Ionicons name="home" color={color} size={21} />
+            ),
+          }}
+        />
+
+        <Tab.Screen
+          name="Tienda"
+          component={Tienda}
+          options={{
+            tabBarIcon: ({ color, size }) => (
+              <FontAwesome5 name="store" size={19} color={color} />
+            ),
+          }}
+        />
+
+        <Tab.Screen
+          name="Favoritos"
+          component={Favoritos}
+          options={{
+            tabBarIcon: ({ color, size }) => (
+              <Ionicons name="heart-sharp" size={24} color="grey" />
+            ),
+          }}
+        />
+
+        <Tab.Screen
+          name="Cuenta"
+          children={() => <Cuenta setIsAuthenticated={setIsAuthenticated} />}
+          options={{
+            tabBarIcon: ({ color, size }) => (
+              <Ionicons name="person-circle-outline" color={color} size={26} />
+            ),
+          }}
+        />
+      </Tab.Navigator>
+    );
+  };
   return (
     <>
       {isAuthenticated ? (
         <NavigationContainer>
-          <Tab.Navigator
-            initialRouteName="Store"
-            screenOptions={{ headerShown: false }}
-          >
-            <Tab.Screen
-              name="Inicio"
-              component={Home}
-              options={{
-                tabBarIcon: ({ color, size }) => (
-                  <Ionicons name="home" color={color} size={21} />
-                ),
-              }}
-            />
-
-            <Tab.Screen
-              name="Tienda"
-              component={Tienda}
-              options={{
-                tabBarIcon: ({ color, size }) => (
-                  <FontAwesome5 name="store" size={19} color={color} />
-                ),
-              }}
-            />
-
-            <Tab.Screen
-              name="Favoritos"
-              component={Favoritos}
-              options={{
-                tabBarIcon: ({ color, size }) => (
-                  <Ionicons name="heart-sharp" size={24} color="grey" />
-                ),
-              }}
-            />
-
-            <Tab.Screen
-              name="Cuenta"
-              // component={Cuenta}
-              children={() => (
-                <Cuenta setIsAuthenticated={setIsAuthenticated} />
-              )}
-              options={{
-                tabBarIcon: ({ color, size }) => (
-                  <Ionicons
-                    name="person-circle-outline"
-                    color={color}
-                    size={26}
-                  />
-                ),
-              }}
-            />
-          </Tab.Navigator>
+          <Stack.Navigator screenOptions={{ headerShown: false }}>
+            <Stack.Screen name="HomeTabs" component={HomeTabs} />
+            <Stack.Screen name="DetalleProducto" component={DetalleProducto} />
+          </Stack.Navigator>
         </NavigationContainer>
       ) : (
         <Login onAuth={onAuth} setIsAuthenticated={setIsAuthenticated} />

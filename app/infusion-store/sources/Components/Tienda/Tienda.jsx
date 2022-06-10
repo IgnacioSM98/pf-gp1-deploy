@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useCallback, useRef } from "react";
-import { Button, InteractionManager } from "react-native";
+import { Button, InteractionManager, Pressable } from "react-native";
 import { useFocusEffect } from "@react-navigation/native";
 import { NavBar } from "../index";
 
@@ -14,8 +14,7 @@ import {
   Platform,
 } from "react-native";
 
-import { Producto } from "../index";
-import { DetalleProducto } from "../index";
+import { Producto, DetalleProducto } from "../index";
 
 const styles = StyleSheet.create({
   container: {
@@ -50,7 +49,7 @@ const styles = StyleSheet.create({
   },
 });
 
-const Tienda = () => {
+const Tienda = ({ navigation }) => {
   const [isLoading, setLoading] = useState(true);
   const [data, setData] = useState([]);
   const [cantidad, setCantidad] = useState(8);
@@ -92,23 +91,26 @@ const Tienda = () => {
   };
 
   return (
-    <View style={styles.container}>
-      {isLoading ? (
-        <ActivityIndicator
-          style={styles.loading}
-          size="large"
-          color="#00ff00"
-        />
-      ) : (
-        <FlatList
-          data={data.slice(0, cantidad)}
-          onEndReachedThreshold={0.1}
-          onEndReached={handleMore}
-          ref={scrollRef}
-          keyExtractor={(item) => item.id}
-          renderItem={({ item }) => (
-            <View>
-              {!detalle && (
+    <>
+      <NavBar></NavBar>
+
+      <View style={styles.container}>
+        {isLoading ? (
+          <ActivityIndicator
+            style={styles.loading}
+            size="large"
+            color="#00ff00"
+          />
+        ) : (
+          <FlatList
+            data={data.slice(0, cantidad)}
+            onEndReachedThreshold={0.1}
+            onEndReached={handleMore}
+            ref={scrollRef}
+            keyExtractor={(item) => item.id}
+            renderItem={({ item }) => (
+              <View>
+                {/* {!detalle && ( */}
                 <Producto
                   id={item.id}
                   imagen={{ uri: item.imagen }}
@@ -119,16 +121,19 @@ const Tienda = () => {
                   state={detalle}
                   setDetalle={setDetalle}
                   setIdProd={setIdProd}
+                  navigation={navigation}
+
                   // categorias={item.categoria}
                 />
-              )}
-            </View>
-          )}
-        />
-      )}
+                {/* )} */}
+              </View>
+            )}
+          />
+        )}
 
-      {detalle && <DetalleProducto id={idProd} />}
-    </View>
+        {/* {detalle && <DetalleProducto id={idProd} />} */}
+      </View>
+    </>
   );
 };
 

@@ -7,7 +7,6 @@ import {
   TouchableWithoutFeedback,
 } from "react-native";
 
-
 const styles = StyleSheet.create({
   contProd: {
     width: "100%",
@@ -51,10 +50,9 @@ const styles = StyleSheet.create({
   },
 });
 
-const Producto = (props) => {
+function Producto(props) {
   const goToProduct = (idProd) => {
-      props.setDetalle(!props.detalle),
-      props.setIdProd(idProd)
+    props.navigation.navigate("DetalleProducto", { id: idProd });
   };
 
   return (
@@ -74,6 +72,6 @@ const Producto = (props) => {
       </View>
     </TouchableWithoutFeedback>
   );
-};
+}
 
 export default Producto;

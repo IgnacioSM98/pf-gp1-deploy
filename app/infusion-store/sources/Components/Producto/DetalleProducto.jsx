@@ -5,7 +5,7 @@ const styles = StyleSheet.create({
   contProd: {
     width: "100%",
   },
-  nombre:{
+  nombre: {
     fontWeight: "bold",
   },
 
@@ -23,11 +23,10 @@ const styles = StyleSheet.create({
     height: 250,
     resizeMode: "contain",
   },
-
 });
 
-const DetalleProducto = ({ id }) => {
-
+const DetalleProducto = ({ route }) => {
+  const { id } = route.params;
   const [data, setData] = useState([]);
 
   useEffect(() => {
@@ -39,16 +38,16 @@ const DetalleProducto = ({ id }) => {
       .catch((error) => console.error(error));
   }, [id]);
   return (
-      <View style={styles.contProd}>
-        <Text style={styles.nombre}>{data.nombre}</Text>
-        <View style={styles.contFoto}>
+    <View style={styles.contProd}>
+      <Text style={styles.nombre}>{data.nombre}</Text>
+      <View style={styles.contFoto}>
         <Image source={{ uri: data.imagen }} style={styles.img} />
-        </View>
-        <Text>{data.precio}</Text>
-        <Text>{data.descripcion}</Text>
-        <Text>{data.stock}</Text>
-        <Button title="Agregar al carrito"></Button>
       </View>
+      <Text>{data.precio}</Text>
+      <Text>{data.descripcion}</Text>
+      <Text>{data.stock}</Text>
+      <Button title="Agregar al carrito"></Button>
+    </View>
   );
 };
 
