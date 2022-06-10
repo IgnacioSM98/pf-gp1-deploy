@@ -68,8 +68,8 @@ const Nombre = styled.p`
 `;
 
 const ProductLink = styled(Link)`
-  height: 150px;
-  width: 50%;
+  height: ${(props) => (props.height ? props.height : "150px")};
+  width: ${(props) => (props.width ? props.width : "50%")};
 
   margin: 0px 0px 10px 0px;
 
@@ -80,13 +80,15 @@ const ProductLink = styled(Link)`
   position: relative;
 `;
 
-export default function ItemCompra({ producto }) {
+export default function ItemCompra({ producto, height, width }) {
   // const item = useSelector(
   //   (state) => state.productos.filter((item) => item.id === producto.id)[0]
   // );
 
   return (
     <ProductLink
+      height={height}
+      width={width}
       // style={{ color: "black", textDecoration: "none" }}
       to={`/pedido/${producto.id}`}
     >
