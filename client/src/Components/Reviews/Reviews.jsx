@@ -70,7 +70,9 @@ export default function Producto({ setReseñas }) {
                 puntaje={review.puntaje}
                 titulo={review.titulo}
                 comentario={review.comentario}
-                fecha={review.updatedAt.slice(0, 10)}
+                fecha={
+                  review.updatedAt ? review.updatedAt.slice(0, 10) : "Ahora"
+                }
               />
             );
           })

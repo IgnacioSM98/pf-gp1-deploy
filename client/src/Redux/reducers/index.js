@@ -164,9 +164,12 @@ export default function rootReducer(state = initialState, action) {
         ...state,
         productos: productosPrecio,
       };
+
     case "CREAR_REVIEW":
+      // console.log(action.payload, state.reviews);
       return {
         ...state,
+        reviews: [...state.reviews, action.payload],
       };
 
     case "GET_REVIEWS":
