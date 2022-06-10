@@ -76,9 +76,8 @@ export default function App() {
               }}
             />
 
-        
             <Tab.Screen
-              name="Favs"
+              name="Favoritos"
               component={Favoritos}
               options={{
                 tabBarIcon: ({ color, size }) => (

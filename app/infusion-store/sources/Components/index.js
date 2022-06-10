@@ -6,6 +6,8 @@ import Carrousel from "./Carrousel/Carrousel";
 import Producto from "./Producto/Producto";
 import NavBar from "./NavBar/NavBar";
 import DetalleProducto from "./Producto/DetalleProducto";
+import Favorito from "./Favoritos/Favorito";
+import Favoritos from "./Favoritos/Favoritos";
 
 export {
   NavBar,
@@ -17,5 +19,5 @@ export {
   Producto,
   Favoritos,
   Favorito,
-  DetalleProducto
+  DetalleProducto,
 };
