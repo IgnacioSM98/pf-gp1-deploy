@@ -192,13 +192,11 @@ export function deleteCategoria(id) {
 
 export function postReviews(id, payload) {
   return async function (dispatch) {
-    console.log(payload);
     await axios.post(`${urlBase}${ratings}${crear}/${id}`, payload);
-
-    dispatch(getReviews(id));
 
     return dispatch({
       type: "CREAR_REVIEW",
+      payload,
     });
   };
 }
