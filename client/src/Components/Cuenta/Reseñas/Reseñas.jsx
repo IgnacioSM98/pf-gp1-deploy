@@ -69,9 +69,7 @@ export default function Reseñas() {
 
   return (
     <div>
-      {reseñas
-        .filter((reseña) => reseña.usuarioId === id)
-        .map((el) => (
+      {reseñas?.map((el) => (
           <StyledLink to={`/productos/${el.productoId}`}>
             <Review key={el.id}>
               <Stars rating={el.puntaje} />
