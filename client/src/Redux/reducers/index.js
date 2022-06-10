@@ -13,7 +13,6 @@ const initialState = {
   pedidos: [],
   usuarios: [],
   detalleEnvio: {},
-  pedidos: [],
   favoritos: [],
 };
 
@@ -95,6 +94,12 @@ export default function rootReducer(state = initialState, action) {
       return {
         ...state,
         detalle: action.payload,
+      };
+
+    case "GET_FAVORITOS":
+      return {
+        ...state,
+        favoritos: action.payload,
       };
 
     case "CLEAR_DETAIL":
@@ -382,13 +387,13 @@ export default function rootReducer(state = initialState, action) {
       };
 
     case "AÑADIR_A_FAVORITOS":
-      const usuarioFiltrado = state.usuarios.filter(
-        (u) => u.mail == state.userInfo.email
-      );
+      // const usuarioFiltrado = state.usuarios.filter(
+      //   (u) => u.mail == state.userInfo.email
+      // );
 
       const idProducto = action.payload.id;
-      const idUsuario = usuarioFiltrado && usuarioFiltrado[0].id;
-      console.log(usuarioFiltrado, "ACAAAAAAAAAAA");
+      const idUsuario = state.userInfo.uid;
+      // console.log(usuarioFiltrado, "ACAAAAAAAAAAA");
 
       const favorites = axios.get(
         `https://proyecto-final-gp1.herokuapp.com/favoritos/wishlist/${idUsuario}`
@@ -414,24 +419,27 @@ export default function rootReducer(state = initialState, action) {
       };
 
     case "ELIMINAR_DE_FAVORITOS":
-      const usuarioFiltradoid = state.usuarios.filter(
-        (u) => u.mail == state.userInfo.email
-      );
-      console.log(action.payload);
+      // const usuarioFiltradoid = state.usuarios.filter(
+      //   (u) => u.mail == state.userInfo.email
+      // );
+
+      // console.log(state.userInfo.id);
 
       const idProductoEliminar = action.payload;
-      const idUsuarioEliminar = usuarioFiltradoid[0]?.id;
+      const idUsuarioEliminar = state.userInfo.uid;
 
       const favoritosFiltrados = state.favoritos.filter(
         (e) => e.id !== action.payload
       );
 
-      console.log(idProductoEliminar, idUsuarioEliminar, "HOLAAAAAAA");
+      // console.log(idProductoEliminar, idUsuarioEliminar, "HOLAAAAAAA");
 
       axios
         .delete("https://proyecto-final-gp1.herokuapp.com/favoritos/wishlist", {
-          idUsuario: idUsuarioEliminar,
-          idProducto: idProductoEliminar,
+          data: {
+            idUsuario: idUsuarioEliminar,
+            idProducto: idProductoEliminar,
+          },
         })
         .catch((error) => console.log(error));
 

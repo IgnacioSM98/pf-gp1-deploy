@@ -16,6 +16,7 @@ import {
 import axios from "axios";
 
 const LinkProduct = styled(Link)`
+  margin: 0px 2px;
   text-decoration: none;
   width: 240px;
 `;
@@ -179,7 +180,7 @@ export default function Producto({
   );
 
   useEffect(() => {
-    dispatch(getUsuarios());
+    // dispatch(getUsuarios());
     setFlag(cantidadCarrito?.cantidad ? true : false);
     setCantidad(cantidadCarrito?.cantidad ? cantidadCarrito.cantidad : 1);
   }, [cantidadCarrito]);

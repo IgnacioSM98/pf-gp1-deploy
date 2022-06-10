@@ -14,8 +14,12 @@ export function getProductos() {
     if (data) {
       dispatch({ type: "GET_PRODUCTOS", payload: data });
     } else {
-      const resp = await axios.get(`${urlBase}${productos}`);
-      dispatch({ type: "GET_PRODUCTOS", payload: resp.data });
+      try {
+        const resp = await axios.get(`${urlBase}${productos}`);
+        dispatch({ type: "GET_PRODUCTOS", payload: resp.data });
+      } catch (error) {
+        console.log(error);
+      }
     }
   };
 }
@@ -321,6 +325,17 @@ export function actualizarEstadoEnvio(id, payload, productos) {
       res.data.productos = productos;
       dispatch({ type: "ACTUALIZAR_ESTADO", payload: res.data });
     });
+  };
+}
+
+export function getFavoritos(id) {
+  return async function (dispatch) {
+    try {
+      const favoritos = await axios.get(`${urlBase}favoritos/wishlist/${id}`);
+      dispatch({ type: "GET_FAVORITOS", payload: favoritos.data });
+    } catch (error) {
+      console.log(error);
+    }
   };
 }
 

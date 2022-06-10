@@ -7,6 +7,8 @@ import {
   Image,
   StyleSheet,
   SafeAreaView,
+  Animated,
+  Dimensions,
 } from "react-native";
 import axios from "axios";
 import { Carrousel } from "../index";
@@ -15,7 +17,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 2,
-    marginTop: 20,
+    marginTop: 2,
   },
 
   loading: {
@@ -28,28 +30,67 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
 
+  productosTitulo: {
+    fontSize: 18,
+    fontFamily: "Roboto" || "Al Nile",
+    color: "#222",
+    fontWeight: "700",
+    marginBottom: 10,
+    marginTop: 70,
+  },
+
   containerProductos: {
-    backgroundColor: "grey",
     height: 250,
   },
 
-  containerProducto: {
-    // justifyContent: "center",
+  // containerProducto: {
+  //   // justifyContent: "center",
+  //   width: 150,
+  //   height: "90%",
+  //   margin: 10,
+  //   transform: [{ translateY }],
+  // },
+
+  imagen: {
     width: 150,
-    height: "90%",
+    height: 100,
+    resizeMode: "contain",
+    padding: 10,
+    marginTop: 15,
+  },
+
+  nombre: {
+    fontSize: 15,
+    fontFamily: "notoserif" || "Al Nile",
+    color: "#222",
+    fontWeight: "700",
+    textAlign: "center",
     margin: 10,
   },
 
-  imagen: {
-    width: 100,
-    height: 100,
-    resizeMode: "contain",
+  precio: {
+    fontSize: 15,
+    fontFamily: "monospace" || "Apple Color Emoji",
+    fontWeight: "700",
+    marginLeft: 15,
+    marginTop: 5,
+  },
+
+  descripcion: {
+    fontSize: 13,
+    textAlign: "center",
+    fontFamily: "notoserif" || "Al Nile",
   },
 });
+
+// const width = Dimensions.get("window").width;
+const ANCHO_CONTENEDOR = 150;
 
 export default function Home() {
   const [productos, setProductos] = useState([]);
   const [loading, setLoading] = useState(true);
+
+  const scrollX = React.useRef(new Animated.Value(0)).current;
 
   useEffect(() => {
     axios
@@ -66,20 +107,72 @@ export default function Home() {
       ) : (
         <View>
           <Carrousel />
-          <Text>Productos Destacados</Text>
-          <FlatList
-            data={productos.slice(0, 6)}
+          <Text
+            style={
+              (styles.productosTitulo,
+              { fontFamily: "PoppinsM", fontSize: 22, fontWeight: "100" })
+            }
+          >
+            Productos Destacados
+          </Text>
+          <Animated.FlatList
+            onScroll={Animated.event(
+              [{ nativeEvent: { contentOffset: { x: scrollX } } }],
+              { useNativeDriver: false }
+            )}
+            data={productos.slice(0, 8)}
             keyExtractor={({ id }, index) => id}
+            showsHorizontalScrollIndicator={false}
+            contentContainerStyle={{
+              marginHorizontal: 15,
+            }}
+            decelerationRate={0}
+            snapToInterval={ANCHO_CONTENEDOR}
+            scrollEventThrottle={16}
             style={styles.containerProductos}
             horizontal
-            renderItem={({ item }) => (
-              <View style={styles.containerProducto}>
-                <Image source={{ uri: item.imagen }} style={styles.imagen} />
-                <Text>{item.nombre}</Text>
-                <Text>{item.precio}</Text>
-                <Text>{item.descripcion.slice(0, 100)}</Text>
-              </View>
-            )}
+            renderItem={({ item, index }) => {
+              const inputRange = [
+                (index - 1) * ANCHO_CONTENEDOR,
+                index * ANCHO_CONTENEDOR,
+                (index + 1) * ANCHO_CONTENEDOR,
+              ];
+
+              const outputRange = [-2, -8, 0];
+
+              const translateY = scrollX.interpolate({
+                inputRange,
+                outputRange,
+              });
+
+              return (
+                <Animated.View
+                  style={{
+                    width: 150,
+                    height: "75%",
+                    margin: 15,
+                    backgroundColor: "white",
+                    borderRadius: 10,
+
+                    shadowColor: "#000",
+                    shadowOffset: {
+                      width: 4,
+                      height: 0,
+                    },
+                    shadowOpacity: 0.2,
+                    shadowRadius: 8,
+                    transform: [{ translateY }],
+                  }}
+                >
+                  <Image source={{ uri: item.imagen }} style={styles.imagen} />
+                  <Text style={styles.nombre}>{item.nombre}</Text>
+                  {/* <Text style={styles.descripcion}>
+                    {item.descripcion.slice(0, 100)}
+                  </Text> */}
+                  {/* <Text style={styles.precio}>${item.precio}</Text> */}
+                </Animated.View>
+              );
+            }}
           />
         </View>
       )}

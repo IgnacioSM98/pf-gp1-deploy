@@ -1,37 +1,49 @@
-// import { StatusBar } from "expo-status-bar";
-// import { StyleSheet, Text, View, Vibration, Platform } from "react-native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { NavigationContainer } from "@react-navigation/native";
-import { Login, Home, Tienda, Cuenta } from "./sources/Components/index.js";
+import {
+  Login,
+  Home,
+  Tienda,
+  Favoritos,
+  Cuenta,
+} from "./sources/Components/index.js";
 import { useState, useEffect } from "react";
 import { FontAwesome5, Ionicons } from "@expo/vector-icons";
-import { Button } from "react-native";
 import * as LocalAuthentication from "expo-local-authentication";
+import { View, Text } from "react-native";
+import { setData, getData } from "./sources/Functions/localStorage";
+import * as Font from "expo-font";
 
 const Tab = createBottomTabNavigator();
 
-// const vibrate = () => {
-//   if (Platform.OS === "ios") {
-//     console.log(Platform.OS);
-//     // this logic works in android too. you could omit the else statement
-//     const interval = setInterval(() => Vibration.vibrate(), 1000);
-//     // it will vibrate for 5 seconds
-//     setTimeout(() => clearInterval(interval), 5000);
-//   } else {
-//     Vibration.vibrate(5000);
-//   }
-// };
+const fetchFonts = async () => {
+  await Font.loadAsync({
+    Poppins: require("./assets/fonts/Poppins-Thin.ttf"),
+    PoppinsM: require("./assets/fonts/Poppins-Medium.ttf"),
+  });
+};
 
 export default function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [isBiometricAvailable, setIsBiometricAvailable] = useState(false);
 
   useEffect(() => {
+    fetchFonts();
+
     (async () => {
-      const compatable = await LocalAuthentication.hasHardwareAsync();
-      setIsBiometricAvailable(compatable);
+      const compatible = await LocalAuthentication.hasHardwareAsync();
+      setIsBiometricAvailable(compatible);
+
+      // Para guardar el usuario
+      // setData("user", "rodri");
+
+      // Para recuperar el usuario
+      const user = await getData("user");
+
+      // Usuario que inició sesión
+      console.log(isAuthenticated, "xd");
     })();
-  });
+  }, []);
 
   const onAuth = () => {
     if (isBiometricAvailable) {
@@ -75,6 +87,16 @@ export default function App() {
             />
 
             <Tab.Screen
+              name="Favoritos"
+              component={Favoritos}
+              options={{
+                tabBarIcon: ({ color, size }) => (
+                  <Ionicons name="heart-sharp" size={24} color="grey" />
+                ),
+              }}
+            />
+
+            <Tab.Screen
               name="Cuenta"
               // component={Cuenta}
               children={() => (
@@ -93,7 +115,7 @@ export default function App() {
           </Tab.Navigator>
         </NavigationContainer>
       ) : (
-        <Login onAuth={onAuth} />
+        <Login onAuth={onAuth} setIsAuthenticated={setIsAuthenticated} />
       )}
     </>
   );

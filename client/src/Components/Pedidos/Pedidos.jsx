@@ -2,70 +2,66 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getPedidos } from "../../Redux/actions";
 import styled from "styled-components";
-import { Pedido } from "../index";
+import { Pedido, BuscarPedido } from "../index";
 
 const Container = styled.div`
-  height: 80vh;
+  height: ${(props) => (props.pedido ? "53vh" : "75vh")};
+  width: 100%;
+
+  display: flex;
+  flex-wrap: wrap;
 
   padding-top: 20px;
 
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  // grid-auto-flow: dense;
-  grid-gap: 20px 12px;
-
-  // justify-content: center;
-  // align-items: center;
-
-  width: 100%;
-  height: 75vh;
-
-  // margin: 15px;
   padding: 5px;
-  // border: 1px solid darkgrey;
-  // border-radius: 8px;
-  // box-shadow: 0 2px 2px 0 darkgrey, 0 2px 2px 0 #222;
 
-  overflow-x: scroll;
+  overflow-y: scroll;
+  @media screen and (max-width: 1530px) {
+    margin-top: 30px;
+  }
 `;
 
-const Crear = styled.button`
-  // top: 660px;
+const Select = styled.select`
   top: 0;
   right: 0;
   position: absolute;
-  width: 80px;
-  background: #37563d;
 
-  display: block;
-
-  height: 30px;
-  border: none;
-  color: white;
-  border-radius: 4px;
-  font-size: 16px;
-  margin: 40px 0px 0px 0px;
-  margin: auto;
-  cursor: pointer;
-`;
-
-let Select = styled.select`
-  margin-bottom: 3em;
+  // margin-bottom: 3em;
   width: 150px;
   height: 30px;
+  border: none;
   border-radius: 8px;
-  background-color: rgb(182, 182, 182);
+  background-color: white;
   font-weight: bold;
   text-align: center;
+`;
+const H1 = styled.h1`
+  font-size: 20px;
+  font-family: Poppins;
+  font-weight: 600;
+  padding-bottom: 20px;
+  text-align: start;
+  float: left;
 
-  position: absolute;
-  top: 0;
+  // @media screen and (max-width: 1530px) {
+  //   display: none;
+  // }
+  // @media screen and (max-width: 560px) {
+  //   display: none;
+  // }
+`;
+
+const Option = styled.option`
+  border-radius: 8px;
+  background-color: white;
 `;
 
 function Pedidos() {
   const dispatch = useDispatch();
   const pedidos = useSelector((state) => state.pedidos);
   const [renderizar, setRenderizar] = useState(pedidos);
+
+  const [pedido, setPedido] = useState();
 
   useEffect(() => {
     dispatch(getPedidos());

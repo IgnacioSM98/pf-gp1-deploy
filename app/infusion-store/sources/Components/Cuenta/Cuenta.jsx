@@ -1,14 +1,26 @@
 import React, { useEffect, useState, useCallback } from "react";
 import styled from "styled-components/native";
 import { useFocusEffect } from "@react-navigation/native";
-import { Text, View } from "react-native";
+import { Platform, Text, View } from "react-native";
+import {
+  Ajustes,
+  Contacto,
+  Historial,
+  Notificaciones,
+  Reseñas,
+  Seguridad,
+} from "./Opciones/index";
 
 const Container = styled.View`
-  padding-top: 10%;
+  display: flex;
+  justify-content: center;
+  margin-top: ${Platform.OS === "ios" ? "10%" : 0};
 `;
 
 const Button = styled.Pressable`
-  padding-top: 10%;
+  // background-color: red;
+  padding: 6% 4%;
+  margin: 1%;
 `;
 
 export default function Cuenta({ setIsAuthenticated }) {
@@ -60,21 +72,21 @@ export default function Cuenta({ setIsAuthenticated }) {
         </View>
       )}
 
-      {option === "ajustes" && <Text>Ajustes</Text>}
+      {option === "ajustes" && <Ajustes />}
 
-      {option === "historial" && <Text>historial</Text>}
+      {option === "historial" && <Historial />}
 
-      {option === "reseñas" && <Text>reseñas</Text>}
+      {option === "reseñas" && <Reseñas />}
 
-      {option === "favoritos" && <Text>favoritos</Text>}
+      {/* {option === "favoritos" && <Text>favoritos</Text>} */}
 
-      {option === "notificaciones" && <Text>notificaciones</Text>}
+      {option === "notificaciones" && <Notificaciones />}
 
-      {option === "seguridad" && <Text>seguridad</Text>}
+      {option === "seguridad" && <Seguridad />}
 
-      {option === "contacto" && <Text>contacto</Text>}
+      {option === "contacto" && <Contacto />}
 
-      {option === "cerrar sesión" && <Text>cerrar sesión</Text>}
+      {/* {option === "cerrar sesión" && <Ajustes/>} */}
     </Container>
   );
 }

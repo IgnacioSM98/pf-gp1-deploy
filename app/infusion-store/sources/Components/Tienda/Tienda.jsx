@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useCallback, useRef } from "react";
-import { InteractionManager } from "react-native";
+import { Button, InteractionManager } from "react-native";
 import { useFocusEffect } from "@react-navigation/native";
+import { NavBar } from "../index";
 
 import {
   ActivityIndicator,
@@ -14,13 +15,15 @@ import {
 } from "react-native";
 
 import { Producto } from "../index";
+import { DetalleProducto } from "../index";
 
 const styles = StyleSheet.create({
   container: {
     width: "100%",
     flex: 1,
     padding: 2,
-    marginTop: 10,
+    // marginTop: Platform.OS === "ios" ? "10%" : 0,
+    marginTop: 2,
   },
 
   loading: {
@@ -51,7 +54,8 @@ const Tienda = () => {
   const [isLoading, setLoading] = useState(true);
   const [data, setData] = useState([]);
   const [cantidad, setCantidad] = useState(8);
-
+  const [detalle, setDetalle] = useState(false);
+  const [idProd, setIdProd] = useState();
   const scrollRef = useRef();
 
   useFocusEffect(
@@ -65,6 +69,8 @@ const Tienda = () => {
         });
 
         setCantidad(8);
+        setDetalle(false);
+        setIdProd();
       };
 
       return () => unsubscribe();
@@ -101,19 +107,27 @@ const Tienda = () => {
           ref={scrollRef}
           keyExtractor={(item) => item.id}
           renderItem={({ item }) => (
-            <Producto
-              // id={item.id}
-              imagen={{ uri: item.imagen }}
-              nombre={item.nombre}
-              precio={item.precio}
-              stock={item.stock}
-              descripcion={item.descripcion}
-              // categorias={item.categoria}
-             
-            />
+            <View>
+              {!detalle && (
+                <Producto
+                  id={item.id}
+                  imagen={{ uri: item.imagen }}
+                  nombre={item.nombre}
+                  precio={item.precio}
+                  stock={item.stock}
+                  descripcion={item.descripcion}
+                  state={detalle}
+                  setDetalle={setDetalle}
+                  setIdProd={setIdProd}
+                  // categorias={item.categoria}
+                />
+              )}
+            </View>
           )}
         />
       )}
+
+      {detalle && <DetalleProducto id={idProd} />}
     </View>
   );
 };

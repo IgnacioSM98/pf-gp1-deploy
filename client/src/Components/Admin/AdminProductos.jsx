@@ -29,8 +29,48 @@ const Crear = styled.button`
   margin: auto;
   cursor: pointer;
 `;
+const Grupo = styled.div`
+  width: 100%;
+  height: 75vh;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-gap: 20px 12px;
+  grid-auto-flow: dense;
+  padding: 5px;
+  /* justify-content: space-evenly; */
+  /* flex-wrap: wrap; */
+  /* margin-top: 1em; */
+  overflow-y: scroll;
+  @media screen and (max-width: 1530px) {
+    margin-top: 30px;
+  }
+  @media screen and (max-width: 1240px) {
+    margin-top: 30px;
+  }
+  @media screen and (max-width: 860px) {
+    display: flex;
+    flex-direction: column;
+    margin-top: 30px;
+  }
+  @media screen and (max-width: 560px) {
+    display: flex;
+    flex-direction: column;
+    margin-top: 30px;
+  }
+`;
+const H1 = styled.h1`
+  font-size: 20px;
+  font-family: Poppins;
+  font-weight: 600;
+  // padding-bottom: 20px;
+  text-align: start;
 
-let Select = styled.select`
+  // @media screen and (max-width: 1530px) {
+  //   display: none;
+  // }
+`;
+
+const Select = styled.select`
   top: 0;
   right: 100px;
   position: absolute;
@@ -141,17 +181,7 @@ export default function AdminProductos() {
 
   return (
     <Container>
-      <h1
-        style={{
-          fontSize: "20px",
-          fontFamily: "Poppins",
-          fontWeight: 600,
-          paddingBottom: "20px",
-          textAlign: "start",
-        }}
-      >
-        Administrador de Productos
-      </h1>
+      <H1>Administrador de Productos</H1>
 
       <Select onChange={handleByStock}>
         <Option value="Ordenar por stock">Ordenar por stock</Option>
@@ -168,7 +198,7 @@ export default function AdminProductos() {
         Crear
       </Crear>
 
-      <div className="grupo-productos">
+      <Grupo>
         {productos?.map((el) => (
           <Link
             key={el.id}
@@ -189,7 +219,7 @@ export default function AdminProductos() {
             </ProdAdmin>
           </Link>
         ))}
-      </div>
+      </Grupo>
     </Container>
   );
 }

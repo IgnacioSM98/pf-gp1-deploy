@@ -57,7 +57,7 @@ export default function EliminarCategoria() {
   }
 
   return (
-    <div style={{ height: "100vh" }}>
+    <div style={{ height: "100%" }}>
       <h1
         style={{
           fontSize: "20px",

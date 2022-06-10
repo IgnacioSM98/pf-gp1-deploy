@@ -23,6 +23,11 @@ const Container = styled.div`
   background-color: white;
   justify-content: center;
   // align-items: center;
+  @media screen and (max-width: 560px) {
+    height: auto;
+    display: flex;
+    flex-direction: column;
+  }
 `;
 
 const Informacion = styled.div`
@@ -30,6 +35,9 @@ const Informacion = styled.div`
   height: 100%;
   // padding-top: 40px;
   position: relative;
+  @media screen and (max-width: 960px) {
+    width: 100%;
+  }
 `;
 
 const Options = styled.div`
@@ -45,6 +53,9 @@ const Options = styled.div`
   margin-right: 3rem;
 
   position: relative;
+  @media screen and (max-width: 560px) {
+    width: 100%;
+  }
 `;
 
 const ContenedorTitulo = styled.div`
@@ -154,24 +165,13 @@ const ContainerPedidos = styled.div`
 
   padding-top: 20px;
 
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  // grid-auto-flow: dense;
-  grid-gap: 20px 12px;
-
-  // justify-content: center;
-  // align-items: center;
+  display: flex;
+  flex-wrap: wrap;
 
   width: 100%;
-  // height: auto;
-
-  // margin: 15px;
   padding: 5px;
-  // border: 1px solid darkgrey;
   border-radius: 8px;
-  // box-shadow: 0 2px 2px 0 darkgrey, 0 2px 2px 0 #222;
-
-  overflow-x: scroll;
+  overflow-y: scroll;
 `;
 function Cuenta() {
   const pedidos = useSelector((state) => state.pedidos);
@@ -269,7 +269,13 @@ function Cuenta() {
         {detalle === "principal" && (
           <Categorias>
             <Categoria>
-              <Secciones>{`Pedidos a Despachar (totales: ${pedidos.length})`}</Secciones>
+              <Secciones>{`Pedidos a Despachar (totales: ${
+                pedidos.filter(
+                  (pedido) =>
+                    pedido.Estado === "Creado" ||
+                    pedido.Estado === "En preparación"
+                ).length
+              })`}</Secciones>
               <ContainerPedidos>
                 {pedidos &&
                   pedidos
