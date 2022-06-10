@@ -160,7 +160,6 @@ const Secciones = styled.p`
   font-family: Poppins;
   font-weight: 600;
 `;
-
 const ContainerPedidos = styled.div`
   height: 75vh;
 
@@ -174,7 +173,6 @@ const ContainerPedidos = styled.div`
   border-radius: 8px;
   overflow-y: scroll;
 `;
-
 function Cuenta() {
   const pedidos = useSelector((state) => state.pedidos);
   const [detalle, setDetalle] = useState("principal");
@@ -278,7 +276,6 @@ function Cuenta() {
                     pedido.Estado === "En preparación"
                 ).length
               })`}</Secciones>
-
               <ContainerPedidos>
                 {pedidos &&
                   pedidos
