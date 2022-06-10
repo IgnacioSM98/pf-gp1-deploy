@@ -319,7 +319,7 @@ export default function DetalleProducto() {
 
   useEffect(() => {
     dispatch(getProductReviews(id));
-  }, []);
+  }, [reviews]);
 
   useEffect(() => {
     // if (productos.length === 0) dispatch(getProductos());
