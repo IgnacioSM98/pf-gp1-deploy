@@ -12,7 +12,7 @@ import {
   Dimensions,
 } from "react-native";
 import axios from "axios";
-import { Carrousel, NavBar } from "../index";
+import { Carrousel, NavBar, Bienvenida } from "../index";
 
 const styles = StyleSheet.create({
   container: {
@@ -112,6 +112,7 @@ export default function Home({ navigation }) {
         ) : (
           <View>
             <Carrousel />
+            <Bienvenida />
             <Text style={styles.productosTitulo}>Productos Destacados</Text>
             <Animated.FlatList
               onScroll={Animated.event(
