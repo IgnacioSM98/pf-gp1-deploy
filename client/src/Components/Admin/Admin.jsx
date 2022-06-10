@@ -45,7 +45,7 @@ const Options = styled.div`
   flex-direction: column;
   // justify-content: space-between;
   width: 25%;
-  height: 60vh;
+  height: 80vh;
   background-color: white;
   border-radius: 10px;
   border: 2px solid black;
@@ -170,11 +170,8 @@ const ContainerPedidos = styled.div`
   flex-wrap: wrap;
 
   width: 100%;
-
   padding: 5px;
-
   border-radius: 8px;
-
   overflow-y: scroll;
 `;
 

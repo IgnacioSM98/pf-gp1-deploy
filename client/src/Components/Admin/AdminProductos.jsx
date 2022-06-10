@@ -59,14 +59,15 @@ const Grupo = styled.div`
   }
 `;
 const H1 = styled.h1`
-  fontsize: "20px";
-  fontfamily: "Poppins";
-  fontweight: 600;
-  paddingbottom: "20px";
-  textalign: "start";
-  @media screen and (max-width: 1530px) {
-    display: none;
-  }
+  font-size: 20px;
+  font-family: Poppins;
+  font-weight: 600;
+  // padding-bottom: 20px;
+  text-align: start;
+
+  // @media screen and (max-width: 1530px) {
+  //   display: none;
+  // }
 `;
 
 const Select = styled.select`
