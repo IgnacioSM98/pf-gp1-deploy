@@ -92,24 +92,6 @@
 
 @media screen and (max-width: 1100px) {
   form {
-    width: 50%;
-  }
-}
-
-@media screen and (max-width: 600px) {
-  form {
-    width: 60%;
-  }
-}
-
-@media screen and (max-width: 450%) {
-  form {
     width: 80%;
-  }
-}
-
-@media screen and (max-width: 300px) {
-  form {
-    width: 90%;
   }
 }

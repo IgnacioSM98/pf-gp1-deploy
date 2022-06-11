@@ -22,12 +22,15 @@ const Container = styled.div`
   background-position: center;
   font-family: Poppins;
 
-  height: 90vh;
+  height: 92vh;
   display: flex;
   flex-direction: row;
   justify-content: center;
   align-items: center;
   background: cover;
+  @media screen and (max-width: 560px) {
+    flex-direction: column;
+  }
 `;
 
 const SignIn = styled.div`
@@ -41,6 +44,13 @@ const SignIn = styled.div`
   border-radius: 20px 0px 0px 20px;
   width: 35%;
   height: 75vh;
+
+  @media screen and (max-width: 560px) {
+    margin-top: 5.5vh;
+    width: 85%;
+    height: 30vh;
+    border-radius: 20px;
+  }
 `;
 
 const SignUp = styled.form`
@@ -54,18 +64,41 @@ const SignUp = styled.form`
   border-radius: 0px 20px 20px 0px;
   width: 45%;
   height: 75vh;
+  @media screen and (max-width: 560px) {
+    margin: 0.5vh 0;
+    width: 85%;
+    height: 55vh;
+    border-radius: 20px;
+  }
 `;
 
 const Titulo = styled.h1`
   position: absolute;
   top: 10px;
-
   text-align: center;
   font-size: 30px;
   font-family: Poppins;
   font-weight: bold;
   color: ${(props) => props.color};
   margin: 2rem;
+  @media screen and (max-width: 560px) {
+    position: relative;
+    font-size: 15px;
+    height: 10%;
+  }
+`;
+const Parrafo = styled.p`
+  margin: 20px;
+
+  @media screen and (max-width: 560px) {
+    display: none;
+  }
+`;
+const ParrafoRegistro = styled.p`
+  margin: 10px;
+  @media screen and (max-width: 560px) {
+    margin: 4px;
+  }
 `;
 
 const Apps = styled.div`
@@ -74,6 +107,9 @@ const Apps = styled.div`
   // margin-bottom: 1rem;
   width: 50%;
   margin: 20px;
+  @media screen and (max-width: 560px) {
+    margin: 8px;
+  }
 `;
 
 const BotonGoogle = styled.img`
@@ -98,6 +134,12 @@ const Boton = styled.button`
   margin: 10px 0px;
   cursor: pointer;
   font-family: Poppins;
+  @media screen and (max-width: 560px) {
+    position: relative;
+    width: 130px;
+    height: 25px;
+    bottom: 0px;
+  }
 `;
 
 const Form = styled.form`
@@ -105,6 +147,15 @@ const Form = styled.form`
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  @media screen and (max-width: 560px) {
+    flex-direction: column;
+  }
+`;
+const NombreContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+  justifycontent: space-between;
+  width: 80%;
 `;
 
 const Error = styled.p`
@@ -323,18 +374,9 @@ export default function Login({ setUser }) {
         </Titulo>
 
         <Form onSubmit={(e) => handleSubmit(e)}>
-          <p style={{ margin: "20px" }}>
+          <Parrafo>
             Para continuar conectado con nosotros ingresá con tu cuenta
-          </p>
-
-          <Boton
-            onClick={() => setIsSignUp(false)}
-            color="black"
-            backgroundColor="white"
-            type="submit"
-          >
-            Iniciar Sesion
-          </Boton>
+          </Parrafo>
 
           <div className="grupo-login">
             <input
@@ -369,6 +411,14 @@ export default function Login({ setUser }) {
             </label>
             {error.login.contraseña && <Error>{error.login.contraseña}</Error>}
           </div>
+          <Boton
+            onClick={() => setIsSignUp(false)}
+            color="black"
+            backgroundColor="white"
+            type="submit"
+          >
+            Iniciar Sesion
+          </Boton>
         </Form>
       </SignIn>
 
@@ -380,11 +430,14 @@ export default function Login({ setUser }) {
         <Apps>
           <BotonGoogle src={google} onClick={googleSignIn} />
         </Apps>
-        <p style={{ margin: "10px" }}>O registrate con tu correo</p>
+        <ParrafoRegistro>O registrate con tu correo</ParrafoRegistro>
 
-        <form style={{ margin: "0px 0px 40px 0px" }} onSubmit={handleSubmit}>
-          <div style={{ display: "flex", justifyContent: "space-between" }}>
-            <div className="grupo-login" style={{ width: "150px" }}>
+        <Form
+          style={{ margin: "0px 0px 40px 0px", alignItems: "center" }}
+          onSubmit={handleSubmit}
+        >
+          <NombreContainer>
+            <div className="grupo-login" style={{ width: "50%" }}>
               <input
                 className="input-login"
                 type="text"
@@ -402,7 +455,7 @@ export default function Login({ setUser }) {
               {error.signUp.nombre && <Error>{error.signUp.nombre}</Error>}
             </div>
 
-            <div className="grupo-login" style={{ width: "150px" }}>
+            <div className="grupo-login" style={{ width: "50%" }}>
               <input
                 className="input-login"
                 type="text"
@@ -419,7 +472,7 @@ export default function Login({ setUser }) {
 
               {error.signUp.apellido && <Error>{error.signUp.apellido}</Error>}
             </div>
-          </div>
+          </NombreContainer>
 
           <div className="grupo-login">
             <input
@@ -458,7 +511,7 @@ export default function Login({ setUser }) {
               <Error>{error.signUp.contraseña}</Error>
             )}
           </div>
-        </form>
+        </Form>
 
         <Boton
           color="white"
