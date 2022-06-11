@@ -40,6 +40,7 @@ export default function AgregarCategorias({
   post,
   setErrors,
   detalle,
+  creado,
 }) {
   const [selectedValue, setSelectedValue] = useState([]);
 
@@ -51,6 +52,10 @@ export default function AgregarCategorias({
     setPost({ ...post, probando: true });
     // eslint-disable-next-line
   }, []);
+
+  useEffect(() => {
+    if (creado) setSelectedValue([]);
+  }, [creado]);
 
   var categorias = useSelector((state) => state.categorias);
 
@@ -65,11 +70,10 @@ export default function AgregarCategorias({
     });
   }, [categorias]);
 
-  useEffect(() => {
-    console.log(selectedValue);
-    setErrors(validate({ ...post, categorias: selectedValue }));
-    // eslint-disable-next-line
-  }, [selectedValue]);
+  // useEffect(() => {
+  //   setErrors(validate({ ...post, categorias: selectedValue }));
+  //   // eslint-disable-next-line
+  // }, [selectedValue]);
 
   const handleChange = ({ target }) => {
     const categoria = categorias?.filter(
@@ -81,6 +85,8 @@ export default function AgregarCategorias({
 
       setPost({ ...post, categorias: [...selectedValue, categoria] });
     }
+
+    setErrors(validate({ ...post, categorias: selectedValue }));
   };
 
   const handleDelete = (e) => {
