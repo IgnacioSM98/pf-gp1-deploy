@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { postReviews } from "../../Redux/actions";
 import { StarRating, Modal } from "../index";
 import styled from "styled-components";
@@ -12,24 +12,23 @@ const Container = styled.div`
   justify-content: space-around;
   align-items: start;
   position: relative;
+  @media screen and (max-width: 960px) {
+    width: 90%;
+  }
 `;
 
 const Formulario = styled.form`
   display: flex;
   flex-direction: column;
   position: relative;
-
   align-items: start;
   justify-content: space-around;
-
   height: 144px;
   width: 292px;
   margin: 0.5rem;
   padding: 10px 20px;
-
   background-color: #1b1919ed;
   border-radius: 10px;
-
   text-align: center;
 `;
 
@@ -51,7 +50,6 @@ const ComentarioDetallado = styled.textarea`
   text-align: justify;
   border-radius: 10px;
   border: none;
-
   resize: none;
   font-size: 13px;
   font-family: sans-serif;
@@ -76,7 +74,6 @@ const Image = styled.img`
   padding: 2px 2px 2px 5px;
   margin: 3px;
   cursor: pointer;
-
   &: hover {
     width: 32px;
     height: 32px;
@@ -90,31 +87,36 @@ const ParrafoOk = styled.p`
 `;
 
 export default function CrearReview({ id }) {
-  let dispatch = useDispatch();
+  const dispatch = useDispatch();
+  const user = useSelector((state) => state.userInfo);
+  const userId = user.uid;
   const [stateModalOpinion, setStateModalOpinion] = useState(false);
 
-  let [input, setInput] = useState({
+  const [input, setInput] = useState({
     puntaje: "",
     comentario: "",
     titulo: "",
+    usuarioId: userId,
   });
 
-  let handleInputChange = (e) => {
+  const handleInputChange = (e) => {
     setInput({
       ...input,
       [e.target.name]: e.target.value,
     });
   };
 
-  let handleSubmit = (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
+
     dispatch(postReviews(id, input));
-    setStateModalOpinion(!stateModalOpinion)
+    setStateModalOpinion(!stateModalOpinion);
     setInput({
+      ...input,
       puntaje: "",
       comentario: "",
       titulo: "",
-    })
+    });
   };
 
   return (

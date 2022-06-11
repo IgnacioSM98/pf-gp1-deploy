@@ -97,6 +97,12 @@ export default function rootReducer(state = initialState, action) {
         detalle: action.payload,
       };
 
+    case "GET_FAVORITOS":
+      return {
+        ...state,
+        favoritos: action.payload,
+      };
+
     case "CLEAR_DETAIL":
       return {
         ...state,
@@ -110,6 +116,7 @@ export default function rootReducer(state = initialState, action) {
       };
 
     case "FILTRAR_CATEGORIAS":
+      //?????
       const productos = state.productosCopiados;
       const productosConCategoria =
         action.payload === "all"
@@ -125,6 +132,7 @@ export default function rootReducer(state = initialState, action) {
       };
 
     case "ORDENAR_POR_NOMBRE":
+      //creo que no se usan
       const productosSorted =
         action.payload === "asc"
           ? state.productos.sort((a, b) => {
@@ -143,6 +151,8 @@ export default function rootReducer(state = initialState, action) {
       };
 
     case "ORDENAR_POR_PRECIO":
+      //creo que no se usan
+
       const productosPrecio =
         action.payload === "desc"
           ? state.productos.sort((a, b) => {
@@ -160,9 +170,11 @@ export default function rootReducer(state = initialState, action) {
         ...state,
         productos: productosPrecio,
       };
+
     case "CREAR_REVIEW":
       return {
         ...state,
+        reviews: [...state.reviews, action.payload],
       };
 
     case "GET_REVIEWS":
@@ -182,7 +194,9 @@ export default function rootReducer(state = initialState, action) {
         reviews: action.payload,
       };
     case "DELETE_REVIEW":
+      //tamos seguros? xd
       return { ...state };
+
     case "SET_CARRITO":
       return {
         ...state,
@@ -384,13 +398,10 @@ export default function rootReducer(state = initialState, action) {
       };
 
     case "AÑADIR_A_FAVORITOS":
-      const usuarioFiltrado = state.usuarios.filter(
-        (u) => u.mail === state.userInfo.email
-      );
-
       const idProducto = action.payload.id;
-      const idUsuario = usuarioFiltrado && usuarioFiltrado[0].id;
+      const idUsuario = state.userInfo.uid;
 
+      //???????????
       const favorites = axios.get(
         `https://proyecto-final-gp1.herokuapp.com/favoritos/wishlist/${idUsuario}`
       );
@@ -416,23 +427,22 @@ export default function rootReducer(state = initialState, action) {
       };
 
     case "ELIMINAR_DE_FAVORITOS":
-      const usuarioFiltradoid = state.usuarios.filter(
-        (u) => u.mail === state.userInfo.email
-      );
-
       const idProductoEliminar = action.payload;
-      const idUsuarioEliminar = usuarioFiltradoid[0]?.id;
+      const idUsuarioEliminar = state.userInfo.uid;
 
       const favoritosFiltrados = state.favoritos.filter(
         (e) => e.id !== action.payload
       );
 
-      axios
-        .delete("https://proyecto-final-gp1.herokuapp.com/favoritos/wishlist", {
-          idUsuario: idUsuarioEliminar,
-          idProducto: idProductoEliminar,
-        })
-        .catch((error) => console.log(error));
+      axios.delete(
+        "https://proyecto-final-gp1.herokuapp.com/favoritos/wishlist",
+        {
+          data: {
+            idUsuario: idUsuarioEliminar,
+            idProducto: idProductoEliminar,
+          },
+        }
+      );
 
       return {
         ...state,

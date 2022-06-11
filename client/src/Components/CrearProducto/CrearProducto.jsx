@@ -12,8 +12,7 @@ import "./CrearProducto.css";
 import styled from "styled-components";
 import validate from "./validaciones.js";
 import { useParams } from "react-router-dom";
-import { Modal, Loading } from "../index";
-import AgregarCategorias from "../AgregarCategorias/AgregarCategorias";
+import { Modal, Loading, AgregarCategorias } from "../index";
 
 const Container = styled.div`
   // display: flex;
@@ -55,7 +54,6 @@ const Left = styled.div`
   flex-direction: column;
   width: 35%;
   height: 100%;
-  // justify-content: center;
   align-items: center;
   margin-top: 50px;
   border: 2px solid black;
@@ -77,7 +75,6 @@ const Right = styled.div`
   flex-direction: column;
   width: 30%;
   height: 100%;
-  // justify-content: center;
   align-items: center;
   margin-top: 50px;
   border: 2px solid black;
@@ -99,7 +96,6 @@ const Input = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
-
   margin: 30px;
   width: 80%;
   @media screen and (max-width: 960px) {
@@ -112,9 +108,7 @@ const Errors = styled.span`
   position: absolute;
   bottom: -20px;
   width: 100%;
-
   left: 0;
-  // white-space: nowrap;
   font-size: 12px;
   font-weight: 500;
   color: #951414d9;
@@ -128,7 +122,6 @@ const SelectorImagen = styled.input`
   margin: auto;
   position: absolute;
   color: transparent;
-  // background-color: red;
   z-index: 0;
   border-radius: 5px;
   @media screen and (max-width: 960px) {
@@ -148,17 +141,10 @@ const Imagen = styled.img`
 
 const Button = styled.button`
   position: absolute;
-  // top: 660px;
   bottom: 35px;
   width: 80%;
   background: #37563d;
-  // /* fallback for old browsers */
-  // background: -webkit-linear-gradient(to left, #190a05, #870000);
-  // /* Chrome 10-25, Safari 5.1-6 */
-  // background: linear-gradient(to left, #190a05, #870000);
-  // /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
   display: block;
-  // width: 300px;
   height: 40px;
   border: none;
   color: white;
@@ -182,7 +168,6 @@ const CrearCat = styled.div`
   width: 80%;
   left: 10%;
   right: 10%;
-  // padding-bottom: 3em;
   @media screen and (max-width: 960px) {
     width: 100%;
   }
@@ -220,10 +205,12 @@ const ParrafoAlerta = styled.p`
   font-weight: bold;
   color: red;
 `;
+
 const ParrafoOk = styled.p`
   font-size: 20px;
   font-weight: bold;
 `;
+
 const ParrafoCat = styled.p`
   font-size: 20px;
   font-weight: bold;
@@ -393,6 +380,7 @@ export default function CrearProducto() {
     // Eliminamos el error del state de errores
     setErrors(() => {
       const state = { ...errors };
+
       delete state.imagen;
       return state;
     });
@@ -437,6 +425,7 @@ export default function CrearProducto() {
           </p>
         )}
       </Encabezado>
+
       <Container>
         <Form onSubmit={(e) => handleSubmit(e)}>
           <Left>
@@ -463,6 +452,7 @@ export default function CrearProducto() {
                 placeholder=" "
                 onChange={(e) => handleInputChange(e)}
               />
+
               <span className="barra"></span>
               <label className="label">Descripción</label>
               {errors.descripcion && <Errors>{errors.descripcion}</Errors>}
@@ -478,6 +468,7 @@ export default function CrearProducto() {
                 placeholder=" "
                 onChange={(e) => handleInputChange(e)}
               />
+
               <span className="barra"></span>
               <label className="label">Precio</label>
               {errors.precio && <Errors>{errors.precio}</Errors>}
@@ -493,6 +484,7 @@ export default function CrearProducto() {
                 placeholder=" "
                 onChange={(e) => handleInputChange(e)}
               />
+
               <span className="barra"></span>
               <label className="label">Stock</label>
               {errors.stock && <Errors>{errors.stock}</Errors>}
@@ -505,6 +497,7 @@ export default function CrearProducto() {
                 setErrors={setErrors}
                 detalle={detalle}
               />
+
               {errors.categorias && <Errors>{errors.categorias}</Errors>}
             </Input>
           </Left>
