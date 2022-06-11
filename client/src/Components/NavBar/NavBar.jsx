@@ -152,8 +152,10 @@ const MobileIcon = styled.div`
 `;
 
 export default function NavBar({ contacto, setUser }) {
-  const carrito = useSelector((state) => state.carrito);
   const dispatch = useDispatch();
+
+  const carrito = useSelector((state) => state.carrito);
+
   const [userMenu, setMenu] = useState(false);
   const [showMobileMenu, setShowMobileMenu] = useState(false);
 

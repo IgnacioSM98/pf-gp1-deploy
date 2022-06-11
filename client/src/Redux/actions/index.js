@@ -272,6 +272,19 @@ export function getPedidos() {
   };
 }
 
+export function getPedidosUsuario(user) {
+  return user
+    ? function (dispatch) {
+        axios(`${urlBase}pedidos`).then((res) =>
+          dispatch({
+            type: "GET_PEDIDOS_USUARIO",
+            payload: res.data.filter((pedido) => pedido.usuarioId === user),
+          })
+        );
+      }
+    : () => {};
+}
+
 export function getDetalleEnvio(id) {
   return async function (dispatch) {
     const envio = await axios.get(`${urlBase}${pedido}${id}`);
