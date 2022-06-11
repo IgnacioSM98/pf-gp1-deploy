@@ -35,6 +35,10 @@ const ContenedorFiltrosPro = styled.div`
   margin-right: 2rem;
   margin-bottom: 2rem;
   max-width: 1300px;
+  @media screen and (max-width: 960px) {
+    max-width: none;
+    flex-direction: column;
+  }
 `;
 
 const FiltrosCont = styled.div`
@@ -45,6 +49,10 @@ const FiltrosCont = styled.div`
   border-radius: 15px;
   margin-top: 2rem;
   // box-shadow: 0px 2px 2px 0 #222, 0 2px 2px 0 #222;
+  @media screen and (max-width: 960px) {
+    width: auto;
+    height: auto;
+  }
 `;
 
 const CuadradoFiltro = styled.div`
@@ -56,6 +64,10 @@ const CuadradoFiltro = styled.div`
   flex-direction: column;
   padding: 10px;
   border-radius: 15px;
+  @media screen and (max-width: 960px) {
+    height: auto;
+    float: none;
+  }
 `;
 
 const LetraFiltro = styled.p`
@@ -72,6 +84,20 @@ const ProductosTienda = styled.div`
   grid-template-columns: repeat(3, 1fr);
   grid-gap: 20px 60px;
   margin: 2rem;
+  @media screen and (max-width: 960px) {
+    min-height: none;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    margin: 0;
+    margin-top: 20px;
+  }
+  @media screen and (max-width: 560px) {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
 `;
 
 const Linea = styled.hr`
@@ -97,6 +123,10 @@ const TextoLinea = styled.div`
   margin-top: 2rem;
 
   position: relative;
+  @media screen and (max-width: 960px) {
+    max-width: none;
+    min-width: 0;
+  }
 `;
 
 const Imagen = styled.img`
@@ -156,6 +186,9 @@ const Buscador = styled.input`
     font-size: 18px;
   }
   margin-top: 2em;
+  @media screen and (max-width: 960px) {
+    width: 85%;
+  }
 `;
 
 const Tienda = styled.h1`

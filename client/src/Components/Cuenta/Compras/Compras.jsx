@@ -25,6 +25,9 @@ const Container = styled.div`
   // border: 1px solid darkgrey;
   border-radius: 8px;
   // box-shadow: 0 2px 2px 0 darkgrey, 0 2px 2px 0 #222;
+  @media screen and (max-width: 560px) {
+    margin: 0;
+  }
 `;
 
 export default function Compras() {

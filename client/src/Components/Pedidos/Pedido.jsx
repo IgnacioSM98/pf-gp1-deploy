@@ -78,6 +78,27 @@ const ProductLink = styled(Link)`
   font-size: 18px;
 
   position: relative;
+  @media screen and (max-width: 960px) {
+    width: 85%;
+  }
+  @media screen and (max-width: 560px) {
+    display: contents;
+  }
+`;
+const Span = styled.span`
+  font-size: "8px";
+  @media screen and (max-width: 700px) {
+    display: none;
+  }
+`;
+const Span2 = styled.span`
+  font-size: "8px";
+  @media screen and (max-width: 1000px) {
+    display: none;
+  }
+  @media screen and (max-width: 560px) {
+    display: contents;
+  }
 `;
 
 export default function ItemCompra({ producto }) {
@@ -96,15 +117,15 @@ export default function ItemCompra({ producto }) {
 
           <Nombre>{`Pedido: #${producto.id}`}</Nombre>
 
-          <span style={{ fontSize: "12px", paddingTop: "35px" }}>
+          <Span>
             {/* Llegó el 26 de Mayo */}
             Estado: {producto.Estado}
-          </span>
+          </Span>
 
-          <span style={{ fontSize: "12px" }}>
+          <Span2>
             {/* Llegó el 26 de Mayo */}
             Tipo de Envío: {producto.Tipo_de_envio}
-          </span>
+          </Span2>
 
           {/* <div style={{ position: "absolute", bottom: "25px" }}>
           <Stars puntaje={item.puntaje}></Stars>

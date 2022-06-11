@@ -11,7 +11,63 @@
   position: relative;
   box-shadow: 0 2px 2px 0 darkgray, 2px 2px 2px 2px darkgray;
 }
-
+@media screen and (max-width: 910px) {
+  .container-producto {
+    width: 300px;
+    margin: 5px;
+  }
+}
+@media screen and (max-width: 750px) {
+  .container-producto {
+    width: 700px;
+  }
+}
+@media screen and (max-width: 720px) {
+  .container-producto {
+    width: 650px;
+  }
+}
+@media screen and (max-width: 690px) {
+  .container-producto {
+    width: 650px;
+  }
+}
+@media screen and (max-width: 650px) {
+  .container-producto {
+    width: 600px;
+  }
+}
+@media screen and (max-width: 610px) {
+  .container-producto {
+    width: 530px;
+  }
+}
+@media screen and (max-width: 560px) {
+  .container-producto {
+    width: 450px;
+  }
+}
+@media screen and (max-width: 520px) {
+  .container-producto {
+    width: 420px;
+  }
+}
+@media screen and (max-width: 450px) {
+  .container-producto {
+    width: 390px;
+  }
+}
+@media screen and (max-width: 420px) {
+  .container-producto {
+    width: 320px;
+  }
+}
+@media screen and (max-width: 390px) {
+  .container-producto {
+    width: 250px;
+    left: 10px;
+  }
+}
 .container-producto:hover {
   color: #36885ed1;
   background-color: #f9f9f9;
