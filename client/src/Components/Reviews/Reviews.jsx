@@ -9,7 +9,9 @@ const Container = styled.div`
   height: 184px;
   justify-content: space-around;
   align-items: start;
-  position: relative;
+  // position: relative;
+
+  overflow-y: scroll;
 `;
 
 const Reviews = styled.div`
@@ -49,14 +51,18 @@ export default function Producto({ setReseñas }) {
   return (
     <Container>
       <Titulo>Reseñas de otros usuarios</Titulo>
-      <Button
-        onClick={(e) => {
-          e.preventDefault();
-          setReseñas(true);
-        }}
-      >
-        ver todas
-      </Button>
+
+      {reviews.length && (
+        <Button
+          onClick={(e) => {
+            e.preventDefault();
+            setReseñas(true);
+          }}
+        >
+          ver todas
+        </Button>
+      )}
+
       <Reviews>
         {reviews.length ? (
           reviews.slice(0, 4).map((review) => {

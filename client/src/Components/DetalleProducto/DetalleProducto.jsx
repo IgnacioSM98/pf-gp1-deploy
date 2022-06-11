@@ -62,6 +62,9 @@ const Reviews = styled.div`
 `;
 
 const ContainerReviews = styled.div`
+  width: 100%;
+  position: relative;
+
   @media screen and (max-width: 500px) {
     display: flex;
     flex_direction: row;
@@ -313,7 +316,8 @@ export default function DetalleProducto({ contacto }) {
   var rating = 0;
 
   // Sumarizamos la cantidad de estrellas entre todas las reviews
-  reviews[0]
+  console.log(reviews, "rompe?");
+  reviews
     ? reviews.map((reviews) => (rating += reviews.puntaje))
     : (rating = 1);
 
