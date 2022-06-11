@@ -12,6 +12,7 @@ const Contenedor = styled.div`
   align-items: center;
   justify-content: center;
   width: 100%;
+
   height: 90vh;
   padding-top: 5%;
   background-image: url("https://media.diepresse.com/images/uploads/8/7/c/5486716/QATAR-COFFEE-CULTURE_1535388239909509.jpg");
@@ -104,6 +105,7 @@ const Productos = styled.div`
   background: rgb(255 255 255 / 46%);
   border-radius: 10px;
   border-radius: 10px;
+
   h3 {
     font-size: 22px;
     font-family: Poppins;
@@ -138,6 +140,7 @@ const ContenedorProducto = styled.div`
   display: flex;
   justify-content: space-between;
   margin-bottom: 15px;
+
   h3 {
     width: 200px;
     text-align: left;
@@ -169,6 +172,7 @@ export default function Checkout({ contacto }) {
   const [precioTotal, setPrecioTotal] = useState(0);
   const [flag, setFlag] = useState(false);
   const [userId, setUserId] = useState();
+
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -176,12 +180,12 @@ export default function Checkout({ contacto }) {
   }, [dispatch]);
 
   useEffect(() => {
-    if (usuarios.length > 0) {
+    if (usuarios.length > 0 && userInfo) {
       const usuario = usuarios.find(
         (usuario) => usuario.mail === userInfo.email
       );
 
-      setUserId(usuario.id);
+      setUserId(usuario?.id);
     } else {
       navigate(-1);
     }
@@ -358,6 +362,7 @@ export default function Checkout({ contacto }) {
                     name="mail"
                     id="emailAddress"
                     type="email"
+                    disabled
                     value={input.mail}
                     onChange={(e) => handleChange(e)}
                     required
