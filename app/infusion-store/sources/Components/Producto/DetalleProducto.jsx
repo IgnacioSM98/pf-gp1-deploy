@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Text, Button, View, StyleSheet, Image } from "react-native";
 import { AntDesign, Octicons } from "@expo/vector-icons";
+import { useNavigation } from "@react-navigation/native";
 
 const styles = StyleSheet.create({
   contProd: {
@@ -124,6 +125,7 @@ const styles = StyleSheet.create({
 const DetalleProducto = ({ route }) => {
   const { id } = route.params;
   const [data, setData] = useState([]);
+  const navigation = useNavigation();
 
   useEffect(() => {
     fetch(`https://proyecto-final-gp1.herokuapp.com/producto/${id}`)
@@ -133,6 +135,7 @@ const DetalleProducto = ({ route }) => {
       })
       .catch((error) => console.error(error));
   }, [id]);
+
   return (
     <View style={styles.contProd}>
       <AntDesign
@@ -140,11 +143,17 @@ const DetalleProducto = ({ route }) => {
         name="arrowleft"
         size={24}
         color="black"
+        onPress={() => {
+          navigation.goBack();
+        }}
       />
+
       <Octicons style={styles.favoritos} name="heart" size={24} color="black" />
+
       <View style={styles.contFoto}>
         <Image source={{ uri: data.imagen }} style={styles.img} />
       </View>
+
       <View style={styles.contDatos}>
         <Text style={styles.nombre}>{data.nombre}</Text>
         <Text style={styles.descripcion}>{data.descripcion}</Text>
