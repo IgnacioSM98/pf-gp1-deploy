@@ -18,7 +18,6 @@ import cards from "../../Images/Cards/index";
 import { Relacionado } from "../index";
 
 const Container = styled.div`
-  // height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -52,6 +51,21 @@ const Reviews = styled.div`
   height: 222px;
   @media screen and (max-width: 500px) {
     width: 95%;
+    height: auto;
+    justify-content: flex-start;
+    flex-direction: column;
+    align-items: center;
+  }
+`;
+
+const ContainerReviews = styled.div`
+  @media screen and (max-width: 500px) {
+    display: flex;
+    flex_direction: row;
+    width: 95%;
+    justify-content: center;
+    align-items: center;
+    height: 222px;
   }
 `;
 
@@ -59,7 +73,6 @@ const RelacionadosContainer = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
-
   height: 352px;
   width: 95%;
 `;
@@ -69,7 +82,6 @@ const Image = styled.img`
   max-height: 650px;
   width: 50%;
   max-width: 650px;
-  // margin: 50px;
   object-fit: contain;
   margin-top: 90px;
   @media screen and (max-width: 960px) {
@@ -164,7 +176,6 @@ const Boton = styled.button`
   height: 40px;
   width: ${(props) => (props.width ? props.width : "100px")};
   cursor: pointer;
-  // padding: 2%;
 `;
 
 const Cantidad = styled.button`
@@ -174,7 +185,6 @@ const Cantidad = styled.button`
   border-radius: 8px;
   border-width: 1.5px;
   border-color: black;
-
   margin: 5px;
   height: 40px;
   width: 40px;
@@ -241,7 +251,6 @@ const Span = styled.span`
   font-size: 13px;
   font-weight: 600;
   text-decoration: underline;
-
   cursor: pointer;
 `;
 
@@ -254,7 +263,6 @@ const Titulo = styled.span`
 
 const Relacionados = styled.div`
   display: flex;
-
   // text-align: initial;
   // margin-left: 10px;
   // font-size: 20px;
@@ -438,6 +446,7 @@ export default function DetalleProducto() {
               ) : null}
             </div>
             <Bar />
+
             <Botones>
               {detalle.stock ? (
                 <div>
@@ -482,13 +491,18 @@ export default function DetalleProducto() {
           </Bottom>
         </Body>
       </Details>
+
       <Bar style={{ width: "100%" }} />
+
       <Reviews>
         {/* Acá sólo se valida que esté la sesión iniciada */}
         {user && <CrearReview id={id} />}
-        <ProductReviews setReseñas={setReseñas} />
-        {reseñas && <Reseñas setReseñas={setReseñas} />}
+        <ContainerReviews>
+          <ProductReviews setReseñas={setReseñas} />
+          {reseñas && <Reseñas setReseñas={setReseñas} />}
+        </ContainerReviews>
       </Reviews>
+
       <Bar style={{ width: "100%" }} />
 
       <RelacionadosContainer>

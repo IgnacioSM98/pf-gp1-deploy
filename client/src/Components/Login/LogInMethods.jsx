@@ -15,7 +15,6 @@ const Container = styled.div`
   background-repeat: no-repeat;
   background-position: center;
   font-family: Poppins;
-
   height: 90vh;
   display: flex;
   flex-direction: row;
@@ -30,7 +29,6 @@ const SignIn = styled.div`
   align-items: center;
   justify-content: center;
   position: relative;
-
   background-color: #36885ed1;
   border-radius: 20px 0px 0px 20px;
   width: 35%;
@@ -43,7 +41,6 @@ const SignUp = styled.form`
   align-items: center;
   justify-content: center;
   position: relative;
-
   background-color: white;
   border-radius: 0px 20px 20px 0px;
   width: 45%;
@@ -53,7 +50,6 @@ const SignUp = styled.form`
 const Titulo = styled.h1`
   position: absolute;
   top: 10px;
-
   text-align: center;
   font-size: 30px;
   font-family: Poppins;
@@ -63,17 +59,11 @@ const Titulo = styled.h1`
 `;
 
 const Apps = styled.div`
-  // display: flex;
-  // margin-left: 3rem;
-  // margin-bottom: 1rem;
   width: 50%;
   margin: 20px;
 `;
 
 const BotonGoogle = styled.img`
-  // display: flex;
-  // margin-left: 3rem;
-  // margin-bottom: 1rem;
   width: 30px;
   cursor: pointer;
 `;
@@ -85,7 +75,6 @@ const Boton = styled.button`
   border: none;
   position: absolute;
   bottom: 40px;
-
   color: ${(props) => props.color};
   border-radius: 6px;
   font-size: 16px;
@@ -104,9 +93,10 @@ const Form = styled.form`
 const Error = styled.p`
   position: absolute;
   bottom: -15px;
+  font-weigth: 600;
   left: 5px;
   color: #ff000091;
-  font-size: 10px;
+  font-size: 13px;
 `;
 
 export default function Login({ setUser }) {
@@ -134,36 +124,31 @@ export default function Login({ setUser }) {
   const googleSignIn = () => {
     const provider = new GoogleAuthProvider();
 
-    signInWithPopup(authentication, provider)
-      .then(async (res) => {
-        const user = { ...res.user };
+    signInWithPopup(authentication, provider).then(async (res) => {
+      const user = { ...res.user };
 
-        await axios
-          .get("https://proyecto-final-gp1.herokuapp.com/usuarios")
-          .then(
-            (res) =>
-              res.data.filter((usuario) => usuario.mail === user.email)[0]
-          )
-          .then((res) => {
-            user.rol = res.isAdmin ? "admin" : "user";
-            user.visualizacion = res.isAdmin ? "admin" : "user";
-          })
-          .catch(() => {
-            user.rol = "user";
-            user.visualizacion = "user";
-          });
+      await axios
+        .get("https://proyecto-final-gp1.herokuapp.com/usuarios")
+        .then(
+          (res) => res.data.filter((usuario) => usuario.mail === user.email)[0]
+        )
+        .then((res) => {
+          user.rol = res.isAdmin ? "admin" : "user";
+          user.visualizacion = res.isAdmin ? "admin" : "user";
+        })
+        .catch(() => {
+          user.rol = "user";
+          user.visualizacion = "user";
+        });
 
-        localStorage.setItem("user", JSON.stringify(user));
+      localStorage.setItem("user", JSON.stringify(user));
 
-        dispatch(setUserInfo(user));
+      dispatch(setUserInfo(user));
 
-        setUser(user);
-        dispatch(getUser(user.email));
-        navigate(-1);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+      setUser(user);
+      dispatch(getUser(user.email));
+      navigate(-1);
+    });
   };
 
   const createUser = (mail, pass, nombre, apellido) => {
@@ -200,9 +185,6 @@ export default function Login({ setUser }) {
             dispatch(postUsuario(body));
             navigate(-1);
           });
-      })
-      .catch((err) => {
-        console.log(err, "error al crear cuenta");
       });
   };
 
@@ -238,7 +220,11 @@ export default function Login({ setUser }) {
         navigate(-1);
       })
       .catch((err) => {
-        console.log(err);
+        setError({
+          ...error,
+          login: { contraseña: "usuario o contraseña no valido" },
+        });
+        console.log(error);
       });
   };
 

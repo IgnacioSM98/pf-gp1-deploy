@@ -8,6 +8,12 @@ const Pages = styled.div`
   justify-content: center;
   align-content: center;
   margin-right: 4em;
+  @media screen and (max-width: 960px) {
+    max-width: none;
+    min-width: none;
+    margin-top: 10px;
+    margin-right: auto;
+  }
 `;
 
 const Page = styled.button`
@@ -22,7 +28,6 @@ const Page = styled.button`
   border-radius: 4px;
   font-weight: bolder;
   cursor: pointer;
-
   &: hover {
     background-color: rgb(195, 195, 195);
   }
@@ -32,8 +37,6 @@ export default function Paginado({ pages, setPageSelected, pageSelected }) {
   const handleOnClick = (e) => {
     e.preventDefault();
     setPageSelected(e.target.value);
-
-    // window.scrollTo(0, 0);
   };
 
   const getArray = (pages) => {

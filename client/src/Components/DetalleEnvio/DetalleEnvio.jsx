@@ -20,7 +20,6 @@ const Container = styled.div`
   padding-top: 10%;
   margin: auto;
   gap: 4em;
-
   position: relative;
 `;
 
@@ -73,6 +72,7 @@ const Linea = styled.div`
   top: 31px;
   left: 5.5px;
 `;
+
 const ParrafoLi = styled.p`
   margin: 0.4em 0em 0em 1em;
   text-align: left;
@@ -90,21 +90,25 @@ const Domicilio = styled.div`
   box-shadow: 3px 3px 12px #8080807a;
   position: relative;
 `;
+
 const Lugar = styled.div`
   display: flex;
   margin: 0.2em 0em 0em 1.8em;
   gap: 3px;
 `;
+
 const ParrafoLugar = styled.p`
   text-align: left;
   color: #424242;
 `;
+
 const LogoGPS = styled.img`
   width: 6%;
   position: absolute;
   top: 10px;
   right: 20px;
 `;
+
 const Codigo = styled.div`
   display: flex;
   flex-direction: column;
@@ -127,17 +131,18 @@ const Compra = styled.div`
   display: flex;
   flex-direction: column;
   width: 350px;
-  // height: 100px;
   padding-bottom: 1em;
   border: 1px solid black;
   border-radius: 16px;
   box-shadow: 3px 3px 12px #8080807a;
 `;
+
 const Titulo = styled.h3`
   margin: 0.5em 0em 0em 1.5em;
   text-align: left;
   color: #424242;
 `;
+
 const Parrafo = styled.p`
   margin: 0.5em 0em 0em 1.8em;
   text-align: left;
@@ -149,8 +154,6 @@ const ModificarEstados = styled.select`
   height: 40px;
   border: 1px solid black;
   border-radius: 8px;
-  // box-shadow: 6px 6px 12px #8080807a;
-
   position: absolute;
   top: 8%;
   right: 150px;
@@ -168,9 +171,9 @@ const Producto = styled.p`
 `;
 
 export default function DetalleEnvio() {
-  let dispatch = useDispatch();
-  let { id } = useParams();
-  let detalle = useSelector((state) => state.detalleEnvio);
+  const dispatch = useDispatch();
+  const { id } = useParams();
+  const detalle = useSelector((state) => state.detalleEnvio);
   const user = useSelector((state) => state.userInfo?.visualizacion);
 
   useEffect(() => {
@@ -189,25 +192,25 @@ export default function DetalleEnvio() {
       confirmButtonColor: "green",
       cancelButtonColor: "darkgrey",
       confirmButtonText: "Si",
-    })
-      .then((result) => {
-        if (result.isConfirmed) {
-          Swal.fire({
-            text: "El pedido se actualizó con éxito",
-            icon: "success",
-            iconColor: "green",
-            color: "#222",
-            showConfirmButton: false,
-            timer: "1500",
-            toast: true,
-          });
-          dispatch(actualizarEstadoEnvio(id, { estado }, detalle.productos));
-          if (detalle.usuarioId !== undefined) {
-            dispatch(mailAdmin(detalle.usuarioId, { estado }));
-          }
+    }).then((result) => {
+      if (result.isConfirmed) {
+        Swal.fire({
+          text: "El pedido se actualizó con éxito",
+          icon: "success",
+          iconColor: "green",
+          color: "#222",
+          showConfirmButton: false,
+          timer: "1500",
+          toast: true,
+        });
+
+        dispatch(actualizarEstadoEnvio(id, { estado }, detalle.productos));
+
+        if (detalle.usuarioId !== undefined) {
+          dispatch(mailAdmin(detalle.usuarioId, { estado }));
         }
-      })
-      .catch((err) => console.log(err));
+      }
+    });
   }
 
   useEffect(() => {
@@ -232,7 +235,6 @@ export default function DetalleEnvio() {
       )}
 
       {user === "admin" && (
-        // <Formulario onSubmit={handleSubmit}>
         <ModificarEstados onChange={handleInputChange}>
           <option name="estados">Modificar estado</option>
 
@@ -242,12 +244,14 @@ export default function DetalleEnvio() {
           >
             En preparación
           </OpcionEstado>
+
           <OpcionEstado
             disabled={detalle.Estado === "En camino" ? true : false}
             value="En camino"
           >
             En camino
           </OpcionEstado>
+
           <OpcionEstado
             disabled={
               detalle.Estado === "En punto de entrega/poder del correo"
@@ -258,6 +262,7 @@ export default function DetalleEnvio() {
           >
             En punto de entrega/poder del correo
           </OpcionEstado>
+
           <OpcionEstado
             disabled={detalle.Estado === "Entregado" ? true : false}
             value="Entregado"
@@ -265,8 +270,8 @@ export default function DetalleEnvio() {
             Entregado
           </OpcionEstado>
         </ModificarEstados>
-        // </Formulario>
       )}
+
       <Envio className="envio">
         <Estado className="Estado">
           <Titulo>Estado de envio</Titulo>

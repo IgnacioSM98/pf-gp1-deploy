@@ -15,24 +15,16 @@ const Button = styled.button`
   padding: 7px;
   border: none;
   background-color: transparent;
-
   cursor: pointer;
-
-  &: hover {
-    // background-color: red;
-  }
 `;
 
 const Crear = styled.button`
-  // top: 660px;
   top: 0;
   right: 0;
   position: absolute;
   width: 80px;
   background: #37563d;
-
   display: block;
-
   height: 30px;
   border: none;
   color: white;

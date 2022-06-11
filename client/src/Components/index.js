@@ -44,6 +44,7 @@ import Consultas from "./Cuenta/Consultas/Consultas";
 import NotFound from "./NotFound/NotFound";
 import UseOnScreen from "./UseOnScreen/UseOnScreen";
 import AgregarCategorias from "./AgregarCategorias/AgregarCategorias";
+import BuscarPedido from "./BuscarPedido/BuscarPedido";
 
 export {
   Home,
@@ -92,4 +93,5 @@ export {
   NotFound,
   UseOnScreen,
   AgregarCategorias,
+  BuscarPedido,
 };

@@ -14,11 +14,10 @@ const Container = styled.div`
 
 const Reviews = styled.div`
   display: flex;
-  // flex-direction: row;
   width: 100%;
   @media screen and (max-width: 500px) {
     width: 95%;
-    flex-direction: inherit;
+    flex-direction: row;
   }
 `;
 
@@ -35,11 +34,9 @@ const Button = styled.button`
   position: absolute;
   top: 0;
   right: 0;
-
   border: none;
   background-color: transparent;
   text-decoration: underline;
-
   cursor: pointer;
   @media screen and (max-width: 500px) {
     margin-left: 3px;

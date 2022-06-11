@@ -41,6 +41,7 @@ const Boton = styled.button`
     transform: translateY(2px);
   }
 `;
+
 export default function BuscarPedido({ pedido, pedidos, setPedido }) {
   const [buscar, setBuscar] = useState("");
 

@@ -6,40 +6,49 @@ import {
   Notificaciones,
   Seguridad,
   Consultas,
+  Reseñas,
+  Perfil,
 } from "../index";
-import Perfil from "./AjustesPerfil/Perfil";
-import Reseñas from "./Reseñas/Reseñas";
 
 const Container = styled.div`
   display: flex;
-  // flex-direction: column;
   height: 100vh;
   width: 100%;
   padding-top: 8%;
   background-color: white;
   justify-content: center;
-  // align-items: center;
+  @media screen and (max-width: 560px) {
+    height: auto;
+    display: flex;
+    flex-direction: column;
+  }
 `;
 
 const Informacion = styled.div`
   width: 60%;
   height: 100%;
-  // padding-top: 40px;
+  @media screen and (max-width: 960px) {
+    width: 100%;
+  }
 `;
 
 const Options = styled.div`
   display: flex;
   flex-direction: column;
-  // justify-content: space-between;
   width: 25%;
   height: 80vh;
   background-color: white;
   border-radius: 10px;
   border: 2px solid black;
-  // box-shadow: 0 2px 2px 0 #222, 0 2px 2px 0 #222;
   margin-right: 3rem;
-
   position: relative;
+  @media screen and (max-width: 960px) {
+    width: 60%;
+  }
+  @media screen and (max-width: 560px) {
+    height: 90vh;
+    width: 100%;
+  }
 `;
 
 const ContenedorTitulo = styled.div`
@@ -52,8 +61,6 @@ const ContenedorTitulo = styled.div`
   margin: 15px;
   margin-top: 30px;
   border-radius: 3px;
-  // box-shadow: 0 2px 2px 0 #222, 0 2px 2px 0 #222;
-
   margin-bottom: 40px;
 `;
 
@@ -67,35 +74,25 @@ const Titulo = styled.p`
 const Botones = styled.div`
   display: flex;
   flex-direction: column;
-  // align-items: start;
-  // height: 60%;
   border-bottom: 1px solid black;
   width: 100%;
-  // margin-top: 5rem;
 `;
 
 const Boton = styled.button`
   width: 100%;
   height: 60px;
-
   text-align: start;
   padding-left: 15px;
-
   font-size: 18px;
   font-family: Poppins;
-
   background-color: white;
   color: black;
-
   border: none;
   border-top: 1px solid black;
-  // border-bottom: 2px solid black;
-
   &:hover {
     background-color: black;
     color: white;
   }
-
   cursor: pointer;
 `;
 
@@ -108,15 +105,8 @@ const Sesion = styled.button`
   font-family: Poppins;
   background-color: #222;
   color: white;
-  // border: 2px solid black;
   border: none;
-  // cursor: pointer;
-
   border-radius: 0px 0px 8px 8px;
-
-  // &:hover {
-  //   background-color: black;
-  // }
 `;
 
 const Categorias = styled.div`
@@ -135,7 +125,7 @@ const Categoria = styled.div`
   width: 100%;
 `;
 
-function Cuenta() {
+export default function Cuenta() {
   const componentes = {
     perfil: Perfil,
     compras: Compras,
@@ -163,25 +153,32 @@ function Cuenta() {
         <ContenedorTitulo>
           <Titulo>Infusion Store</Titulo>
         </ContenedorTitulo>
+
         <Botones>
           <Boton onClick={handleOnClick} value="perfil">
             Ajustes de Perfil
           </Boton>
+
           <Boton onClick={handleOnClick} value="compras">
             Mis Compras
           </Boton>
+
           <Boton onClick={handleOnClick} value="reseñas">
             Reseñas
           </Boton>
+
           <Boton onClick={handleOnClick} value="favoritos">
             Favoritos
           </Boton>
+
           <Boton onClick={handleOnClick} value="notificaciones">
             Notificaciones
           </Boton>
+
           <Boton onClick={handleOnClick} value="seguridad">
             Seguridad
           </Boton>
+
           <Boton onClick={handleOnClick} value="consultas">
             Consultanos!
           </Boton>
@@ -189,27 +186,12 @@ function Cuenta() {
 
         <Sesion>Mi Cuenta</Sesion>
       </Options>
+
       <Informacion>
         <Categorias>
-          <Categoria>
-            {componente && <ComponenteDinamico />}
-            {/* <Secciones>Historial de compras</Secciones> */}
-            {/* {carrito[0] && (
-              <Items>
-                {carrito.map((el) => {
-                  return <ItemCompra key={el.id} producto={el} />;
-                })}
-              </Items>
-            )} */}
-          </Categoria>
-
-          <Categoria>
-            {/* <Secciones>Productos recomendados</Secciones> */}
-          </Categoria>
+          <Categoria>{componente && <ComponenteDinamico />}</Categoria>
         </Categorias>
       </Informacion>
     </Container>
   );
 }
-
-export default Cuenta;

@@ -7,7 +7,6 @@ const Container = styled.div`
   position: relative;
   justify-content: start;
   align-items: center;
-  // margin-top: 30px;
 `;
 
 const Imagen = styled.img`
@@ -31,11 +30,16 @@ const ContenedorInfo = styled.div`
 const Nombre = styled.p`
   font-family: Poppins;
   font-size: 18px;
-  // margin-top: 1.5rem;
   font-weight: 800;
   width: 260px;
-
   text-align: start;
+  @media screen and (max-width: 1000px) {
+    display: none;
+  }
+  @media screen and (max-width: 560px) {
+    display: contents;
+    font-size: 15px;
+  }
 `;
 
 const PrecioUnitario = styled.p`
@@ -45,12 +49,15 @@ const PrecioUnitario = styled.p`
   position: absolute;
   right: 27.5%;
   top: 30%;
+  @media screen and (max-width: 560px) {
+    font-size: 15px;
+    right: 5%;
+  }
 `;
 
 const ProductLink = styled(Link)`
   height: auto;
   width: auto;
-
   color: black;
   font-size: 18px;
 `;

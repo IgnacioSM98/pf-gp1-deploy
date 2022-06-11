@@ -14,8 +14,9 @@ import {
 } from "../../Redux/actions";
 
 const LinkProduct = styled(Link)`
+  margin: 0px 2px;
   text-decoration: none;
-  width: 240px;
+  width: auto;
 `;
 
 const Button = styled.button`
@@ -24,7 +25,6 @@ const Button = styled.button`
   margin: 2px 5%;
   background-color: white;
   border: none;
-
   cursor: pointer;
 `;
 
@@ -53,7 +53,6 @@ const Cantidad = styled.button`
   border-width: 1.5px;
   border-color: black;
   border: none;
-
   margin: 0px;
   height: 28px;
   width: 28px;
@@ -89,7 +88,6 @@ const Boton = styled.button`
   position: absolute;
   bottom: 10px;
   right: 10px;
-
   &:hover {
     background-color: #36885ed1;
     color: white;
@@ -108,13 +106,11 @@ const ManejoStock = styled.div`
   box-shadow: 0 2px 2px 0 #222, 0 2px 2px 0 #222;
   border: none;
   outline: none;
-  // padding: 5px 10px 5px 10px;
   margin-top: 15px;
   position: absolute;
   bottom: 10px;
   right: 10px;
   cursor: auto;
-
   display: flex;
   justify-content: space-evenly;
   align-items: center;
@@ -126,18 +122,15 @@ const ContenedorFav = styled.div`
   z-index: 3;
   left: 7%;
   top: 2%;
-
   p {
     color: #5a9d7b;
     font-size: 25px;
     margin-top: 5px;
   }
-
   label {
     color: #5a9d7b;
     font-weight: bold;
     font-size: 25px;
-
     margin-top: 5px;
   }
 `;
@@ -156,7 +149,7 @@ export default function Producto({
   const dispatch = useDispatch();
 
   const admin = useSelector((state) => state.userInfo?.visualizacion);
-
+  const user = useSelector((state) => state.userInfo);
   const favoritos = useSelector((state) => state.favoritos);
 
   const [showOptions, setOptions] = useState({ button: false, popup: false });
@@ -169,11 +162,11 @@ export default function Producto({
   );
 
   useEffect(() => {
+    //taba comentado en develop el dispatch, why?
     dispatch(getUsuarios());
     setFlag(cantidadCarrito?.cantidad ? true : false);
     setCantidad(cantidadCarrito?.cantidad ? cantidadCarrito.cantidad : 1);
-    // eslint-disable-next-line
-  }, [cantidadCarrito]);
+  }, [dispatch, cantidadCarrito]);
 
   const handleEdit = () => {
     navigate(`/edit/${id}`);
@@ -231,13 +224,15 @@ export default function Producto({
           if (admin === "admin") setOptions({ popup: false, button: false });
         }}
       >
-        <ContenedorFav>
-          {favoritos.find((fav) => fav.id === id) ? (
-            <p onClick={(e) => handleFav(e)}>♥</p>
-          ) : (
-            <label onClick={(e) => handleFav(e)}>♡</label>
-          )}
-        </ContenedorFav>
+        {user && (
+          <ContenedorFav>
+            {favoritos.find((fav) => fav.id === id) ? (
+              <p onClick={(e) => handleFav(e)}>♥</p>
+            ) : (
+              <label onClick={(e) => handleFav(e)}>♡</label>
+            )}
+          </ContenedorFav>
+        )}
 
         <div className="container-foto">
           <img src={imagen} className="foto" alt="foto" />
@@ -301,25 +296,16 @@ export default function Producto({
 
           {flag === true ? (
             <ManejoStock onClick={(e) => e.preventDefault()}>
-              <Cantidad
-                name="resta"
-                onClick={cambiarCantidad}
-                // disabled={boton.resta}
-              >
+              <Cantidad name="resta" onClick={cambiarCantidad}>
                 -
               </Cantidad>
               <Stock>{cantidad}</Stock>
-              <Cantidad
-                name="suma"
-                onClick={cambiarCantidad}
-                // disabled={boton.suma}
-              >
+              <Cantidad name="suma" onClick={cambiarCantidad}>
                 +
               </Cantidad>
             </ManejoStock>
           ) : (
             <Boton
-              // className="boton-agregar"
               onClick={(e) => {
                 setFlag(true);
                 agregarAlCarrito(e);

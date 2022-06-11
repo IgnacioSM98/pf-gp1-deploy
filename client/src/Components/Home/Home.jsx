@@ -1,16 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { Boton, Producto, UseOnScreen } from "../index";
+import { Boton, Producto, UseOnScreen, Footer, ScrollToTop } from "../index";
 import styled from "styled-components";
 import "./Home.css";
-import Footer from "../Footer/Footer";
-import ScrollToTop from "../ScrollToTop/ScrollToTop";
-import { getProductos } from "../../Redux/actions";
+import { getProductos, getFavoritos } from "../../Redux/actions";
 
 const Container = styled.div`
   height: 100vh;
-  // margin-top: 50px;
 `;
 
 const Categoria = styled.div`
@@ -33,8 +30,6 @@ const Image = styled.img`
   height: 500px;
   object-fit: cover;
   opacity: 0.5;
-
-  // margin-top: 50px;
   @media screen and (max-width: 960px) {
     display: flex;
     height: 30vh;
@@ -100,11 +95,16 @@ export default function Home({ contacto }) {
   const [destacados, setDestacados] = useState();
   const [width, setWidth] = useState(window.innerWidth);
   const isVisible = UseOnScreen(contacto);
+  const userInfo = useSelector((state) => state.userInfo);
 
   useEffect(() => {
     localStorage.removeItem("productos");
     dispatch(getProductos());
   }, [dispatch]);
+
+  useEffect(() => {
+    if (userInfo) dispatch(getFavoritos(userInfo?.uid));
+  }, [dispatch, userInfo]);
 
   useEffect(() => {
     localStorage.setItem("productos", JSON.stringify(productos));
@@ -158,13 +158,6 @@ export default function Home({ contacto }) {
           <Boton texto="Mas productos" />
         </Link>
       </Categoria>
-
-      {/* <Categoria>
-        <P>BLOG</P>
-        <Link to="/blog">
-          <Boton texto="Mas notas" />
-        </Link>
-      </Categoria> */}
 
       <Footer contacto={contacto} />
       {isVisible && <ScrollToTop />}
