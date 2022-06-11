@@ -12,6 +12,9 @@ import {
   Reviews as ProductReviews,
   Stars,
   Reseñas,
+  Footer,
+  ScrollToTop,
+  UseOnScreen,
 } from "../index";
 import styled from "styled-components";
 import cards from "../../Images/Cards/index";
@@ -269,13 +272,15 @@ const Relacionados = styled.div`
   // font-weight: 600;
 `;
 
-export default function DetalleProducto() {
+export default function DetalleProducto({ contacto }) {
   const { id } = useParams();
   const dispatch = useDispatch();
   const location = useLocation();
 
   // Recuperamos el tipo de visualización/permiso del usuario
   const user = useSelector((state) => state.userInfo?.visualizacion);
+
+  const isVisible = UseOnScreen(contacto);
 
   // Validamos si hay sesion iniciada
   // const user = localStorage.getItem("user") ? true : false;
@@ -299,6 +304,10 @@ export default function DetalleProducto() {
   useEffect(() => {
     setRelacionados(productos);
   }, [productos]);
+
+  useEffect(() => {
+    console.log(contacto, "wuwu");
+  }, [contacto]);
 
   // Creamos la variable a utilizar
   var rating = 0;
@@ -528,6 +537,9 @@ export default function DetalleProducto() {
       </RelacionadosContainer>
 
       <Bar style={{ width: "100%" }} />
+
+      <Footer contacto={contacto} />
+      {isVisible && <ScrollToTop />}
     </Container>
   ) : (
     <></>
