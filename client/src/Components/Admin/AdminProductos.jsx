@@ -199,7 +199,14 @@ export default function AdminProductos() {
                 </Stock>
               </ContenedorDatos>
 
-              <Boton onClick={() => navigate(`/edit/${el.id}`)}>Editar</Boton>
+              <Boton
+                onClick={(e) => {
+                  e.preventDefault();
+                  navigate(`/edit/${el.id}`);
+                }}
+              >
+                Editar
+              </Boton>
             </ProdAdmin>
           </Link>
         ))}
