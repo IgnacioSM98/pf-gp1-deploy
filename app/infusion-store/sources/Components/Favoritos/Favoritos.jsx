@@ -15,6 +15,9 @@ const styles = StyleSheet.create({
     left: "35%",
     fontSize: 20,
   },
+  espacio:{
+    marginTop: 45,
+  }
 });
 
 export default function Favoritos({ navigation }) {
@@ -30,6 +33,7 @@ export default function Favoritos({ navigation }) {
 
   return (
     <View>
+      <View style={styles.espacio}></View>
       <FlatList
         data={favoritos}
         renderItem={({ item }) => (
