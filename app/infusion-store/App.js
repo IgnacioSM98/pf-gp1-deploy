@@ -11,6 +11,7 @@ import {
   Cuenta,
   DetalleProducto,
 } from "./sources/Components/index.js";
+import { StatusBar } from "react-native";
 import { useState, useEffect } from "react";
 
 // ICONOS - Libreria: https://icons.expo.fyi
@@ -38,6 +39,8 @@ const fetchFonts = async () => {
 export default function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [isBiometricAvailable, setIsBiometricAvailable] = useState(false);
+
+  StatusBar.setBarStyle("dark-content", true);
 
   useEffect(() => {
     fetchFonts();
