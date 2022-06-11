@@ -8,7 +8,6 @@ import {
 import {
   Home,
   Tienda,
-  Blog,
   Cuenta,
   Carrito,
   CrearProducto,
@@ -43,7 +42,11 @@ function App() {
         <Routes>
           <Route exact path={"/"} element={<Home contacto={contacto} />} />
 
-          <Route exact path="/productos/:id" element={<DetalleProducto />} />
+          <Route
+            exact
+            path="/productos/:id"
+            element={<DetalleProducto contacto={contacto} />}
+          />
 
           <Route
             exact
@@ -51,17 +54,17 @@ function App() {
             element={<Tienda contacto={contacto} />}
           />
 
-          <Route exact path="/productos/:id" element={<DetalleProducto />} />
-
-          <Route exact path="/edit/:id" element={<CrearProducto />} />
+          <Route
+            exact
+            path="/edit/:id"
+            element={<CrearProducto contacto={contacto} />}
+          />
 
           <Route
             exact
             path="/carrito"
             element={<Carrito contacto={contacto} />}
           />
-
-          <Route exact path="/blog" element={<Blog contacto={contacto} />} />
 
           <Route exact path="/cuenta" element={<Cuenta />} />
 
@@ -70,14 +73,24 @@ function App() {
             path="/checkout"
             element={<Checkout contacto={contacto} />}
           />
+
           <Route exact path="/admin" element={<Admin />} />
-          <Route exact path="/pedido/:id" element={<DetalleEnvio />} />
+
+          <Route
+            exact
+            path="/pedido/:id"
+            element={<DetalleEnvio contacto={contacto} />}
+          />
           <Route
             exact
             path="/admin/eliminar/categorias"
             element={<EliminarCategoria />}
           />
-          <Route exact path="/admin/crear" element={<CrearProducto />} />
+          <Route
+            exact
+            path="/admin/crear"
+            element={<CrearProducto contacto={contacto} />}
+          />
           <Route
             exact
             path="/login"

@@ -6,10 +6,10 @@ import {
   quitarItem,
   mailAdmin,
 } from "../../Redux/actions";
+import { Footer, ScrollToTop, UseOnScreen, Loader } from "../index";
 import { useParams, Link } from "react-router-dom";
 import styled from "styled-components";
 import Swal from "sweetalert2";
-import Loader from "../Loader/Loader";
 
 const Container = styled.div`
   width: 90%;
@@ -170,11 +170,12 @@ const Producto = styled.p`
   color: #424242;
 `;
 
-export default function DetalleEnvio() {
+export default function DetalleEnvio({ contacto }) {
   const dispatch = useDispatch();
   const { id } = useParams();
   const detalle = useSelector((state) => state.detalleEnvio);
   const user = useSelector((state) => state.userInfo?.visualizacion);
+  const isVisible = UseOnScreen(contacto);
 
   useEffect(() => {
     dispatch(getDetalleEnvio(id));
@@ -227,211 +228,216 @@ export default function DetalleEnvio() {
   };
 
   return detalle.id ? (
-    <Container>
-      {user === "admin" && (
-        <h1 style={{ position: "absolute", top: "8%", left: "160px" }}>
-          {`Pedido numero: #2022${detalle.id}`}
-        </h1>
-      )}
+    <>
+      <Container>
+        {user === "admin" && (
+          <h1 style={{ position: "absolute", top: "8%", left: "160px" }}>
+            {`Pedido numero: #2022${detalle.id}`}
+          </h1>
+        )}
 
-      {user === "admin" && (
-        <ModificarEstados onChange={handleInputChange}>
-          <option name="estados">Modificar estado</option>
+        {user === "admin" && (
+          <ModificarEstados onChange={handleInputChange}>
+            <option name="estados">Modificar estado</option>
 
-          <OpcionEstado
-            disabled={detalle.Estado === "En preparación" ? true : false}
-            value="En preparación"
-          >
-            En preparación
-          </OpcionEstado>
+            <OpcionEstado
+              disabled={detalle.Estado === "En preparación" ? true : false}
+              value="En preparación"
+            >
+              En preparación
+            </OpcionEstado>
 
-          <OpcionEstado
-            disabled={detalle.Estado === "En camino" ? true : false}
-            value="En camino"
-          >
-            En camino
-          </OpcionEstado>
+            <OpcionEstado
+              disabled={detalle.Estado === "En camino" ? true : false}
+              value="En camino"
+            >
+              En camino
+            </OpcionEstado>
 
-          <OpcionEstado
-            disabled={
-              detalle.Estado === "En punto de entrega/poder del correo"
-                ? true
-                : false
-            }
-            value="En punto de entrega/poder del correo"
-          >
-            En punto de entrega/poder del correo
-          </OpcionEstado>
+            <OpcionEstado
+              disabled={
+                detalle.Estado === "En punto de entrega/poder del correo"
+                  ? true
+                  : false
+              }
+              value="En punto de entrega/poder del correo"
+            >
+              En punto de entrega/poder del correo
+            </OpcionEstado>
 
-          <OpcionEstado
-            disabled={detalle.Estado === "Entregado" ? true : false}
-            value="Entregado"
-          >
-            Entregado
-          </OpcionEstado>
-        </ModificarEstados>
-      )}
+            <OpcionEstado
+              disabled={detalle.Estado === "Entregado" ? true : false}
+              value="Entregado"
+            >
+              Entregado
+            </OpcionEstado>
+          </ModificarEstados>
+        )}
 
-      <Envio className="envio">
-        <Estado className="Estado">
-          <Titulo>Estado de envio</Titulo>
-          <Opciones>
-            <ul>
-              <EstadosLi>
-                <Circulo
-                  active={detalle?.Estado !== "En preparación" ? false : true}
-                ></Circulo>
-                <Linea
-                  active={detalle?.Estado !== "En preparación" ? false : true}
-                ></Linea>
-                <ImagenEstados
-                  src="https://i.ibb.co/NFLFkKr/Asset-460.png"
-                  alt=""
-                />
-                <ParrafoLi
-                  active={detalle?.Estado !== "En preparación" ? false : true}
-                >
-                  En preparación
-                </ParrafoLi>
-              </EstadosLi>
-              <EstadosLi>
-                <Circulo
-                  active={detalle?.Estado !== "En camino" ? false : true}
-                ></Circulo>
-                <Linea
-                  active={detalle?.Estado !== "En camino" ? false : true}
-                ></Linea>
-                <ImagenEstados
-                  src="https://i.ibb.co/NCmsgvw/Asset-510.png"
-                  alt=""
-                />
-                <ParrafoLi
-                  active={detalle?.Estado !== "En camino" ? false : true}
-                >
-                  En camino
-                </ParrafoLi>
-              </EstadosLi>
-              <EstadosLi>
-                <Circulo
-                  active={
-                    detalle?.Estado !== "En punto de entrega/poder del correo"
-                      ? false
-                      : true
-                  }
-                ></Circulo>
-                <Linea
-                  active={
-                    detalle?.Estado !== "En punto de entrega/poder del correo"
-                      ? false
-                      : true
-                  }
-                ></Linea>
-                <ImagenEstados
-                  src="https://i.ibb.co/chNcvsM/Asset-190.png"
-                  alt=""
-                />
-                <ParrafoLi
-                  active={
-                    detalle?.Estado !== "En punto de entrega/poder del correo"
-                      ? false
-                      : true
-                  }
-                >
-                  En punto de entrega/poder del correo
-                </ParrafoLi>
-              </EstadosLi>
-              <EstadosLi>
-                <Circulo
-                  active={detalle?.Estado !== "Entregado" ? false : true}
-                ></Circulo>
-                <ImagenEstados
-                  src="https://i.ibb.co/Z2NPGQ0/Asset-210.png"
-                  alt=""
-                />
-                <ParrafoLi
-                  active={detalle?.Estado !== "Entregado" ? false : true}
-                >
-                  Entregado
-                </ParrafoLi>
-              </EstadosLi>
-            </ul>
-          </Opciones>
-        </Estado>
-        <Domicilio className="domicilio">
-          <Titulo>
-            Domicilio de{" "}
-            {detalle.Tipo_de_envio === "domicilio"
-              ? "entrega"
-              : "punto de retiro"}
-          </Titulo>
-          <LogoGPS
-            src="https://i.ibb.co/PC2BbmZ/Asset-960.png"
-            alt="Imagen logo GPS"
-          />
-          {detalle && (
-            <Parrafo>{`${detalle?.Direccion_de_envio?.calle} ${detalle?.Direccion_de_envio?.altura} ${detalle?.Direccion_de_envio?.piso}`}</Parrafo>
-          )}
-          <Lugar>
-            <ParrafoLugar>{`${detalle?.Direccion_de_envio?.ciudad} `}</ParrafoLugar>
-            <ParrafoLugar>
-              {" "}
-              {`(${detalle?.Direccion_de_envio?.cp}), `}
-            </ParrafoLugar>
-            <ParrafoLugar>{` ${detalle?.Direccion_de_envio?.provincia}`}</ParrafoLugar>
-          </Lugar>
-        </Domicilio>
-        <Codigo className="codigo">
-          <Titulo>
-            {detalle.Tipo_de_envio === "domicilio"
-              ? " Entrega en domicilio"
-              : "Retiro en sucursal"}
-          </Titulo>
+        <Envio className="envio">
+          <Estado className="Estado">
+            <Titulo>Estado de envio</Titulo>
+            <Opciones>
+              <ul>
+                <EstadosLi>
+                  <Circulo
+                    active={detalle?.Estado !== "En preparación" ? false : true}
+                  ></Circulo>
+                  <Linea
+                    active={detalle?.Estado !== "En preparación" ? false : true}
+                  ></Linea>
+                  <ImagenEstados
+                    src="https://i.ibb.co/NFLFkKr/Asset-460.png"
+                    alt=""
+                  />
+                  <ParrafoLi
+                    active={detalle?.Estado !== "En preparación" ? false : true}
+                  >
+                    En preparación
+                  </ParrafoLi>
+                </EstadosLi>
+                <EstadosLi>
+                  <Circulo
+                    active={detalle?.Estado !== "En camino" ? false : true}
+                  ></Circulo>
+                  <Linea
+                    active={detalle?.Estado !== "En camino" ? false : true}
+                  ></Linea>
+                  <ImagenEstados
+                    src="https://i.ibb.co/NCmsgvw/Asset-510.png"
+                    alt=""
+                  />
+                  <ParrafoLi
+                    active={detalle?.Estado !== "En camino" ? false : true}
+                  >
+                    En camino
+                  </ParrafoLi>
+                </EstadosLi>
+                <EstadosLi>
+                  <Circulo
+                    active={
+                      detalle?.Estado !== "En punto de entrega/poder del correo"
+                        ? false
+                        : true
+                    }
+                  ></Circulo>
+                  <Linea
+                    active={
+                      detalle?.Estado !== "En punto de entrega/poder del correo"
+                        ? false
+                        : true
+                    }
+                  ></Linea>
+                  <ImagenEstados
+                    src="https://i.ibb.co/chNcvsM/Asset-190.png"
+                    alt=""
+                  />
+                  <ParrafoLi
+                    active={
+                      detalle?.Estado !== "En punto de entrega/poder del correo"
+                        ? false
+                        : true
+                    }
+                  >
+                    En punto de entrega/poder del correo
+                  </ParrafoLi>
+                </EstadosLi>
+                <EstadosLi>
+                  <Circulo
+                    active={detalle?.Estado !== "Entregado" ? false : true}
+                  ></Circulo>
+                  <ImagenEstados
+                    src="https://i.ibb.co/Z2NPGQ0/Asset-210.png"
+                    alt=""
+                  />
+                  <ParrafoLi
+                    active={detalle?.Estado !== "Entregado" ? false : true}
+                  >
+                    Entregado
+                  </ParrafoLi>
+                </EstadosLi>
+              </ul>
+            </Opciones>
+          </Estado>
+          <Domicilio className="domicilio">
+            <Titulo>
+              Domicilio de{" "}
+              {detalle.Tipo_de_envio === "domicilio"
+                ? "entrega"
+                : "punto de retiro"}
+            </Titulo>
+            <LogoGPS
+              src="https://i.ibb.co/PC2BbmZ/Asset-960.png"
+              alt="Imagen logo GPS"
+            />
+            {detalle && (
+              <Parrafo>{`${detalle?.Direccion_de_envio?.calle} ${detalle?.Direccion_de_envio?.altura} ${detalle?.Direccion_de_envio?.piso}`}</Parrafo>
+            )}
+            <Lugar>
+              <ParrafoLugar>{`${detalle?.Direccion_de_envio?.ciudad} `}</ParrafoLugar>
+              <ParrafoLugar>
+                {" "}
+                {`(${detalle?.Direccion_de_envio?.cp}), `}
+              </ParrafoLugar>
+              <ParrafoLugar>{` ${detalle?.Direccion_de_envio?.provincia}`}</ParrafoLugar>
+            </Lugar>
+          </Domicilio>
+          <Codigo className="codigo">
+            <Titulo>
+              {detalle.Tipo_de_envio === "domicilio"
+                ? " Entrega en domicilio"
+                : "Retiro en sucursal"}
+            </Titulo>
 
-          <Parrafo>
-            Codigo{" "}
-            {detalle.Tipo_de_envio === "domicilio"
-              ? "para entrega:"
-              : "para retiro:"}{" "}
-            #2022{detalle?.id}
-          </Parrafo>
+            <Parrafo>
+              Codigo{" "}
+              {detalle.Tipo_de_envio === "domicilio"
+                ? "para entrega:"
+                : "para retiro:"}{" "}
+              #2022{detalle?.id}
+            </Parrafo>
 
-          <LogoCodigo
-            src="https://i.ibb.co/vkjfvPY/Asset-930.png"
-            alt="Imagen de una pizarra"
-          />
-        </Codigo>
-      </Envio>
-      <div>
-        <Compra className="compra">
-          <Titulo>
-            {user === "admin" ? "Detalle de Pedido" : "Compraste"}
-          </Titulo>
+            <LogoCodigo
+              src="https://i.ibb.co/vkjfvPY/Asset-930.png"
+              alt="Imagen de una pizarra"
+            />
+          </Codigo>
+        </Envio>
+        <div>
+          <Compra className="compra">
+            <Titulo>
+              {user === "admin" ? "Detalle de Pedido" : "Compraste"}
+            </Titulo>
 
-          {detalle?.productos?.map((el) => {
-            return (
-              <div key={el?.compra?.productoId}>
-                <Link
-                  style={{ color: "black", textDecoration: "none" }}
-                  to={`/productos/${el?.compra?.productoId}`}
-                >
-                  <Producto>{el?.nombre}</Producto>
-                  <Producto>Cantidad: {el?.compra?.cantidad}</Producto>{" "}
-                </Link>
-                <div
-                  style={{
-                    height: "0.5px",
-                    width: "85%",
-                    margin: "auto",
-                    marginTop: "2px",
-                    backgroundColor: "grey",
-                  }}
-                />
-              </div>
-            );
-          })}
-        </Compra>
-      </div>
-    </Container>
+            {detalle?.productos?.map((el) => {
+              return (
+                <div key={el?.compra?.productoId}>
+                  <Link
+                    style={{ color: "black", textDecoration: "none" }}
+                    to={`/productos/${el?.compra?.productoId}`}
+                  >
+                    <Producto>{el?.nombre}</Producto>
+                    <Producto>Cantidad: {el?.compra?.cantidad}</Producto>{" "}
+                  </Link>
+                  <div
+                    style={{
+                      height: "0.5px",
+                      width: "85%",
+                      margin: "auto",
+                      marginTop: "2px",
+                      backgroundColor: "grey",
+                    }}
+                  />
+                </div>
+              );
+            })}
+          </Compra>
+        </div>
+      </Container>
+
+      <Footer contacto={contacto} />
+      {isVisible && <ScrollToTop />}
+    </>
   ) : (
     <Loader />
   );

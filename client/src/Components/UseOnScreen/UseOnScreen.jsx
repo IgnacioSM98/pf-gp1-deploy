@@ -8,12 +8,15 @@ export default function UseOnScreen(ref) {
   );
 
   useEffect(() => {
-    observer.observe(ref.current);
-    return () => {
-      observer.disconnect();
-    };
+    console.log(ref.current, "wuwehi");
+    if (ref.current) {
+      observer.observe(ref.current);
+      return () => {
+        observer.disconnect();
+      };
+    }
     // eslint-disable-next-line
-  }, []);
+  }, [ref.current]);
 
   return isIntersecting;
 }

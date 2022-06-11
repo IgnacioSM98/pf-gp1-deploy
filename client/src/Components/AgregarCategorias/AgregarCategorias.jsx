@@ -7,9 +7,8 @@ const Container = s.div`
     display: flex;
     flex-direction: inherit;
     justify-content: end;
-     width: 100%;
-     height: 100%;
-    // margin: 0px 4px;
+    width: 100%;
+    height: 100%;
     border-radius: 7px 7px 7px 7px;
     border: none;
     background-color: lightgrey;
@@ -26,18 +25,14 @@ const Button = s.button`
 `;
 
 const Select = s.select`
-    // width: 310px;
     margin: 2px 4px;
     border-radius: 3px 3px 3px 3px;
     border-width: 0;
 `;
 
 const Option = s.option`
-    // width: 310px;
      margin: 2px 2px;
      padding: 0px 4px;
-    //  border-radius: 5px 5px 5px 5px;
-    // border-width: 0;
 `;
 
 export default function AgregarCategorias({

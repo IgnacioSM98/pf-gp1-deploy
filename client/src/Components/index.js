@@ -45,6 +45,7 @@ import NotFound from "./NotFound/NotFound";
 import UseOnScreen from "./UseOnScreen/UseOnScreen";
 import AgregarCategorias from "./AgregarCategorias/AgregarCategorias";
 import BuscarPedido from "./BuscarPedido/BuscarPedido";
+import Loader from "./Loader/Loader";
 
 export {
   Home,
@@ -94,4 +95,5 @@ export {
   UseOnScreen,
   AgregarCategorias,
   BuscarPedido,
+  Loader,
 };

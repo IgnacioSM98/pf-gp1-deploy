@@ -12,7 +12,14 @@ import "./CrearProducto.css";
 import styled from "styled-components";
 import validate from "./validaciones.js";
 import { useParams } from "react-router-dom";
-import { Modal, Loading, AgregarCategorias } from "../index";
+import {
+  Modal,
+  Loading,
+  AgregarCategorias,
+  Footer,
+  ScrollToTop,
+  UseOnScreen,
+} from "../index";
 
 const Container = styled.div`
   // display: flex;
@@ -216,11 +223,12 @@ const ParrafoCat = styled.p`
   font-weight: bold;
 `;
 
-export default function CrearProducto() {
+export default function CrearProducto({ contacto }) {
   const dispatch = useDispatch();
   const categorías = useSelector((state) => state.categorias);
   const { id } = useParams();
   const detalle = useSelector((state) => state.detalle);
+  const isVisible = UseOnScreen(contacto);
 
   const [stateModalProd, setStateModalProd] = useState(false);
   const [stateModalCat, setStateModalCat] = useState(false);
@@ -583,6 +591,9 @@ export default function CrearProducto() {
           </ParrafoOk>
         </Modal>
       </Container>
+
+      <Footer contacto={contacto} />
+      {isVisible && <ScrollToTop />}
     </>
   );
 }
