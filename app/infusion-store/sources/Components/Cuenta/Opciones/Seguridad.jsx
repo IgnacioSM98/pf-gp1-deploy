@@ -1,6 +1,15 @@
 import React from "react";
-import { Text } from "react-native";
+import { View, Text, Pressable } from "react-native";
+import Cerrar from "../Cerrar";
 
-export default function Seguridad() {
-  return <Text>Seguridad</Text>;
+export default function Seguridad({ setOption }) {
+  return (
+    <View>
+      <Pressable onPress={() => setOption(false)}>
+        <Cerrar />
+      </Pressable>
+
+      <Text>Seguridad</Text>
+    </View>
+  );
 }
