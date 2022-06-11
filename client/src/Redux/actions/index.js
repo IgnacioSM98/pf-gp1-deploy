@@ -280,7 +280,6 @@ export function getDetalleEnvio(id) {
 }
 
 export function actualizarEstadoEnvio(id, payload, productos) {
-  console.log(payload, "ugu");
   return async function (dispatch) {
     await axios
       .put(`${urlBase}${admin}${pedido}${id}`, { estado: payload.newEstado })

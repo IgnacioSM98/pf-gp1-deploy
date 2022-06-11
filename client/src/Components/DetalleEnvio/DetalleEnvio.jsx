@@ -273,7 +273,6 @@ export default function DetalleEnvio({ contacto }) {
       detalle.productos.map((producto) => {
         dispatch(quitarItem({ id: producto.compra.productoId }));
       });
-      console.log("uwu");
       setEstado((prevState) => {
         const newState = { ...prevState };
 
