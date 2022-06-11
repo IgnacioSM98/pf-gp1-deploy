@@ -6,25 +6,18 @@ import styled from "styled-components";
 
 const Container = styled.div`
   height: 80vh;
-
   padding-top: 20px;
-
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  // grid-auto-flow: dense;
   grid-gap: 20px 12px;
-
-  // justify-content: center;
-  // align-items: center;
-
   width: 100%;
   height: auto;
-
   margin: 15px;
   padding: 5px;
-  // border: 1px solid darkgrey;
   border-radius: 8px;
-  // box-shadow: 0 2px 2px 0 darkgrey, 0 2px 2px 0 #222;
+  @media screen and (max-width: 560px) {
+    margin: 0;
+  }
 `;
 
 export default function Compras() {

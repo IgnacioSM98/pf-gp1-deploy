@@ -10,13 +10,9 @@ const Container = styled.div`
   justify-content: start;
   border-radius: 6px;
   align-items: center;
-  // margin-top: 30px;
   padding: 20px;
-
-  // box-shadow: 0 1px 1px 0 darkgrey, 0 1px 2px 0 #222;
   -webkit-box-shadow: 1px 3px 10px rgba(0, 0, 0, 0.26);
   box-shadow: 1px 3px 10px rgba(0, 0, 0, 0.26);
-
   &: hover {
     border: 1px solid black;
     box-shadow: none;
@@ -28,47 +24,63 @@ const ContenedorInfo = styled.div`
   flex-direction: column;
   width: 100%;
   height: 100%;
-
-  // padding-top: 30px;
   justify-content: start;
-  // align-items: center;
   text-align: start;
-
   position: relative;
 `;
 
 const Nombre = styled.p`
-  // position: absolute;
-  // top: 50px;
-
   font-family: Poppins;
   font-size: 16px;
-  // margin-top: 1.5rem;
   font-weight: 900;
-  // width: 260px;
-
   text-align: start;
 `;
 
-export default function ItemCompra({ producto }) {
+const ProductLink = styled(Link)`
+  height: ${(props) => (props.height ? props.height : "150px")};
+  width: ${(props) => (props.width ? props.width : "50%")};
+  margin: 0px 0px 10px 0px;
+  color: black;
+  text-decoration: none;
+  font-size: 18px;
+  position: relative;
+  @media screen and (max-width: 960px) {
+    width: 85%;
+  }
+  @media screen and (max-width: 560px) {
+    display: contents;
+  }
+`;
+
+const Span = styled.span`
+  font-size: "8px";
+  @media screen and (max-width: 700px) {
+    display: none;
+  }
+`;
+
+const Span2 = styled.span`
+  font-size: "8px";
+  @media screen and (max-width: 1000px) {
+    display: none;
+  }
+  @media screen and (max-width: 560px) {
+    display: contents;
+  }
+`;
+
+export default function ItemCompra({ producto, height, width }) {
   return (
-    <Link
-      style={{ color: "black", textDecoration: "none" }}
-      to={`/pedido/${producto.id}`}
-    >
+    <ProductLink height={height} width={width} to={`/pedido/${producto.id}`}>
       <Container>
         <ContenedorInfo>
           <Nombre>{`Pedido: #${producto.id}`}</Nombre>
 
-          <span style={{ fontSize: "12px", paddingTop: "35px" }}>
-            Estado: {producto.Estado}
-          </span>
+          <Span>Estado: {producto.Estado}</Span>
 
-          <span style={{ fontSize: "12px" }}>
-            Tipo de Envío: {producto.Tipo_de_envio}
-          </span>
+          <Span2>Tipo de Envío: {producto.Tipo_de_envio}</Span2>
         </ContenedorInfo>
       </Container>
-    </Link>
+    </ProductLink>
   );
 }

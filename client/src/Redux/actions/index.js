@@ -11,10 +11,12 @@ const pedido = "pedido/";
 export function getProductos() {
   return async function (dispatch) {
     const data = JSON.parse(localStorage.getItem("productos"));
+
     if (data) {
       dispatch({ type: "GET_PRODUCTOS", payload: data });
     } else {
       const resp = await axios.get(`${urlBase}${productos}`);
+
       dispatch({ type: "GET_PRODUCTOS", payload: resp.data });
     }
   };
@@ -42,21 +44,18 @@ export function clearDetail() {
 
 export function getCategorias() {
   return async function (dispatch) {
-    try {
-      const resp = await axios.get(`${urlBase}${categorias}`);
+    const resp = await axios.get(`${urlBase}${categorias}`);
 
-      if (resp) {
-        dispatch({ type: "GET_CATEGORIAS", payload: resp.data });
-      }
-    } catch (err) {
-      console.log(err, "error categorias");
+    if (resp) {
+      dispatch({ type: "GET_CATEGORIAS", payload: resp.data });
     }
   };
 }
 
 export function searchProduct(name) {
   return async function (dispatch) {
-    let json = await axios.get(`${urlBase}${productos}?name=${name}`);
+    const json = await axios.get(`${urlBase}${productos}?name=${name}`);
+
     return dispatch({
       type: "SEARCH_PRODUCTS",
       payload: json.data,
@@ -73,47 +72,36 @@ export function filtrarCategorias(payload) {
 
 export function getReviews(id) {
   return async function (dispatch) {
-    try {
-      const resp = await axios.get(`${urlBase}ratings/usuario/${id}`);
+    const resp = await axios.get(`${urlBase}ratings/usuario/${id}`);
 
-      if (resp) {
-        dispatch({ type: "GET_REVIEWS", payload: resp.data });
-      }
-    } catch (err) {
-      console.log(err, "error reviews");
+    if (resp) {
+      dispatch({ type: "GET_REVIEWS", payload: resp.data });
     }
   };
 }
 
 export function getProductReviews(id) {
   return async function (dispatch) {
-    try {
-      const resp = await axios.get(`${urlBase}ratings/${id}`);
+    const resp = await axios.get(`${urlBase}ratings/${id}`);
 
-      if (resp) {
-        dispatch({ type: "GET_PRODUCT_REVIEWS", payload: resp.data });
-      }
-    } catch (err) {
-      console.log(err, "error reviews");
+    if (resp) {
+      dispatch({ type: "GET_PRODUCT_REVIEWS", payload: resp.data });
     }
   };
 }
 
 export function getAllReviews() {
   return async function (dispatch) {
-    try {
-      const resp = await axios.get(`${urlBase}ratings/`);
+    const resp = await axios.get(`${urlBase}ratings/`);
 
-      if (resp) {
-        dispatch({ type: "GET_ALL_REVIEWS", payload: resp.data });
-      }
-    } catch (err) {
-      console.log(err, "error AllReviews");
+    if (resp) {
+      dispatch({ type: "GET_ALL_REVIEWS", payload: resp.data });
     }
   };
 }
 
 export function deleteReview(id) {
+  //habria que actualizar el estado de los reviews
   return async function (dispatch) {
     await axios.delete(`${urlBase}ratings/${id}`);
     dispatch(getAllReviews());
@@ -125,10 +113,6 @@ export function deleteReview(id) {
 
 export function postProducto(payload) {
   return async function (dispatch) {
-    // let json = await axios.post(`${urlBase}${admin}${crear}`, payload);
-
-    // dispatch({ type: "POST_PRODUCTO", payload: json.data });
-
     axios.post(`${urlBase}${admin}${crear}`, payload).then((res) => {
       dispatch({
         type: "POST_PRODUCTO",
@@ -157,12 +141,9 @@ export function putProducto(id, body) {
 
 export function deleteProducto(id) {
   return function (dispatch) {
-    axios
-      .delete(`${urlBase}producto/${id}`)
-      .then((res) => {
-        dispatch({ type: "DELETE_PRODUCTO", payload: res.data });
-      })
-      .catch((err) => console.log(err, "error delete"));
+    axios.delete(`${urlBase}producto/${id}`).then((res) => {
+      dispatch({ type: "DELETE_PRODUCTO", payload: res.data });
+    });
   };
 }
 
@@ -170,14 +151,15 @@ export function postCategoria(payload) {
   return async function (dispatch) {
     let json = await axios.post(`${urlBase}${categorias}/${crear}`, payload);
 
+    //????????
     dispatch(getCategorias());
-
     return json;
   };
 }
 
 export function deleteCategoria(id) {
   return async function () {
+    //habria que actualizar el estado de los reviews
     await axios.delete(`${urlBase}${categorias}/${id}`);
     return function (dispatch) {
       dispatch({ type: "DELETE_CATEGORIA" });
@@ -189,6 +171,7 @@ export function postReviews(id, payload) {
   return async function (dispatch) {
     await axios.post(`${urlBase}${ratings}${crear}/${id}`, payload);
 
+    //????????????????????
     dispatch(getReviews(id));
 
     return dispatch({
@@ -199,12 +182,14 @@ export function postReviews(id, payload) {
 export function enviarConsulta(payload) {
   return async function (dispatch) {
     await axios.post(`${urlBase}usuario/contacto`, payload);
+
     return dispatch({
       type: "ENVIAR_CONSULTA",
     });
   };
 }
 
+//?????????
 export const setSort = (value) => (dispatch) => {
   dispatch({ type: "SET_SORT", payload: value });
 };
@@ -233,37 +218,27 @@ export function quitarItem(idProducto) {
   };
 }
 
+//MOMENTO
 export function getUser(mail) {
   return function (dispatch) {
-    try {
-      axios(`${urlBase}usuarios`).then((res) =>
-        dispatch({ type: "GET_USER", payload: res.data, mail })
-      );
-    } catch (err) {
-      console.log(err);
-    }
+    axios(`${urlBase}usuarios`).then((res) =>
+      dispatch({ type: "GET_USER", payload: res.data, mail })
+    );
   };
 }
 
 export function setUserInfo(user) {
   return function (dispatch) {
-    try {
-      dispatch({ type: "SET_USER", payload: user });
-    } catch (err) {
-      console.log(err);
-    }
+    dispatch({ type: "SET_USER", payload: user });
   };
 }
 
+//XD
 export function getUsuarios() {
   return function (dispatch) {
-    try {
-      axios(`${urlBase}usuarios`).then((res) =>
-        dispatch({ type: "GET_USUARIOS", payload: res.data })
-      );
-    } catch (error) {
-      console.log(error);
-    }
+    axios(`${urlBase}usuarios`).then((res) =>
+      dispatch({ type: "GET_USUARIOS", payload: res.data })
+    );
   };
 }
 
@@ -281,32 +256,25 @@ export function changeUserMode(userInfo) {
   user.visualizacion = user.visualizacion === "admin" ? "user" : "admin";
 
   return function (dispatch) {
-    try {
-      dispatch({
-        type: "CHANGE_MODE",
-        payload: user,
-      });
-    } catch (err) {
-      console.log(err);
-    }
+    dispatch({
+      type: "CHANGE_MODE",
+      payload: user,
+    });
   };
 }
 
 export function getPedidos() {
   return function (dispatch) {
-    try {
-      axios(`${urlBase}pedidos`).then((res) =>
-        dispatch({ type: "GET_PEDIDOS", payload: res.data })
-      );
-    } catch (error) {
-      console.log(error);
-    }
+    axios(`${urlBase}pedidos`).then((res) =>
+      dispatch({ type: "GET_PEDIDOS", payload: res.data })
+    );
   };
 }
 
 export function getDetalleEnvio(id) {
   return async function (dispatch) {
-    let envio = await axios.get(`${urlBase}${pedido}${id}`);
+    const envio = await axios.get(`${urlBase}${pedido}${id}`);
+
     return dispatch({ type: "GET_DETALLE_ENVIO", payload: envio?.data });
   };
 }
@@ -317,6 +285,14 @@ export function actualizarEstadoEnvio(id, payload, productos) {
       res.data.productos = productos;
       dispatch({ type: "ACTUALIZAR_ESTADO", payload: res.data });
     });
+  };
+}
+
+export function getFavoritos(id) {
+  return async function (dispatch) {
+    const favoritos = await axios.get(`${urlBase}favoritos/wishlist/${id}`);
+
+    dispatch({ type: "GET_FAVORITOS", payload: favoritos.data });
   };
 }
 
@@ -333,18 +309,14 @@ export function eliminarDeFavoritos(productoFav) {
 }
 
 export function enviarMail(userMail) {
-  // const user = { ...userInfo };
-  // const usuario = user.multiFactor.user.email;
   return async function (dispatch) {
-    await axios
-      .post(`${urlBase}usuario/confirmacion`, { mail: userMail })
-      .catch((err) => {
-        console.log(err);
-      });
+    await axios.post(`${urlBase}usuario/confirmacion`, { mail: userMail });
+
     dispatch({ type: "ENVIAR_MAIL", payload: userMail });
   };
 }
 
+//????????
 export function orderByStock(payload) {
   return { type: "ORDER_BY_STOCK", payload };
 }
@@ -352,33 +324,18 @@ export function orderByStock(payload) {
 export function mailAdmin(userId, { estado }) {
   return async function (dispatch) {
     if (estado === "En preparación") {
-      await axios
-        .post(`${urlBase}usuario/confirmacion`, { userId: userId })
-        .catch((err) => {
-          console.log(err);
-        });
+      await axios.post(`${urlBase}usuario/confirmacion`, { userId: userId });
     }
     if (estado === "En camino") {
-      await axios
-        .post(`${urlBase}${admin}despachar`, { userId: userId })
-        .catch((err) => {
-          console.log(err);
-        });
+      await axios.post(`${urlBase}${admin}despachar`, { userId: userId });
     }
     if (estado === "En punto de entrega/poder del correo") {
-      await axios
-        .post(`${urlBase}${admin}correo`, { userId: userId })
-        .catch((err) => {
-          console.log(err);
-        });
+      await axios.post(`${urlBase}${admin}correo`, { userId: userId });
     }
     if (estado === "Entregado") {
-      await axios
-        .post(`${urlBase}${admin}entrega`, { userId: userId })
-        .catch((err) => {
-          console.log(err);
-        });
+      await axios.post(`${urlBase}${admin}entrega`, { userId: userId });
     }
+
     dispatch({ type: "ENVIAR_MAIL" });
   };
 }

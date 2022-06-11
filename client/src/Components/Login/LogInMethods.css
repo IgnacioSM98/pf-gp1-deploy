@@ -35,14 +35,14 @@
 
 .input-login:focus {
   outline: none;
-  color: rgb(94, 93, 93);
+  color: white;
 }
 
 .input-login:focus ~ .label-login {
   position: absolute;
   top: -14px;
   font-size: 12px;
-  color: #36885ed1;
+  color: black;
 }
 
 .input-login:not(:placeholder-shown) ~ .label-login {
@@ -52,7 +52,7 @@
 }
 
 .label-login {
-  color: #49454567;
+  color: black;
   font-size: 16px;
   position: absolute;
   left: 5px;

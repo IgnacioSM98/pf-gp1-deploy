@@ -41,6 +41,7 @@ export default function Perfil() {
 
   function handleSubmit(e) {
     e.preventDefault();
+
     dispatch(putPerfil(inputs));
   }
 
@@ -52,10 +53,12 @@ export default function Perfil() {
           fontFamily: "Poppins",
           fontWeight: 600,
           paddingBottom: "20px",
+          marginTop: "15px",
         }}
       >
         Editar
       </h1>
+
       <div>
         <div>
           <div className="grupo-perfil">
@@ -70,6 +73,7 @@ export default function Perfil() {
             <span className="barra-perfil"></span>
             <label className="label-perfil">Nombre</label>
           </div>
+
           <div className="grupo-perfil">
             <input
               type="text"
@@ -82,6 +86,7 @@ export default function Perfil() {
             <span className="barra-perfil"></span>
             <label className="label-perfil">Apellido</label>
           </div>
+
           <div className="grupo-perfil">
             <input
               type="text"
@@ -94,6 +99,7 @@ export default function Perfil() {
             <span className="barra-perfil"></span>
             <label className="label-perfil">D.N.I.</label>
           </div>
+
           <div className="grupo-perfil">
             <input
               type="text"
@@ -106,6 +112,7 @@ export default function Perfil() {
             <span className="barra-perfil"></span>
             <label className="label-perfil">Direccion</label>
           </div>
+
           <div className="grupo-perfil">
             <input
               type="text"
@@ -118,6 +125,7 @@ export default function Perfil() {
             <span className="barra-perfil"></span>
             <label className="label-perfil">Correo</label>
           </div>
+
           <div className="grupo-perfil">
             <input
               type="text"
@@ -130,6 +138,7 @@ export default function Perfil() {
             <span className="barra-perfil"></span>
             <label className="label-perfil">Contraseña</label>
           </div>
+
           <div className="grupo-perfil">
             <input
               type="text"

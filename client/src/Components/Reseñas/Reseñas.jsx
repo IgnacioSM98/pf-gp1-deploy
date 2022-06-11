@@ -8,32 +8,24 @@ const Container = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-
   position: fixed;
   top: 0;
   left: 0;
-
   padding-top: 40px;
-
   height: 100%;
   width: 100%;
   z-index: 2;
-
   background-color: #80808085;
-
   overflow: hidden;
 `;
 
 const Popup = styled.div`
   position: relative;
-
   display: flex;
   flex-direction: column;
-
   height: 80%;
   width: 700px;
   background-color: white;
-
   border-radius: 5px;
 `;
 
@@ -41,21 +33,17 @@ const Cerrar = styled.button`
   position: absolute;
   top: 20px;
   right: 20px;
-
   height: 25px;
   width: 25px;
-
   border: none;
   background-color: black;
   color: white;
   border-radius: 5px;
-
   cursor: pointer;
 `;
 
 const Titulo = styled.span`
   height: 20px;
-
   font-weight: 600;
   border-radius: 5px;
   margin-top: 20px;
@@ -66,24 +54,16 @@ const TodasLasReseñas = styled.div`
   bottom: 0;
   height: 60%;
   width: 100%;
-
-  // background-color: red;
-
   overflow-y: scroll;
 `;
 
 const Review = styled.div`
   display: flex;
   flex-direction: column;
-
   justify-content: space-evenly;
-
-  // align-items: center;
   text-align: start;
-
   padding: 0px 20px;
   margin: 0px 2% 20px;
-
   height: 140px;
   width: 96%;
   background-color: #80808038;
@@ -92,31 +72,24 @@ const Review = styled.div`
 
 const TituloReview = styled.span`
   height: 22px;
-
   font-size: 16px;
   font-weight: 500;
-
   width: 100%;
 `;
 
 const ComentarioReview = styled.span`
   height: 60px;
-
   font-size: 15px;
   font-weight: 400;
-
   width: 100%;
 `;
 
 const Botones = styled.div`
   display: flex;
-
   position: absolute;
   bottom: 62%;
-
   width: 100%;
   justify-content: space-evenly;
-  // background-color: green;
 `;
 
 const Boton = styled.button`
@@ -124,18 +97,12 @@ const Boton = styled.button`
   font-weight: 700;
   width: 30%;
   height: 45px;
-
-  // border: none;
   padding: 10px 20px;
-
   cursor: pointer;
   background-color: transparent;
-
   &: hover {
     color: #37563de0;
-    // border-bottom: 2.5px solid #37563de0;
   }
-
   &: active {
     background-color: #0446041f;
     border-radius: 5px;

@@ -10,15 +10,12 @@ const Container = styled.div`
 `;
 
 const Crear = styled.button`
-  // top: 660px;
   top: 0;
   right: 0;
   position: absolute;
   width: 80px;
   background: #37563d;
-
   display: block;
-
   height: 30px;
   border: none;
   color: white;
@@ -29,11 +26,44 @@ const Crear = styled.button`
   cursor: pointer;
 `;
 
-let Select = styled.select`
+const Grupo = styled.div`
+  width: 100%;
+  height: 75vh;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-gap: 20px 12px;
+  grid-auto-flow: dense;
+  padding: 5px;
+  overflow-y: scroll;
+  @media screen and (max-width: 1530px) {
+    margin-top: 30px;
+  }
+  @media screen and (max-width: 1240px) {
+    margin-top: 30px;
+  }
+  @media screen and (max-width: 860px) {
+    display: flex;
+    flex-direction: column;
+    margin-top: 30px;
+  }
+  @media screen and (max-width: 560px) {
+    display: flex;
+    flex-direction: column;
+    margin-top: 30px;
+  }
+`;
+
+const H1 = styled.h1`
+  font-size: 20px;
+  font-family: Poppins;
+  font-weight: 600;
+  text-align: start;
+`;
+
+const Select = styled.select`
   top: 0;
   right: 100px;
   position: absolute;
-
   margin-bottom: 3em;
   width: 150px;
   height: 30px;
@@ -49,37 +79,34 @@ const Option = styled.option`
   background-color: white;
 `;
 
-let ProdAdmin = styled.div`
+const ProdAdmin = styled.div`
   display: flex;
   flex-direction: row;
-  // gap: 0.5em;
   width: 98%;
   height: 150px;
-  // border: 1px solid black;
   position: relative;
-  // margin-bottom: 10px;
   border-radius: 8px;
-
   -webkit-box-shadow: 1px 3px 10px rgba(0, 0, 0, 0.26);
   box-shadow: 1px 3px 10px rgba(0, 0, 0, 0.26);
-
   &: hover {
     border: 1px solid black;
     box-shadow: none;
   }
 `;
-let ContenedorImagen = styled.div`
+
+const ContenedorImagen = styled.div`
   margin: 10px;
   width: 120px;
   height: 120px;
 `;
-let Imagen = styled.img`
+
+const Imagen = styled.img`
   width: 100%;
   height: 100%;
   object-fit: contain;
 `;
 
-let ContenedorDatos = styled.div`
+const ContenedorDatos = styled.div`
   margin: 2px;
   width: 80%;
   height: 100px;
@@ -88,21 +115,21 @@ let ContenedorDatos = styled.div`
   text-align: left;
   margin-top: 0.5em;
 `;
-let Titulo = styled.p`
+
+const Titulo = styled.p`
   font-size: 20px;
   font-weight: 600;
 `;
 
-let Stock = styled.p`
+const Stock = styled.p`
   position: absolute;
   bottom: 15px;
-
   font-size: 15px;
   font-weight: 600;
   color: ${(props) => (props.alerta ? "red" : "black")};
 `;
 
-let Boton = styled.button`
+const Boton = styled.button`
   position: absolute;
   bottom: 10px;
   right: 10px;
@@ -114,7 +141,6 @@ let Boton = styled.button`
   border-radius: 4px;
   font-size: 16px;
   cursor: pointer;
-
   &: hover {
     color: white;
     background-color: #37563d;
@@ -131,23 +157,13 @@ export default function AdminProductos() {
     dispatch(getProductos());
   }, [dispatch]);
 
-  let handleByStock = (e) => {
+  const handleByStock = (e) => {
     dispatch(orderByStock(e.target.value));
   };
 
   return (
     <Container>
-      <h1
-        style={{
-          fontSize: "20px",
-          fontFamily: "Poppins",
-          fontWeight: 600,
-          paddingBottom: "20px",
-          textAlign: "start",
-        }}
-      >
-        Administrador de Productos
-      </h1>
+      <H1>Administrador de Productos</H1>
 
       <Select onChange={handleByStock}>
         <Option value="Ordenar por stock">Ordenar por stock</Option>
@@ -164,7 +180,7 @@ export default function AdminProductos() {
         Crear
       </Crear>
 
-      <div className="grupo-productos">
+      <Grupo>
         {productos?.map((el) => (
           <Link
             key={el.id}
@@ -175,17 +191,19 @@ export default function AdminProductos() {
               <ContenedorImagen>
                 <Imagen src={el.imagen} alt="" />
               </ContenedorImagen>
+
               <ContenedorDatos>
                 <Titulo>{el.nombre}</Titulo>
                 <Stock alerta={el?.stock > 4 ? false : true}>
                   {`Stock: ${el.stock}`}
                 </Stock>
               </ContenedorDatos>
+
               <Boton onClick={() => navigate(`/edit/${el.id}`)}>Editar</Boton>
             </ProdAdmin>
           </Link>
         ))}
-      </div>
+      </Grupo>
     </Container>
   );
 }

@@ -18,16 +18,13 @@ const Container = styled.div`
   align-items: center;
   position: fixed;
   width: 100%;
-  // top: 20px;
   z-index: 20;
   height: 50px;
   background-color: #000000f0;
-
   @media screen and (max-width: 960px) {
     position: fixed;
     top: 0;
     width: 100%;
-
     height: ${(props) => (props.open ? "25vh" : "5vh")};
     justify-content: space-around;
     flex-direction: column;
@@ -58,7 +55,6 @@ const UserButton = styled(Link)`
   text-decoration: none;
   border: none;
   cursor: pointer;
-  // width: 100%;
   margin-bottom: 7px;
   font-weight: 500;
 `;
@@ -69,7 +65,6 @@ const ChangeMode = styled.span`
   text-decoration: none;
   border: none;
   cursor: pointer;
-  // width: 100%;
   margin-bottom: 7px;
   font-weight: 500;
 `;
@@ -97,7 +92,6 @@ const Span = styled.span`
   font-size: 13px;
   text-shadow: 1px 1px black;
   cursor: pointer;
-
   @media screen and (max-width: 960px) {
     width: 100%;
     margin: 0;
@@ -116,7 +110,6 @@ const Login = styled.div`
   font-size: 13px;
   color: white;
   right: 20px;
-
   @media screen and (max-width: 960px) {
     position: absolute;
     right: 20px;
@@ -146,11 +139,12 @@ const MobileIcon = styled.div`
   @media screen and (max-width: 960px) {
     position: absolute;
     left: 20px;
-    top: 5px;
+    top: 25%;
     display: flex;
     align-items: center;
     cursor: pointer;
     svg {
+      height: 22px;
       fill: white;
       margin-left: 0.5rem;
     }
@@ -208,18 +202,6 @@ export default function NavBar({ contacto, setUser }) {
     }
   }, [carrito]);
 
-  // useEffect(() => {
-  //   if (!user) {
-  //     // dispatch(setUserInfo(JSON.parse(localStorage.getItem("user"))));
-
-  //     const userAux = JSON.parse(localStorage.getItem("user"));
-
-  //     setUser(userAux);
-  //   } else {
-  //     dispatch(getUser(user.email));
-  //   }
-  // }, []);
-
   return (
     <Container open={showMobileMenu} onMouseLeave={() => setMenu(false)}>
       <MobileIcon
@@ -229,14 +211,11 @@ export default function NavBar({ contacto, setUser }) {
       >
         <FaBars />
       </MobileIcon>
+
       <Menu open={showMobileMenu}>
         <NavLink to={"/"} onClick={() => setMenu(false)}>
           <Span>Inicio</Span>
         </NavLink>
-
-        {/* <NavLink to="/">
-        <Span>About</Span>
-      </NavLink> */}
 
         <NavLink to={"tienda"} onClick={() => setMenu(false)}>
           <Span>Tienda</Span>
@@ -250,11 +229,8 @@ export default function NavBar({ contacto, setUser }) {
         >
           Contacto
         </Span>
-
-        {/* <NavLink to="/blog">
-        <Span>Blog</Span>
-      </NavLink> */}
       </Menu>
+
       <Login>
         <NavLink
           to={"/carrito"}
@@ -300,13 +276,11 @@ export default function NavBar({ contacto, setUser }) {
           </NavLink>
         )}
       </Login>
-      {/* ) : null} */}
 
       {userMenu && (
         <UserMenu onMouseLeave={() => setMenu(false)}>
           {userInfo?.rol === "admin" && (
             <ChangeMode
-              // to="/"
               onClick={() => {
                 setMenu(!userMenu);
                 dispatch(changeUserMode(userInfo));

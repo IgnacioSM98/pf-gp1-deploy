@@ -6,28 +6,31 @@ import styled from "styled-components";
 
 const Container = styled.div`
   display: flex;
+  width: 100%;
+  height: 75vh;
   flex-direction: row;
   flex-wrap: wrap;
   justify-content: start;
   align-items: center;
+  overflow-y: scroll;
 `;
 
 const Review = styled.div`
   display: flex;
+  position: relative;
   flex-direction: column;
   justify-content: space-evenly;
-  // align-items: center;
   text-align: start;
-  padding: 0px 20px;
-  margin: 0px 2% 20px;
+  padding: 0px 17px;
+  margin: 0px 1% 20px;
   height: 140px;
-  width: 180px;
+  width: 31%;
   background-color: #80808038;
   border-radius: 5px;
 `;
 
 const TituloReview = styled.span`
-  height: 22px;
+  height: 18px;
   font-size: 16px;
   font-weight: 500;
   width: 100%;
@@ -38,23 +41,27 @@ const ComentarioReview = styled.span`
   font-size: 15px;
   font-weight: 400;
   width: 100%;
+  margin-bottom: 20px;
 `;
-let Boton = styled.button`
-  width: 80px;
+
+const Boton = styled.button`
+  position: absolute;
+  bottom: 5px;
+  right: 10px;
+  width: 70px;
   height: 30px;
   background: white;
   border: 1px solid black;
-  margin: auto;
-  margin-bottom: 5px;
   color: black;
   border-radius: 4px;
-  font-size: 16px;
+  font-size: 13px;
   cursor: pointer;
 `;
 
 export default function AdminReseñas() {
-  let dispatch = useDispatch();
-  let reviews = useSelector((state) => state.reviews);
+  const dispatch = useDispatch();
+  const reviews = useSelector((state) => state.reviews);
+
   useEffect(() => {
     dispatch(getAllReviews());
   }, [dispatch]);
@@ -72,12 +79,16 @@ export default function AdminReseñas() {
       >
         Administrador de Reviews
       </h1>
+
       <Container>
         {reviews.map((el) => (
           <Review key={el.id}>
             <Stars rating={el.puntaje} />
+
             <TituloReview>{el.titulo}</TituloReview>
+
             <ComentarioReview>{el.comentario}</ComentarioReview>
+
             <Boton
               onClick={() => {
                 dispatch(deleteReview(el.id));
