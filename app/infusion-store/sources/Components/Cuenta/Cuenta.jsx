@@ -50,9 +50,9 @@ export default function Cuenta({ setIsAuthenticated }) {
             <Text>Mis Reseñas</Text>
           </Button>
 
-          <Button onPress={() => setOption("favoritos")}>
+          {/* <Button onPress={() => setOption("favoritos")}>
             <Text>Favoritos</Text>
-          </Button>
+          </Button> */}
 
           <Button onPress={() => setOption("notificaciones")}>
             <Text>Notificaciones</Text>

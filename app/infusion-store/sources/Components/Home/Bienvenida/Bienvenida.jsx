@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { View } from "react-native";
 import { getData } from "../../../Functions/localStorage";
 import styled from "styled-components/native";
@@ -19,8 +19,6 @@ const Image = styled.Image`
   aspect-ratio: ${1 / 1};
   resize-mode: contain;
   border-radius: 100;
-
-  //   background-color: red;
 `;
 
 const Saludo = styled.Text`
@@ -37,20 +35,22 @@ const Texto = styled.Text`
 export default function Bienvenida() {
   const [user, setUser] = useState({});
 
-  getData("user").then((res) => {
-    setUser(res.userInfo);
+  useEffect(() => {
+    getData("user").then((res) => {
+      setUser(res.userInfo);
+    });
   });
 
-  return (
-    user && (
-      <Container>
-        <View>
-          <Saludo>{`¡Hola ${user.displayName?.split(" ")[0]}!`}</Saludo>
-          <Texto>{`¿Con qué infusión te gustaría empezar tu día?`}</Texto>
-        </View>
+  return user ? (
+    <Container>
+      <View>
+        <Saludo>{`¡Hola ${user.displayName?.split(" ")[0]}!`}</Saludo>
+        <Texto>{`¿Con qué infusión te gustaría empezar tu día?`}</Texto>
+      </View>
 
-        <Image source={{ uri: user.photoURL }}></Image>
-      </Container>
-    )
+      <Image source={{ uri: user.photoURL }} alt="Profile Picture"></Image>
+    </Container>
+  ) : (
+    <View></View>
   );
 }

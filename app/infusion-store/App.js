@@ -10,7 +10,15 @@ import {
   DetalleProducto,
 } from "./sources/Components/index.js";
 import { useState, useEffect } from "react";
-import { FontAwesome5, Ionicons } from "@expo/vector-icons";
+
+// ICONOS - Libreria: https://icons.expo.fyi
+
+import {
+  FontAwesome5,
+  Ionicons,
+  MaterialCommunityIcons,
+} from "@expo/vector-icons";
+
 import * as LocalAuthentication from "expo-local-authentication";
 import { setData, getData } from "./sources/Functions/localStorage";
 import * as Font from "expo-font";
@@ -201,7 +209,11 @@ export default function App() {
           component={Home}
           options={{
             tabBarIcon: ({ color, size }) => (
-              <Ionicons name="home" color={color} size={21} />
+              <MaterialCommunityIcons
+                name="home-variant-outline"
+                size={28}
+                color={color}
+              />
             ),
           }}
         />
@@ -221,7 +233,7 @@ export default function App() {
           component={Favoritos}
           options={{
             tabBarIcon: ({ color, size }) => (
-              <Ionicons name="heart-sharp" size={24} color="grey" />
+              <Ionicons name="heart-sharp" size={24} color={color} />
             ),
           }}
         />
@@ -238,6 +250,7 @@ export default function App() {
       </Tab.Navigator>
     );
   };
+
   return (
     <>
       {isAuthenticated ? (
