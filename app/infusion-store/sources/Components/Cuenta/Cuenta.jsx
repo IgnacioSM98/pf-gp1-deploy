@@ -1,4 +1,6 @@
 import React, { useEffect, useState, useCallback } from "react";
+import { useSelector } from "react-redux";
+
 import styled from "styled-components/native";
 import { useFocusEffect } from "@react-navigation/native";
 import { Platform, Text, View } from "react-native";
@@ -25,6 +27,7 @@ const Button = styled.Pressable`
 
 export default function Cuenta({ setIsAuthenticated }) {
   const [option, setOption] = useState(null);
+  const user = useSelector((state) => state.userInfo);
 
   useFocusEffect(
     useCallback(() => {
@@ -50,10 +53,6 @@ export default function Cuenta({ setIsAuthenticated }) {
             <Text>Mis Reseñas</Text>
           </Button>
 
-          <Button onPress={() => setOption("favoritos")}>
-            <Text>Favoritos</Text>
-          </Button>
-
           <Button onPress={() => setOption("notificaciones")}>
             <Text>Notificaciones</Text>
           </Button>
@@ -72,21 +71,12 @@ export default function Cuenta({ setIsAuthenticated }) {
         </View>
       )}
 
-      {option === "ajustes" && <Ajustes />}
-
-      {option === "historial" && <Historial />}
-
-      {option === "reseñas" && <Reseñas />}
-
-      {/* {option === "favoritos" && <Text>favoritos</Text>} */}
-
-      {option === "notificaciones" && <Notificaciones />}
-
-      {option === "seguridad" && <Seguridad />}
-
-      {option === "contacto" && <Contacto />}
-
-      {/* {option === "cerrar sesión" && <Ajustes/>} */}
+      {option === "ajustes" && <Ajustes setOption={setOption} />}
+      {option === "historial" && <Historial setOption={setOption} />}
+      {option === "reseñas" && <Reseñas setOption={setOption} />}
+      {option === "notificaciones" && <Notificaciones setOption={setOption} />}
+      {option === "seguridad" && <Seguridad setOption={setOption} />}
+      {option === "contacto" && <Contacto setOption={setOption} />}
     </Container>
   );
 }

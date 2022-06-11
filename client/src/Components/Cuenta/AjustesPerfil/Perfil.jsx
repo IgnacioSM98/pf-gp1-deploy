@@ -53,6 +53,7 @@ export default function Perfil() {
           fontFamily: "Poppins",
           fontWeight: 600,
           paddingBottom: "20px",
+          marginTop: "15px",
         }}
       >
         Editar

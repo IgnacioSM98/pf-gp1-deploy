@@ -22,12 +22,20 @@ const Container = styled.div`
   background-color: white;
   justify-content: center;
   // align-items: center;
+  @media screen and (max-width: 560px) {
+    height: auto;
+    display: flex;
+    flex-direction: column;
+  }
 `;
 
 const Informacion = styled.div`
   width: 60%;
   height: 100%;
   // padding-top: 40px;
+  @media screen and (max-width: 960px) {
+    width: 100%;
+  }
 `;
 
 const Options = styled.div`
@@ -43,6 +51,13 @@ const Options = styled.div`
   margin-right: 3rem;
 
   position: relative;
+  @media screen and (max-width: 960px) {
+    width: 60%;
+  }
+  @media screen and (max-width: 560px) {
+    height: 90vh;
+    width: 100%;
+  }
 `;
 
 const ContenedorTitulo = styled.div`
