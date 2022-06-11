@@ -172,10 +172,11 @@ export function postReviews(id, payload) {
     await axios.post(`${urlBase}${ratings}${crear}/${id}`, payload);
 
     //????????????????????
-    dispatch(getReviews(id));
+    // dispatch(getReviews(id));
 
     return dispatch({
       type: "CREAR_REVIEW",
+      payload,
     });
   };
 }

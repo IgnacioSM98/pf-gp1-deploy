@@ -24,6 +24,7 @@ const Container = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+
   @media screen and (max-width: 960px) {
     width: 100%;
     justify-content: space-around;
@@ -38,6 +39,7 @@ const Details = styled.div`
   margin: 0px 40px 0px 40px;
   height: 650px;
   justify-content: center;
+
   @media screen and (max-width: 500px) {
     width: 100%;
     height: 100vh;
@@ -49,22 +51,32 @@ const Details = styled.div`
 
 const Reviews = styled.div`
   display: flex;
-  width: 95%;
+  width: 100%;
   align-items: center;
   height: 222px;
+  padding: 0% 1%;
+
   @media screen and (max-width: 500px) {
-    width: 95%;
+    width: 100%;
     height: auto;
+
+    padding: 0%;
+
     justify-content: flex-start;
     flex-direction: column;
+
     align-items: center;
   }
 `;
 
 const ContainerReviews = styled.div`
+  width: 100%;
+  position: relative;
+  // overflow-y: scroll;
+
   @media screen and (max-width: 500px) {
     display: flex;
-    flex_direction: row;
+    flex-direction: row;
     width: 95%;
     justify-content: center;
     align-items: center;
@@ -87,6 +99,7 @@ const Image = styled.img`
   max-width: 650px;
   object-fit: contain;
   margin-top: 90px;
+
   @media screen and (max-width: 960px) {
     height: 35vh;
     width: 45%;
@@ -305,15 +318,11 @@ export default function DetalleProducto({ contacto }) {
     setRelacionados(productos);
   }, [productos]);
 
-  useEffect(() => {
-    console.log(contacto, "wuwu");
-  }, [contacto]);
-
   // Creamos la variable a utilizar
   var rating = 0;
 
   // Sumarizamos la cantidad de estrellas entre todas las reviews
-  reviews[0]
+  reviews
     ? reviews.map((reviews) => (rating += reviews.puntaje))
     : (rating = 1);
 

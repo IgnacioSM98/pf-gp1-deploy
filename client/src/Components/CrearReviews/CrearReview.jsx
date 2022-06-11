@@ -111,6 +111,7 @@ export default function CrearReview({ id }) {
 
     dispatch(postReviews(id, input));
     setStateModalOpinion(!stateModalOpinion);
+
     setInput({
       ...input,
       puntaje: "",

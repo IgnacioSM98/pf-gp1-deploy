@@ -8,7 +8,6 @@ export default function UseOnScreen(ref) {
   );
 
   useEffect(() => {
-    console.log(ref.current, "wuwehi");
     if (ref.current) {
       observer.observe(ref.current);
       return () => {
