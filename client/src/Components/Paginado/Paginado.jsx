@@ -8,6 +8,12 @@ const Pages = styled.div`
   justify-content: center;
   align-content: center;
   margin-right: 4em;
+  @media screen and (max-width: 960px) {
+    max-width: none;
+    min-width: none;
+    margin-top: 10px;
+    margin-right: auto;
+  }
 `;
 
 const Page = styled.button`

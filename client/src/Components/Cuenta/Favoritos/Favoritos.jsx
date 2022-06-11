@@ -15,6 +15,9 @@ const Productos = styled.div`
   padding: 5px;
   border: 1px solid darkgrey;
   border-radius: 8px;
+  @media screen and (max-width: 560px) {
+    left: 5%;
+  }
 `;
 
 export default function Favoritos() {

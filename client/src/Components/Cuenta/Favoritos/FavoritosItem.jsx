@@ -36,6 +36,13 @@ const Nombre = styled.p`
   width: 260px;
 
   text-align: start;
+  @media screen and (max-width: 1000px) {
+    display: none;
+  }
+  @media screen and (max-width: 560px) {
+    display: contents;
+    font-size: 15px;
+  }
 `;
 
 const PrecioUnitario = styled.p`
@@ -45,6 +52,10 @@ const PrecioUnitario = styled.p`
   position: absolute;
   right: 27.5%;
   top: 30%;
+  @media screen and (max-width: 560px) {
+    font-size: 15px;
+    right: 5%;
+  }
 `;
 
 const ProductLink = styled(Link)`
