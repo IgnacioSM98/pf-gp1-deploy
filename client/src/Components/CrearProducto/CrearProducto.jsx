@@ -226,6 +226,7 @@ export default function CrearProducto() {
   const [stateModalCat, setStateModalCat] = useState(false);
   const [stateModalPut, setStateModalPut] = useState(false);
   const [stateModalImg, setStateModalImg] = useState(false);
+  const [creado, setCreado] = useState(false);
 
   const [categorias, setCategorias] = useState([]),
     [errors, setErrors] = useState({}),
@@ -400,6 +401,18 @@ export default function CrearProducto() {
       } else {
         dispatch(postProducto(post));
         setStateModalProd(!stateModalProd);
+
+        setPost({
+          nombre: "",
+          descripcion: "",
+          precio: 0,
+          imagen: "",
+          stock: 0,
+          categorias: [],
+        });
+
+        setCreado(true);
+        setImageSelected();
       }
     }
   }
@@ -496,6 +509,7 @@ export default function CrearProducto() {
                 setPost={setPost}
                 setErrors={setErrors}
                 detalle={detalle}
+                creado={creado}
               />
 
               {errors.categorias && <Errors>{errors.categorias}</Errors>}
