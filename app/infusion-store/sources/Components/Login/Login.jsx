@@ -1,5 +1,7 @@
 import React from "react";
 import { Text, View, TouchableOpacity, StyleSheet, Image } from "react-native";
+import { useDispatch } from "react-redux";
+import { setUserInfo } from "../../../redux/actions";
 
 const styles = StyleSheet.create({
   btn: {
@@ -26,6 +28,27 @@ const styles = StyleSheet.create({
 });
 
 export default function Login({ onAuth, setIsAuthenticated }) {
+  const dispatch = useDispatch();
+
+  // Recuperamos el usuario de la cache
+  // const user = await getData("user");
+
+  // Guardamos la información del usuario
+  dispatch(
+    setUserInfo({
+      uid: "kHXq79CbI7delhbqeFLdG3WJBqk2",
+      displayName: "Rodrigo Cremella",
+      email: "rodrigocremella@gmail.com",
+      emailVerified: true,
+      phoneNumber: null,
+      photoURL:
+        "https://lh3.googleusercontent.com/a-/AOh14GgZYieOLM4OfMsyQ1_-i1UimJySENWd0VmU6YUT8w=s96-c",
+      isAnonymous: false,
+      rol: "admin",
+      visualizacion: "admin",
+    })
+  );
+
   return (
     <View>
       <Text style={styles.text}>Si ma re dulce</Text>

@@ -26,6 +26,10 @@
     "react-native-axios": "^0.17.1",
     "react-native-global-font": "^1.0.3",
     "react-native-web": "0.17.7",
+    "react-redux": "^8.0.2",
+    "redux": "^4.2.0",
+    "redux-devtools-extension": "^2.13.9",
+    "redux-thunk": "^2.4.1",
     "styled-components": "^5.3.5",
     "webpack-dev-server": "~3.11.0"
   },

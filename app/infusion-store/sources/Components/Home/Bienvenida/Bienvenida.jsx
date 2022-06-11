@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useSelector } from "react-redux";
 import { View } from "react-native";
 import { getData } from "../../../Functions/localStorage";
 import styled from "styled-components/native";
@@ -33,13 +34,8 @@ const Texto = styled.Text`
 `;
 
 export default function Bienvenida() {
-  const [user, setUser] = useState({});
-
-  useEffect(() => {
-    getData("user").then((res) => {
-      setUser(res.userInfo);
-    });
-  });
+  // const [user, setUser] = useState();
+  const user = useSelector((state) => state.userInfo);
 
   return user ? (
     <Container>
