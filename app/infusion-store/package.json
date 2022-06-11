@@ -25,6 +25,7 @@
     "react-native": "^0.68.2",
     "react-native-axios": "^0.17.1",
     "react-native-global-font": "^1.0.3",
+    "react-native-paper": "^4.12.1",
     "react-native-web": "0.17.7",
     "react-redux": "^8.0.2",
     "redux": "^4.2.0",
