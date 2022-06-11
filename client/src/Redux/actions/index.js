@@ -281,10 +281,12 @@ export function getDetalleEnvio(id) {
 
 export function actualizarEstadoEnvio(id, payload, productos) {
   return async function (dispatch) {
-    await axios.put(`${urlBase}${admin}${pedido}${id}`, payload).then((res) => {
-      res.data.productos = productos;
-      dispatch({ type: "ACTUALIZAR_ESTADO", payload: res.data });
-    });
+    await axios
+      .put(`${urlBase}${admin}${pedido}${id}`, { estado: payload.newEstado })
+      .then((res) => {
+        res.data.productos = productos;
+        dispatch({ type: "ACTUALIZAR_ESTADO", payload: res.data });
+      });
   };
 }
 
