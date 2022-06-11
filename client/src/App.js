@@ -2,6 +2,7 @@ import "./App.css";
 import { useEffect, useRef, useState } from "react";
 import {
   getCategorias,
+  getPedidosUsuario,
   getProductos,
   setUserInfo,
 } from "./Redux/actions/index";
@@ -21,12 +22,17 @@ import {
   NotFound,
 } from "./Components/index";
 import { Routes, Route } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 function App() {
   const dispatch = useDispatch();
   const contacto = useRef(null);
   const [user, setUser] = useState();
+  const usuario = useSelector((state) => state.userInfo);
+
+  useEffect(() => {
+    dispatch(getPedidosUsuario(usuario?.uid));
+  }, [usuario]);
 
   useEffect(() => {
     // Si sacamos el GET PRUDUCTOS de acá se rompe Redux al POST PRODUCTO nuevo
