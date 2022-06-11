@@ -15,7 +15,7 @@ import {
 
 const Container = styled.View`
   display: flex;
-  justify-content: center;
+  // justify-content: center;
   margin-top: ${Platform.OS === "ios" ? "10%" : 0};
 `;
 
