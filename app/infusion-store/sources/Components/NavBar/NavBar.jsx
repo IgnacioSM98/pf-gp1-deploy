@@ -1,39 +1,98 @@
-import React from "react";
-import { Text, TextInput } from "react-native";
+import React, { useState } from "react";
+import { Text, TextInput, StyleSheet, View } from "react-native";
+import { Feather } from "@expo/vector-icons";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
+import { Searchbar } from "react-native-paper";
+
 import styled from "styled-components/native";
 
 const Container = styled.View`
   position: relative;
-  background-color: grey;
+  // justify-content: flex-start;
+  align-items: center;
+  width: 100%;
   height: 10%;
+  top: 5%;
+  margin-bottom: 10%;
+  // background-color: grey;
 `;
 
 const Button = styled.Pressable`
   position: absolute;
-  bottom: 0;
-  right: 0;
-  padding: 2%;
+  bottom: 5%;
+  right: 5%;
+  padding: 10px;
+  background-color: rgba(194, 194, 194, 0.69);
+  border-radius: 15px;
 `;
+
+const styles = StyleSheet.create({
+  // contenedorInput: {
+  //   flex: 1,
+  //   flexDirection: "row",
+  //   justifyContent: "center",
+  //   alignItems: "center",
+  //   width: "70%",
+  //   top: "5%",
+  // },
+
+  buscador: {
+    position: "absolute",
+    flex: 1,
+    width: "65%",
+    bottom: "5%",
+    left: "5%",
+    // padding: 10,
+    borderRadius: 5,
+    backgroundColor: "rgba(194, 194, 194, 0.69)",
+    color: "grey",
+    fontFamily: "PoppinsM",
+  },
+
+  // icono: {
+  //   left: "20%",
+  //   top: "5%",
+  //   paddingLeft: 13,
+  //   padding: 8,
+  //   backgroundColor: "rgba(194, 194, 194, 0.69)",
+  //   borderTopRighttRadius: 0,
+  //   borderBottomRighttRadius: 0,
+  //   borderTopLeftRadius: 13,
+  //   borderBottomLeftRadius: 13,
+  //   borderColor: "none",
+  // },
+});
 
 export default function NavBar() {
   return (
     <Container>
       <Button>
-        <Text>Carrito</Text>
+        <MaterialCommunityIcons
+          name="cart"
+          size={26}
+          color="black"
+          style={{ alignItems: "center", justifyContent: "center" }}
+        />
       </Button>
 
-      <TextInput
-        placeholder="Buscar producto"
-        style={{
-          position: "absolute",
-          bottom: 0,
-          width: "50%",
-          margin: 10,
-          borderWidth: 1,
-          borderRadius: 8,
-          padding: 6,
+      <Searchbar
+        placeholder="Buscar producto..."
+        style={styles.buscador}
+        inputStyle={{
+          fontFamily: "PoppinsM",
+          fontSize: 15,
+          color: "grey",
         }}
-      ></TextInput>
+      />
+
+      {/* <View style={styles.contenedorInput}> */}
+      {/* <Feather style={styles.icono} name="search" size={24} color="black" /> */}
+      {/* <TextInput
+        placeholder="Buscar producto..."
+        placeholderTextColor="grey"
+        style={styles.buscador}
+      ></TextInput> */}
+      {/* </View> */}
     </Container>
   );
 }
