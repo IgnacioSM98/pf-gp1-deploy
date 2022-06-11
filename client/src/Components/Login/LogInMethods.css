@@ -18,7 +18,7 @@
 .grupo-login {
   position: relative;
   margin: 45px 0px 0px 0px;
-  width: 320px;
+  width: 80%;
 }
 
 .input-login {
@@ -35,7 +35,7 @@
 
 .input-login:focus {
   outline: none;
-  color: white;
+  color: #c6c6c6;
 }
 
 .input-login:focus ~ .label-login {
@@ -84,24 +84,23 @@
 
 @media screen and (max-width: 1100px) {
   .form-login {
-    width: 50%;
+    width: 100%;
   }
 }
 
-@media screen and (max-width: 600px) {
-  .form-login {
-    width: 60%;
-  }
-}
-
-@media screen and (max-width: 450%) {
+@media screen and (max-width: 560px) {
   .form-login {
     width: 80%;
   }
-}
-
-@media screen and (max-width: 300px) {
-  .form-login {
-    width: 90%;
+  .input-login {
+    width: 80%;
+    display: inline;
+  }
+  .grupo-login {
+    margin: 10px 0px 0px 0px;
+    width: 120%;
+  }
+  .label-login {
+    left: 10%;
   }
 }
