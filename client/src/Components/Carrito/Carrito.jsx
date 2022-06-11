@@ -42,7 +42,7 @@ const Borrar = styled.button`
   background-color: rgba(98, 148, 107, 1);
   cursor: pointer;
   &: hover {
-    background-color: red;
+    // background-color: red;
   }
 `;
 
