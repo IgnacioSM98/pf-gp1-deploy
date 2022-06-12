@@ -55,6 +55,9 @@ const ComentarioReview = styled.span`
 
 const Boton = styled.button`
   position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   bottom: 5px;
   right: 10px;
   width: 70px;
@@ -67,6 +70,9 @@ const Boton = styled.button`
   border-radius: 4px;
   font-size: 13px;
   cursor: pointer;
+  @media screen and (min-width: 560px) {
+    display: none;
+  }
 `;
 
 const BotonCerrar = styled.button`

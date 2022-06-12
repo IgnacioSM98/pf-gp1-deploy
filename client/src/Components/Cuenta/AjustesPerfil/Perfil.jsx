@@ -15,6 +15,9 @@ const Container = styled.div`
 
 const Boton = styled.button`
   position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   right: 20px;
   width: 25px;
   height: 25px;
@@ -23,7 +26,9 @@ const Boton = styled.button`
   border-radius: 4px;
   font-size: 13px;
   cursor: pointer;
-  background-color: ;
+  @media screen and (min-width: 560px) {
+    display: none;
+  }
 `;
 
 export default function Perfil() {

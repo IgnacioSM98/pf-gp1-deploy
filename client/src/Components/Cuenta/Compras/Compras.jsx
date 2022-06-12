@@ -36,6 +36,9 @@ const Container = styled.div`
 
 const Boton = styled.button`
   position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   margin-top: 20px;
   right: 20px;
   width: 25px;
@@ -45,7 +48,17 @@ const Boton = styled.button`
   border-radius: 4px;
   font-size: 13px;
   cursor: pointer;
-  background-color: ;
+  @media screen and (min-width: 560px) {
+    display: none;
+  }
+  @media screen and (max-width: 450px) {
+    width: 20px;
+    height: 20px;
+  }
+  @media screen and (max-width: 380px) {
+    width: 17px;
+    height: 17px;
+  }
 `;
 
 export default function Compras() {

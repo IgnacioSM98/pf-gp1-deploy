@@ -4,6 +4,9 @@ import styled from "styled-components";
 
 const Boton = styled.button`
   position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   margin-top: 15px;
   right: 20px;
   width: 25px;
@@ -13,6 +16,9 @@ const Boton = styled.button`
   border-radius: 4px;
   font-size: 13px;
   cursor: pointer;
+  @media screen and (min-width: 560px) {
+    display: none;
+  }
   @media screen and (max-width: 450px) {
     width: 20px;
     height: 20px;

@@ -103,6 +103,9 @@ const Button = styled.button`
 `;
 
 const Boton = styled.button`
+  display: flex;
+  justify-content: center;
+  align-items: center;
   display: block;
   position: absolute;
   margin: 5px 5px 5px 5px;
@@ -114,7 +117,9 @@ const Boton = styled.button`
   border-radius: 4px;
   font-size: 13px;
   cursor: pointer;
-  background-color: ;
+  @media screen and (min-width: 560px) {
+    display: none;
+  }
   @media screen and (max-width: 450px) {
     width: 20px;
     height: 20px;

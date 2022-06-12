@@ -31,6 +31,9 @@ const Productos = styled.div`
   }
 `;
 const Boton = styled.button`
+  display: flex;
+  justify-content: center;
+  align-items: center;
   margin-top: 25px;
   right: 20px;
   width: 25px;
@@ -40,7 +43,9 @@ const Boton = styled.button`
   border-radius: 4px;
   font-size: 13px;
   cursor: pointer;
-  background-color: ;
+  @media screen and (min-width: 560px) {
+    display: none;
+  }
 `;
 
 export default function Favoritos() {
