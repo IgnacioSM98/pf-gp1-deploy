@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getPedidos } from "../../../Redux/actions";
+import { getPedidos, getPedidosUsuario } from "../../../Redux/actions";
 import { Pedido } from "../..";
 import styled from "styled-components";
 
@@ -55,12 +55,14 @@ const Boton = styled.button`
 
 export default function Compras() {
   const dispatch = useDispatch();
+
   const userInfo = useSelector((state) => state.userInfo);
   const pedidos = useSelector((state) => state.pedidos);
   const [show, setShow] = useState(true);
+  const pedidos = useSelector((state) => state.pedidosUsuario);
 
   useEffect(() => {
-    dispatch(getPedidos());
+    dispatch(getPedidosUsuario(userInfo?.uid));
   }, [dispatch]);
 
   const filterByUser = (pedido) => {

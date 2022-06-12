@@ -17,6 +17,8 @@ const DivUno = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+  align-items: center;
+  width: 45%;
 `;
 
 const Imagen = styled.img`
@@ -45,15 +47,16 @@ const Imagen = styled.img`
 const Nombre = styled.p`
   font-family: Poppins;
   font-weight: 800;
-  width: auto;
+  width: 200px;
   text-align: start;
+
   @media screen and (max-width: 1200px) {
     heigth: auto;
-    font-size: 22px;
+    font-size: 15px;
   }
   @media screen and (max-width: 1000px) {
     heigth: auto;
-    font-size: 18px;
+    font-size: 15px;
   }
   @media screen and (max-width: 800px) {
     heigth: auto;
@@ -158,7 +161,6 @@ const BotonCantidad = styled.button`
   outline: none;
   color: white;
   cursor: pointer;
-  
 `;
 
 const Cantidad = styled.p`
@@ -178,7 +180,7 @@ const Cantidad = styled.p`
   }
   @media screen and (max-width: 450px) {
     size: 40%;
-    font-size: 15;
+    font-size: 12px;
   }
   @media screen and (max-width: 300px) {
     size: 25%;
@@ -219,38 +221,46 @@ export default function CarritoItem({ producto, setPrecioTotal }) {
   return (
     <Container>
       <DivUno>
-        <Link to={`/productos/${producto.id}`}>
+        <Link
+          style={{
+            textDecoration: "none",
+            color: "black",
+            display: "flex",
+            alignItems: "center",
+          }}
+          to={`/productos/${producto.id}`}
+        >
           <Imagen
             className="item-img"
             src={producto.imagen}
             alt={producto.nombre}
           />
+
+          <Nombre>{producto.nombre}</Nombre>
         </Link>
 
-        <Nombre>{producto.nombre}</Nombre>
+        <ContenedorCantidad>
+          <BotonCantidad
+            onClick={(e) => {
+              e.preventDefault();
+              handleResta(e);
+            }}
+          >
+            -
+          </BotonCantidad>
+
+          <Cantidad>{cantidad}</Cantidad>
+
+          <BotonCantidad
+            onClick={(e) => {
+              e.preventDefault();
+              handleSuma(e);
+            }}
+          >
+            +
+          </BotonCantidad>
+        </ContenedorCantidad>
       </DivUno>
-
-      <ContenedorCantidad>
-        <BotonCantidad
-          onClick={(e) => {
-            e.preventDefault();
-            handleResta(e);
-          }}
-        >
-          -
-        </BotonCantidad>
-
-        <Cantidad>{cantidad}</Cantidad>
-
-        <BotonCantidad
-          onClick={(e) => {
-            e.preventDefault();
-            handleSuma(e);
-          }}
-        >
-          +
-        </BotonCantidad>
-      </ContenedorCantidad>
 
       <PrecioUnitario>${producto.precio}</PrecioUnitario>
       <PrecioSubtotal>${semiTotal}</PrecioSubtotal>

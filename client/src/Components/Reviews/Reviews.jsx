@@ -7,17 +7,25 @@ const Container = styled.div`
   display: flex;
   flex-direction: column;
   height: 184px;
+  width: 100%;
   justify-content: space-around;
   align-items: start;
-  position: relative;
+  // position: relative;
+
+  // overflow-y: scroll;
 `;
 
 const Reviews = styled.div`
   display: flex;
-  width: 100%;
+  // flex-direction: row;
+  width: 75%;
+
+  // overflow-y: scroll;
+
   @media screen and (max-width: 500px) {
-    width: 95%;
-    flex-direction: row;
+    // background-color: red;
+    width: 100%;
+    flex-direction: column;
   }
 `;
 
@@ -25,6 +33,7 @@ const Titulo = styled.div`
   margin-left: 10px;
   font-size: 20px;
   font-weight: 600;
+
   @media screen and (max-width: 500px) {
     font-size: 15px;
   }
@@ -38,6 +47,7 @@ const Button = styled.button`
   background-color: transparent;
   text-decoration: underline;
   cursor: pointer;
+
   @media screen and (max-width: 500px) {
     margin-left: 3px;
   }
@@ -49,14 +59,20 @@ export default function Producto({ setReseñas }) {
   return (
     <Container>
       <Titulo>Reseñas de otros usuarios</Titulo>
-      <Button
-        onClick={(e) => {
-          e.preventDefault();
-          setReseñas(true);
-        }}
-      >
-        ver todas
-      </Button>
+
+      {reviews.length ? (
+        <Button
+          onClick={(e) => {
+            e.preventDefault();
+            setReseñas(true);
+          }}
+        >
+          ver todas
+        </Button>
+      ) : (
+        <></>
+      )}
+
       <Reviews>
         {reviews.length ? (
           reviews.slice(0, 4).map((review) => {
@@ -67,7 +83,9 @@ export default function Producto({ setReseñas }) {
                 puntaje={review.puntaje}
                 titulo={review.titulo}
                 comentario={review.comentario}
-                fecha={review.updatedAt.slice(0, 10)}
+                fecha={
+                  review.updatedAt ? review.updatedAt.slice(0, 10) : "Ahora"
+                }
               />
             );
           })

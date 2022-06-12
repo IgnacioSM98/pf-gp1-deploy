@@ -33,7 +33,8 @@ const Boton = styled.button`
 
 export default function Perfil() {
   const user = useSelector((state) => state.userInfo);
-  const mail = user.email;
+  const mail = user?.email;
+
   const usuarios = useSelector((state) => state.usuarios);
   const [usuario, setUsuario] = useState({});
   const dispatch = useDispatch();

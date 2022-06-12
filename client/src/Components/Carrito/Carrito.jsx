@@ -42,28 +42,30 @@ const Borrar = styled.button`
   background-color: rgba(98, 148, 107, 1);
   cursor: pointer;
   &: hover {
-    background-color: red;
+    // background-color: red;
   }
 `;
 
 const Titulo = styled.h2`
-  margin-top: 7rem;
+  margin-top: 6rem;
   font-size: 40px;
   font-family: Poppins;
   font-weight: 400;
+
   @media screen and (max-width: 1200px) {
     font-size: 40px;
   }
   @media screen and (max-width: 1000px) {
-    font-size: 35px;
+    font-size: 30px;
   }
   @media screen and (max-width: 800px) {
-    font-size: 30px;
+    font-size: 25px;
   }
   @media screen and (max-width: 600px) {
     font-size: 20px;
   }
   @media screen and (max-width: 450px) {
+    margin-top: 5.5rem;
     font-size: 23px;
   }
   @media screen and (max-width: 300px) {
@@ -91,9 +93,9 @@ const ContenedorOpciones = styled.div`
   display: flex;
   flex-direction: row;
   margin-top: 4rem;
-  width: 100%;
+  width: 85%;
   position: relative;
-  justify-content: space-around;
+  justify-content: space-between;
   align-items: center;
 `;
 
@@ -101,18 +103,21 @@ const OpcionesProducto = styled.p`
   font-size: 18px;
   font-family: Poppins;
   top: -23px;
+
   @media screen and (max-width: 1200px) {
-    width: 200%;
+    width: 20%;
     heigth: auto;
-    font-size: 22px;
+    font-size: 20px;
   }
+
   @media screen and (max-width: 1000px) {
-    width: 200%;
+    width: 20%;
     heigth: auto;
     font-size: 19px;
   }
+
   @media screen and (max-width: 800px) {
-    width: 150%;
+    width: 15%;
     heigth: auto;
     font-size: 17px;
   }
@@ -137,21 +142,31 @@ const Opciones = styled.p`
   font-size: 18px;
   font-family: Poppins;
   top: -23px;
+
   @media screen and (max-width: 1200px) {
-    width: 100%;
+    width: 15%;
     heigth: auto;
-    font-size: 22px;
+    font-size: 18px;
   }
+
+  @media screen and (max-width: 1100px) {
+    width: 12%;
+    heigth: auto;
+    font-size: 18px;
+  }
+
   @media screen and (max-width: 1000px) {
-    width: 90%;
+    width: 17%;
     heigth: auto;
     font-size: 19px;
   }
+
   @media screen and (max-width: 800px) {
-    width: 75%;
+    width: 12%;
     heigth: auto;
     font-size: 17px;
   }
+
   @media screen and (max-width: 600px) {
     font-size: 15px;
     width: 50%;
@@ -159,7 +174,7 @@ const Opciones = styled.p`
   }
   @media screen and (max-width: 450px) {
     font-size: 12px;
-    width: 40%;
+    width: 20%;
     heigth: auto;
   }
   @media screen and (max-width: 300px) {
@@ -213,12 +228,13 @@ const ContenedorMonto = styled.div`
   justify-content: space-evenly;
   position: relative;
   heigth: auto;
+
   @media screen and (max-width: 1200px) {
     font-size: 22px;
-    size: 100%;
+    size: 10%;
   }
   @media screen and (max-width: 800px) {
-    size: 75%;
+    size: 15%;
     font-size: 17px;
   }
   @media screen and (max-width: 600px) {
@@ -256,6 +272,7 @@ const Label = styled.label`
   position: absolute;
   left: ${(props) => props.left};
   right: ${(props) => props.right};
+
   @media screen and (max-width: 1200px) {
     font-size: 22px;
   }
@@ -266,7 +283,8 @@ const Label = styled.label`
     font-size: 11px;
   }
   @media screen and (max-width: 450px) {
-    font-size: 10px;
+    margin: 15px 5px;
+    font-size: 13px;
   }
   @media screen and (max-width: 300px) {
     font-size: 9px;
@@ -369,8 +387,16 @@ export default function Carrito({ contacto }) {
         </ContenedorLinea>
 
         <ContenedorOpciones>
-          <OpcionesProducto>Producto</OpcionesProducto>
-          <Opciones>Cantidad</Opciones>
+          <div
+            style={{
+              width: "40%",
+              display: "flex",
+              justifyContent: "space-between",
+            }}
+          >
+            <OpcionesProducto>Producto</OpcionesProducto>
+            <Opciones>Cantidad</Opciones>
+          </div>
           <Opciones>Precio Unitario</Opciones>
           <Opciones>Subtotal</Opciones>
         </ContenedorOpciones>
