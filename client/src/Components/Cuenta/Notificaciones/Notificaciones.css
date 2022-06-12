@@ -10,17 +10,6 @@ p {
   margin: 15px 10px 10px 10px;
 }
 
-.form-notificaciones {
-  margin-top: 20px;
-  min-height: 100vh;
-  display: flex;
-  position: relative;
-  flex-direction: column;
-  background-color: white;
-  border-radius: 10px;
-  box-shadow: 0 0 6px 0 rgba(255, 255, 255, 0.8);
-}
-
 .contenedor-divs {
   display: flex;
   flex-direction: column;
@@ -44,42 +33,4 @@ p {
   border-radius: 5px;
   width: 15px;
   height: 15px;
-}
-
-@media screen and (max-width: 1100px) {
-  .form-notificaciones {
-    width: 50%;
-  }
-  p {
-    font-weight: 600;
-    font-size: 30px;
-  }
-}
-
-@media screen and (max-width: 600px) {
-  .form-notificaciones {
-    width: 60%;
-  }
-  p {
-    font-weight: 400;
-    font-size: 20px;
-  }
-}
-@media screen and (max-width: 560px) {
-  .form-notificaciones {
-    width: 100vw;
-  }
-  p {
-    font-weight: 300;
-    font-size: 20px;
-  }
-}
-@media screen and (max-width: 300px) {
-  .form-notificaciones {
-    width: 100vw;
-  }
-  p {
-    font-weight: 300;
-    font-size: 15px;
-  }
 }

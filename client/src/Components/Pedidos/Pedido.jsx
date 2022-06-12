@@ -53,14 +53,14 @@ const ProductLink = styled(Link)`
 `;
 
 const Span = styled.span`
-  font-size: "8px";
+  font-size: 8px;
   @media screen and (max-width: 700px) {
     display: none;
   }
 `;
 
 const Span2 = styled.span`
-  font-size: "8px";
+  font-size: 8px;
   @media screen and (max-width: 1000px) {
     display: none;
   }

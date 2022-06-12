@@ -29,6 +29,71 @@ const Boton = styled.button`
   }
 `;
 
+const Form = styled.form`
+  margin-top: 20px;
+  min-height: 100vh;
+  display: flex;
+  position: relative;
+  flex-direction: column;
+  background-color: white;
+  border-radius: 10px;
+  box-shadow: 0 0 6px 0 rgba(255, 255, 255, 0.8);
+  @media screen and (max-width: 1100px) {
+      width: 50%;
+  }
+    p {
+      font-weight: 600;
+      font-size: 30px;
+    }
+  }
+  
+  @media screen and (max-width: 600px) {
+      width: 60%;
+    }
+    p {
+      font-weight: 400;
+      font-size: 20px;
+    }
+  }
+  @media screen and (max-width: 560px) {
+      width: 100vw;
+    }
+    p {
+      font-weight: 300;
+      font-size: 20px;
+    }
+  }
+  @media screen and (max-width: 300px) {
+      width: 100vw;
+  }
+    p {
+      font-weight: 300;
+      font-size: 15px;
+    }
+  }
+`;
+
+const P = styled.p`
+  margin: 15px 10px 10px 10px;
+  @media screen and (max-width: 1100px) {
+    font-weight: 600;
+    font-size: 30px;
+  }
+
+  @media screen and (max-width: 600px) {
+    font-weight: 400;
+    font-size: 20px;
+  }
+  @media screen and (max-width: 560px) {
+    font-weight: 300;
+    font-size: 20px;
+  }
+  @media screen and (max-width: 300px) {
+    font-weight: 300;
+    font-size: 15px;
+  }
+`;
+
 export default function Notificaciones() {
   const [show, setShow] = useState(true);
 
@@ -37,14 +102,11 @@ export default function Notificaciones() {
   }
 
   return (
-    <form
-      className="form-notificaciones"
-      style={{ display: show ? "absolute" : "none" }}
-    >
+    <Form style={{ display: show ? "absolute" : "none" }}>
       <Boton onClick={handleClick}>X</Boton>
 
       <div>
-        <p>NOFICICACIONES POR MAIL</p>
+        <P>NOFICICACIONES POR MAIL</P>
       </div>
 
       <div className="grupo-notificaciones">
@@ -68,6 +130,6 @@ export default function Notificaciones() {
         <label className="label-notificaciones">Te Extrañamos</label>
         <input className="input-notificaciones" type="checkbox"></input>
       </div>
-    </form>
+    </Form>
   );
 }
