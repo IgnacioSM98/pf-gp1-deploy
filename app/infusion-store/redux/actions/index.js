@@ -1,7 +1,7 @@
 import axios from "axios";
 
-// const urlBase = "https://proyecto-final-gp1.herokuapp.com/";
-// const productos = "productos";
+const urlBase = "https://proyecto-final-gp1.herokuapp.com/";
+const productos = "productos";
 // const categorias = "categorias";
 // const crear = "crear";
 // const admin = "admin/";
@@ -217,17 +217,17 @@ export function setProductosFiltrados(productosFiltrados) {
 //   };
 // }
 
-export function addCarrito(carrito) {
-  return function (dispatch) {
-    dispatch({ type: "ADD_CARRITO", payload: carrito });
-  };
-}
-
-// export function addCarrito(idProducto, cantidad) {
+// export function addCarrito(carrito) {
 //   return function (dispatch) {
-//     dispatch({ type: "ADD_CARRITO", payload: { idProducto, cantidad } });
+//     dispatch({ type: "ADD_CARRITO", payload: carrito });
 //   };
 // }
+
+export function agregarCarrito(idProducto, cantidad) {
+  return function (dispatch) {
+    dispatch({ type: "AGREGAR_CARRITO", payload: { idProducto, cantidad } });
+  };
+}
 
 // export function restarCarrito(idProducto, cantidad) {
 //   // console.log(idProducto, cantidad);

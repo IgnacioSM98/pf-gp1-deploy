@@ -13,6 +13,7 @@ import { useNavigation } from "@react-navigation/native";
 import { useDispatch, useSelector } from "react-redux";
 import {
   addCarrito,
+  agregarCarrito
   eliminarDeFavoritos,
   añadirAFavoritos,
 } from "../../../redux/actions";
@@ -150,7 +151,7 @@ const DetalleProducto = ({ route }) => {
 
   function addToCarrito(e) {
     if (data.stock > 0) {
-      dispatch(addCarrito(id, 1));
+      dispatch(agregarCarrito(id, 1));
     }
   }
 

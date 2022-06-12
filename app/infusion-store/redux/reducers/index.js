@@ -197,51 +197,50 @@ export default function rootReducer(state = initialState, action) {
     //     carrito: action.payload,
     //   };
 
-    case "ADD_CARRITO":
-      return {
-        ...state,
-        carrito: [...state.carrito, action.payload],
-      };
+    // case "ADD_CARRITO":
+    //   return {
+    //     ...state,
+    //     carrito: [...state.carrito, action.payload],
+    //   };
 
-    // case "AGREGAR_CARRITO":
-    //   let addCarrito = [];
+    case "AGREGAR_CARRITO":
+      let addCarrito = [];
 
-    //   if (state.carrito !== null) {
-    //     addCarrito = [...state.carrito];
-    //   }
+      if (state.carrito !== null) {
+        addCarrito = [...state.carrito];
+      }
 
-    //   let indexCarritoAdd = state.carrito?.findIndex(
-    //     (carrito) => Number(carrito.id) === Number(action.payload.idProducto)
-    //   );
+      let indexCarritoAdd = state.carrito?.findIndex(
+        (carrito) => Number(carrito.id) === Number(action.payload.idProducto)
+      );
 
-    //   if (indexCarritoAdd !== -1) {
-    //     addCarrito[indexCarritoAdd].cantidad = action.payload.cantidad;
+      if (indexCarritoAdd !== -1) {
+        addCarrito[indexCarritoAdd].cantidad = action.payload.cantidad;
 
-    //     return {
-    //       ...state,
-    //       carrito: addCarrito,
-    //     };
-    //   } else {
-    //     const productoSeleccionado = state.productos.find(
-    //       (producto) =>
-    //         Number(producto.id) === Number(action.payload.idProducto)
-    //     );
-    //     console.log(productoSeleccionado, "ACAAA");
+        return {
+          ...state,
+          carrito: addCarrito,
+        };
+      } else {
+        const productoSeleccionado = state.productos.find(
+          (producto) =>
+            Number(producto.id) === Number(action.payload.idProducto)
+        );
 
-    //     return {
-    //       ...state,
-    //       carrito: [
-    //         ...state.carrito,
-    //         {
-    //           id: productoSeleccionado.id,
-    //           nombre: productoSeleccionado.nombre,
-    //           precio: productoSeleccionado.precio,
-    //           imagen: productoSeleccionado.imagen,
-    //           cantidad: action.payload.cantidad,
-    //         },
-    //       ],
-    //     };
-    //   }
+        return {
+          ...state,
+          carrito: [
+            ...state.carrito,
+            {
+              id: productoSeleccionado.id,
+              nombre: productoSeleccionado.nombre,
+              precio: productoSeleccionado.precio,
+              imagen: productoSeleccionado.imagen,
+              cantidad: action.payload.cantidad,
+            },
+          ],
+        };
+      }
 
     //     case "RESTAR_CARRITO":
     //       var newCarrito = [...state.carrito];

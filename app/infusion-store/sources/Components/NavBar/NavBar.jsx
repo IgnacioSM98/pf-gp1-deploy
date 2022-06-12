@@ -1,8 +1,17 @@
 import React, { useState } from "react";
-import { Text, TextInput, StyleSheet, View } from "react-native";
+import {
+  Text,
+  TextInput,
+  StyleSheet,
+  View,
+  Pressable,
+  TouchableWithoutFeedback,
+} from "react-native";
 import { Feather } from "@expo/vector-icons";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { Searchbar } from "react-native-paper";
+import { Carrito } from "../index";
+import { useNavigation } from "@react-navigation/native";
 import { useDispatch, useSelector } from "react-redux";
 
 import styled from "styled-components/native";
@@ -53,6 +62,11 @@ const styles = StyleSheet.create({
 
 export default function NavBar({ titulo }) {
   const dispatch = useDispatch();
+  const navigation = useNavigation();
+  
+  const goToCart = () => {
+    navigation.navigate("Carrito");
+    
   const productos = useSelector((state) => state.productos);
 
   const handleSearch = (text) => {
@@ -63,11 +77,12 @@ export default function NavBar({ titulo }) {
         )
       )
     );
+
   };
 
   return (
     <Container>
-      <Button>
+      <Button onPress={() => goToCart()}>
         <MaterialCommunityIcons
           name="cart"
           size={26}
