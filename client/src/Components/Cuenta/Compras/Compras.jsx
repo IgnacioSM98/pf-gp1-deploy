@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getPedidos, getPedidosUsuario } from "../../../Redux/actions";
+import { getPedidos } from "../../../Redux/actions";
 import { Pedido } from "../..";
 import styled from "styled-components";
 

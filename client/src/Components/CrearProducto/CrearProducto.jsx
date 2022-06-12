@@ -207,22 +207,6 @@ const ButtonCat = styled.button`
   cursor: pointer;
 `;
 
-const ParrafoAlerta = styled.p`
-  font-size: 20px;
-  font-weight: bold;
-  color: red;
-`;
-
-const ParrafoOk = styled.p`
-  font-size: 20px;
-  font-weight: bold;
-`;
-
-const ParrafoCat = styled.p`
-  font-size: 20px;
-  font-weight: bold;
-`;
-
 export default function CrearProducto({ contacto }) {
   const dispatch = useDispatch();
   const location = useLocation();

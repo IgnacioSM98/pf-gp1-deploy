@@ -8,7 +8,7 @@ import {
 import "./LogInMethods.css";
 import styled from "styled-components";
 import google from "./Google.png";
-import { useNavigate, useHistory, useLocation } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { getUser, setUserInfo, postUsuario } from "../../Redux/actions";
 import { useDispatch } from "react-redux";
 import Swal from "sweetalert2";
