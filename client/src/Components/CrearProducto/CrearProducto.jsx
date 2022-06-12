@@ -232,6 +232,7 @@ export default function CrearProducto({ contacto }) {
   const detalle = useSelector((state) => state.detalle);
   const isVisible = UseOnScreen(contacto);
 
+  const [creado, setCreado] = useState(false);
   const [categorias, setCategorias] = useState([]),
     [errors, setErrors] = useState({}),
     [post, setPost] = useState({
@@ -481,6 +482,18 @@ export default function CrearProducto({ contacto }) {
         });
 
         dispatch(postProducto(post));
+
+        setPost({
+          nombre: "",
+          descripcion: "",
+          precio: 0,
+          imagen: "",
+          stock: 0,
+          categorias: [],
+        });
+
+        setCreado(true);
+        setImageSelected();
       }
     }
   }
@@ -577,6 +590,7 @@ export default function CrearProducto({ contacto }) {
                 setPost={setPost}
                 setErrors={setErrors}
                 detalle={detalle}
+                creado={creado}
               />
 
               {errors.categorias && <Errors>{errors.categorias}</Errors>}
