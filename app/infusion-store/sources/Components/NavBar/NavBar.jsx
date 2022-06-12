@@ -63,11 +63,12 @@ const styles = StyleSheet.create({
 export default function NavBar({ titulo }) {
   const dispatch = useDispatch();
   const navigation = useNavigation();
-  
+
+  const productos = useSelector((state) => state.productos);
+
   const goToCart = () => {
     navigation.navigate("Carrito");
-    
-  const productos = useSelector((state) => state.productos);
+  };
 
   const handleSearch = (text) => {
     dispatch(
@@ -77,7 +78,6 @@ export default function NavBar({ titulo }) {
         )
       )
     );
-
   };
 
   return (

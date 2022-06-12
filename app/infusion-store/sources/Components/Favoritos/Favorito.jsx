@@ -90,17 +90,16 @@ const styles = StyleSheet.create({
 
 export default function Favorito({ navigation, item }) {
   return (
-      <Pressable
-        onPress={() => navigation.navigate("DetalleProducto", { id: item.id })}
-      >  
-        <View style={styles.contProd}>
-          <View style={styles.contFoto}>
-            <Image source={{ uri: item.imagen }} style={styles.img} alt="uwu" />
-          </View>
-          <View style={styles.contDatos}>
-            <Text style={styles.nombre}>{item.nombre}</Text>
-            <Text style={styles.precio}>${item.precio}</Text>
-          </View>
+    <Pressable
+      onPress={() => navigation.navigate("DetalleProducto", { id: item.id })}
+    >
+      <View style={styles.contProd}>
+        <View style={styles.contFoto}>
+          <Image source={{ uri: item.imagen }} style={styles.img} alt="uwu" />
+        </View>
+        <View style={styles.contDatos}>
+          <Text style={styles.nombre}>{item.nombre}</Text>
+          <Text style={styles.precio}>${item.precio}</Text>
         </View>
       </View>
     </Pressable>
