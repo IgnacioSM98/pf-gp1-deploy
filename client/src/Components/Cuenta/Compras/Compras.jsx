@@ -59,10 +59,9 @@ export default function Compras() {
   const userInfo = useSelector((state) => state.userInfo);
   const pedidos = useSelector((state) => state.pedidos);
   const [show, setShow] = useState(true);
-  const pedidos = useSelector((state) => state.pedidosUsuario);
 
   useEffect(() => {
-    dispatch(getPedidosUsuario(userInfo?.uid));
+    dispatch(getPedidos());
   }, [dispatch]);
 
   const filterByUser = (pedido) => {
