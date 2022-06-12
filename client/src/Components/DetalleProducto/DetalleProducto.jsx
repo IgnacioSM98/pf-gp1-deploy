@@ -323,7 +323,7 @@ export default function DetalleProducto({ contacto }) {
 
   // Sumarizamos la cantidad de estrellas entre todas las reviews
   reviews
-    ? reviews.map((reviews) => (rating += reviews.puntaje))
+    ? reviews.map((reviews) => (rating += reviews?.puntaje))
     : (rating = 1);
 
   // Dividimos la suma de estrellas por cantidad de review para saber el promedio

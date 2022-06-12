@@ -45,6 +45,7 @@ import NotFound from "./NotFound/NotFound";
 import UseOnScreen from "./UseOnScreen/UseOnScreen";
 import AgregarCategorias from "./AgregarCategorias/AgregarCategorias";
 import BuscarPedido from "./BuscarPedido/BuscarPedido";
+import CuentaReseñas from "../Components/Cuenta/Reseñas/Reseñas";
 import Loader from "./Loader/Loader";
 
 export {
@@ -95,5 +96,6 @@ export {
   UseOnScreen,
   AgregarCategorias,
   BuscarPedido,
+  CuentaReseñas,
   Loader,
 };

@@ -6,7 +6,7 @@ import {
   Notificaciones,
   Seguridad,
   Consultas,
-  Reseñas,
+  CuentaReseñas,
   Perfil,
 } from "../index";
 
@@ -129,7 +129,7 @@ export default function Cuenta() {
   const componentes = {
     perfil: Perfil,
     compras: Compras,
-    reseñas: Reseñas,
+    reseñas: CuentaReseñas,
     favoritos: Favoritos,
     notificaciones: Notificaciones,
     seguridad: Seguridad,
