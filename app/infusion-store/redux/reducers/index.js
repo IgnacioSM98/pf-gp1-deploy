@@ -1,13 +1,13 @@
 import axios from "axios";
 
 const initialState = {
-  // productos: [],
+  productos: [],
   // productosFiltrados: [],
   // categorias: [],
   // productosCopiados: [],
   // detalle: {},
   // reviews: [],
-  // carrito: [],
+  carrito: [],
   // user: false,
   userInfo: {},
   // pedidos: [],
@@ -190,50 +190,58 @@ export default function rootReducer(state = initialState, action) {
     //       };
     //     case "DELETE_REVIEW":
     //       return { ...state };
-    //     case "SET_CARRITO":
-    //       return {
-    //         ...state,
-    //         carrito: action.payload,
-    //       };
 
-    //     case "AGREGAR_CARRITO":
-    //       let addCarrito = [];
+    // case "SET_CARRITO":
+    //   return {
+    //     ...state,
+    //     carrito: action.payload,
+    //   };
 
-    //       if (state.carrito !== null) {
-    //         addCarrito = [...state.carrito];
-    //       }
+    case "ADD_CARRITO":
+      return {
+        ...state,
+        carrito: [...state.carrito, action.payload],
+      };
 
-    //       let indexCarritoAdd = state.carrito?.findIndex(
-    //         (carrito) => Number(carrito.id) === Number(action.payload.idProducto)
-    //       );
+    // case "AGREGAR_CARRITO":
+    //   let addCarrito = [];
 
-    //       if (indexCarritoAdd !== -1) {
-    //         addCarrito[indexCarritoAdd].cantidad = action.payload.cantidad;
+    //   if (state.carrito !== null) {
+    //     addCarrito = [...state.carrito];
+    //   }
 
-    //         return {
-    //           ...state,
-    //           carrito: addCarrito,
-    //         };
-    //       } else {
-    //         const productoSeleccionado = state.productos.find(
-    //           (producto) =>
-    //             Number(producto.id) === Number(action.payload.idProducto)
-    //         );
+    //   let indexCarritoAdd = state.carrito?.findIndex(
+    //     (carrito) => Number(carrito.id) === Number(action.payload.idProducto)
+    //   );
 
-    //         return {
-    //           ...state,
-    //           carrito: [
-    //             ...state.carrito,
-    //             {
-    //               id: productoSeleccionado.id,
-    //               nombre: productoSeleccionado.nombre,
-    //               precio: productoSeleccionado.precio,
-    //               imagen: productoSeleccionado.imagen,
-    //               cantidad: action.payload.cantidad,
-    //             },
-    //           ],
-    //         };
-    //       }
+    //   if (indexCarritoAdd !== -1) {
+    //     addCarrito[indexCarritoAdd].cantidad = action.payload.cantidad;
+
+    //     return {
+    //       ...state,
+    //       carrito: addCarrito,
+    //     };
+    //   } else {
+    //     const productoSeleccionado = state.productos.find(
+    //       (producto) =>
+    //         Number(producto.id) === Number(action.payload.idProducto)
+    //     );
+    //     console.log(productoSeleccionado, "ACAAA");
+
+    //     return {
+    //       ...state,
+    //       carrito: [
+    //         ...state.carrito,
+    //         {
+    //           id: productoSeleccionado.id,
+    //           nombre: productoSeleccionado.nombre,
+    //           precio: productoSeleccionado.precio,
+    //           imagen: productoSeleccionado.imagen,
+    //           cantidad: action.payload.cantidad,
+    //         },
+    //       ],
+    //     };
+    //   }
 
     //     case "RESTAR_CARRITO":
     //       var newCarrito = [...state.carrito];
