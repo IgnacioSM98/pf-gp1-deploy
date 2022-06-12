@@ -65,25 +65,25 @@ export default function Reseñas() {
 
   return (
     <div>
-      {
-        // eslint-disable-next-line
-        reseñas?.map((review) => {
+      {reseñas?.map((review) => {
+        return (
           <StyledLink to={`/productos/${review.productoId}`}>
             <Review key={review.id}>
               <Stars rating={review.puntaje} />
               <TituloReview>{review.titulo}</TituloReview>
               <ComentarioReview>{review.comentario}</ComentarioReview>
               <Boton
-                onClick={() => {
+                onClick={(e) => {
+                  e.preventDefault();
                   dispatch(deleteReview(review.id));
                 }}
               >
                 Eliminar
               </Boton>
             </Review>
-          </StyledLink>;
-        })
-      }
+          </StyledLink>
+        );
+      })}
     </div>
   );
 }
