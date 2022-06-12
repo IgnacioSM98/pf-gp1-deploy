@@ -219,9 +219,15 @@ import axios from "axios";
 //   };
 // }
 
-// export function agregarCarrito(idProducto, cantidad) {
+export function addCarrito(carrito) {
+  return function (dispatch) {
+    dispatch({ type: "ADD_CARRITO", payload: carrito });
+  };
+}
+
+// export function addCarrito(idProducto, cantidad) {
 //   return function (dispatch) {
-//     dispatch({ type: "AGREGAR_CARRITO", payload: { idProducto, cantidad } });
+//     dispatch({ type: "ADD_CARRITO", payload: { idProducto, cantidad } });
 //   };
 // }
 

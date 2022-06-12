@@ -1,7 +1,17 @@
 import React, { useEffect, useState } from "react";
-import { Text, Button, View, StyleSheet, Image } from "react-native";
+import {
+  Text,
+  Button,
+  View,
+  StyleSheet,
+  Image,
+  TouchableOpacity,
+  Pressable,
+} from "react-native";
 import { AntDesign, Octicons } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
+import { useDispatch } from "react-redux";
+import { addCarrito } from "../../../redux/actions";
 
 const styles = StyleSheet.create({
   contProd: {
@@ -96,9 +106,9 @@ const styles = StyleSheet.create({
     elevation: 17,
   },
   agregar: {
-    color: "white",
-    fontSize: 30,
-    backgroundColor: "#414345",
+    // color: "white",
+    // fontSize: 30,
+    // backgroundColor: "#414345",
     marginLeft: 35,
     width: 180,
     height: 68,
@@ -115,6 +125,10 @@ const styles = StyleSheet.create({
 
     elevation: 17,
   },
+  letraBoton: {
+    color: "white",
+    fontSize: 30,
+  },
   num: {
     color: "white",
     fontSize: 30,
@@ -126,6 +140,13 @@ const DetalleProducto = ({ route }) => {
   const { id } = route.params;
   const [data, setData] = useState([]);
   const navigation = useNavigation();
+  const dispatch = useDispatch();
+
+  function addToCarrito(e) {
+    if (data.stock > 0) {
+      dispatch(addCarrito(id, 1));
+    }
+  }
 
   useEffect(() => {
     fetch(`https://proyecto-final-gp1.herokuapp.com/producto/${id}`)
@@ -164,7 +185,21 @@ const DetalleProducto = ({ route }) => {
             <Text style={styles.num}>01</Text>
             <Text style={styles.boton}>-</Text>
           </View>
-          <Text style={styles.agregar}>Agregar</Text>
+          <Pressable
+            onPress={(e) => {
+              addToCarrito(e);
+            }}
+            style={({ pressed }) => [
+              {
+                backgroundColor: pressed
+                  ? "rgba(194, 194, 194, 0.69)"
+                  : "#414345",
+              },
+              styles.agregar,
+            ]}
+          >
+            <Text style={styles.letraBoton}>Agregar</Text>
+          </Pressable>
         </View>
       </View>
     </View>
