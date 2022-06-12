@@ -4,7 +4,7 @@ import { signInWithPopup, GoogleAuthProvider } from "firebase/auth";
 import "./LogInMethods.css";
 import styled from "styled-components";
 import google from "./Google.png";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useHistory, useLocation } from "react-router-dom";
 import { getUser, setUserInfo, postUsuario } from "../../Redux/actions";
 import { useDispatch } from "react-redux";
 import axios from "axios";
@@ -105,6 +105,7 @@ export default function Login({ setUser }) {
     [error, setError] = useState({ login: {}, signUp: {} });
 
   const navigate = useNavigate();
+  const location = useLocation();
   const dispatch = useDispatch();
 
   const nombreRef = useRef(null);
@@ -147,7 +148,9 @@ export default function Login({ setUser }) {
 
       setUser(user);
       dispatch(getUser(user.email));
-      navigate(-1);
+
+      // Definimos si vienen desde la pagina o si pegaron el Link
+      location.key === "default" ? navigate("/") : navigate(-1);
     });
   };
 
@@ -183,7 +186,9 @@ export default function Login({ setUser }) {
             dispatch(getUser(mail));
 
             dispatch(postUsuario(body));
-            navigate(-1);
+
+            // Definimos si vienen desde la pagina o si pegaron el Link
+            location.key === "default" ? navigate("/") : navigate(-1);
           });
       });
   };
@@ -217,7 +222,9 @@ export default function Login({ setUser }) {
         dispatch(setUserInfo(user));
 
         setUser(user);
-        navigate(-1);
+
+        // Definimos si vienen desde la pagina o si pegaron el Link
+        location.key === "default" ? navigate("/") : navigate(-1);
       })
       .catch((err) => {
         setError({
