@@ -11,7 +11,7 @@ import {
 import { AntDesign, Octicons } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
 import { useDispatch } from "react-redux";
-import { addCarrito } from "../../../redux/actions";
+import { agregarCarrito } from "../../../redux/actions";
 
 const styles = StyleSheet.create({
   contProd: {
@@ -144,7 +144,7 @@ const DetalleProducto = ({ route }) => {
 
   function addToCarrito(e) {
     if (data.stock > 0) {
-      dispatch(addCarrito(id, 1));
+      dispatch(agregarCarrito(id, 1));
     }
   }
 

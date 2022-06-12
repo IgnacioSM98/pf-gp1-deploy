@@ -13,6 +13,8 @@ import {
 } from "react-native";
 import axios from "axios";
 import { Carrousel, NavBar, Bienvenida } from "../index";
+import { useDispatch, useSelector } from "react-redux";
+import { getProductos } from "../../../redux/actions";
 
 const styles = StyleSheet.create({
   container: {
@@ -89,18 +91,25 @@ const styles = StyleSheet.create({
 const ANCHO_CONTENEDOR = 150;
 
 export default function Home({ navigation }) {
-  const [productos, setProductos] = useState([]);
+  // const [productos, setProductos] = useState([]);
   const [loading, setLoading] = useState(true);
+  const productos = useSelector((state) => state.productos);
 
   const scrollX = React.useRef(new Animated.Value(0)).current;
   const AnimatedPressable = Animated.createAnimatedComponent(Pressable);
 
+  const dispatch = useDispatch();
+
   useEffect(() => {
-    axios
-      .get("https://proyecto-final-gp1.herokuapp.com/productos")
-      .then((res) => setProductos(res.data))
-      .catch((error) => console.error(error))
-      .finally(() => setLoading(false));
+    // axios
+    //   .get("https://proyecto-final-gp1.herokuapp.com/productos")
+    //   .then((res) => {
+    //     setProductos(res.data);
+    dispatch(getProductos());
+    // })
+    // .catch((error) => console.error(error))
+    // .finally(() => setLoading(false));
+    setLoading(false);
   }, []);
 
   return (

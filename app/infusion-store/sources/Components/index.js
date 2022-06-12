@@ -9,6 +9,7 @@ import DetalleProducto from "./Producto/DetalleProducto";
 import Favorito from "./Favoritos/Favorito";
 import Favoritos from "./Favoritos/Favoritos";
 import Bienvenida from "./Home/Bienvenida/Bienvenida";
+import Carrito from "./Carrito/Carrito";
 
 export {
   NavBar,
@@ -22,4 +23,5 @@ export {
   Favorito,
   DetalleProducto,
   Bienvenida,
+  Carrito,
 };

@@ -10,6 +10,7 @@ import {
   Favoritos,
   Cuenta,
   DetalleProducto,
+  Carrito,
 } from "./sources/Components/index.js";
 import { StatusBar } from "react-native";
 import { useState, useEffect } from "react";
@@ -131,6 +132,7 @@ export default function App() {
           <Stack.Navigator screenOptions={{ headerShown: false }}>
             <Stack.Screen name="HomeTabs" component={HomeTabs} />
             <Stack.Screen name="DetalleProducto" component={DetalleProducto} />
+            <Stack.Screen name="Carrito" component={Carrito} />
           </Stack.Navigator>
         </NavigationContainer>
       ) : (
