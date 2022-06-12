@@ -56,6 +56,7 @@ const Tienda = ({ navigation }) => {
   const [detalle, setDetalle] = useState(false);
   const [idProd, setIdProd] = useState();
   const scrollRef = useRef();
+  const originalData = [];
 
   useFocusEffect(
     useCallback(() => {
@@ -81,6 +82,7 @@ const Tienda = ({ navigation }) => {
       .then((response) => response.json())
       .then((response) => {
         setData(response);
+        originalData(response);
       })
       .catch((error) => console.error(error))
       .finally(() => setLoading(false));
