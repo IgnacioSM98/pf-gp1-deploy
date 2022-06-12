@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import styled from "styled-components";
 import FavoritosItem from "./FavoritosItem";
@@ -18,10 +18,47 @@ const Productos = styled.div`
   }
 `;
 
+const Contenedor = styled.div`
+  min-height: 100vh;
+  background-color: white;
+  @media screen and (max-width: 560px) {
+    display: absolute;
+    z-index: 1;
+  }
+`;
+
+const ContenedorFav = styled.div`
+  padding-top: 25px;
+`;
+
+const Boton = styled.button`
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 5px;
+  right: 20px;
+  width: 25px;
+  height: 25px;
+  background: #36885ed1;
+  color: white;
+  border-radius: 4px;
+  font-size: 13px;
+  cursor: pointer;
+  @media screen and (min-width: 560px) {
+    display: none;
+  }
+`;
+
 export default function Favoritos() {
   const fav = useSelector((state) => state.favoritos);
   const userInfo = useSelector((state) => state.userInfo);
   const dispatch = useDispatch();
+  const [show, setShow] = useState(true);
+
+  function handleClick() {
+    setShow((current) => !current);
+  }
 
   useEffect(() => {
     dispatch(getFavoritos(userInfo.uid));
@@ -29,18 +66,21 @@ export default function Favoritos() {
   }, [dispatch]);
 
   return (
-    <div>
-      {fav.length > 0 ? (
-        fav.map((el) => {
-          return (
-            <Productos key={el.id}>
-              <FavoritosItem producto={el} />
-            </Productos>
-          );
-        })
-      ) : (
-        <p>No tienes productos agregados a Favoritos</p>
-      )}
-    </div>
+    <Contenedor style={{ display: show ? "block" : "none" }}>
+      <Boton onClick={handleClick}>X</Boton>
+      <ContenedorFav>
+        {fav.length > 0 ? (
+          fav.map((el) => {
+            return (
+              <Productos key={el.id}>
+                <FavoritosItem producto={el} />
+              </Productos>
+            );
+          })
+        ) : (
+          <p>No tienes productos agregados a Favoritos</p>
+        )}
+      </ContenedorFav>
+    </Contenedor>
   );
 }

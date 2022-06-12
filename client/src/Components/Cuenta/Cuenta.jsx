@@ -21,12 +21,13 @@ const Container = styled.div`
     height: auto;
     display: flex;
     flex-direction: column;
+    postition: relative;
   }
 `;
 
 const Informacion = styled.div`
   width: 60%;
-  height: 100%;
+  height: 100vh;
   @media screen and (max-width: 960px) {
     width: 100%;
   }
@@ -36,7 +37,7 @@ const Options = styled.div`
   display: flex;
   flex-direction: column;
   width: 25%;
-  height: 80vh;
+  height: 100%;
   background-color: white;
   border-radius: 10px;
   border: 2px solid black;
@@ -46,8 +47,8 @@ const Options = styled.div`
     width: 60%;
   }
   @media screen and (max-width: 560px) {
-    height: 90vh;
     width: 100%;
+    position: absolute;
   }
 `;
 
@@ -109,20 +110,20 @@ const Sesion = styled.button`
   border-radius: 0px 0px 8px 8px;
 `;
 
-const Categorias = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  min-height: 70vh;
-  max-height: fit-content;
-  width: 100%;
-`;
+// const Categorias = styled.div`
+//   display: flex;
+//   flex-direction: column;
+//   justify-content: space-between;
+//   min-height: 70vh;
+//   max-height: fit-content;
+//   width: 100%;
+// `;
 
 const Categoria = styled.div`
   display: flex;
   flex-direction: column;
   height: 50%;
-  width: 100%;
+  background-color: white;
 `;
 
 export default function Cuenta() {
@@ -144,7 +145,7 @@ export default function Cuenta() {
   };
 
   useEffect(() => {
-    setComponente("perfil");
+    setComponente("");
   }, []);
 
   return (
@@ -188,9 +189,7 @@ export default function Cuenta() {
       </Options>
 
       <Informacion>
-        <Categorias>
-          <Categoria>{componente && <ComponenteDinamico />}</Categoria>
-        </Categorias>
+        <Categoria>{componente && <ComponenteDinamico />}</Categoria>
       </Informacion>
     </Container>
   );
