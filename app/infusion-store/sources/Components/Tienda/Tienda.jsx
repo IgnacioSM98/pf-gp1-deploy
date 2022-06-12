@@ -1,20 +1,12 @@
 import React, { useEffect, useState, useCallback, useRef } from "react";
-import { Button, InteractionManager, Pressable } from "react-native";
+import { InteractionManager } from "react-native";
 import { useFocusEffect } from "@react-navigation/native";
 import { NavBar } from "../index";
+import { useSelector } from "react-redux";
 
-import {
-  ActivityIndicator,
-  FlatList,
-  Text,
-  View,
-  StyleSheet,
-  Image,
-  Vibration,
-  Platform,
-} from "react-native";
+import { ActivityIndicator, FlatList, View, StyleSheet } from "react-native";
 
-import { Producto, DetalleProducto } from "../index";
+import { Producto } from "../index";
 
 const styles = StyleSheet.create({
   container: {
@@ -51,12 +43,11 @@ const styles = StyleSheet.create({
 
 const Tienda = ({ navigation }) => {
   const [isLoading, setLoading] = useState(true);
-  const [data, setData] = useState([]);
+  const data = useSelector((state) => state.productosFiltrados);
   const [cantidad, setCantidad] = useState(8);
   const [detalle, setDetalle] = useState(false);
   const [idProd, setIdProd] = useState();
   const scrollRef = useRef();
-  const originalData = [];
 
   useFocusEffect(
     useCallback(() => {
@@ -78,15 +69,10 @@ const Tienda = ({ navigation }) => {
   );
 
   useEffect(() => {
-    fetch("https://proyecto-final-gp1.herokuapp.com/productos")
-      .then((response) => response.json())
-      .then((response) => {
-        setData(response);
-        originalData(response);
-      })
-      .catch((error) => console.error(error))
-      .finally(() => setLoading(false));
-  }, [cantidad]);
+    if (data[0]) {
+      setLoading(false);
+    }
+  }, [data]);
 
   const handleMore = () => {
     cantidad < data.length && setCantidad(cantidad + 8);
@@ -94,7 +80,7 @@ const Tienda = ({ navigation }) => {
 
   return (
     <>
-      <NavBar></NavBar>
+      <NavBar />
 
       <View style={styles.container}>
         {isLoading ? (
@@ -112,7 +98,6 @@ const Tienda = ({ navigation }) => {
             keyExtractor={(item) => item.id}
             renderItem={({ item }) => (
               <View>
-                {/* {!detalle && ( */}
                 <Producto
                   id={item.id}
                   imagen={{ uri: item.imagen }}
@@ -127,13 +112,10 @@ const Tienda = ({ navigation }) => {
 
                   // categorias={item.categoria}
                 />
-                {/* )} */}
               </View>
             )}
           />
         )}
-
-        {/* {detalle && <DetalleProducto id={idProd} />} */}
       </View>
     </>
   );

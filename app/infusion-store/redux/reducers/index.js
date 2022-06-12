@@ -18,18 +18,18 @@ const initialState = {
 
 export default function rootReducer(state = initialState, action) {
   switch (action.type) {
-    //     case "GET_PRODUCTOS":
-    //       return {
-    //         ...state,
-    //         productos: action.payload,
-    //         productosFiltrados: action.payload,
-    //       };
+    case "GET_PRODUCTOS":
+      return {
+        ...state,
+        productos: action.payload,
+        productosFiltrados: action.payload,
+      };
 
-    //     case "GET_PRODUCTOS_FILTRADOS":
-    //       return {
-    //         ...state,
-    //         productosFiltrados: action.payload,
-    //       };
+    case "SET_PRODUCTOS_FILTRADOS":
+      return {
+        ...state,
+        productosFiltrados: action.payload,
+      };
 
     //     case "SET_SORT":
     //       if (action.payload !== "DEFAULT") {
