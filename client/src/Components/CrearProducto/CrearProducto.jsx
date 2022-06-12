@@ -11,15 +11,15 @@ import {
 import "./CrearProducto.css";
 import styled from "styled-components";
 import validate from "./validaciones.js";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import {
-  Modal,
   Loading,
   AgregarCategorias,
   Footer,
   ScrollToTop,
   UseOnScreen,
 } from "../index";
+import Swal from "sweetalert2";
 
 const Container = styled.div`
   // display: flex;
@@ -225,17 +225,14 @@ const ParrafoCat = styled.p`
 
 export default function CrearProducto({ contacto }) {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+
   const categorías = useSelector((state) => state.categorias);
   const { id } = useParams();
   const detalle = useSelector((state) => state.detalle);
   const isVisible = UseOnScreen(contacto);
 
-  const [stateModalProd, setStateModalProd] = useState(false);
-  const [stateModalCat, setStateModalCat] = useState(false);
-  const [stateModalPut, setStateModalPut] = useState(false);
-  const [stateModalImg, setStateModalImg] = useState(false);
   const [creado, setCreado] = useState(false);
-
   const [categorias, setCategorias] = useState([]),
     [errors, setErrors] = useState({}),
     [post, setPost] = useState({
@@ -311,8 +308,31 @@ export default function CrearProducto({ contacto }) {
     const inputNewCat = document.getElementById("crear-categoria");
 
     if (inputNewCat.value) {
-      dispatch(postCategoria(categoria));
-      setStateModalCat(!stateModalCat);
+      Swal.fire({
+        title: "Crear Categoría",
+        text: "¿Estas seguro crear una nueva categoría?",
+        icon: "warning",
+        iconColor: "grey",
+        color: "#222",
+        showCancelButton: true,
+        cancelButtonText: "No",
+        confirmButtonColor: "green",
+        cancelButtonColor: "darkgrey",
+        confirmButtonText: "Si",
+      }).then((result) => {
+        if (result.isConfirmed) {
+          Swal.fire({
+            text: "¡Categoría creada con éxito!",
+            icon: "success",
+            iconColor: "green",
+            color: "#222",
+            showConfirmButton: false,
+            timer: "1500",
+            toast: true,
+          });
+          dispatch(postCategoria(categoria));
+        }
+      });
     } else {
       errors.crearCategoria = "Debe crear una categoria";
     }
@@ -373,8 +393,18 @@ export default function CrearProducto({ contacto }) {
       })
       .catch((err) => {
         setLoading(false);
-        setStateModalImg(true);
         setImageSelected();
+
+        Swal.fire({
+          title: "Por favor intente nuevamente",
+          text: "Ocurrió un error al añadir la imagen",
+          icon: "warning",
+          iconColor: "red",
+          color: "#222",
+          confirmButtonColor: "grey",
+          cancelButtonColor: "darkgrey",
+          confirmButtonText: "Aceptar",
+        });
       });
   }
 
@@ -400,15 +430,58 @@ export default function CrearProducto({ contacto }) {
     e.preventDefault();
 
     if (id) {
-      dispatch(putProducto(id, post));
+      Swal.fire({
+        title: `Editar Producto`,
+        text: `¿Estas seguro modificar el producto ${post.nombre}?`,
+        icon: "warning",
+        iconColor: "grey",
+        color: "#222",
+        showCancelButton: true,
+        cancelButtonText: "No",
+        confirmButtonColor: "green",
+        cancelButtonColor: "darkgrey",
+        confirmButtonText: "Si",
+      }).then((result) => {
+        if (result.isConfirmed) {
+          Swal.fire({
+            text: "¡Cambios realizados con éxito!",
+            icon: "success",
+            iconColor: "green",
+            color: "#222",
+            showConfirmButton: false,
+            timer: "1500",
+            toast: true,
+          });
 
-      setStateModalPut(!stateModalPut);
+          dispatch(putProducto(id, post));
+          navigate(-1);
+        }
+      });
     } else {
-      if (Object.values(errors).length > 0) {
-        setStateModalProd(!stateModalProd);
+      if (Object.values(errors).length > 0 || !post.nombre) {
+        Swal.fire({
+          title: "Completar todos los campos",
+          text: "Todos los campos son obligatorios",
+          icon: "warning",
+          iconColor: "red",
+          color: "#222",
+          confirmButtonColor: "grey",
+          cancelButtonColor: "darkgrey",
+          confirmButtonText: "Aceptar",
+        });
       } else {
+        Swal.fire({
+          title: "¡Producto creado con éxito!",
+          text: `Se ha creado el producto ${post.nombre}`,
+          icon: "success",
+          iconColor: "green",
+          color: "#222",
+          confirmButtonColor: "grey",
+          cancelButtonColor: "darkgrey",
+          confirmButtonText: "Aceptar",
+        });
+
         dispatch(postProducto(post));
-        setStateModalProd(!stateModalProd);
 
         setPost({
           nombre: "",
@@ -582,28 +655,6 @@ export default function CrearProducto({ contacto }) {
             )}
           </Right>
         </Form>
-
-        <Modal state={stateModalProd} setStateModal={setStateModalProd}>
-          {Object.values(errors).length > 0 ? (
-            <ParrafoAlerta>Por favor rellenar todos los campos</ParrafoAlerta>
-          ) : (
-            <ParrafoOk>¡Producto creado con éxito!</ParrafoOk>
-          )}
-        </Modal>
-
-        <Modal state={stateModalCat} setStateModal={setStateModalCat}>
-          <ParrafoCat>¡Categoría creada con éxito!</ParrafoCat>
-        </Modal>
-
-        <Modal state={stateModalPut} setStateModal={setStateModalPut}>
-          <ParrafoOk>¡Cambios realizados con éxito!</ParrafoOk>
-        </Modal>
-
-        <Modal state={stateModalImg} setStateModal={setStateModalImg}>
-          <ParrafoOk>
-            Ocurrió un error al añadir la imagen, por favor intente nuevamente
-          </ParrafoOk>
-        </Modal>
       </Container>
 
       <Footer contacto={contacto} />
