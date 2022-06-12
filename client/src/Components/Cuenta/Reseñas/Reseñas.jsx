@@ -55,28 +55,23 @@ const ComentarioReview = styled.span`
 
 const Boton = styled.button`
   position: absolute;
-  display: flex;
-  justify-content: center;
-  align-items: center;
   bottom: 5px;
   right: 10px;
   width: 70px;
   height: 30px;
   background: white;
   border: 1px solid black;
-  // margin: auto;
-  // margin-bottom: 5px;
   color: black;
   border-radius: 4px;
   font-size: 13px;
   cursor: pointer;
-  @media screen and (min-width: 560px) {
-    display: none;
-  }
 `;
 
 const BotonCerrar = styled.button`
   position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   margin-top: 25px;
   right: 20px;
   width: 25px;
@@ -86,7 +81,9 @@ const BotonCerrar = styled.button`
   border-radius: 4px;
   font-size: 13px;
   cursor: pointer;
-  background-color: ;
+  @media screen and (min-width: 560px) {
+    display: none;
+  }
 `;
 
 export default function Reseñas() {
