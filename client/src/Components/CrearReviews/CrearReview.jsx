@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { postReviews } from "../../Redux/actions";
-import { StarRating, Modal } from "../index";
+import { StarRating } from "../index";
 import styled from "styled-components";
 import send from "../../Images/Send.png";
+import Swal from "sweetalert2";
 
 const Container = styled.div`
   display: flex;
@@ -120,8 +121,6 @@ export default function CrearReview({ id }) {
     );
   }, [user, pedidos]);
 
-  const [stateModalOpinion, setStateModalOpinion] = useState(false);
-
   const [input, setInput] = useState({
     puntaje: "",
     comentario: "",
@@ -139,14 +138,39 @@ export default function CrearReview({ id }) {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    dispatch(postReviews(id, input));
-    setStateModalOpinion(!stateModalOpinion);
+    Swal.fire({
+      title: "Enviar Reseña",
+      text: "¿Estas seguro de enviar esta reseña?",
+      icon: "warning",
+      iconColor: "grey",
+      color: "#222",
+      showCancelButton: true,
+      cancelButtonText: "No",
+      confirmButtonColor: "green",
+      cancelButtonColor: "darkgrey",
+      confirmButtonText: "Si",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        Swal.fire({
+          text: "¡Opinion enviada con exito!",
+          icon: "success",
+          iconColor: "green",
+          color: "#222",
+          showConfirmButton: false,
+          timer: "1500",
+          toast: true,
+        });
 
-    setInput({
-      ...input,
-      puntaje: "",
-      comentario: "",
-      titulo: "",
+        dispatch(postReviews(id, input));
+
+        // Vaciar inputs
+        setInput({
+          ...input,
+          puntaje: "",
+          comentario: "",
+          titulo: "",
+        });
+      }
     });
   };
 
@@ -190,10 +214,6 @@ export default function CrearReview({ id }) {
           ></ComentarioDetallado>
         </Formulario>
       )}
-
-      <Modal state={stateModalOpinion} setStateModal={setStateModalOpinion}>
-        <ParrafoOk>¡Opinion enviada con exito!</ParrafoOk>
-      </Modal>
     </Container>
   );
 }
