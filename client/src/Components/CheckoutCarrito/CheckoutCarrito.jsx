@@ -191,7 +191,7 @@ export default function Checkout({ contacto }) {
       // Definimos si vienen desde la pagina o si pegaron el Link
       location.key === "default" ? navigate("/") : navigate(-1);
     }
-    //a chekear
+    //eslint-disable-next-line
   }, [usuarios, userInfo, navigate]);
 
   useEffect(() => {

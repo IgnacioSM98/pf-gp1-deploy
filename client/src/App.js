@@ -32,7 +32,7 @@ function App() {
 
   useEffect(() => {
     dispatch(getPedidosUsuario(usuario?.uid));
-  }, [usuario]);
+  }, [dispatch, usuario]);
 
   useEffect(() => {
     // Si sacamos el GET PRUDUCTOS de acá se rompe Redux al POST PRODUCTO nuevo

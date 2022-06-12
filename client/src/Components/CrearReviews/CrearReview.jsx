@@ -99,11 +99,6 @@ const Image = styled.img`
   }
 `;
 
-const ParrafoOk = styled.p`
-  font-size: 20px;
-  font-weight: bold;
-`;
-
 export default function CrearReview({ id }) {
   const dispatch = useDispatch();
 
@@ -113,12 +108,14 @@ export default function CrearReview({ id }) {
 
   useEffect(() => {
     pedidos.map((pedido) =>
+      //eslint-disable-next-line
       pedido.productos.map((producto) => {
         if (producto.compra.productoId === Number(id)) {
           setComprado(true);
         }
       })
     );
+    //eslint-disable-next-line
   }, [user, pedidos]);
 
   const [input, setInput] = useState({
