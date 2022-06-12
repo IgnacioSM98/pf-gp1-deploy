@@ -11,7 +11,7 @@ import {
 import "./CrearProducto.css";
 import styled from "styled-components";
 import validate from "./validaciones.js";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams, useLocation } from "react-router-dom";
 import {
   Loading,
   AgregarCategorias,
@@ -225,6 +225,7 @@ const ParrafoCat = styled.p`
 
 export default function CrearProducto({ contacto }) {
   const dispatch = useDispatch();
+  const location = useLocation();
   const navigate = useNavigate();
 
   const categorías = useSelector((state) => state.categorias);
@@ -454,7 +455,9 @@ export default function CrearProducto({ contacto }) {
           });
 
           dispatch(putProducto(id, post));
-          navigate(-1);
+
+          // Definimos si vienen desde la pagina o si pegaron el Link
+          location.key === "default" ? navigate("/") : navigate(-1);
         }
       });
     } else {
