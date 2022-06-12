@@ -1,5 +1,6 @@
 import { SocialIcon } from "react-social-icons";
 import styled from "styled-components";
+import { Link } from "react-router-dom";
 
 const Container = styled.div`
   display: flex;
@@ -45,8 +46,10 @@ const Title = styled.p`
   font-weight: 600;
 `;
 
-const SubTitle = styled.p`
-  font-size: 20px;
+const SubTitle = styled.a`
+  text-decoration: none;
+  color: white;
+  font-size: 17px;
   font-weight: bold;
   margin: 2px 0px;
 `;
@@ -87,28 +90,60 @@ export default function Footer({ contacto }) {
 
       <Contacto>
         <Categoria>
-          <SubTitle>Mercancia</SubTitle>
-          {/* <Item>Remeras</Item>
-          <Item>Gorras</Item> */}
-          <Item>Proximamente</Item>
-          {/* <Item>Mascaras</Item> */}
+          <SubTitle
+            href="https://www.linkedin.com/in/alegalus/"
+            target="_blank"
+          >
+            Alejandro Galus
+          </SubTitle>
         </Categoria>
-
-        {/* <Categoria>
-          <SubTitle>Franquicia</SubTitle>
-          <Item>Coffee Outlet</Item>
-          <Item>Coffee Vending Machine</Item>
-          <Item>Contact us</Item>
-        </Categoria> */}
-
         <Categoria>
-          <SubTitle>Sobre Nosotros</SubTitle>
-          {/* <Item>Promociones</Item> */}
-          <Item>Proximamente</Item>
-          {/* <Item>Customer care</Item> */}
-          {/* <Item>Legal information</Item> */}
-          {/* <Item>Achievements</Item> */}
-          {/* <Item>Careers</Item> */}
+          <SubTitle
+            href="https://www.linkedin.com/in/deborah-sanchez-developer/"
+            target="_blank"
+          >
+            Deborah Sanchez
+          </SubTitle>
+        </Categoria>
+        <Categoria>
+          <SubTitle
+            href="https://www.linkedin.com/in/fatima-lezcano/"
+            target="_blank"
+          >
+            Fatima Lescano
+          </SubTitle>
+        </Categoria>
+        <Categoria>
+          <SubTitle
+            href="https://www.linkedin.com/in/ignacio-sm/"
+            target="_blank"
+          >
+            Ignacio Sanchez
+          </SubTitle>
+        </Categoria>
+        <Categoria>
+          <SubTitle
+            href="https://www.linkedin.com/in/juanimoyano/"
+            target="_blank"
+          >
+            Juan Moyano
+          </SubTitle>
+        </Categoria>
+        <Categoria>
+          <SubTitle
+            href="https://www.linkedin.com/in/rodrigocremella/"
+            target="_blank"
+          >
+            Rodrigo Cremella
+          </SubTitle>
+        </Categoria>
+        <Categoria>
+          <SubTitle
+            href="https://www.linkedin.com/in/roque-iv%C3%A1n-moyano-tucuman/"
+            target="_blank"
+          >
+            Roque Moyano
+          </SubTitle>
         </Categoria>
 
         <Categoria>
