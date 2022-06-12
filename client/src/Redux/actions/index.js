@@ -172,10 +172,11 @@ export function postReviews(id, payload) {
     await axios.post(`${urlBase}${ratings}${crear}/${id}`, payload);
 
     //????????????????????
-    dispatch(getReviews(id));
+    // dispatch(getReviews(id));
 
     return dispatch({
       type: "CREAR_REVIEW",
+      payload,
     });
   };
 }
@@ -271,6 +272,19 @@ export function getPedidos() {
   };
 }
 
+export function getPedidosUsuario(user) {
+  return user
+    ? function (dispatch) {
+        axios(`${urlBase}pedidos`).then((res) =>
+          dispatch({
+            type: "GET_PEDIDOS_USUARIO",
+            payload: res.data.filter((pedido) => pedido.usuarioId === user),
+          })
+        );
+      }
+    : () => {};
+}
+
 export function getDetalleEnvio(id) {
   return async function (dispatch) {
     const envio = await axios.get(`${urlBase}${pedido}${id}`);
@@ -281,10 +295,12 @@ export function getDetalleEnvio(id) {
 
 export function actualizarEstadoEnvio(id, payload, productos) {
   return async function (dispatch) {
-    await axios.put(`${urlBase}${admin}${pedido}${id}`, payload).then((res) => {
-      res.data.productos = productos;
-      dispatch({ type: "ACTUALIZAR_ESTADO", payload: res.data });
-    });
+    await axios
+      .put(`${urlBase}${admin}${pedido}${id}`, { estado: payload.newEstado })
+      .then((res) => {
+        res.data.productos = productos;
+        dispatch({ type: "ACTUALIZAR_ESTADO", payload: res.data });
+      });
   };
 }
 

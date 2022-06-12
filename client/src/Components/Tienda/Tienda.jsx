@@ -101,11 +101,19 @@ const Linea = styled.hr`
   height: 0px;
   background-color: rgba(4, 4, 4, 1);
   // margin-top: 1.5rem;
+
+  @media screen and (max-width: 400px) {
+    display: none;
+  }
 `;
 
 const Titulo = styled.p`
   font-size: 25px;
   font-family: Poppins;
+
+  @media screen and (max-width: 400px) {
+    font-size: 18px;
+  }
 `;
 
 const TextoLinea = styled.div`
@@ -140,6 +148,11 @@ const Header = styled.div`
   position: relative;
   margin: auto;
   margin-top: 4rem;
+
+  @media screen and (max-width: 400px) {
+    color: white;
+    height: 108px;
+  }
 `;
 
 const Marco = styled.div`
@@ -254,11 +267,12 @@ function Shop({ contacto }) {
   }, [resVis]);
 
   useEffect(() => {
-    // setPages(Math.ceil(productos.filter(filterStock).length / 9));
     setPages(Math.ceil(productos.length / 9));
   }, [productos.length]);
 
+
   useEffect(() => {
+    setPageSelected(1);
     setPages(Math.ceil(productosFiltrados.filter(filterDropdown).length / 9));
 
     if (productosFiltrados.filter(filterDropdown).length === 0) setFlag(true);
@@ -277,7 +291,7 @@ function Shop({ contacto }) {
     }
 
     // eslint-disable-next-line
-    const arrayAux = productos.filter(filterStock).filter((producto) => {
+    const arrayAux = productos.filter((producto) => {
       const name = producto.nombre.toLowerCase();
       const isVisible = name.includes(value.toLowerCase());
 
@@ -380,7 +394,6 @@ function Shop({ contacto }) {
                       producto={el}
                     />
                   );
-                  // }
                 })}
           </ProductosTienda>
 

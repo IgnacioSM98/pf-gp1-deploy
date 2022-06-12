@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   getDetalleEnvio,
@@ -6,17 +6,17 @@ import {
   quitarItem,
   mailAdmin,
 } from "../../Redux/actions";
+import { Footer, ScrollToTop, UseOnScreen, Loader } from "../index";
 import { useParams, Link } from "react-router-dom";
 import styled from "styled-components";
 import Swal from "sweetalert2";
-import Loader from "../Loader/Loader";
 
 const Container = styled.div`
   width: 90%;
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-  justify-content: center;
+  justify-content: space-evenly;
   padding-top: 10%;
   margin: auto;
   gap: 4em;
@@ -127,6 +127,7 @@ const LogoCodigo = styled.img`
   top: 10px;
   right: 20px;
 `;
+
 const Compra = styled.div`
   display: flex;
   flex-direction: column;
@@ -170,20 +171,60 @@ const Producto = styled.p`
   color: #424242;
 `;
 
-export default function DetalleEnvio() {
+export default function DetalleEnvio({ contacto }) {
   const dispatch = useDispatch();
   const { id } = useParams();
   const detalle = useSelector((state) => state.detalleEnvio);
   const user = useSelector((state) => state.userInfo?.visualizacion);
+  const isVisible = UseOnScreen(contacto);
+  const [estado, setEstado] = useState({
+    Creado: {
+      estado: true,
+      active: true,
+      texto: true,
+    },
+    "En preparación": {
+      estado: false,
+      active: false,
+      texto: false,
+    },
+    "En camino": {
+      estado: false,
+      active: false,
+      texto: false,
+    },
+    "En punto de entrega/poder del correo": {
+      estado: false,
+      active: false,
+      texto: false,
+    },
+    Entregado: {
+      estado: false,
+      active: false,
+      texto: false,
+    },
+    Cancelado: {
+      estado: false,
+      active: false,
+      texto: false,
+    },
+  });
+  const prevEstado = {
+    "En preparación": "Creado",
+    "En camino": "En preparación",
+    "En punto de entrega/poder del correo": "En camino",
+    Entregado: "En punto de entrega/poder del correo",
+    Cancelado: "Entregado",
+  };
 
   useEffect(() => {
     dispatch(getDetalleEnvio(id));
   }, [dispatch, id]);
 
-  function changeEstado(estado) {
+  function changeEstado(newEstado) {
     Swal.fire({
       title: "Cambiar Estado",
-      text: `¿Estas seguro de cambiar el estado de este pedido de ${detalle.Estado} a ${estado}?`,
+      text: `¿Estas seguro de cambiar el estado de este pedido de ${detalle.Estado} a ${newEstado}?`,
       icon: "warning",
       iconColor: "grey",
       color: "#222",
@@ -204,11 +245,24 @@ export default function DetalleEnvio() {
           toast: true,
         });
 
-        dispatch(actualizarEstadoEnvio(id, { estado }, detalle.productos));
+        dispatch(actualizarEstadoEnvio(id, { newEstado }, detalle.productos));
 
         if (detalle.usuarioId !== undefined) {
-          dispatch(mailAdmin(detalle.usuarioId, { estado }));
+          dispatch(mailAdmin(detalle.usuarioId, { newEstado }));
         }
+
+        setEstado((prevState) => {
+          const newState = { ...prevState };
+
+          newState[newEstado].estado = true;
+          newState[newEstado].active = true;
+          newState[newEstado].texto = true;
+
+          newState[prevEstado[newEstado]].estado = false;
+          newState[prevEstado[newEstado]].texto = false;
+
+          return newState;
+        });
       }
     });
   }
@@ -219,7 +273,27 @@ export default function DetalleEnvio() {
       detalle.productos.map((producto) => {
         dispatch(quitarItem({ id: producto.compra.productoId }));
       });
+      setEstado((prevState) => {
+        const newState = { ...prevState };
+
+        for (const key in newState) {
+          if (key === detalle.Estado) {
+            newState[key].estado = true;
+            newState[key].active = true;
+            newState[key].texto = true;
+
+            break;
+          }
+
+          newState[key].estado = true;
+          newState[key].active = true;
+          newState[key].texto = false;
+        }
+
+        return newState;
+      });
     }
+    //eslint-disable-next-line
   }, [dispatch, detalle]);
 
   const handleInputChange = (e) => {
@@ -227,211 +301,203 @@ export default function DetalleEnvio() {
   };
 
   return detalle.id ? (
-    <Container>
-      {user === "admin" && (
-        <h1 style={{ position: "absolute", top: "8%", left: "160px" }}>
-          {`Pedido numero: #2022${detalle.id}`}
-        </h1>
-      )}
+    <>
+      <Container>
+        {user === "admin" && (
+          <h1 style={{ position: "absolute", top: "8%", left: "160px" }}>
+            {`Pedido numero: #2022${detalle.id}`}
+          </h1>
+        )}
 
-      {user === "admin" && (
-        <ModificarEstados onChange={handleInputChange}>
-          <option name="estados">Modificar estado</option>
+        {user === "admin" && (
+          <ModificarEstados onChange={handleInputChange}>
+            <option name="estados">Modificar estado</option>
+            <OpcionEstado
+              disabled={estado["En preparación"].estado}
+              value="En preparación"
+            >
+              En preparación
+            </OpcionEstado>
 
-          <OpcionEstado
-            disabled={detalle.Estado === "En preparación" ? true : false}
-            value="En preparación"
-          >
-            En preparación
-          </OpcionEstado>
+            <OpcionEstado
+              disabled={estado["En camino"].estado}
+              value="En camino"
+            >
+              En camino
+            </OpcionEstado>
 
-          <OpcionEstado
-            disabled={detalle.Estado === "En camino" ? true : false}
-            value="En camino"
-          >
-            En camino
-          </OpcionEstado>
+            <OpcionEstado
+              disabled={estado["En punto de entrega/poder del correo"].estado}
+              value="En punto de entrega/poder del correo"
+            >
+              En punto de entrega/poder del correo
+            </OpcionEstado>
 
-          <OpcionEstado
-            disabled={
-              detalle.Estado === "En punto de entrega/poder del correo"
-                ? true
-                : false
-            }
-            value="En punto de entrega/poder del correo"
-          >
-            En punto de entrega/poder del correo
-          </OpcionEstado>
+            <OpcionEstado disabled={estado.Entregado.estado} value="Entregado">
+              Entregado
+            </OpcionEstado>
 
-          <OpcionEstado
-            disabled={detalle.Estado === "Entregado" ? true : false}
-            value="Entregado"
-          >
-            Entregado
-          </OpcionEstado>
-        </ModificarEstados>
-      )}
+            <OpcionEstado disabled={estado.Cancelado.estado} value="Cancelado">
+              Cancelado
+            </OpcionEstado>
+          </ModificarEstados>
+        )}
 
-      <Envio className="envio">
-        <Estado className="Estado">
-          <Titulo>Estado de envio</Titulo>
-          <Opciones>
-            <ul>
-              <EstadosLi>
-                <Circulo
-                  active={detalle?.Estado !== "En preparación" ? false : true}
-                ></Circulo>
-                <Linea
-                  active={detalle?.Estado !== "En preparación" ? false : true}
-                ></Linea>
-                <ImagenEstados
-                  src="https://i.ibb.co/NFLFkKr/Asset-460.png"
-                  alt=""
-                />
-                <ParrafoLi
-                  active={detalle?.Estado !== "En preparación" ? false : true}
-                >
-                  En preparación
-                </ParrafoLi>
-              </EstadosLi>
-              <EstadosLi>
-                <Circulo
-                  active={detalle?.Estado !== "En camino" ? false : true}
-                ></Circulo>
-                <Linea
-                  active={detalle?.Estado !== "En camino" ? false : true}
-                ></Linea>
-                <ImagenEstados
-                  src="https://i.ibb.co/NCmsgvw/Asset-510.png"
-                  alt=""
-                />
-                <ParrafoLi
-                  active={detalle?.Estado !== "En camino" ? false : true}
-                >
-                  En camino
-                </ParrafoLi>
-              </EstadosLi>
-              <EstadosLi>
-                <Circulo
-                  active={
-                    detalle?.Estado !== "En punto de entrega/poder del correo"
-                      ? false
-                      : true
-                  }
-                ></Circulo>
-                <Linea
-                  active={
-                    detalle?.Estado !== "En punto de entrega/poder del correo"
-                      ? false
-                      : true
-                  }
-                ></Linea>
-                <ImagenEstados
-                  src="https://i.ibb.co/chNcvsM/Asset-190.png"
-                  alt=""
-                />
-                <ParrafoLi
-                  active={
-                    detalle?.Estado !== "En punto de entrega/poder del correo"
-                      ? false
-                      : true
-                  }
-                >
-                  En punto de entrega/poder del correo
-                </ParrafoLi>
-              </EstadosLi>
-              <EstadosLi>
-                <Circulo
-                  active={detalle?.Estado !== "Entregado" ? false : true}
-                ></Circulo>
-                <ImagenEstados
-                  src="https://i.ibb.co/Z2NPGQ0/Asset-210.png"
-                  alt=""
-                />
-                <ParrafoLi
-                  active={detalle?.Estado !== "Entregado" ? false : true}
-                >
-                  Entregado
-                </ParrafoLi>
-              </EstadosLi>
-            </ul>
-          </Opciones>
-        </Estado>
-        <Domicilio className="domicilio">
-          <Titulo>
-            Domicilio de{" "}
-            {detalle.Tipo_de_envio === "domicilio"
-              ? "entrega"
-              : "punto de retiro"}
-          </Titulo>
-          <LogoGPS
-            src="https://i.ibb.co/PC2BbmZ/Asset-960.png"
-            alt="Imagen logo GPS"
-          />
-          {detalle && (
-            <Parrafo>{`${detalle?.Direccion_de_envio?.calle} ${detalle?.Direccion_de_envio?.altura} ${detalle?.Direccion_de_envio?.piso}`}</Parrafo>
-          )}
-          <Lugar>
-            <ParrafoLugar>{`${detalle?.Direccion_de_envio?.ciudad} `}</ParrafoLugar>
-            <ParrafoLugar>
-              {" "}
-              {`(${detalle?.Direccion_de_envio?.cp}), `}
-            </ParrafoLugar>
-            <ParrafoLugar>{` ${detalle?.Direccion_de_envio?.provincia}`}</ParrafoLugar>
-          </Lugar>
-        </Domicilio>
-        <Codigo className="codigo">
-          <Titulo>
-            {detalle.Tipo_de_envio === "domicilio"
-              ? " Entrega en domicilio"
-              : "Retiro en sucursal"}
-          </Titulo>
+        <Envio className="envio">
+          <Estado className="Estado">
+            <Titulo>Estado de envio</Titulo>
+            <Opciones>
+              <ul>
+                <EstadosLi>
+                  <Circulo active={estado.Creado.active}></Circulo>
+                  <Linea active={estado.Creado.active}></Linea>
+                  <ImagenEstados
+                    src="https://i.ibb.co/NFLFkKr/Asset-460.png"
+                    alt=""
+                  />
+                  <ParrafoLi active={estado.Creado.texto}>Creado</ParrafoLi>
+                </EstadosLi>
 
-          <Parrafo>
-            Codigo{" "}
-            {detalle.Tipo_de_envio === "domicilio"
-              ? "para entrega:"
-              : "para retiro:"}{" "}
-            #2022{detalle?.id}
-          </Parrafo>
+                <EstadosLi>
+                  <Circulo active={estado["En preparación"].active}></Circulo>
+                  <Linea active={estado["En preparación"].active}></Linea>
+                  <ImagenEstados
+                    src="https://i.ibb.co/NFLFkKr/Asset-460.png"
+                    alt=""
+                  />
+                  <ParrafoLi active={estado["En preparación"].texto}>
+                    En preparación
+                  </ParrafoLi>
+                </EstadosLi>
 
-          <LogoCodigo
-            src="https://i.ibb.co/vkjfvPY/Asset-930.png"
-            alt="Imagen de una pizarra"
-          />
-        </Codigo>
-      </Envio>
-      <div>
-        <Compra className="compra">
-          <Titulo>
-            {user === "admin" ? "Detalle de Pedido" : "Compraste"}
-          </Titulo>
+                <EstadosLi>
+                  <Circulo active={estado["En camino"].active}></Circulo>
+                  <Linea active={estado["En camino"].active}></Linea>
+                  <ImagenEstados
+                    src="https://i.ibb.co/NCmsgvw/Asset-510.png"
+                    alt=""
+                  />
+                  <ParrafoLi active={estado["En camino"].texto}>
+                    En camino
+                  </ParrafoLi>
+                </EstadosLi>
 
-          {detalle?.productos?.map((el) => {
-            return (
-              <div key={el?.compra?.productoId}>
-                <Link
-                  style={{ color: "black", textDecoration: "none" }}
-                  to={`/productos/${el?.compra?.productoId}`}
-                >
-                  <Producto>{el?.nombre}</Producto>
-                  <Producto>Cantidad: {el?.compra?.cantidad}</Producto>{" "}
-                </Link>
-                <div
-                  style={{
-                    height: "0.5px",
-                    width: "85%",
-                    margin: "auto",
-                    marginTop: "2px",
-                    backgroundColor: "grey",
-                  }}
-                />
-              </div>
-            );
-          })}
-        </Compra>
-      </div>
-    </Container>
+                <EstadosLi>
+                  <Circulo
+                    active={
+                      estado["En punto de entrega/poder del correo"].active
+                    }
+                  ></Circulo>
+                  <Linea
+                    active={
+                      estado["En punto de entrega/poder del correo"].active
+                    }
+                  ></Linea>
+                  <ImagenEstados
+                    src="https://i.ibb.co/chNcvsM/Asset-190.png"
+                    alt=""
+                  />
+                  <ParrafoLi
+                    active={
+                      estado["En punto de entrega/poder del correo"].texto
+                    }
+                  >
+                    En punto de entrega/poder del correo
+                  </ParrafoLi>
+                </EstadosLi>
+
+                <EstadosLi>
+                  <Circulo active={estado.Entregado.active}></Circulo>
+                  <ImagenEstados
+                    src="https://i.ibb.co/Z2NPGQ0/Asset-210.png"
+                    alt=""
+                  />
+                  <ParrafoLi active={estado.Entregado.texto}>
+                    Entregado
+                  </ParrafoLi>
+                </EstadosLi>
+              </ul>
+            </Opciones>
+          </Estado>
+          <Domicilio className="domicilio">
+            <Titulo>
+              Domicilio de{" "}
+              {detalle.Tipo_de_envio === "domicilio"
+                ? "entrega"
+                : "punto de retiro"}
+            </Titulo>
+            <LogoGPS
+              src="https://i.ibb.co/PC2BbmZ/Asset-960.png"
+              alt="Imagen logo GPS"
+            />
+            {detalle && (
+              <Parrafo>{`${detalle?.Direccion_de_envio?.calle} ${detalle?.Direccion_de_envio?.altura} ${detalle?.Direccion_de_envio?.piso}`}</Parrafo>
+            )}
+            <Lugar>
+              <ParrafoLugar>{`${detalle?.Direccion_de_envio?.ciudad} `}</ParrafoLugar>
+              <ParrafoLugar>
+                {" "}
+                {`(${detalle?.Direccion_de_envio?.cp}), `}
+              </ParrafoLugar>
+              <ParrafoLugar>{` ${detalle?.Direccion_de_envio?.provincia}`}</ParrafoLugar>
+            </Lugar>
+          </Domicilio>
+          <Codigo className="codigo">
+            <Titulo>
+              {detalle.Tipo_de_envio === "domicilio"
+                ? " Entrega en domicilio"
+                : "Retiro en sucursal"}
+            </Titulo>
+
+            <Parrafo>
+              Codigo{" "}
+              {detalle.Tipo_de_envio === "domicilio"
+                ? "para entrega:"
+                : "para retiro:"}{" "}
+              #2022{detalle?.id}
+            </Parrafo>
+
+            <LogoCodigo
+              src="https://i.ibb.co/vkjfvPY/Asset-930.png"
+              alt="Imagen de una pizarra"
+            />
+          </Codigo>
+        </Envio>
+        <div>
+          <Compra className="compra">
+            <Titulo>
+              {user === "admin" ? "Detalle de Pedido" : "Compraste"}
+            </Titulo>
+
+            {detalle?.productos?.map((el) => {
+              return (
+                <div key={el?.compra?.productoId}>
+                  <Link
+                    style={{ color: "black", textDecoration: "none" }}
+                    to={`/productos/${el?.compra?.productoId}`}
+                  >
+                    <Producto>{el?.nombre}</Producto>
+                    <Producto>Cantidad: {el?.compra?.cantidad}</Producto>{" "}
+                  </Link>
+                  <div
+                    style={{
+                      height: "0.5px",
+                      width: "85%",
+                      margin: "auto",
+                      marginTop: "2px",
+                      backgroundColor: "grey",
+                    }}
+                  />
+                </div>
+              );
+            })}
+          </Compra>
+        </div>
+      </Container>
+
+      <Footer contacto={contacto} />
+      {isVisible && <ScrollToTop />}
+    </>
   ) : (
     <Loader />
   );

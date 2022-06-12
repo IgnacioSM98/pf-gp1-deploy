@@ -11,6 +11,7 @@ const initialState = {
   user: false,
   userInfo: {},
   pedidos: [],
+  pedidosUsuario: [],
   usuarios: [],
   detalleEnvio: {},
   favoritos: [],
@@ -83,6 +84,12 @@ export default function rootReducer(state = initialState, action) {
       return {
         ...state,
         pedidos: action.payload,
+      };
+
+    case "GET_PEDIDOS_USUARIO":
+      return {
+        ...state,
+        pedidosUsuario: action.payload,
       };
 
     case "DELETE_CATEGORIA":
