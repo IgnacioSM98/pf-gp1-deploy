@@ -10,7 +10,6 @@ import {
   restarCarrito,
   añadirAFavoritos,
   eliminarDeFavoritos,
-  getUsuarios,
 } from "../../Redux/actions";
 
 const LinkProduct = styled(Link)`
@@ -162,11 +161,9 @@ export default function Producto({
   );
 
   useEffect(() => {
-    //taba comentado en develop el dispatch, why?
-    dispatch(getUsuarios());
     setFlag(cantidadCarrito?.cantidad ? true : false);
     setCantidad(cantidadCarrito?.cantidad ? cantidadCarrito.cantidad : 1);
-  }, [dispatch, cantidadCarrito]);
+  }, [cantidadCarrito]);
 
   const handleEdit = () => {
     navigate(`/edit/${id}`);

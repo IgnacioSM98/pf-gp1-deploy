@@ -227,23 +227,24 @@ const Crear = styled.button`
   }
 `;
 
+const filterStock = (producto) => {
+  if (producto.stock > 0) return producto;
+};
+
 function Shop({ contacto }) {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const productos = useSelector((state) =>
-    state.productos.filter((producto) => producto.stock)
-  );
-
+  const productos = useSelector((state) => state.productos.filter(filterStock));
   const productosFiltrados = useSelector((state) =>
-    state.productosFiltrados.filter((producto) => producto.stock)
+    state.productosFiltrados.filter(filterStock)
   );
 
   const user = useSelector((state) => state.userInfo?.visualizacion);
   const userInfo = useSelector((state) => state.userInfo);
 
   const [selected, setSelected] = useState("");
-  const [pages, setPages] = useState(4);
+  const [pages, setPages] = useState();
   const [pageSelected, setPageSelected] = useState(1);
   const [resVis, setResVis] = useState(0);
   const [flag, setFlag] = useState(false);
@@ -258,19 +259,23 @@ function Shop({ contacto }) {
 
   useEffect(() => {
     if (userInfo) dispatch(getFavoritos(userInfo?.uid));
-  }, [dispatch, userInfo]);
+    //eslint-disable-next-line
+  }, [dispatch]);
 
   useEffect(() => {
     setPages(Math.ceil(resVis / 9));
   }, [resVis]);
 
   useEffect(() => {
-    setPages(Math.ceil(productosFiltrados.length / 9));
-  }, [productosFiltrados]);
+    setPages(Math.ceil(productos.length / 9));
+  }, [productos.length]);
+
 
   useEffect(() => {
     setPageSelected(1);
     setPages(Math.ceil(productosFiltrados.filter(filterDropdown).length / 9));
+
+    if (productosFiltrados.filter(filterDropdown).length === 0) setFlag(true);
     // eslint-disable-next-line
   }, [selected]);
 
@@ -299,10 +304,6 @@ function Shop({ contacto }) {
 
     dispatch(getProductosFiltrados(arrayAux));
   }
-
-  // const filterStock = (producto) => {
-  //   if (producto.stock > 0) return producto;
-  // };
 
   const filterPerPages = (producto, i) => {
     if (i >= 9 * (pageSelected - 1) && i <= 9 * pageSelected - 1) {
@@ -367,9 +368,11 @@ function Shop({ contacto }) {
         </FiltrosCont>
         <div>
           <ProductosTienda>
-            {flag && productosFiltrados.length === 0 && (
-              <p>No se encontraron resultados</p>
-            )}
+            {flag &&
+              (productosFiltrados.length === 0 ||
+                productosFiltrados.filter(filterDropdown).length === 0) && (
+                <p>No se encontraron resultados</p>
+              )}
 
             {productosFiltrados &&
               productosFiltrados

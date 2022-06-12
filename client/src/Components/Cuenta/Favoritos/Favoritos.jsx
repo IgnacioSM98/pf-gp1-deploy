@@ -25,7 +25,8 @@ export default function Favoritos() {
 
   useEffect(() => {
     dispatch(getFavoritos(userInfo.uid));
-  }, [dispatch, userInfo]);
+    // eslint-disable-next-line
+  }, [dispatch]);
 
   return (
     <div>
