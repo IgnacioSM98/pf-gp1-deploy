@@ -32,7 +32,6 @@ const Estado = styled.div`
   display: flex;
   flex-direction: column;
   width: 450px;
-  height: 350px;
   border: 1px solid black;
   border-radius: 16px;
   box-shadow: 3px 3px 12px #8080807a;
@@ -126,7 +125,6 @@ const Codigo = styled.div`
   display: flex;
   flex-direction: column;
   width: 450px;
-  height: 80px;
   border: 1px solid black;
   border-radius: 16px;
   margin: 2em 0em;
@@ -179,8 +177,6 @@ const ModificarEstados = styled.select`
   @media screen and (max-width: 1040px) {
     position: relative;
     right: auto;
-    margin-bottom: 10px;
-    margin-top: 10px;
   }
 `;
 
@@ -210,8 +206,6 @@ const H1 = styled.h1`
     top: 0;
     position: relative;
     right: auto;
-    margin-bottom: 10px;
-    margin-top: 30px;
   }
 `;
 const CompraCont = styled.div`
