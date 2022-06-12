@@ -4,9 +4,27 @@ import styled from "styled-components";
 import { enviarConsulta } from "../../../Redux/actions";
 import Swal from "sweetalert2";
 
+const Contenedor = styled.div`
+  margin-top: 20px;
+  background-color: white;
+  @media screen and (max-width: 560px) {
+    display: absolute;
+    z-index: 1;
+  }
+`;
+
 const Titulo = styled.h2`
   color: #4b6650;
   margin-bottom: 10px;
+  @media screen and (max-width: 450px) {
+    font-size: 20px;
+  }
+  @media screen and (max-width: 380px) {
+    font-size: 15px;
+  }
+  @media screen and (max-width: 315px) {
+    font-size: 12px;
+  }
 `;
 
 const Container = styled.div`
@@ -84,6 +102,34 @@ const Button = styled.button`
   cursor: pointer;
 `;
 
+const Boton = styled.button`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  display: block;
+  position: absolute;
+  margin: 5px 5px 5px 5px;
+  right: 20px;
+  width: 25px;
+  height: 25px;
+  background: #36885ed1;
+  color: white;
+  border-radius: 4px;
+  font-size: 13px;
+  cursor: pointer;
+  @media screen and (min-width: 560px) {
+    display: none;
+  }
+  @media screen and (max-width: 450px) {
+    width: 20px;
+    height: 20px;
+  }
+  @media screen and (max-width: 380px) {
+    width: 17px;
+    height: 17px;
+  }
+`;
+
 function validate(post) {
   let errors = {};
   if (!post.mail) {
@@ -107,6 +153,7 @@ export default function Consultas() {
     subject: "",
     text: "",
   });
+  const [show, setShow] = useState(true);
 
   function handleInputChange(e) {
     setPost({
@@ -144,6 +191,9 @@ export default function Consultas() {
       }
     });
   }
+  function handleClick() {
+    setShow((current) => !current);
+  }
   function handleSubmit(e) {
     e.preventDefault();
     if (post !== undefined) {
@@ -153,7 +203,8 @@ export default function Consultas() {
     }
   }
   return (
-    <>
+    <Contenedor style={{ display: show ? "block" : "none" }}>
+      <Boton onClick={handleClick}>X</Boton>
       <Titulo>Consultanos o Reclamanos!</Titulo>
       <Container>
         <Form onSubmit={(e) => handleSubmit(e)}>
@@ -199,6 +250,6 @@ export default function Consultas() {
           <Button type="submit">¡Enviar!</Button>
         </Form>
       </Container>
-    </>
+    </Contenedor>
   );
 }

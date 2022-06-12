@@ -7,6 +7,18 @@ import Stars from "../../Stars/Stars";
 import styled from "styled-components";
 import { deleteReview } from "../../../Redux/actions";
 
+const Contenedor = styled.div`
+  min-height: 100vh;
+  background-color: white;
+  @media screen and (max-width: 560px) {
+    display: absolute;
+    z-index: 1;
+    margin: 0;
+  }
+`;
+const ContenedorReseñas = styled.div`
+  padding-top: 25px;
+`;
 const StyledLink = styled(Link)`
   text-decoration: none,
   color: black,
@@ -49,12 +61,29 @@ const Boton = styled.button`
   height: 30px;
   background: white;
   border: 1px solid black;
-  // margin: auto;
-  // margin-bottom: 5px;
   color: black;
   border-radius: 4px;
   font-size: 13px;
   cursor: pointer;
+`;
+
+const BotonCerrar = styled.button`
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 10px;
+  right: 20px;
+  width: 25px;
+  height: 25px;
+  background: #36885ed1;
+  color: white;
+  border-radius: 4px;
+  font-size: 13px;
+  cursor: pointer;
+  @media screen and (min-width: 560px) {
+    display: none;
+  }
 `;
 
 export default function Reseñas() {
@@ -62,14 +91,21 @@ export default function Reseñas() {
   const id = user.uid;
   const reseñas = useSelector((state) => state.reviews);
   const dispatch = useDispatch();
+  const [show, setShow] = useState(true);
 
   useEffect(() => {
     dispatch(getReviews(id));
   }, []);
 
+  function handleClick() {
+    setShow((current) => !current);
+  }
+
   return (
-    <div>
-      {reseñas?.map((el) => (
+    <Contenedor style={{ display: show ? "block" : "none" }}>
+      <BotonCerrar onClick={handleClick}>X</BotonCerrar>
+      <ContenedorReseñas>
+        {reseñas?.map((el) => (
           <StyledLink to={`/productos/${el.productoId}`}>
             <Review key={el.id}>
               <Stars rating={el.puntaje} />
@@ -85,6 +121,7 @@ export default function Reseñas() {
             </Review>
           </StyledLink>
         ))}
-    </div>
+      </ContenedorReseñas>
+    </Contenedor>
   );
 }

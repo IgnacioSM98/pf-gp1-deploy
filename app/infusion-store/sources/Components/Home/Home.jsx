@@ -1,19 +1,15 @@
 import React, { useEffect, useState } from "react";
 import {
   ActivityIndicator,
-  FlatList,
   Text,
   View,
   Image,
   StyleSheet,
-  SafeAreaView,
   Pressable,
   Animated,
-  Dimensions,
 } from "react-native";
-import axios from "axios";
-import { Carrousel, NavBar, Bienvenida } from "../index";
 import { useDispatch, useSelector } from "react-redux";
+import { Carrousel, NavBar, Bienvenida } from "../index";
 import { getProductos } from "../../../redux/actions";
 
 const styles = StyleSheet.create({
@@ -47,14 +43,6 @@ const styles = StyleSheet.create({
     height: 250,
   },
 
-  // containerProducto: {
-  //   // justifyContent: "center",
-  //   width: 150,
-  //   height: "90%",
-  //   margin: 10,
-  //   transform: [{ translateY }],
-  // },
-
   imagen: {
     width: 150,
     height: 100,
@@ -67,14 +55,14 @@ const styles = StyleSheet.create({
     fontSize: 15,
     fontFamily: "PoppinsM",
     color: "#222",
-    // fontWeight: "700",
+
     textAlign: "center",
     margin: 10,
   },
 
   precio: {
     fontSize: 15,
-    // fontFamily: "monospace" || "Apple Color Emoji",
+
     fontWeight: "700",
     marginLeft: 15,
     marginTop: 5,
@@ -83,7 +71,6 @@ const styles = StyleSheet.create({
   descripcion: {
     fontSize: 13,
     textAlign: "center",
-    // fontFamily: "notoserif" || "Al Nile",
   },
 });
 
@@ -91,7 +78,9 @@ const styles = StyleSheet.create({
 const ANCHO_CONTENEDOR = 150;
 
 export default function Home({ navigation }) {
-  // const [productos, setProductos] = useState([]);
+  const dispatch = useDispatch();
+
+  const productos = useSelector((state) => state.productos);
   const [loading, setLoading] = useState(true);
   const productos = useSelector((state) => state.productos);
 
@@ -101,16 +90,14 @@ export default function Home({ navigation }) {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    // axios
-    //   .get("https://proyecto-final-gp1.herokuapp.com/productos")
-    //   .then((res) => {
-    //     setProductos(res.data);
     dispatch(getProductos());
-    // })
-    // .catch((error) => console.error(error))
-    // .finally(() => setLoading(false));
-    setLoading(false);
   }, []);
+
+  useEffect(() => {
+    if (productos[0]) {
+      setLoading(false);
+    }
+  }, [productos]);
 
   return (
     <>
@@ -127,7 +114,6 @@ export default function Home({ navigation }) {
             <Bienvenida />
             <Carrousel />
 
-            {/* <View> */}
             <Text style={styles.productosTitulo}>Productos Destacados</Text>
             <Animated.FlatList
               onScroll={Animated.event(
@@ -190,7 +176,6 @@ export default function Home({ navigation }) {
                 );
               }}
             />
-            {/* </View> */}
           </View>
         )}
       </View>

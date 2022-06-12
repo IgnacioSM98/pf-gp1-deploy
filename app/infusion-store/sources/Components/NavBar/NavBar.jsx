@@ -12,8 +12,10 @@ import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { Searchbar } from "react-native-paper";
 import { Carrito } from "../index";
 import { useNavigation } from "@react-navigation/native";
+import { useDispatch, useSelector } from "react-redux";
 
 import styled from "styled-components/native";
+import { setProductosFiltrados } from "../../../redux/actions";
 
 const Container = styled.View`
   position: relative;
@@ -35,16 +37,15 @@ const Button = styled.Pressable`
   border-radius: 15px;
 `;
 
-const styles = StyleSheet.create({
-  // contenedorInput: {
-  //   flex: 1,
-  //   flexDirection: "row",
-  //   justifyContent: "center",
-  //   alignItems: "center",
-  //   width: "70%",
-  //   top: "5%",
-  // },
+const Titulo = styled.Text`
+  position: absolute;
+  top: 50%;
+  left: 8%;
+  font-size: 20;
+  font-weight: 600;
+`;
 
+const styles = StyleSheet.create({
   buscador: {
     position: "absolute",
     flex: 1,
@@ -52,30 +53,31 @@ const styles = StyleSheet.create({
     bottom: "5%",
     left: "5%",
     // padding: 10,
-    borderRadius: 5,
+    borderRadius: 12,
     backgroundColor: "rgba(194, 194, 194, 0.69)",
     color: "grey",
     fontFamily: "PoppinsM",
   },
-
-  // icono: {
-  //   left: "20%",
-  //   top: "5%",
-  //   paddingLeft: 13,
-  //   padding: 8,
-  //   backgroundColor: "rgba(194, 194, 194, 0.69)",
-  //   borderTopRighttRadius: 0,
-  //   borderBottomRighttRadius: 0,
-  //   borderTopLeftRadius: 13,
-  //   borderBottomLeftRadius: 13,
-  //   borderColor: "none",
-  // },
 });
 
-export default function NavBar() {
+export default function NavBar({ titulo }) {
+  const dispatch = useDispatch();
   const navigation = useNavigation();
+  
   const goToCart = () => {
     navigation.navigate("Carrito");
+    
+  const productos = useSelector((state) => state.productos);
+
+  const handleSearch = (text) => {
+    dispatch(
+      setProductosFiltrados(
+        productos.filter((producto) =>
+          producto.nombre.toUpperCase().includes(text.toUpperCase())
+        )
+      )
+    );
+
   };
 
   return (
@@ -89,24 +91,20 @@ export default function NavBar() {
         />
       </Button>
 
-      <Searchbar
-        placeholder="Buscar producto..."
-        style={styles.buscador}
-        inputStyle={{
-          fontFamily: "PoppinsM",
-          fontSize: 15,
-          color: "grey",
-        }}
-      />
-
-      {/* <View style={styles.contenedorInput}> */}
-      {/* <Feather style={styles.icono} name="search" size={24} color="black" /> */}
-      {/* <TextInput
-        placeholder="Buscar producto..."
-        placeholderTextColor="grey"
-        style={styles.buscador}
-      ></TextInput> */}
-      {/* </View> */}
+      {titulo ? (
+        <Titulo>{titulo}</Titulo>
+      ) : (
+        <Searchbar
+          placeholder="Buscar producto..."
+          style={styles.buscador}
+          onChangeText={(text) => handleSearch(text)}
+          inputStyle={{
+            fontFamily: "PoppinsM",
+            fontSize: 15,
+            color: "grey",
+          }}
+        />
+      )}
     </Container>
   );
 }

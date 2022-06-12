@@ -1,9 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
-import { Link } from "react-router-dom";
 import styled from "styled-components";
 import {
-  ItemCompra,
   Compras,
   Favoritos,
   Notificaciones,
@@ -15,26 +13,28 @@ import Reseñas from "./Reseñas/Reseñas";
 
 const Container = styled.div`
   display: flex;
-  // flex-direction: column;
   height: 100vh;
   width: 100%;
   padding-top: 8%;
   background-color: white;
   justify-content: center;
-  // align-items: center;
   @media screen and (max-width: 560px) {
     height: auto;
     display: flex;
     flex-direction: column;
+    postition: relative;
   }
 `;
 
 const Informacion = styled.div`
   width: 60%;
-  height: 100%;
-  // padding-top: 40px;
+  height: 100vh;
   @media screen and (max-width: 960px) {
     width: 100%;
+  }
+  @media screen and (max-width: 560px) {
+    postition: absolute;
+    background-color: #ffffff;
   }
 `;
 
@@ -43,7 +43,7 @@ const Options = styled.div`
   flex-direction: column;
   // justify-content: space-between;
   width: 25%;
-  height: 80vh;
+  height: 100vh;
   background-color: white;
   border-radius: 10px;
   border: 2px solid black;
@@ -55,8 +55,8 @@ const Options = styled.div`
     width: 60%;
   }
   @media screen and (max-width: 560px) {
-    height: 90vh;
     width: 100%;
+    position: absolute;
   }
 `;
 
@@ -137,20 +137,11 @@ const Sesion = styled.button`
   // }
 `;
 
-const Categorias = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  min-height: 70vh;
-  max-height: fit-content;
-  width: 100%;
-`;
-
 const Categoria = styled.div`
   display: flex;
   flex-direction: column;
   height: 50%;
-  width: 100%;
+  background-color: white;
 `;
 
 const Secciones = styled.p`
@@ -200,7 +191,7 @@ function Cuenta() {
   };
 
   useEffect(() => {
-    setComponente("perfil");
+    setComponente("");
   }, []);
 
   return (
@@ -210,25 +201,25 @@ function Cuenta() {
           <Titulo>Infusion Store</Titulo>
         </ContenedorTitulo>
         <Botones>
-          <Boton onClick={handleOnClick} value="perfil">
+          <Boton onClick={(e) => handleOnClick(e)} value="perfil">
             Ajustes de Perfil
           </Boton>
-          <Boton onClick={handleOnClick} value="compras">
+          <Boton onClick={(e) => handleOnClick(e)} value="compras">
             Mis Compras
           </Boton>
-          <Boton onClick={handleOnClick} value="reseñas">
+          <Boton onClick={(e) => handleOnClick(e)} value="reseñas">
             Reseñas
           </Boton>
-          <Boton onClick={handleOnClick} value="favoritos">
+          <Boton onClick={(e) => handleOnClick(e)} value="favoritos">
             Favoritos
           </Boton>
-          <Boton onClick={handleOnClick} value="notificaciones">
+          <Boton onClick={(e) => handleOnClick(e)} value="notificaciones">
             Notificaciones
           </Boton>
-          <Boton onClick={handleOnClick} value="seguridad">
+          <Boton onClick={(e) => handleOnClick(e)} value="seguridad">
             Seguridad
           </Boton>
-          <Boton onClick={handleOnClick} value="consultas">
+          <Boton onClick={(e) => handleOnClick(e)} value="consultas">
             Consultanos!
           </Boton>
         </Botones>
@@ -236,23 +227,7 @@ function Cuenta() {
         <Sesion>Mi Cuenta</Sesion>
       </Options>
       <Informacion>
-        <Categorias>
-          <Categoria>
-            {componente && <ComponenteDinamico />}
-            {/* <Secciones>Historial de compras</Secciones> */}
-            {/* {carrito[0] && (
-              <Items>
-                {carrito.map((el) => {
-                  return <ItemCompra key={el.id} producto={el} />;
-                })}
-              </Items>
-            )} */}
-          </Categoria>
-
-          <Categoria>
-            {/* <Secciones>Productos recomendados</Secciones> */}
-          </Categoria>
-        </Categorias>
+        <Categoria>{componente && <ComponenteDinamico />}</Categoria>
       </Informacion>
     </Container>
   );
