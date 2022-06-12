@@ -1,12 +1,17 @@
 import { useState, useRef } from "react";
 import { app, authentication } from "../../firebase";
-import { signInWithPopup, GoogleAuthProvider } from "firebase/auth";
+import {
+  signInWithPopup,
+  GoogleAuthProvider,
+  sendPasswordResetEmail,
+} from "firebase/auth";
 import "./LogInMethods.css";
 import styled from "styled-components";
 import google from "./Google.png";
 import { useNavigate } from "react-router-dom";
 import { getUser, setUserInfo, postUsuario } from "../../Redux/actions";
 import { useDispatch } from "react-redux";
+import Swal from "sweetalert2";
 import axios from "axios";
 
 const Container = styled.div`
@@ -219,7 +224,7 @@ export default function Login({ setUser }) {
         setUser(user);
         navigate(-1);
       })
-      .catch((err) => {
+      .catch(() => {
         setError({
           ...error,
           login: { contraseña: "usuario o contraseña no valido" },
@@ -258,6 +263,32 @@ export default function Login({ setUser }) {
     }
 
     return errors;
+  };
+
+  const handleNoEmail = (props) => {
+    Swal.fire({
+      title: "Ingresar correo",
+      text: "Correo es obligatorio para reestablecer contraseña",
+      icon: "warning",
+      iconColor: "red",
+      color: "#222",
+      confirmButtonColor: "grey",
+      confirmButtonText: "Aceptar",
+    });
+  };
+
+  const handleForgotPass = (e) => {
+    e.preventDefault();
+
+    const email = emailLRef.current.value;
+
+    if (email) {
+      sendPasswordResetEmail(authentication, email).then(() => {
+        emailLRef.current.value = "";
+      });
+    } else {
+      handleNoEmail();
+    }
   };
 
   const handleSubmit = (e) => {
@@ -310,14 +341,14 @@ export default function Login({ setUser }) {
             <input
               className="input-login"
               type="email"
-              id="emailField"
+              id="emailLField"
               name="correo"
               ref={emailLRef}
               onChange={handleChange}
               placeholder=" "
             />
             <span className="barra-login"></span>
-            <label className="label-login" htmlFor="emailField">
+            <label className="label-login" htmlFor="emailLField">
               Correo
             </label>
             {error.login.correo && <Error>{error.login.correo}</Error>}
@@ -327,17 +358,21 @@ export default function Login({ setUser }) {
             <input
               className="input-login"
               type="password"
-              id="passwordField"
+              id="passwordLField"
               name="contraseña"
               ref={passLRef}
               onChange={handleChange}
               placeholder=" "
             />
             <span className="barra-login"></span>
-            <label className="label-login" htmlFor="passwordField">
+            <label className="label-login" htmlFor="passwordLField">
               Contraseña
             </label>
             {error.login.contraseña && <Error>{error.login.contraseña}</Error>}
+          </div>
+
+          <div className="barra-login">
+            <p onClick={handleForgotPass}>Forgot Password?</p>
           </div>
         </Form>
       </SignIn>
