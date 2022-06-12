@@ -30,8 +30,9 @@ const Image = styled.img`
   height: 500px;
   object-fit: cover;
   opacity: 0.5;
+
   @media screen and (max-width: 960px) {
-    display: flex;
+    // display: flex;
     height: 30vh;
   }
 `;
@@ -43,11 +44,21 @@ const Text = styled.div`
   left: 30%;
   right: 30%;
   width: 40%;
+
   @media screen and (max-width: 960px) {
     bottom: 20vh;
     top: 7vh;
     left: 25%;
     right: 25%;
+  }
+
+  @media screen and (max-width: 400px) {
+    height: 140px;
+    width: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
   }
 `;
 
@@ -55,6 +66,10 @@ const Title = styled.p`
   font-size: 50px;
   font-weight: bold;
   color: white;
+
+  @media screen and (max-width: 400px) {
+    font-size: 30px;
+  }
 `;
 
 const SubTitle = styled.p`
@@ -67,7 +82,9 @@ const P = styled.p`
   font-weight: 700;
   padding: 0px 0px 20px 0px;
   color: black;
+
   @media screen and (max-width: 500px) {
+    font-size: 15px;
     width: 100%;
     margin: 0;
     display: flex;
@@ -82,7 +99,13 @@ const Header = styled.div`
   position: relative;
   z-index: 1;
   background-color: Black;
+
   @media screen and (max-width: 960px) {
+    display: flex;
+    height: 30vh;
+  }
+
+  @media screen and (max-width: 400px) {
     display: flex;
     height: 30vh;
   }
