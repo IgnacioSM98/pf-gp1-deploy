@@ -1,9 +1,10 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { postReviews } from "../../Redux/actions";
-import { StarRating, Modal } from "../index";
+import { StarRating } from "../index";
 import styled from "styled-components";
 import send from "../../Images/Send.png";
+import Swal from "sweetalert2";
 
 const Container = styled.div`
   display: flex;
@@ -15,6 +16,23 @@ const Container = styled.div`
   @media screen and (max-width: 960px) {
     width: 90%;
   }
+`;
+
+const Comprar = styled.div`
+  display: flex;
+  flex-direction: column;
+
+  align-items: start;
+  justify-content: space-around;
+
+  height: 144px;
+  width: 292px;
+
+  margin: 0.5rem;
+  padding: 10px 20px;
+  background-color: #1b1919ed;
+  border-radius: 10px;
+  text-align: center;
 `;
 
 const Formulario = styled.form`
@@ -88,15 +106,26 @@ const ParrafoOk = styled.p`
 
 export default function CrearReview({ id }) {
   const dispatch = useDispatch();
+
   const user = useSelector((state) => state.userInfo);
-  const userId = user.uid;
-  const [stateModalOpinion, setStateModalOpinion] = useState(false);
+  const pedidos = useSelector((state) => state.pedidosUsuario);
+  const [comprado, setComprado] = useState(false);
+
+  useEffect(() => {
+    pedidos.map((pedido) =>
+      pedido.productos.map((producto) => {
+        if (producto.compra.productoId === Number(id)) {
+          setComprado(true);
+        }
+      })
+    );
+  }, [user, pedidos]);
 
   const [input, setInput] = useState({
     puntaje: "",
     comentario: "",
     titulo: "",
-    usuarioId: userId,
+    usuarioId: user.uid,
   });
 
   const handleInputChange = (e) => {
@@ -109,48 +138,82 @@ export default function CrearReview({ id }) {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    dispatch(postReviews(id, input));
-    setStateModalOpinion(!stateModalOpinion);
-    setInput({
-      ...input,
-      puntaje: "",
-      comentario: "",
-      titulo: "",
+    Swal.fire({
+      title: "Enviar Reseña",
+      text: "¿Estas seguro de enviar esta reseña?",
+      icon: "warning",
+      iconColor: "grey",
+      color: "#222",
+      showCancelButton: true,
+      cancelButtonText: "No",
+      confirmButtonColor: "green",
+      cancelButtonColor: "darkgrey",
+      confirmButtonText: "Si",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        Swal.fire({
+          text: "¡Opinion enviada con exito!",
+          icon: "success",
+          iconColor: "green",
+          color: "#222",
+          showConfirmButton: false,
+          timer: "1500",
+          toast: true,
+        });
+
+        dispatch(postReviews(id, input));
+
+        // Vaciar inputs
+        setInput({
+          ...input,
+          puntaje: "",
+          comentario: "",
+          titulo: "",
+        });
+      }
     });
   };
 
   return (
     <Container>
       <Titulo>Crea tu reseña</Titulo>
-      <Formulario onSubmit={handleSubmit}>
-        <Image
-          title="Enviar reseña"
-          src={send}
-          onClick={(e) => handleSubmit(e)}
-        ></Image>
 
-        <Comentario
-          type={"text"}
-          name="titulo"
-          value={input.titulo}
-          placeholder="Titulo"
-          onChange={handleInputChange}
-        ></Comentario>
+      {!comprado ? (
+        <Comprar>
+          <p style={{ color: "white" }}>
+            {
+              "No se puede añadir una reseña si aún no has adquirido el producto"
+            }
+          </p>
+        </Comprar>
+      ) : (
+        <Formulario onSubmit={handleSubmit}>
+          <Image
+            title="Enviar reseña"
+            src={send}
+            onClick={(e) => handleSubmit(e)}
+          ></Image>
 
-        <StarRating inputs={input} setInputs={setInput}></StarRating>
+          <Comentario
+            type={"text"}
+            name="titulo"
+            value={input.titulo}
+            placeholder="Titulo"
+            onChange={handleInputChange}
+          ></Comentario>
 
-        <ComentarioDetallado
-          name="comentario"
-          placeholder="Opina sobre este producto"
-          onChange={handleInputChange}
-          value={input.comentario}
-          cols="30"
-          rows="10"
-        ></ComentarioDetallado>
-      </Formulario>
-      <Modal state={stateModalOpinion} setStateModal={setStateModalOpinion}>
-        <ParrafoOk>¡Opinion enviada con exito!</ParrafoOk>
-      </Modal>
+          <StarRating inputs={input} setInputs={setInput}></StarRating>
+
+          <ComentarioDetallado
+            name="comentario"
+            placeholder="Opina sobre este producto"
+            onChange={handleInputChange}
+            value={input.comentario}
+            cols="30"
+            rows="10"
+          ></ComentarioDetallado>
+        </Formulario>
+      )}
     </Container>
   );
 }

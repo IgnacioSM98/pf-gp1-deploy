@@ -25,7 +25,6 @@ const Input = styled.input`
   border-radius: 2px;
   padding: 10px;
   margin: 2px;
-  // background-color: #8080806e;
 `;
 
 const Select = styled.select`
