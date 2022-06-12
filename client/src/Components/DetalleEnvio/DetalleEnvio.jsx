@@ -38,6 +38,11 @@ const Estado = styled.div`
   border: 1px solid black;
   border-radius: 16px;
   box-shadow: 3px 3px 12px #8080807a;
+  @media screen and (max-width: 500px) {
+    position: relative;
+    width: 370px;
+    margin-left: 5px;
+  }
 `;
 const Opciones = styled.div`
   display: flex;
@@ -90,6 +95,12 @@ const Domicilio = styled.div`
   margin-top: 2em;
   box-shadow: 3px 3px 12px #8080807a;
   position: relative;
+
+  @media screen and (max-width: 500px) {
+    position: relative;
+    width: 370px;
+    margin-left: 5px;
+  }
 `;
 const Lugar = styled.div`
   display: flex;
@@ -116,6 +127,11 @@ const Codigo = styled.div`
   margin: 2em 0em;
   box-shadow: 3px 3px 12px #8080807a;
   position: relative;
+  @media screen and (max-width: 500px) {
+    position: relative;
+    width: 370px;
+    margin-left: 5px;
+  }
 `;
 
 const LogoCodigo = styled.img`
@@ -155,6 +171,12 @@ const ModificarEstados = styled.select`
   position: absolute;
   top: 8%;
   right: 150px;
+  @media screen and (max-width: 1040px) {
+    position: relative;
+    right: auto;
+    margin-bottom: 10px;
+    margin-top: 10px;
+  }
 `;
 
 const OpcionEstado = styled.option`
@@ -186,6 +208,31 @@ const Producto = styled.p`
   margin: 0.5em 0em 0em 1.8em;
   text-align: left;
   color: #424242;
+`;
+
+const H1 = styled.h1`
+  position: absolute;
+  top: 8%;
+  left: 160px;
+  @media screen and (max-width: 1040px) {
+    left: 0;
+    top: 0;
+    position: relative;
+    right: auto;
+  }
+  @media screen and (max-width: 500px) {
+    left: 0;
+    top: 0;
+    position: relative;
+    right: auto;
+    margin-bottom: 10px;
+    margin-top: 30px;
+  }
+`;
+const CompraCont = styled.div`
+  @media screen and (max-width: 500px) {
+    margin-left: 5px;
+  }
 `;
 
 export default function DetalleEnvio() {
@@ -268,11 +315,7 @@ export default function DetalleEnvio() {
 
   return detalle.id ? (
     <Container>
-      {user === "admin" && (
-        <h1 style={{ position: "absolute", top: "8%", left: "160px" }}>
-          {`Pedido numero: #2022${detalle.id}`}
-        </h1>
-      )}
+      {user === "admin" && <H1>{`Pedido numero: #2022${detalle.id}`}</H1>}
 
       {user === "admin" && (
         // <Formulario onSubmit={handleSubmit}>
@@ -444,7 +487,7 @@ export default function DetalleEnvio() {
           />
         </Codigo>
       </Envio>
-      <div>
+      <CompraCont>
         <Compra className="compra">
           <Titulo>
             {user === "admin" ? "Detalle de Pedido" : "Compraste"}
@@ -473,7 +516,7 @@ export default function DetalleEnvio() {
             );
           })}
         </Compra>
-      </div>
+      </CompraCont>
     </Container>
   ) : (
     <Loader />
