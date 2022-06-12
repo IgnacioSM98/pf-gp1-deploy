@@ -110,11 +110,13 @@ const Login = styled.div`
   font-size: 13px;
   color: white;
   right: 20px;
+
   @media screen and (max-width: 960px) {
     position: absolute;
     right: 20px;
     top: 0;
-    display: flex;
+
+    display: ${(props) => (props.open ? "none" : "flex")};
     align-items: center;
     cursor: pointer;
   }
@@ -208,6 +210,7 @@ export default function NavBar({ contacto, setUser }) {
     <Container open={showMobileMenu} onMouseLeave={() => setMenu(false)}>
       <MobileIcon
         onClick={() => {
+          setMenu(false);
           setShowMobileMenu(!showMobileMenu);
         }}
       >
@@ -233,7 +236,7 @@ export default function NavBar({ contacto, setUser }) {
         </Span>
       </Menu>
 
-      <Login>
+      <Login open={showMobileMenu}>
         <NavLink
           to={"/carrito"}
           style={{

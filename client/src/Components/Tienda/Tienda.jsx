@@ -101,11 +101,19 @@ const Linea = styled.hr`
   height: 0px;
   background-color: rgba(4, 4, 4, 1);
   // margin-top: 1.5rem;
+
+  @media screen and (max-width: 400px) {
+    display: none;
+  }
 `;
 
 const Titulo = styled.p`
   font-size: 25px;
   font-family: Poppins;
+
+  @media screen and (max-width: 400px) {
+    font-size: 18px;
+  }
 `;
 
 const TextoLinea = styled.div`
@@ -140,6 +148,11 @@ const Header = styled.div`
   position: relative;
   margin: auto;
   margin-top: 4rem;
+
+  @media screen and (max-width: 400px) {
+    color: white;
+    height: 108px;
+  }
 `;
 
 const Marco = styled.div`
