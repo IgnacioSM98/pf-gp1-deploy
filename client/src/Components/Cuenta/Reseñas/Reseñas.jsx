@@ -72,7 +72,7 @@ const BotonCerrar = styled.button`
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-top: 25px;
+  margin-top: 10px;
   right: 20px;
   width: 25px;
   height: 25px;

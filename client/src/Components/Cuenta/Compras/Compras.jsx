@@ -39,7 +39,7 @@ const Boton = styled.button`
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-top: 20px;
+  margin-top: 10px;
   right: 20px;
   width: 25px;
   height: 25px;

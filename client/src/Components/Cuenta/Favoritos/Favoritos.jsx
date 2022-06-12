@@ -31,10 +31,11 @@ const Productos = styled.div`
   }
 `;
 const Boton = styled.button`
+  position: absolute;
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-top: 25px;
+  margin-top: 5px;
   right: 20px;
   width: 25px;
   height: 25px;
