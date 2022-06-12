@@ -32,23 +32,24 @@ const styles = StyleSheet.create({
   espacio: {
     marginTop: 40,
   },
+
   contProd: {
-    width: "90%",
+    width: "98%",
     display: "flex",
     flexDirection: "row",
     borderColor: "#c8c8c8",
     borderWidth: 1,
-    margin: 12,
+    margin: "1%",
     borderRadius: 20,
     elevation: 5,
     backgroundColor: "#c8c8c8",
-    
   },
+
   favoritos: {
     position: "absolute",
     fontSize: 20,
     top: 22,
-    right: 60,
+    right: 22,
     zIndex: 999,
   },
 
@@ -69,7 +70,7 @@ const styles = StyleSheet.create({
   },
 
   contDatos: {
-    width:200,
+    width: 200,
     margin: 10,
   },
 
@@ -101,6 +102,7 @@ export default function Favorito({ navigation, item }) {
             <Text style={styles.precio}>${item.precio}</Text>
           </View>
         </View>
-      </Pressable>
+      </View>
+    </Pressable>
   );
 }

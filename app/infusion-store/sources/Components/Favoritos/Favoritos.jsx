@@ -8,16 +8,16 @@ import {
   Image,
   FlatList,
 } from "react-native";
-import { Favorito } from "../index";
+import { Favorito, NavBar } from "../index";
 
 const styles = StyleSheet.create({
   text: {
     left: "35%",
     fontSize: 20,
   },
-  espacio:{
+  espacio: {
     marginTop: 45,
-  }
+  },
 });
 
 export default function Favoritos({ navigation }) {
@@ -32,14 +32,17 @@ export default function Favoritos({ navigation }) {
   }, [favoritos]);
 
   return (
-    <View>
-      <View style={styles.espacio}></View>
-      <FlatList
-        data={favoritos}
-        renderItem={({ item }) => (
-          <Favorito navigation={navigation} item={item} />
-        )}
-      />
-    </View>
+    <>
+      <NavBar titulo="Favoritos" />
+      <View>
+        <FlatList
+          style={{ height: "100%", marginTop: "2%" }}
+          data={favoritos}
+          renderItem={({ item }) => (
+            <Favorito navigation={navigation} item={item} />
+          )}
+        />
+      </View>
+    </>
   );
 }

@@ -412,6 +412,12 @@ router.post("/pedido/crear/:idUsuario", async (req, res) => {
         .then((response) => {
           console.log(response);
         })
+        .then((response2) => {
+          Producto.findByPk(p.id).then((auxProducto) => {
+            auxProducto.stock = auxProducto.stock - p.cantidad;
+            auxProducto.save();
+          });
+        })
         .catch((error) => {
           console.log(error);
           return res.status(400).json(error);
