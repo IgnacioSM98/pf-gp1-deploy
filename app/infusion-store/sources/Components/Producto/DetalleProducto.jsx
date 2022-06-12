@@ -10,8 +10,12 @@ import {
 } from "react-native";
 import { AntDesign, Octicons } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
-import { useDispatch } from "react-redux";
-import { addCarrito } from "../../../redux/actions";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  addCarrito,
+  eliminarDeFavoritos,
+  añadirAFavoritos,
+} from "../../../redux/actions";
 
 const styles = StyleSheet.create({
   contProd: {
@@ -141,6 +145,8 @@ const DetalleProducto = ({ route }) => {
   const [data, setData] = useState([]);
   const navigation = useNavigation();
   const dispatch = useDispatch();
+  const user = useSelector((state) => state.userInfo);
+  const favoritos = useSelector((state) => state.favoritos);
 
   function addToCarrito(e) {
     if (data.stock > 0) {
@@ -157,6 +163,17 @@ const DetalleProducto = ({ route }) => {
       .catch((error) => console.error(error));
   }, [id]);
 
+  console.log(data);
+  function handleFav() {
+    if (favoritos.find((fav) => fav.id == id)) {
+      dispatch(eliminarDeFavoritos(id));
+      alert("producto eliminado");
+    } else {
+      dispatch(añadirAFavoritos(data));
+      alert("producto agregado");
+    }
+  }
+
   return (
     <View style={styles.contProd}>
       <AntDesign
@@ -168,8 +185,25 @@ const DetalleProducto = ({ route }) => {
           navigation.goBack();
         }}
       />
-
-      <Octicons style={styles.favoritos} name="heart" size={24} color="black" />
+      {user && (
+        <View style={styles.favoritos}>
+          {favoritos.find((fav) => fav.id == id) ? (
+            <AntDesign
+              onPress={handleFav}
+              name="heart"
+              size={24}
+              color="black"
+            />
+          ) : (
+            <Octicons
+              onPress={handleFav}
+              name="heart"
+              size={24}
+              color="black"
+            />
+          )}
+        </View>
+      )}
 
       <View style={styles.contFoto}>
         <Image source={{ uri: data.imagen }} style={styles.img} />

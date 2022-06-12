@@ -90,23 +90,17 @@ const styles = StyleSheet.create({
 
 export default function Favorito({ navigation, item }) {
   return (
-    <Pressable
-      style={{ position: "relative" }}
-      onPress={() => navigation.navigate("DetalleProducto", { id: item.id })}
-    >
-      <View style={styles.contProd}>
-        <Octicons
-          style={styles.favoritos}
-          name="heart"
-          size={24}
-          color="black"
-        />
-        <View style={styles.contFoto}>
-          <Image source={{ uri: item.imagen }} style={styles.img} alt="uwu" />
-        </View>
-        <View style={styles.contDatos}>
-          <Text style={styles.nombre}>{item.nombre}</Text>
-          <Text style={styles.precio}>${item.precio}</Text>
+      <Pressable
+        onPress={() => navigation.navigate("DetalleProducto", { id: item.id })}
+      >  
+        <View style={styles.contProd}>
+          <View style={styles.contFoto}>
+            <Image source={{ uri: item.imagen }} style={styles.img} alt="uwu" />
+          </View>
+          <View style={styles.contDatos}>
+            <Text style={styles.nombre}>{item.nombre}</Text>
+            <Text style={styles.precio}>${item.precio}</Text>
+          </View>
         </View>
       </View>
     </Pressable>

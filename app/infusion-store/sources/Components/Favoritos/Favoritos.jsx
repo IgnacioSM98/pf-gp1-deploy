@@ -29,7 +29,7 @@ export default function Favoritos({ navigation }) {
     ).then((res) => {
       setFavoritos(res.data);
     });
-  }, []);
+  }, [favoritos]);
 
   return (
     <>
