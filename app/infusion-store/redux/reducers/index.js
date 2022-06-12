@@ -11,9 +11,9 @@ const initialState = {
   // user: false,
   userInfo: {},
   // pedidos: [],
-  // usuarios: [],
+  usuarios: [],
   // detalleEnvio: {},
-  // favoritos: [],
+  favoritos: [],
 };
 
 export default function rootReducer(state = initialState, action) {
@@ -72,11 +72,11 @@ export default function rootReducer(state = initialState, action) {
     //         categorias: action.payload,
     //       };
 
-    //     case "GET_USUARIOS":
-    //       return {
-    //         ...state,
-    //         usuarios: action.payload,
-    //       };
+        case "GET_USUARIOS":
+          return {
+            ...state,
+            usuarios: action.payload,
+          };
 
     //     case "GET_PEDIDOS":
     //       return {
@@ -96,11 +96,11 @@ export default function rootReducer(state = initialState, action) {
     //         detalle: action.payload,
     //       };
 
-    //     case "GET_FAVORITOS":
-    //       return {
-    //         ...state,
-    //         favoritos: action.payload,
-    //       };
+        case "GET_FAVORITOS":
+          return {
+            ...state,
+            favoritos: action.payload,
+          };
 
     //     case "CLEAR_DETAIL":
     //       return {
@@ -397,67 +397,67 @@ export default function rootReducer(state = initialState, action) {
     //         detalleEnvio: action.payload,
     //       };
 
-    //     case "AÑADIR_A_FAVORITOS":
-    //       // const usuarioFiltrado = state.usuarios.filter(
-    //       //   (u) => u.mail == state.userInfo.email
-    //       // );
+        case "AÑADIR_A_FAVORITOS":
+          const usuarioFiltrado = state.usuarios.filter(
+            (u) => u.mail == state.userInfo.email
+          );
 
-    //       const idProducto = action.payload.id;
-    //       const idUsuario = state.userInfo.uid;
-    //       // console.log(usuarioFiltrado, "ACAAAAAAAAAAA");
+          const idProducto = action.payload.id;
+          const idUsuario = state.userInfo.uid;
+          // console.log(usuarioFiltrado, "ACAAAAAAAAAAA");
 
-    //       const favorites = axios.get(
-    //         `https://proyecto-final-gp1.herokuapp.com/favoritos/wishlist/${idUsuario}`
-    //       );
+          const favorites = axios.get(
+            `https://proyecto-final-gp1.herokuapp.com/favoritos/wishlist/${idUsuario}`
+          );
 
-    //       if (
-    //         favorites.data &&
-    //         favorites.data.find((fav) => fav.id == state.productos.id)
-    //       ) {
-    //       } else {
-    //         axios
-    //           .post("https://proyecto-final-gp1.herokuapp.com/favoritos/wishlist", {
-    //             idProducto: idProducto,
-    //             idUsuario: idUsuario,
-    //           })
-    //           .then((response) => console.log(response));
-    //       }
+          if (
+            favorites.data &&
+            favorites.data.find((fav) => fav.id == state.productos.id)
+          ) {
+          } else {
+            axios
+              .post("https://proyecto-final-gp1.herokuapp.com/favoritos/wishlist", {
+                idProducto: idProducto,
+                idUsuario: idUsuario,
+              })
+              .then((response) => console.log(response));
+          }
 
-    //       const newFavorites = [...state.favoritos, action.payload];
-    //       return {
-    //         ...state,
-    //         favoritos: newFavorites,
-    //       };
+          const newFavorites = [...state.favoritos, action.payload];
+          return {
+            ...state,
+            favoritos: newFavorites,
+          };
 
-    //     case "ELIMINAR_DE_FAVORITOS":
-    //       // const usuarioFiltradoid = state.usuarios.filter(
-    //       //   (u) => u.mail == state.userInfo.email
-    //       // );
+        case "ELIMINAR_DE_FAVORITOS":
+          const usuarioFiltradoid = state.usuarios.filter(
+            (u) => u.mail == state.userInfo.email
+          );
 
-    //       // console.log(state.userInfo.id);
+          console.log(state.userInfo.id);
 
-    //       const idProductoEliminar = action.payload;
-    //       const idUsuarioEliminar = state.userInfo.uid;
+          const idProductoEliminar = action.payload;
+          const idUsuarioEliminar = state.userInfo.uid;
 
-    //       const favoritosFiltrados = state.favoritos.filter(
-    //         (e) => e.id !== action.payload
-    //       );
+          const favoritosFiltrados = state.favoritos.filter(
+            (e) => e.id !== action.payload
+          );
 
-    //       // console.log(idProductoEliminar, idUsuarioEliminar, "HOLAAAAAAA");
+          console.log(idProductoEliminar, idUsuarioEliminar, "HOLAAAAAAA");
 
-    //       axios
-    //         .delete("https://proyecto-final-gp1.herokuapp.com/favoritos/wishlist", {
-    //           data: {
-    //             idUsuario: idUsuarioEliminar,
-    //             idProducto: idProductoEliminar,
-    //           },
-    //         })
-    //         .catch((error) => console.log(error));
+          axios
+            .delete("https://proyecto-final-gp1.herokuapp.com/favoritos/wishlist", {
+              data: {
+                idUsuario: idUsuarioEliminar,
+                idProducto: idProductoEliminar,
+              },
+            })
+            .catch((error) => console.log(error));
 
-    //       return {
-    //         ...state,
-    //         favoritos: favoritosFiltrados,
-    //       };
+          return {
+            ...state,
+            favoritos: favoritosFiltrados,
+          };
 
     //     case "POST_PEDIDO":
     //       let pedidosAux = [...state.pedidos];

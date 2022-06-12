@@ -267,17 +267,17 @@ export function setUserInfo(user) {
   };
 }
 
-// export function getUsuarios() {
-//   return function (dispatch) {
-//     try {
-//       axios(`${urlBase}usuarios`).then((res) =>
-//         dispatch({ type: "GET_USUARIOS", payload: res.data })
-//       );
-//     } catch (error) {
-//       console.log(error);
-//     }
-//   };
-// }
+export function getUsuarios() {
+  return function (dispatch) {
+    try {
+      axios(`${urlBase}usuarios`).then((res) =>
+        dispatch({ type: "GET_USUARIOS", payload: res.data })
+      );
+    } catch (error) {
+      console.log(error);
+    }
+  };
+}
 
 // export function postUsuario(body) {
 //   return function (dispatch) {
@@ -332,28 +332,28 @@ export function setUserInfo(user) {
 //   };
 // }
 
-// export function getFavoritos(id) {
-//   return async function (dispatch) {
-//     try {
-//       const favoritos = await axios.get(`${urlBase}favoritos/wishlist/${id}`);
-//       dispatch({ type: "GET_FAVORITOS", payload: favoritos.data });
-//     } catch (error) {
-//       console.log(error);
-//     }
-//   };
-// }
+export function getFavoritos(id) {
+  return async function (dispatch) {
+    try {
+      const favoritos = await axios.get(`${urlBase}favoritos/wishlist/${id}`);
+      dispatch({ type: "GET_FAVORITOS", payload: favoritos.data });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+}
 
-// export function añadirAFavoritos(productoFav) {
-//   return function (dispatch) {
-//     dispatch({ type: "AÑADIR_A_FAVORITOS", payload: productoFav });
-//   };
-// }
+export function añadirAFavoritos(productoFav) {
+  return function (dispatch) {
+    dispatch({ type: "AÑADIR_A_FAVORITOS", payload: productoFav });
+  };
+}
 
-// export function eliminarDeFavoritos(productoFav) {
-//   return function (dispatch) {
-//     dispatch({ type: "ELIMINAR_DE_FAVORITOS", payload: productoFav });
-//   };
-// }
+export function eliminarDeFavoritos(productoFav) {
+  return function (dispatch) {
+    dispatch({ type: "ELIMINAR_DE_FAVORITOS", payload: productoFav });
+  };
+}
 
 // export function enviarMail(userMail) {
 //   // const user = { ...userInfo };

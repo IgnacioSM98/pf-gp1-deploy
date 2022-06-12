@@ -92,7 +92,6 @@ export default function Favorito({ navigation, item }) {
       <Pressable
         onPress={() => navigation.navigate("DetalleProducto", { id: item.id })}
       >  
-      <Octicons style={styles.favoritos} name="heart" size={24} color="black" />
         <View style={styles.contProd}>
           <View style={styles.contFoto}>
             <Image source={{ uri: item.imagen }} style={styles.img} alt="uwu" />
