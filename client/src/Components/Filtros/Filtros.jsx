@@ -10,6 +10,12 @@ const Select = styled.select`
   border: none;
   border-radius: 2px;
   margin: 8px 0px;
+  text-align: center;
+  background: #2b71a378;
+  border: solid 1px white;
+  border-radius: 5px;
+  color: white;
+  overflow: hidden;
 `;
 
 export default function Filtros({ setSelected }) {
