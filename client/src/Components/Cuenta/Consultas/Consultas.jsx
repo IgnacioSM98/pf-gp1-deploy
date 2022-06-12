@@ -7,6 +7,24 @@ import Swal from "sweetalert2";
 const Titulo = styled.h2`
   color: #4b6650;
   margin-bottom: 10px;
+  @media screen and (max-width: 450px) {
+    font-size: 20px;
+  }
+  @media screen and (max-width: 380px) {
+    font-size: 15px;
+  }
+  @media screen and (max-width: 315px) {
+    font-size: 12px;
+  }
+`;
+
+const Contenedor = styled.div`
+  margin-top: 20px;
+  background-color: white;
+  @media screen and (max-width: 560px) {
+    display: absolute;
+    z-index: 1;
+  }
 `;
 
 const Container = styled.div`
@@ -53,9 +71,7 @@ const Errors = styled.span`
   position: absolute;
   bottom: -20px;
   width: 100%;
-
   left: 0;
-  // white-space: nowrap;
   font-size: 12px;
   font-weight: 500;
   color: #951414d9;
@@ -63,17 +79,10 @@ const Errors = styled.span`
 
 const Button = styled.button`
   position: absolute;
-  // top: 660px;
   bottom: 35px;
   width: 80%;
   background: #37563d;
-  // /* fallback for old browsers */
-  // background: -webkit-linear-gradient(to left, #190a05, #870000);
-  // /* Chrome 10-25, Safari 5.1-6 */
-  // background: linear-gradient(to left, #190a05, #870000);
-  // /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
   display: block;
-  // width: 300px;
   height: 40px;
   border: none;
   color: white;
@@ -82,6 +91,34 @@ const Button = styled.button`
   margin: 40px 0px 0px 0px;
   margin: auto;
   cursor: pointer;
+`;
+
+const Boton = styled.button`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  display: block;
+  position: absolute;
+  margin: 5px 5px 5px 5px;
+  right: 20px;
+  width: 25px;
+  height: 25px;
+  background: #36885ed1;
+  color: white;
+  border-radius: 4px;
+  font-size: 13px;
+  cursor: pointer;
+  @media screen and (min-width: 560px) {
+    display: none;
+  }
+  @media screen and (max-width: 450px) {
+    width: 20px;
+    height: 20px;
+  }
+  @media screen and (max-width: 380px) {
+    width: 17px;
+    height: 17px;
+  }
 `;
 
 function validate(post) {
@@ -107,6 +144,8 @@ export default function Consultas() {
     subject: "",
     text: "",
   });
+
+  const [show, setShow] = useState(true);
 
   function handleInputChange(e) {
     setPost({
@@ -144,6 +183,11 @@ export default function Consultas() {
       }
     });
   }
+
+  function handleClick() {
+    setShow((current) => !current);
+  }
+
   function handleSubmit(e) {
     e.preventDefault();
     if (post !== undefined) {
@@ -153,7 +197,8 @@ export default function Consultas() {
     }
   }
   return (
-    <>
+    <Contenedor style={{ display: show ? "block" : "none" }}>
+      <Boton onClick={handleClick}>X</Boton>
       <Titulo>Consultanos o Reclamanos!</Titulo>
       <Container>
         <Form onSubmit={(e) => handleSubmit(e)}>
@@ -199,6 +244,6 @@ export default function Consultas() {
           <Button type="submit">¡Enviar!</Button>
         </Form>
       </Container>
-    </>
+    </Contenedor>
   );
 }

@@ -6,19 +6,30 @@
   box-sizing: border-box;
 }
 
+p {
+  margin: 15px 10px 10px 10px;
+}
+
 .form-notificaciones {
+  margin-top: 20px;
+  min-height: 100vh;
+  display: flex;
+  position: relative;
+  flex-direction: column;
   background-color: white;
-  width: 30%;
-  padding: 10px 0;
   border-radius: 10px;
   box-shadow: 0 0 6px 0 rgba(255, 255, 255, 0.8);
-  margin: auto;
+}
+
+.contenedor-divs {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-content: flex-start;
 }
 
 .grupo-notificaciones {
-  display: flex;
-
-  margin: 45px 0px 0px 0px;
+  margin-top: 45px;
   width: 320px;
 }
 
@@ -26,19 +37,22 @@
   color: #49454567;
   font-size: 16px;
   margin-right: 5px;
-  transition: 0.3s ease all;
   pointer-events: none;
 }
 
-.input-notificaciones{
-    border-radius: 5px;
-    width: 15px;
-    height: 15px;
+.input-notificaciones {
+  border-radius: 5px;
+  width: 15px;
+  height: 15px;
 }
 
 @media screen and (max-width: 1100px) {
   .form-notificaciones {
     width: 50%;
+  }
+  p {
+    font-weight: 600;
+    font-size: 30px;
   }
 }
 
@@ -46,16 +60,26 @@
   .form-notificaciones {
     width: 60%;
   }
-}
-
-@media screen and (max-width: 450%) {
-  .form-notificaciones {
-    width: 80%;
+  p {
+    font-weight: 400;
+    font-size: 20px;
   }
 }
-
+@media screen and (max-width: 560px) {
+  .form-notificaciones {
+    width: 100vw;
+  }
+  p {
+    font-weight: 300;
+    font-size: 20px;
+  }
+}
 @media screen and (max-width: 300px) {
   .form-notificaciones {
-    width: 90%;
+    width: 100vw;
+  }
+  p {
+    font-weight: 300;
+    font-size: 15px;
   }
 }
