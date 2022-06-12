@@ -35,7 +35,7 @@
 
 .input-login:focus {
   outline: none;
-  color: white;
+  color: black;
 }
 
 .input-login:focus ~ .label-login {
