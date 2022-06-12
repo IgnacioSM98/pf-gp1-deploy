@@ -8,27 +8,25 @@ import axios from "axios";
 // const ratings = "ratings/";
 // const pedido = "pedido/";
 
-// export function getProductos() {
-//   return async function (dispatch) {
-//     const data = JSON.parse(localStorage.getItem("productos"));
-//     if (data) {
-//       dispatch({ type: "GET_PRODUCTOS", payload: data });
-//     } else {
-//       try {
-//         const resp = await axios.get(`${urlBase}${productos}`);
-//         dispatch({ type: "GET_PRODUCTOS", payload: resp.data });
-//       } catch (error) {
-//         console.log(error);
-//       }
-//     }
-//   };
-// }
+export function getProductos() {
+  return async function (dispatch) {
+    try {
+      const resp = await axios.get(
+        "https://proyecto-final-gp1.herokuapp.com/productos"
+      );
 
-// export function getProductosFiltrados(productosFiltrados) {
-//   return function (dispatch) {
-//     dispatch({ type: "GET_PRODUCTOS_FILTRADOS", payload: productosFiltrados });
-//   };
-// }
+      dispatch({ type: "GET_PRODUCTOS", payload: resp.data });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+}
+
+export function setProductosFiltrados(productosFiltrados) {
+  return function (dispatch) {
+    dispatch({ type: "SET_PRODUCTOS_FILTRADOS", payload: productosFiltrados });
+  };
+}
 
 // export function getDetail(id) {
 //   return function (dispatch) {
