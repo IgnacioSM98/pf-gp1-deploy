@@ -13,7 +13,7 @@ import { useNavigation } from "@react-navigation/native";
 import { useDispatch, useSelector } from "react-redux";
 import {
   addCarrito,
-  agregarCarrito
+  agregarCarrito,
   eliminarDeFavoritos,
   añadirAFavoritos,
 } from "../../../redux/actions";

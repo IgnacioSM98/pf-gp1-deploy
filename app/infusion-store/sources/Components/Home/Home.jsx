@@ -82,12 +82,9 @@ export default function Home({ navigation }) {
 
   const productos = useSelector((state) => state.productos);
   const [loading, setLoading] = useState(true);
-  const productos = useSelector((state) => state.productos);
 
   const scrollX = React.useRef(new Animated.Value(0)).current;
   const AnimatedPressable = Animated.createAnimatedComponent(Pressable);
-
-  const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(getProductos());
