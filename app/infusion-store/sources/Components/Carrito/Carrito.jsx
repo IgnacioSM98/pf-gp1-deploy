@@ -9,6 +9,7 @@ import {
   Linking,
   TouchableOpacity,
 } from "react-native";
+import { WebView } from "react-native-webview";
 import CarritoItem from "./CarritoItem";
 import { AntDesign } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
@@ -35,7 +36,9 @@ export default function Carrito() {
 
   const handleOnPress = () => {
     //kinda
-    Linking.openURL("https://pf-gp1-deploy.vercel.app/checkout");
+    // Linking.openURL("https://pf-gp1-deploy.vercel.app/checkout");
+
+    navigation.navigate("Checkout");
   };
 
   return (

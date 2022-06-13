@@ -11,6 +11,7 @@ import Favoritos from "./Favoritos/Favoritos";
 import Bienvenida from "./Home/Bienvenida/Bienvenida";
 import Carrito from "./Carrito/Carrito";
 import SignUp from "./Login/SignUp";
+import Checkout from "./Carrito/Checkout";
 
 export {
   NavBar,
@@ -26,4 +27,5 @@ export {
   Bienvenida,
   Carrito,
   SignUp,
+  Checkout,
 };
