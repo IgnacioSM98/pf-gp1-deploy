@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getPedidos } from "../../../Redux/actions";
+import { getPedidosUsuario } from "../../../Redux/actions";
 import { Pedido } from "../..";
 import styled from "styled-components";
 
@@ -57,16 +57,12 @@ export default function Compras() {
   const dispatch = useDispatch();
 
   const userInfo = useSelector((state) => state.userInfo);
-  const pedidos = useSelector((state) => state.pedidos);
+  const pedidos = useSelector((state) => state.pedidosUsuario);
   const [show, setShow] = useState(true);
 
   useEffect(() => {
-    dispatch(getPedidos());
-  }, [dispatch]);
-
-  const filterByUser = (pedido) => {
-    if (pedido.usuarioId === userInfo.uid) return pedido;
-  };
+    dispatch(getPedidosUsuario(userInfo?.uid));
+  }, [dispatch, userInfo]);
 
   function handleClick() {
     setShow((current) => !current);
@@ -76,9 +72,11 @@ export default function Compras() {
     <Contenedor style={{ display: show ? "absolute" : "none" }}>
       <Boton onClick={handleClick}>X</Boton>
       <Container>
-        {pedidos?.filter(filterByUser).map((pedido) => (
-          <Pedido key={pedido.id} producto={pedido} />
-        ))}
+        {pedidos[0] ? (
+          pedidos.map((pedido) => <Pedido key={pedido.id} producto={pedido} />)
+        ) : (
+          <p>Aún no tienes compras realizadas</p>
+        )}
       </Container>
     </Contenedor>
   );
