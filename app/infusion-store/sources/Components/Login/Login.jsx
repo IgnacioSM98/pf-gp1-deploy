@@ -142,6 +142,7 @@ export default function Login({ flag, onAuth, setIsAuthenticated }) {
           nombre: res.user.displayName,
           email: res.user.email,
           uid: res.user.uid,
+          photoURL: res.user.photoURL,
         });
 
         dispatch(
@@ -149,6 +150,7 @@ export default function Login({ flag, onAuth, setIsAuthenticated }) {
             displayName: res.user.displayName,
             email: res.user.email,
             uid: res.user.uid,
+            photoURL: res.user.photoURL,
           })
         );
       })
