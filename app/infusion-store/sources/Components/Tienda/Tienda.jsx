@@ -42,7 +42,7 @@ const styles = StyleSheet.create({
   },
 });
 
-const Tienda = ({ navigation }) => {
+const Tienda = ({ navigation}) => {
   const isFocused = useIsFocused();
   const dispatch = useDispatch();
 
@@ -50,6 +50,7 @@ const Tienda = ({ navigation }) => {
   const data = useSelector((state) => state.productosFiltrados);
   const [cantidad, setCantidad] = useState(8);
   const [detalle, setDetalle] = useState(false);
+  let [mostrar, setMostrar] = useState(false)
   const [idProd, setIdProd] = useState();
   const [selected, setSelected] = useState("");
   const scrollRef = useRef();
@@ -93,8 +94,8 @@ const Tienda = ({ navigation }) => {
 
   return (
     <>
-      <NavBar screen={isFocused ? "Tienda" : ""} />
-
+    <NavBar mostrar={mostrar} setMostrar={setMostrar} screen={isFocused ? "Tienda" : ""} />
+      {mostrar && <Filtros setSelected={setSelected} />}
       <View style={styles.container}>
         {isLoading ? (
           <ActivityIndicator
@@ -129,7 +130,8 @@ const Tienda = ({ navigation }) => {
             )}
           />
         )}
-        <Filtros setSelected={setSelected} />
+        
+        
       </View>
     </>
   );
