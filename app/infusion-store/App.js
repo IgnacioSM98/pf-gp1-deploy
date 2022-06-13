@@ -12,6 +12,7 @@ import {
   Cuenta,
   DetalleProducto,
   Carrito,
+  Checkout,
 } from "./sources/Components/index.js";
 import { StatusBar } from "react-native";
 import { useState, useEffect } from "react";
@@ -51,7 +52,7 @@ export default function App() {
     (async () => {
       const compatible = await LocalAuthentication.hasHardwareAsync();
       setIsBiometricAvailable(compatible);
-      
+
       const user = await getData("user");
 
       if (Object.keys(user).length > 0) {
@@ -134,6 +135,7 @@ export default function App() {
             <Stack.Screen name="HomeTabs" component={HomeTabs} />
             <Stack.Screen name="DetalleProducto" component={DetalleProducto} />
             <Stack.Screen name="Carrito" component={Carrito} />
+            <Stack.Screen name="Checkout" component={Checkout} />
           </Stack.Navigator>
         </NavigationContainer>
       ) : (
