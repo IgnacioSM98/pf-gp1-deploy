@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { StyleSheet, Keyboard } from "react-native";
-import { MaterialCommunityIcons } from "@expo/vector-icons";
+import { MaterialCommunityIcons, Foundation } from "@expo/vector-icons";
 import { Searchbar } from "react-native-paper";
 import { useNavigation } from "@react-navigation/native";
 import { useDispatch, useSelector } from "react-redux";
 import { useIsFocused } from "@react-navigation/native";
 import styled from "styled-components/native";
 import { setProductosFiltrados } from "../../../redux/actions";
+
 
 const Container = styled.View`
   position: relative;
@@ -24,6 +25,16 @@ const Button = styled.Pressable`
   bottom: 5%;
   right: 5%;
   padding: 10px;
+  background-color: rgba(194, 194, 194, 0.69);
+  border-radius: 15px;
+`;
+const Filter = styled.Pressable`
+  position: absolute;
+  bottom: 5%;
+  right: 18%;
+  padding: 10px;
+  padding-left: 12px;
+  padding-right: 12px;
   background-color: rgba(194, 194, 194, 0.69);
   border-radius: 15px;
 `;
@@ -51,10 +62,9 @@ const styles = StyleSheet.create({
   },
 });
 
-export default function NavBar({ titulo, screen }) {
+export default function NavBar({ titulo, screen, mostrar, setMostrar}) {
   const dispatch = useDispatch();
   const navigation = useNavigation();
-
   const productos = useSelector((state) => state.productos);
   const searchValue = useSelector((state) => state.searchBar);
 
@@ -77,8 +87,14 @@ export default function NavBar({ titulo, screen }) {
     );
   };
 
+  
+
   return (
     <Container>
+      <>
+      <Filter onPress={()=> setMostrar(!mostrar)}>
+      <Foundation name="filter" size={26} color="black" style={{ alignItems: "center", justifyContent: "center" }} />
+      </Filter>
       <Button onPress={() => navigation.navigate("Carrito")}>
         <MaterialCommunityIcons
           name="cart"
@@ -87,6 +103,7 @@ export default function NavBar({ titulo, screen }) {
           style={{ alignItems: "center", justifyContent: "center" }}
         />
       </Button>
+      </>
 
       {titulo ? (
         <Titulo>{titulo}</Titulo>
