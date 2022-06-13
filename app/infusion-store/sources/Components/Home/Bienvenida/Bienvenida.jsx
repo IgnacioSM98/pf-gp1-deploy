@@ -19,7 +19,7 @@ const Image = styled.Image`
   height: 90%;
   width: 15%;
   aspect-ratio: ${1 / 1};
-  resize-mode: contain;
+  resize-mode: cover;
   border-radius: 100;
 `;
 
@@ -47,6 +47,7 @@ export default function Bienvenida() {
             displayName: res.nombre,
             email: res.email,
             uid: res.uid,
+            photoURL: res.photoURL,
           })
         );
       }

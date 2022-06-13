@@ -96,6 +96,7 @@ export default function SignUp({ setIsAuthenticated }) {
               nombre: res.user.displayName,
               email: res.user.email,
               uid: res.user.uid,
+              photoURL: res.user.photoURL,
             });
 
             dispatch(
@@ -103,6 +104,7 @@ export default function SignUp({ setIsAuthenticated }) {
                 displayName: res.user.displayName,
                 email: res.user.email,
                 uid: res.user.uid,
+                photoURL: res.user.photoURL,
               })
             );
           })

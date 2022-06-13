@@ -251,6 +251,10 @@ export function agregarCarrito(idProducto, cantidad) {
 // }
 
 export function setUserInfo(user) {
+  user.photoURL = user.photoURL
+    ? user.photoURL
+    : "https://media.istockphoto.com/photos/business-cat-holding-cup-of-coffee-picture-id1146568863?b=1&k=6&m=1146568863&s=170667a&w=0&h=4DeWiqNA4Yso9OTispYgvLw6rzPt2x8WwFXRolwXnac=";
+
   return function (dispatch) {
     try {
       dispatch({ type: "SET_USER", payload: user });
