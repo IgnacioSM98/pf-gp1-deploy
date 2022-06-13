@@ -244,50 +244,49 @@ export default function rootReducer(state = initialState, action) {
         };
       }
 
-    //     case "RESTAR_CARRITO":
-    //       var newCarrito = [...state.carrito];
+    case "RESTAR_CARRITO":
+      var newCarrito = [...state.carrito];
 
-    //       var indexCarrito = state.carrito.findIndex(
-    //         (carrito) => Number(carrito.id) === Number(action.payload.idProducto)
-    //       );
+      var indexCarrito = state.carrito.findIndex(
+        (carrito) => Number(carrito.id) === Number(action.payload.idProducto)
+      );
 
-    //       if (indexCarrito !== -1) {
-    //         newCarrito[indexCarrito].cantidad =
-    //           newCarrito[indexCarrito].cantidad - 1;
-    //         return {
-    //           ...state,
-    //           carrito: newCarrito,
-    //         };
-    //       } else {
-    //         const productoSeleccionado = state.productos.find(
-    //           (producto) =>
-    //             Number(producto.id) === Number(action.payload.idProducto)
-    //         );
+      if (indexCarrito !== -1) {
+        newCarrito[indexCarrito].cantidad =
+          newCarrito[indexCarrito].cantidad - 1;
+        return {
+          ...state,
+          carrito: newCarrito,
+        };
+      } else {
+        const productoSeleccionado = state.productos.find(
+          (producto) =>
+            Number(producto.id) === Number(action.payload.idProducto)
+        );
 
-    //         return {
-    //           ...state,
-    //           carrito: [
-    //             ...state.carrito,
-    //             {
-    //               id: productoSeleccionado.id,
-    //               nombre: productoSeleccionado.nombre,
-    //               precio: productoSeleccionado.precio,
-    //               imagen: productoSeleccionado.imagen,
-    //               cantidad: action.payload.cantidad,
-    //             },
-    //           ],
-    //         };
-    //       }
+        return {
+          ...state,
+          carrito: [
+            ...state.carrito,
+            {
+              id: productoSeleccionado.id,
+              nombre: productoSeleccionado.nombre,
+              precio: productoSeleccionado.precio,
+              imagen: productoSeleccionado.imagen,
+              cantidad: action.payload.cantidad,
+            },
+          ],
+        };
+      }
 
-    //     case "QUITAR_ITEM":
-    //       // console.log(action.payload, "aca?");
-    //       const data = state.carrito?.filter(
-    //         (item) => item.id !== action.payload.id
-    //       );
-    //       return {
-    //         ...state,
-    //         carrito: data,
-    //       };
+    case "QUITAR_ITEM":
+      const data = state.carrito?.filter(
+        (item) => item.id !== action.payload.id
+      );
+      return {
+        ...state,
+        carrito: data,
+      };
 
     //     case "POST_PRODUCTO":
     //       let prodAux = [...state.productos];

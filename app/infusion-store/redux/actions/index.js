@@ -224,19 +224,17 @@ export function agregarCarrito(idProducto, cantidad) {
   };
 }
 
-// export function restarCarrito(idProducto, cantidad) {
-//   // console.log(idProducto, cantidad);
-//   return function (dispatch) {
-//     dispatch({ type: "RESTAR_CARRITO", payload: { idProducto, cantidad } });
-//   };
-// }
+export function restarCarrito(idProducto, cantidad) {
+  return function (dispatch) {
+    dispatch({ type: "RESTAR_CARRITO", payload: { idProducto, cantidad } });
+  };
+}
 
-// export function quitarItem(idProducto) {
-//   // console.log(idProducto, "xd?");
-//   return function (dispatch) {
-//     dispatch({ type: "QUITAR_ITEM", payload: idProducto });
-//   };
-// }
+export function quitarItem(idProducto) {
+  return function (dispatch) {
+    dispatch({ type: "QUITAR_ITEM", payload: idProducto });
+  };
+}
 
 // export function getUser(mail) {
 //   return function (dispatch) {
