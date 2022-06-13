@@ -2,6 +2,7 @@ import axios from "axios";
 import React, { useState, useEffect } from "react";
 import {
   Text,
+  ScrollView,
   View,
   TouchableOpacity,
   StyleSheet,
@@ -34,7 +35,7 @@ export default function Favoritos({ navigation }) {
   return (
     <>
       <NavBar titulo="Favoritos" />
-      <View>
+      <ScrollView>
         <FlatList
           style={{ height: "100%", marginTop: "2%" }}
           data={favoritos}
@@ -42,7 +43,7 @@ export default function Favoritos({ navigation }) {
             <Favorito navigation={navigation} item={item} />
           )}
         />
-      </View>
+      </ScrollView>
     </>
   );
 }
