@@ -3,11 +3,14 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   View,
   Image,
+  Text,
   StyleSheet,
   FlatList,
-  Text,
+  Linking,
   Pressable,
+  TouchableOpacity,
 } from "react-native";
+import { WebView } from "react-native-webview";
 import CarritoItem from "./CarritoItem";
 import { AntDesign } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
@@ -30,6 +33,7 @@ const styles = StyleSheet.create({
     left: 30,
     zIndex: 999,
   },
+
   contenedorTitulo: {},
 
   titulo: {
@@ -158,6 +162,13 @@ export default function Carrito() {
     setPrecioTotal(precio);
   }, [carrito, setPrecioTotal]);
 
+  const handleOnPress = () => {
+    //kinda
+    // Linking.openURL("https://pf-gp1-deploy.vercel.app/checkout");
+
+    navigation.navigate("Checkout");
+  };
+
   return (
     <View style={styles.container}>
       <AntDesign
@@ -218,7 +229,7 @@ export default function Carrito() {
             <Text style={styles.monto}>${precioTotal}</Text>
           </View>
           <View>
-            <Pressable style={styles.botonCompra}>
+            <Pressable onPress={handleOnPress} style={styles.botonCompra}>
               <Text style={styles.textoBoton}>Continuar compra</Text>
             </Pressable>
           </View>
