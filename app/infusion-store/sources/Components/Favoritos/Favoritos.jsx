@@ -33,7 +33,7 @@ export default function Favoritos({ navigation }) {
         setFavoritos(res.data);
       });
     }
-  }, [favoritos]);
+  }, []);
 
   return (
     <>

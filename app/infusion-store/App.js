@@ -51,7 +51,7 @@ export default function App() {
     (async () => {
       const compatible = await LocalAuthentication.hasHardwareAsync();
       setIsBiometricAvailable(compatible);
-
+      
       const user = await getData("user");
 
       if (Object.keys(user).length > 0) {

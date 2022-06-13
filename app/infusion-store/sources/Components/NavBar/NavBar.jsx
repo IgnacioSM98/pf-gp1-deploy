@@ -1,19 +1,10 @@
-import React, { useState } from "react";
-import {
-  Text,
-  TextInput,
-  StyleSheet,
-  View,
-  Pressable,
-  TouchableWithoutFeedback,
-} from "react-native";
-import { Feather } from "@expo/vector-icons";
+import React, { useEffect, useState } from "react";
+import { StyleSheet, Keyboard } from "react-native";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { Searchbar } from "react-native-paper";
-import { Carrito } from "../index";
 import { useNavigation } from "@react-navigation/native";
 import { useDispatch, useSelector } from "react-redux";
-
+import { useIsFocused } from "@react-navigation/native";
 import styled from "styled-components/native";
 import { setProductosFiltrados } from "../../../redux/actions";
 
@@ -60,29 +51,35 @@ const styles = StyleSheet.create({
   },
 });
 
-export default function NavBar({ titulo }) {
+export default function NavBar({ titulo, screen }) {
   const dispatch = useDispatch();
   const navigation = useNavigation();
 
   const productos = useSelector((state) => state.productos);
+  const searchValue = useSelector((state) => state.searchBar);
 
-  const goToCart = () => {
-    navigation.navigate("Carrito");
-  };
+  useEffect(() => {
+    if (screen === "Inicio") {
+      // Keyboard.dismiss();
+    }
+  }, [screen]);
 
   const handleSearch = (text) => {
+    screen === "Inicio" && navigation.navigate("Tienda");
+
     dispatch(
       setProductosFiltrados(
         productos.filter((producto) =>
           producto.nombre.toUpperCase().includes(text.toUpperCase())
-        )
+        ),
+        text
       )
     );
   };
 
   return (
     <Container>
-      <Button onPress={() => goToCart()}>
+      <Button onPress={() => navigation.navigate("Carrito")}>
         <MaterialCommunityIcons
           name="cart"
           size={26}
@@ -98,6 +95,8 @@ export default function NavBar({ titulo }) {
           placeholder="Buscar producto..."
           style={styles.buscador}
           onChangeText={(text) => handleSearch(text)}
+          value={searchValue.length && screen === "Tienda" ? true : false}
+          autoFocus={true}
           inputStyle={{
             fontFamily: "PoppinsM",
             fontSize: 15,
