@@ -158,21 +158,15 @@ export function postCategoria(payload) {
 }
 
 export function deleteCategoria(id) {
-  return async function () {
-    //habria que actualizar el estado de los reviews
+  return async function (dispatch) {
     await axios.delete(`${urlBase}${categorias}/${id}`);
-    return function (dispatch) {
-      dispatch({ type: "DELETE_CATEGORIA" });
-    };
+    dispatch({ type: "DELETE_CATEGORIA", payload: id });
   };
 }
 
 export function postReviews(id, payload) {
   return async function (dispatch) {
     await axios.post(`${urlBase}${ratings}${crear}/${id}`, payload);
-
-    //????????????????????
-    // dispatch(getReviews(id));
 
     return dispatch({
       type: "CREAR_REVIEW",
@@ -353,5 +347,15 @@ export function mailAdmin(userId, { estado }) {
     }
 
     dispatch({ type: "ENVIAR_MAIL" });
+  };
+}
+
+export function deleteUsuario(id) {
+  return async function (dispatch) {
+    await axios.delete(
+      `https://proyecto-final-gp1.herokuapp.com/usuario/${id}`
+    );
+
+    dispatch({ type: "DELETE_USUARIO", payload: id });
   };
 }

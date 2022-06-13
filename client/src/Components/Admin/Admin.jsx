@@ -141,16 +141,6 @@ const ContainerPedidos = styled.div`
   padding: 5px;
   border-radius: 8px;
   overflow-x: scroll;
-
-  //ESTO ESTABA EN DEVELOP
-  // height: 75vh;
-  // padding-top: 20px;
-  // display: flex;
-  // flex-wrap: wrap;
-  // width: 100%;
-  // padding: 5px;
-  // border-radius: 8px;
-  // overflow-y: scroll;
 `;
 
 function Cuenta() {

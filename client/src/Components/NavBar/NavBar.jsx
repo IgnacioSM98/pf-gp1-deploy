@@ -183,7 +183,7 @@ export default function NavBar({ contacto, setUser }) {
 
   const scrollToSection = (elementRef) => {
     window.scrollTo({
-      top: elementRef.current.offsetTop,
+      top: window.innerHeight,
       behavior: "smooth",
     });
   };

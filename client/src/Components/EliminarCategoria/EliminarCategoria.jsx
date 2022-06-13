@@ -71,9 +71,10 @@ export default function EliminarCategoria() {
           <Categoria key={d.id}>
             <span>{d.nombre}</span>
             <Button
-              onClick={() => {
+              onClick={(e) => {
+                e.preventDefault();
                 dispatch(deleteCategoria(d.id));
-                dispatch(getCategorias());
+                // dispatch(getCategorias());
               }}
             >
               🗑
