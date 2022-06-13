@@ -1,12 +1,13 @@
 import React, { useEffect, useState, useCallback, useRef } from "react";
-import { InteractionManager } from "react-native";
+import { InteractionManager, Keyboard } from "react-native";
 import { useFocusEffect } from "@react-navigation/native";
 import { NavBar } from "../index";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { useIsFocused } from "@react-navigation/native";
 
 import { ActivityIndicator, FlatList, View, StyleSheet } from "react-native";
-
 import { Producto, Filtros } from "../index";
+import { setProductosFiltrados } from "../../../redux/actions";
 
 const styles = StyleSheet.create({
   container: {
@@ -42,6 +43,9 @@ const styles = StyleSheet.create({
 });
 
 const Tienda = ({ navigation }) => {
+  const isFocused = useIsFocused();
+  const dispatch = useDispatch();
+
   const [isLoading, setLoading] = useState(true);
   const data = useSelector((state) => state.productosFiltrados);
   const [cantidad, setCantidad] = useState(8);
@@ -49,6 +53,14 @@ const Tienda = ({ navigation }) => {
   const [idProd, setIdProd] = useState();
   const [selected, setSelected] = useState("");
   const scrollRef = useRef();
+
+  useEffect(() => {
+    console.log(isFocused, "tienda");
+    if (!isFocused) {
+      Keyboard.dismiss();
+      dispatch(setProductosFiltrados(data));
+    }
+  }, [isFocused]);
 
   useFocusEffect(
     useCallback(() => {
@@ -81,7 +93,7 @@ const Tienda = ({ navigation }) => {
 
   return (
     <>
-      <NavBar />
+      <NavBar screen={isFocused ? "Tienda" : ""} />
 
       <View style={styles.container}>
         {isLoading ? (

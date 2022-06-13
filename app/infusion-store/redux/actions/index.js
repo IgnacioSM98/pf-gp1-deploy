@@ -1,19 +1,11 @@
 import axios from "axios";
 
 const urlBase = "https://proyecto-final-gp1.herokuapp.com/";
-const productos = "productos";
-// const categorias = "categorias";
-// const crear = "crear";
-// const admin = "admin/";
-// const ratings = "ratings/";
-// const pedido = "pedido/";
 
 export function getProductos() {
   return async function (dispatch) {
     try {
-      const resp = await axios.get(
-        "https://proyecto-final-gp1.herokuapp.com/productos"
-      );
+      const resp = await axios.get(`${urlBase}productos`);
 
       dispatch({ type: "GET_PRODUCTOS", payload: resp.data });
     } catch (error) {
@@ -22,9 +14,12 @@ export function getProductos() {
   };
 }
 
-export function setProductosFiltrados(productosFiltrados) {
+export function setProductosFiltrados(productosFiltrados = [], text = "") {
   return function (dispatch) {
-    dispatch({ type: "SET_PRODUCTOS_FILTRADOS", payload: productosFiltrados });
+    dispatch({
+      type: "SET_PRODUCTOS_FILTRADOS",
+      payload: { productosFiltrados, text },
+    });
   };
 }
 
@@ -302,17 +297,17 @@ export function getUsuarios() {
 //   };
 // }
 
-// export function getPedidos() {
-//   return function (dispatch) {
-//     try {
-//       axios(`${urlBase}pedidos`).then((res) =>
-//         dispatch({ type: "GET_PEDIDOS", payload: res.data })
-//       );
-//     } catch (error) {
-//       console.log(error);
-//     }
-//   };
-// }
+export function getPedidos() {
+  return function (dispatch) {
+    try {
+      axios(`${urlBase}pedidos`).then((res) =>
+        dispatch({ type: "GET_PEDIDOS", payload: res.data })
+      );
+    } catch (error) {
+      console.log(error);
+    }
+  };
+}
 
 // export function getDetalleEnvio(id) {
 //   return async function (dispatch) {

@@ -2,12 +2,14 @@ import axios from "axios";
 import React, { useState, useEffect } from "react";
 import {
   Text,
+  ScrollView,
   View,
   TouchableOpacity,
   StyleSheet,
   Image,
   FlatList,
 } from "react-native";
+import { useSelector } from "react-redux";
 import { Favorito, NavBar } from "../index";
 
 const styles = StyleSheet.create({
@@ -22,19 +24,22 @@ const styles = StyleSheet.create({
 
 export default function Favoritos({ navigation }) {
   const [favoritos, setFavoritos] = useState([]);
+  const userInfo = useSelector((state) => state.userInfo);
 
   useEffect(() => {
-    axios(
-      "https://proyecto-final-gp1.herokuapp.com/favoritos/wishlist/kHXq79CbI7delhbqeFLdG3WJBqk2"
-    ).then((res) => {
-      setFavoritos(res.data);
-    });
-  }, [favoritos]);
+    if (Object.keys(userInfo).length > 0) {
+      axios(
+        `https://proyecto-final-gp1.herokuapp.com/favoritos/wishlist/${userInfo.uid}`
+      ).then((res) => {
+        setFavoritos(res.data);
+      });
+    }
+  }, []);
 
   return (
     <>
       <NavBar titulo="Favoritos" />
-      <View>
+      <ScrollView>
         <FlatList
           style={{ height: "100%", marginTop: "2%" }}
           data={favoritos}
@@ -42,7 +47,7 @@ export default function Favoritos({ navigation }) {
             <Favorito navigation={navigation} item={item} />
           )}
         />
-      </View>
+      </ScrollView>
     </>
   );
 }

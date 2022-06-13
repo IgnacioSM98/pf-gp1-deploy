@@ -5,12 +5,14 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import {
   Login,
+  SignUp,
   Home,
   Tienda,
   Favoritos,
   Cuenta,
   DetalleProducto,
   Carrito,
+  Checkout,
 } from "./sources/Components/index.js";
 import { StatusBar } from "react-native";
 import { useState, useEffect } from "react";
@@ -40,6 +42,7 @@ const fetchFonts = async () => {
 export default function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [isBiometricAvailable, setIsBiometricAvailable] = useState(false);
+  const [flag, setFlag] = useState(false);
 
   StatusBar.setBarStyle("dark-content", true);
 
@@ -50,12 +53,11 @@ export default function App() {
       const compatible = await LocalAuthentication.hasHardwareAsync();
       setIsBiometricAvailable(compatible);
 
-      // Para guardar el usuario
+      const user = await getData("user");
 
-      // Para recuperar el usuario
-
-      // Usuario que inició sesión
-      // console.log(isAuthenticated, "xd");
+      if (Object.keys(user).length > 0) {
+        setFlag(true);
+      }
     })();
   }, []);
 
@@ -133,10 +135,34 @@ export default function App() {
             <Stack.Screen name="HomeTabs" component={HomeTabs} />
             <Stack.Screen name="DetalleProducto" component={DetalleProducto} />
             <Stack.Screen name="Carrito" component={Carrito} />
+            <Stack.Screen name="Checkout" component={Checkout} />
           </Stack.Navigator>
         </NavigationContainer>
       ) : (
-        <Login onAuth={onAuth} setIsAuthenticated={setIsAuthenticated} />
+        <NavigationContainer>
+          <Stack.Navigator screenOptions={{ headerShown: false }}>
+            <Stack.Screen
+              name="Login"
+              children={() => (
+                <Login
+                  flag={flag}
+                  onAuth={onAuth}
+                  setIsAuthenticated={setIsAuthenticated}
+                />
+              )}
+            />
+
+            <Stack.Screen
+              name="SignUp"
+              children={() => (
+                <SignUp
+                  onAuth={onAuth}
+                  setIsAuthenticated={setIsAuthenticated}
+                />
+              )}
+            />
+          </Stack.Navigator>
+        </NavigationContainer>
       )}
     </Provider>
   );

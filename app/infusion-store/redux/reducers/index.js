@@ -10,10 +10,11 @@ const initialState = {
   carrito: [],
   // user: false,
   userInfo: {},
-  // pedidos: [],
+  pedidos: [],
   usuarios: [],
   // detalleEnvio: {},
   favoritos: [],
+  searchBar: "",
 };
 
 export default function rootReducer(state = initialState, action) {
@@ -28,7 +29,8 @@ export default function rootReducer(state = initialState, action) {
     case "SET_PRODUCTOS_FILTRADOS":
       return {
         ...state,
-        productosFiltrados: action.payload,
+        productosFiltrados: action.payload.productosFiltrados,
+        searchBar: action.payload.text,
       };
 
     case "SET_SORT":
@@ -78,11 +80,11 @@ export default function rootReducer(state = initialState, action) {
         usuarios: action.payload,
       };
 
-    //     case "GET_PEDIDOS":
-    //       return {
-    //         ...state,
-    //         pedidos: action.payload,
-    //       };
+        case "GET_PEDIDOS":
+          return {
+            ...state,
+            pedidos: action.payload,
+          };
 
     //     case "DELETE_CATEGORIA":
     //       return {

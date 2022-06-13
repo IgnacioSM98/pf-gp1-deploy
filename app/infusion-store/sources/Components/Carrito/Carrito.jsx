@@ -1,6 +1,15 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { View, Image, StyleSheet, FlatList } from "react-native";
+import {
+  View,
+  Image,
+  Text,
+  StyleSheet,
+  FlatList,
+  Linking,
+  TouchableOpacity,
+} from "react-native";
+import { WebView } from "react-native-webview";
 import CarritoItem from "./CarritoItem";
 import { AntDesign } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
@@ -13,11 +22,24 @@ const styles = StyleSheet.create({
     left: 30,
     zIndex: 999,
   },
+
+  text: {
+    padding: 150,
+    fontSize: 20,
+    fontWeight: "bold",
+  },
 });
 
 export default function Carrito() {
   const navigation = useNavigation();
   const carrito = useSelector((state) => state.carrito);
+
+  const handleOnPress = () => {
+    //kinda
+    // Linking.openURL("https://pf-gp1-deploy.vercel.app/checkout");
+
+    navigation.navigate("Checkout");
+  };
 
   return (
     <View>
@@ -42,6 +64,10 @@ export default function Carrito() {
           return <CarritoItem producto={item} />;
         }}
       />
+
+      <TouchableOpacity onPress={handleOnPress}>
+        <Text style={styles.text}>Comprar</Text>
+      </TouchableOpacity>
     </View>
   );
 }
