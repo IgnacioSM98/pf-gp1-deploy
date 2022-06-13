@@ -479,6 +479,7 @@ export default function rootReducer(state = initialState, action) {
               if (a.stock < b.stock) return 1;
               return 0;
             });
+
       return { ...state, productos: sortStock };
     }
 
@@ -489,6 +490,18 @@ export default function rootReducer(state = initialState, action) {
       return {
         ...state,
         usuarios: usuariosAux,
+      };
+
+    case "DELETE_USUARIO":
+      let usuariosDeleted = [...state.usuarios];
+
+      usuariosDeleted = usuariosDeleted.filter((usuario) => {
+        return usuario.id !== action.payload;
+      });
+
+      return {
+        ...state,
+        usuarios: usuariosDeleted,
       };
 
     default:

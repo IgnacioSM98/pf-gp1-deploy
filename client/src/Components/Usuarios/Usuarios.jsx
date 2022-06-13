@@ -1,7 +1,7 @@
-import axios from "axios";
 import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
-import deleteUsuario from "../Admin/deleteUsuario";
+import { deleteUsuario, getUsuarios } from "../../Redux/actions";
 import CrearUsuario from "../Admin/CrearUsuario";
 
 const Container = styled.div`
@@ -78,21 +78,18 @@ const Crear = styled.button`
 `;
 
 export default function Usuarios() {
-  const [usuarios, setUsuarios] = useState([]);
   const [crearUsuario, setCrear] = useState(false);
   const [editarUsuario, setEditar] = useState("");
-
-  const getUsuarios = async () => {
-    setUsuarios(
-      await axios
-        .get("https://proyecto-final-gp1.herokuapp.com/usuarios")
-        .then((resp) => resp.data)
-    );
-  };
+  const usuarios = useSelector((state) => state.usuarios);
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    getUsuarios();
-  }, []);
+    dispatch(getUsuarios());
+  }, [dispatch]);
+
+  const handleDeleteUsuario = (id) => {
+    dispatch(deleteUsuario(id));
+  };
 
   return crearUsuario ? (
     <CrearUsuario setCrear={setCrear} />
@@ -134,7 +131,7 @@ export default function Usuarios() {
           </Button>
           <Button
             onClick={() => {
-              deleteUsuario(usuario.id);
+              handleDeleteUsuario(usuario.id);
             }}
           >
             🗑

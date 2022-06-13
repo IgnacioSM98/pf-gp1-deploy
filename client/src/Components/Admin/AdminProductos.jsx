@@ -1,8 +1,8 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
-import { getProductos, orderByStock } from "../../Redux/actions";
+import { getProductos } from "../../Redux/actions";
 import "./AdminProductos.css";
 
 const Container = styled.div`
@@ -152,20 +152,39 @@ export default function AdminProductos() {
   const navigate = useNavigate();
   const productos = useSelector((state) => state.productos);
   const dispatch = useDispatch();
+  const [orden, setOrden] = useState("");
 
   useEffect(() => {
     dispatch(getProductos());
   }, [dispatch]);
 
-  const handleByStock = (e) => {
-    dispatch(orderByStock(e.target.value));
+  useEffect(() => {
+    if (orden === "Ordenar por stock") {
+      dispatch(getProductos());
+    }
+  }, [dispatch, orden]);
+
+  const sortByStock = (a, b) => {
+    if (orden === "Menor a Mayor") {
+      if (a.stock > b.stock) return 1;
+      if (a.stock < b.stock) return -1;
+      return 0;
+    } else if (orden === "Mayor a Menor") {
+      if (a.stock > b.stock) return -1;
+      if (a.stock < b.stock) return 1;
+      return 0;
+    }
+  };
+
+  const handleOnChange = (e) => {
+    setOrden(e.target.value);
   };
 
   return (
     <Container>
       <H1>Administrador de Productos</H1>
 
-      <Select onChange={handleByStock}>
+      <Select onChange={handleOnChange}>
         <Option value="Ordenar por stock">Ordenar por stock</Option>
         <Option value="Menor a Mayor">Menor a Mayor</Option>
         <Option value="Mayor a Menor">Mayor a Menor</Option>
@@ -181,7 +200,7 @@ export default function AdminProductos() {
       </Crear>
 
       <Grupo>
-        {productos?.map((el) => (
+        {productos?.sort(sortByStock).map((el) => (
           <Link
             key={el.id}
             style={{ color: "black", textDecoration: "none" }}
