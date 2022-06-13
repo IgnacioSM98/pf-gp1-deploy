@@ -207,9 +207,9 @@ export function setProductosFiltrados(productosFiltrados) {
 //   };
 // }
 
-// export const setSort = (value) => (dispatch) => {
-//   dispatch({ type: "SET_SORT", payload: value });
-// };
+export const setSort = (value) => (dispatch) => {
+  dispatch({ type: "SET_SORT", payload: value });
+};
 
 // export function setCarrito(carrito) {
 //   return function (dispatch) {

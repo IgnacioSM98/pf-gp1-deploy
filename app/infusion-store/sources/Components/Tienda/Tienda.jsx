@@ -6,7 +6,7 @@ import { useSelector } from "react-redux";
 
 import { ActivityIndicator, FlatList, View, StyleSheet } from "react-native";
 
-import { Producto } from "../index";
+import { Producto, Filtros } from "../index";
 
 const styles = StyleSheet.create({
   container: {
@@ -47,6 +47,7 @@ const Tienda = ({ navigation }) => {
   const [cantidad, setCantidad] = useState(8);
   const [detalle, setDetalle] = useState(false);
   const [idProd, setIdProd] = useState();
+  const [selected, setSelected] = useState("");
   const scrollRef = useRef();
 
   useFocusEffect(
@@ -116,6 +117,7 @@ const Tienda = ({ navigation }) => {
             )}
           />
         )}
+        <Filtros setSelected={setSelected} />
       </View>
     </>
   );

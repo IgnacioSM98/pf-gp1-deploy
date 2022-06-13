@@ -10,6 +10,7 @@ import Favorito from "./Favoritos/Favorito";
 import Favoritos from "./Favoritos/Favoritos";
 import Bienvenida from "./Home/Bienvenida/Bienvenida";
 import Carrito from "./Carrito/Carrito";
+import Filtros from "./Filtros/Filtros";
 
 export {
   NavBar,
@@ -24,4 +25,5 @@ export {
   DetalleProducto,
   Bienvenida,
   Carrito,
+  Filtros,
 };
