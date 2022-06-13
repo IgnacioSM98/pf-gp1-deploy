@@ -5,6 +5,7 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import {
   Login,
+  SignUp,
   Home,
   Tienda,
   Favoritos,
@@ -40,6 +41,7 @@ const fetchFonts = async () => {
 export default function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [isBiometricAvailable, setIsBiometricAvailable] = useState(false);
+  const [flag, setFlag] = useState(false);
 
   StatusBar.setBarStyle("dark-content", true);
 
@@ -50,12 +52,11 @@ export default function App() {
       const compatible = await LocalAuthentication.hasHardwareAsync();
       setIsBiometricAvailable(compatible);
 
-      // Para guardar el usuario
+      const user = await getData("user");
 
-      // Para recuperar el usuario
-
-      // Usuario que inició sesión
-      // console.log(isAuthenticated, "xd");
+      if (Object.keys(user).length > 0) {
+        setFlag(true);
+      }
     })();
   }, []);
 
@@ -136,7 +137,30 @@ export default function App() {
           </Stack.Navigator>
         </NavigationContainer>
       ) : (
-        <Login onAuth={onAuth} setIsAuthenticated={setIsAuthenticated} />
+        <NavigationContainer>
+          <Stack.Navigator screenOptions={{ headerShown: false }}>
+            <Stack.Screen
+              name="Login"
+              children={() => (
+                <Login
+                  flag={flag}
+                  onAuth={onAuth}
+                  setIsAuthenticated={setIsAuthenticated}
+                />
+              )}
+            />
+
+            <Stack.Screen
+              name="SignUp"
+              children={() => (
+                <SignUp
+                  onAuth={onAuth}
+                  setIsAuthenticated={setIsAuthenticated}
+                />
+              )}
+            />
+          </Stack.Navigator>
+        </NavigationContainer>
       )}
     </Provider>
   );

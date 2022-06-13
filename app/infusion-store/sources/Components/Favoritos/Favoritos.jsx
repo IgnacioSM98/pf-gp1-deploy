@@ -8,6 +8,7 @@ import {
   Image,
   FlatList,
 } from "react-native";
+import { useSelector } from "react-redux";
 import { Favorito, NavBar } from "../index";
 
 const styles = StyleSheet.create({
@@ -22,13 +23,16 @@ const styles = StyleSheet.create({
 
 export default function Favoritos({ navigation }) {
   const [favoritos, setFavoritos] = useState([]);
+  const userInfo = useSelector((state) => state.userInfo);
 
   useEffect(() => {
-    axios(
-      "https://proyecto-final-gp1.herokuapp.com/favoritos/wishlist/kHXq79CbI7delhbqeFLdG3WJBqk2"
-    ).then((res) => {
-      setFavoritos(res.data);
-    });
+    if (Object.keys(userInfo).length > 0) {
+      axios(
+        `https://proyecto-final-gp1.herokuapp.com/favoritos/wishlist/${userInfo.uid}`
+      ).then((res) => {
+        setFavoritos(res.data);
+      });
+    }
   }, [favoritos]);
 
   return (
