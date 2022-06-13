@@ -69,7 +69,7 @@ export default function Filtros({ setSelected }) {
         <Select
           name="diets"
           id="diets"
-          size={categorias.length ? categorias.length : 1}
+          size={categorias.length ? categorias.length + 1 : 1}
           defaultValue="DEFAULT"
           onChange={(e) => setSelected(e.target.value)}
         >
