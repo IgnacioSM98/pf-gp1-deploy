@@ -33,46 +33,46 @@ export default function rootReducer(state = initialState, action) {
         searchBar: action.payload.text,
       };
 
-    //     case "SET_SORT":
-    //       if (action.payload !== "DEFAULT") {
-    //         const filteredAux = [...state.productosFiltrados];
+    case "SET_SORT":
+      if (action.payload !== "DEFAULT") {
+        const filteredAux = [...state.productosFiltrados];
 
-    //         filteredAux.sort((a, b) => {
-    //           if (action.payload === "A-Z")
-    //             return a.nombre > b.nombre ? 1 : b.nombre > a.nombre ? -1 : 0;
-    //           if (action.payload === "Z-A")
-    //             return a.nombre < b.nombre ? 1 : b.nombre < a.nombre ? -1 : 0;
-    //           if (action.payload === "Highest SpoonScore") {
-    //             return Number(a.precio) < Number(b.precio)
-    //               ? 1
-    //               : Number(b.precio) < Number(a.precio)
-    //               ? -1
-    //               : 0;
-    //           }
-    //           if (action.payload === "Lowest SpoonScore")
-    //             return Number(a.precio) > Number(b.precio)
-    //               ? 1
-    //               : Number(b.precio) > Number(a.precio)
-    //               ? -1
-    //               : 0;
-    //         });
+        filteredAux.sort((a, b) => {
+          if (action.payload === "A-Z")
+            return a.nombre > b.nombre ? 1 : b.nombre > a.nombre ? -1 : 0;
+          if (action.payload === "Z-A")
+            return a.nombre < b.nombre ? 1 : b.nombre < a.nombre ? -1 : 0;
+          if (action.payload === "Highest SpoonScore") {
+            return Number(a.precio) < Number(b.precio)
+              ? 1
+              : Number(b.precio) < Number(a.precio)
+              ? -1
+              : 0;
+          }
+          if (action.payload === "Lowest SpoonScore")
+            return Number(a.precio) > Number(b.precio)
+              ? 1
+              : Number(b.precio) > Number(a.precio)
+              ? -1
+              : 0;
+        });
 
-    //         return {
-    //           ...state,
-    //           productosFiltrados: filteredAux,
-    //         };
-    //       }
+        return {
+          ...state,
+          productosFiltrados: filteredAux,
+        };
+      }
 
-    //       return {
-    //         ...state,
-    //         productosFiltrados: [...state.productos],
-    //       };
+      return {
+        ...state,
+        productosFiltrados: [...state.productos],
+      };
 
-    //     case "GET_CATEGORIAS":
-    //       return {
-    //         ...state,
-    //         categorias: action.payload,
-    //       };
+    case "GET_CATEGORIAS":
+      return {
+        ...state,
+        categorias: action.payload,
+      };
 
     case "GET_USUARIOS":
       return {
