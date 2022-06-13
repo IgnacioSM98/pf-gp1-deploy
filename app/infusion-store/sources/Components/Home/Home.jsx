@@ -8,6 +8,7 @@ import {
   Pressable,
   Animated,
 } from "react-native";
+import { useIsFocused } from "@react-navigation/native";
 import { useDispatch, useSelector } from "react-redux";
 import { Carrousel, NavBar, Bienvenida } from "../index";
 import { getProductos } from "../../../redux/actions";
@@ -86,6 +87,14 @@ export default function Home({ navigation }) {
   const scrollX = React.useRef(new Animated.Value(0)).current;
   const AnimatedPressable = Animated.createAnimatedComponent(Pressable);
 
+  const isFocused = useIsFocused();
+
+  // useEffect(() => {
+  //   // console.log(isFocused);
+  //   //Update the state you want to be updated
+  //   // console.log("rodrigooooo");
+  // }, [isFocused]);
+
   useEffect(() => {
     dispatch(getProductos());
   }, []);
@@ -98,7 +107,7 @@ export default function Home({ navigation }) {
 
   return (
     <>
-      <NavBar />
+      <NavBar screen={isFocused ? "Inicio" : ""} />
       <View style={styles.container}>
         {loading ? (
           <ActivityIndicator style={styles.loading} size="large" color="red" />

@@ -49,13 +49,6 @@ export default function App() {
     (async () => {
       const compatible = await LocalAuthentication.hasHardwareAsync();
       setIsBiometricAvailable(compatible);
-
-      // Para guardar el usuario
-
-      // Para recuperar el usuario
-
-      // Usuario que inició sesión
-      // console.log(isAuthenticated, "xd");
     })();
   }, []);
 

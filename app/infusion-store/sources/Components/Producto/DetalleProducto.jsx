@@ -149,6 +149,10 @@ const DetalleProducto = ({ route }) => {
   const user = useSelector((state) => state.userInfo);
   const favoritos = useSelector((state) => state.favoritos);
 
+  // useEffect(() => {
+  //   console.log("hola");
+  // }, []);
+
   function addToCarrito(e) {
     if (data.stock > 0) {
       dispatch(agregarCarrito(id, 1));
@@ -164,7 +168,6 @@ const DetalleProducto = ({ route }) => {
       .catch((error) => console.error(error));
   }, [id]);
 
-  console.log(data);
   function handleFav() {
     if (favoritos.find((fav) => fav.id == id)) {
       dispatch(eliminarDeFavoritos(id));
