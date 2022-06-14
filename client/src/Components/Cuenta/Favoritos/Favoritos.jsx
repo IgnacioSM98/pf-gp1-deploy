@@ -89,7 +89,7 @@ export default function Favoritos({ setComponente }) {
   }
 
   useEffect(() => {
-    dispatch(getFavoritos(userInfo.uid));
+    dispatch(getFavoritos(userInfo?.uid));
     // eslint-disable-next-line
   }, [dispatch]);
 
@@ -97,19 +97,19 @@ export default function Favoritos({ setComponente }) {
     <Contenedor style={{ display: show ? "block" : "none" }}>
       <H1>Favoritos</H1>
       <Cerrar onClick={handleClick}>X</Cerrar>
-      <ContenedorFav>
-        {fav.length > 0 ? (
-          fav.map((el) => {
+      {fav.length > 0 ? (
+        <ContenedorFav>
+          {fav.map((el) => {
             return (
               <Productos key={el.id}>
                 <FavoritosItem producto={el} />
               </Productos>
             );
-          })
-        ) : (
-          <p>No tienes productos agregados a Favoritos</p>
-        )}
-      </ContenedorFav>
+          })}
+        </ContenedorFav>
+      ) : (
+        <p>No tienes productos agregados a Favoritos</p>
+      )}
     </Contenedor>
   );
 }

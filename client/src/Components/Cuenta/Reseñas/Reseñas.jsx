@@ -119,7 +119,7 @@ const H1 = styled.h1`
 
 export default function Reseñas({ setComponente }) {
   const user = useSelector((state) => state.userInfo);
-  const id = user.uid;
+  const id = user?.uid;
   const reseñas = useSelector((state) => state.reviews);
   const dispatch = useDispatch();
   const [show, setShow] = useState(true);
@@ -176,7 +176,7 @@ export default function Reseñas({ setComponente }) {
             );
           })
         ) : (
-          <p>No tienes reseñas creadas</p>
+          <p style={{ width: "100%" }}>No tienes reseñas creadas</p>
         )}
       </ContenedorReseñas>
     </Contenedor>
