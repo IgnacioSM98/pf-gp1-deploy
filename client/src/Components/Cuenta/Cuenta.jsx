@@ -1,13 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import styled from "styled-components";
-import {
-  Compras,
-  Favoritos,
-  Notificaciones,
-  Seguridad,
-  Consultas,
-} from "../index";
+import { Compras, Favoritos, Seguridad, Consultas } from "../index";
 import Perfil from "./AjustesPerfil/Perfil";
 import Reseñas from "./Reseñas/Reseñas";
 
@@ -177,7 +171,6 @@ function Cuenta() {
     compras: Compras,
     reseñas: Reseñas,
     favoritos: Favoritos,
-    notificaciones: Notificaciones,
     seguridad: Seguridad,
     consultas: Consultas,
   };
@@ -212,9 +205,6 @@ function Cuenta() {
           </Boton>
           <Boton onClick={(e) => handleOnClick(e)} value="favoritos">
             Favoritos
-          </Boton>
-          <Boton onClick={(e) => handleOnClick(e)} value="notificaciones">
-            Notificaciones
           </Boton>
           <Boton onClick={(e) => handleOnClick(e)} value="seguridad">
             Seguridad

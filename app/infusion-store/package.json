@@ -30,7 +30,7 @@
     "react-native-paper": "^4.12.1",
     "react-native-picker-select": "^8.0.4",
     "react-native-web": "0.17.7",
-    "react-native-webview": "^11.22.2",
+    "react-native-webview": "11.18.1",
     "react-redux": "^8.0.2",
     "redux": "^4.2.0",
     "redux-devtools-extension": "^2.13.9",
