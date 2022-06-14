@@ -6,7 +6,7 @@ const initialState = {
   // categorias: [],
   // productosCopiados: [],
   // detalle: {},
-  // reviews: [],
+  reviews: [],
   carrito: [],
   // user: false,
   userInfo: {},
@@ -185,11 +185,11 @@ export default function rootReducer(state = initialState, action) {
     //         reviews: action.payload,
     //       };
 
-    //     case "GET_PRODUCT_REVIEWS":
-    //       return {
-    //         ...state,
-    //         reviews: action.payload,
-    //       };
+        case "GET_PRODUCT_REVIEWS":
+          return {
+            ...state,
+            reviews: action.payload,
+          };
     //     case "DELETE_REVIEW":
     //       return { ...state };
 
