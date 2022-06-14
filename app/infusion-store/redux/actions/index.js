@@ -68,19 +68,19 @@ export function setProductosFiltrados(productosFiltrados = [], text = "") {
 //   };
 // }
 
-// export function getReviews(id) {
-//   return async function (dispatch) {
-//     try {
-//       const resp = await axios.get(`${urlBase}ratings/usuario/${id}`);
+export function getReviews(id) {
+  return async function (dispatch) {
+    try {
+      const resp = await axios.get(`${urlBase}ratings/usuario/${id}`);
 
-//       if (resp) {
-//         dispatch({ type: "GET_REVIEWS", payload: resp.data });
-//       }
-//     } catch (err) {
-//       console.log(err, "error reviews");
-//     }
-//   };
-// }
+      if (resp) {
+        dispatch({ type: "GET_REVIEWS", payload: resp.data });
+      }
+    } catch (err) {
+      console.log(err, "error reviews");
+    }
+  };
+}
 
 // export function getProductReviews(id) {
 //   return async function (dispatch) {
