@@ -9,12 +9,14 @@ import {
   Linking,
   Pressable,
   TouchableOpacity,
+  Alert,
 } from "react-native";
 import { WebView } from "react-native-webview";
 import CarritoItem from "./CarritoItem";
 import { AntDesign } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
 import { quitarItem } from "../../../redux/actions";
+import Toast from "react-native-toast-message";
 
 const styles = StyleSheet.create({
   container: {
@@ -125,31 +127,35 @@ export default function Carrito() {
   const dispatch = useDispatch();
 
   function handleQuit(props) {
-    // Swal.fire({
-    //   title: "Eliminar producto",
-    //   text: "¿Estas seguro de eliminar este producto de tu carrito?",
-    //   icon: "warning",
-    //   iconColor: "red",
-    //   color: "#222",
-    //   showCancelButton: true,
-    //   cancelButtonText: "No",
-    //   confirmButtonColor: "red",
-    //   cancelButtonColor: "darkgrey",
-    //   confirmButtonText: "Si",
-    // }).then((result) => {
-    //   if (result.isConfirmed) {
-    //     Swal.fire({
-    //       text: "El producto se eliminó con éxito",
-    //       icon: "success",
-    //       iconColor: "green",
-    //       color: "#222",
-    //       showConfirmButton: false,
-    //       timer: "1500",
-    //       toast: true,
-    //     });
-    dispatch(quitarItem(props));
-    //   }
-    // });
+    Alert.alert(
+      "Eliminar producto",
+      "¿Estas seguro de eliminar este producto de tu carrito?",
+      [
+        {
+          text: "Si",
+          style: "destructive",
+          onPress: () => {
+            dispatch(quitarItem(props));
+            Toast.show({
+              position: "top",
+              visibilityTime: 1500,
+              autoHide: true,
+              type: "success",
+              text1: "El producto se eliminó con éxito",
+              topOffset: 400,
+              bottomOffset: 0,
+              onShow: () => {},
+              onHide: () => {},
+            });
+          },
+        },
+        {
+          text: "No",
+          style: "cancel",
+        },
+      ],
+      { cancelable: false }
+    );
   }
 
   useEffect(() => {
@@ -196,6 +202,7 @@ export default function Carrito() {
           return (
             <View style={styles.productos}>
               <CarritoItem producto={item} setPrecioTotal={setPrecioTotal} />
+
               <Pressable
                 onPress={() => handleQuit(item)}
                 style={({ pressed }) => [
@@ -221,6 +228,9 @@ export default function Carrito() {
           );
         }}
       />
+
+      {/* ACA RENDERIZO EL ALERT TOAST */}
+      <Toast />
 
       {carrito[0] ? (
         <View style={styles.contenedorTotal}>
