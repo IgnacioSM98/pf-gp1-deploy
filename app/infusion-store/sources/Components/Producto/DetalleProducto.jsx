@@ -16,7 +16,9 @@ import {
   agregarCarrito,
   eliminarDeFavoritos,
   añadirAFavoritos,
+  getProductReviews
 } from "../../../redux/actions";
+import {StarRating} from "../index"
 
 const styles = StyleSheet.create({
   contProd: {
@@ -27,12 +29,13 @@ const styles = StyleSheet.create({
   nombre: {
     fontWeight: "600",
     color: "white",
-    margin: 30,
+    marginLeft: 30,
+    marginBottom: 10,
     fontSize: 30,
   },
   descripcion: {
     color: "white",
-    marginTop: 30,
+    marginTop: 15,
     marginLeft: 30,
     marginRight: 30,
     fontSize: 18,
@@ -139,6 +142,18 @@ const styles = StyleSheet.create({
     fontSize: 30,
     margin: 10,
   },
+  promedio: {
+    marginLeft: 30,
+    display: "flex",
+    flexDirection: "row",
+    alignItems: "center",
+  },
+  review:{
+    paddingTop: 8,
+    fontSize:14,
+    marginLeft: 10,
+    color: "white"
+  }
 });
 
 const DetalleProducto = ({ route }) => {
@@ -148,6 +163,7 @@ const DetalleProducto = ({ route }) => {
   const dispatch = useDispatch();
   const user = useSelector((state) => state.userInfo);
   const favoritos = useSelector((state) => state.favoritos);
+  const reviews = useSelector((state) => state.reviews);
 
   // useEffect(() => {
   //   console.log("hola");
@@ -158,6 +174,28 @@ const DetalleProducto = ({ route }) => {
       dispatch(agregarCarrito(id, 1));
     }
   }
+
+  //reviews de producto
+  useEffect(() => {
+    dispatch(getProductReviews(id));
+  }, []);
+
+  // Creamos la variable a utilizar
+  var rating = 0;
+
+  // Sumarizamos la cantidad de estrellas entre todas las reviews
+  reviews[0]
+    ? reviews.map((reviews) => (rating += reviews.puntaje))
+    : (rating = 1);
+
+  // Dividimos la suma de estrellas por cantidad de review para saber el promedio
+  if (reviews.length) {
+    rating = rating / reviews.length;
+  } else {
+    rating = rating / 1;
+  }
+  // Redondeamos el promedio de estrellas
+  rating = Math.round(rating);
 
   useEffect(() => {
     fetch(`https://proyecto-final-gp1.herokuapp.com/producto/${id}`)
@@ -215,6 +253,10 @@ const DetalleProducto = ({ route }) => {
 
       <View style={styles.contDatos}>
         <Text style={styles.nombre}>{data.nombre}</Text>
+        <View style= {styles.promedio}>
+        <StarRating rating={rating ? rating : 1} />
+        <Text style={styles.review} >({reviews.length} Reviews)</Text>
+        </View>
         <Text style={styles.descripcion}>{data.descripcion}</Text>
         <Text style={styles.numeros}>${data.precio}</Text>
         <View style={styles.botones}>
