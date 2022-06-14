@@ -3,7 +3,6 @@ import styled from "styled-components";
 import {
   Compras,
   Favoritos,
-  Notificaciones,
   Seguridad,
   Consultas,
   CuentaReseñas,
@@ -138,7 +137,6 @@ export default function Cuenta() {
     compras: Compras,
     reseñas: CuentaReseñas,
     favoritos: Favoritos,
-    notificaciones: Notificaciones,
     seguridad: Seguridad,
     consultas: Consultas,
   };
@@ -177,14 +175,6 @@ export default function Cuenta() {
           <Boton onClick={handleOnClick} value="favoritos">
             Favoritos
           </Boton>
-
-          <Boton onClick={handleOnClick} value="notificaciones">
-            Notificaciones
-          </Boton>
-
-          {/* <Boton onClick={handleOnClick} value="seguridad">
-            Seguridad
-          </Boton> */}
 
           <Boton onClick={handleOnClick} value="consultas">
             Contactanos

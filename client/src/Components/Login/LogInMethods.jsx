@@ -186,6 +186,7 @@ export default function Login({ setUser }) {
             user.rol = "user";
             user.visualizacion = "user";
             user.email = res.user.email;
+            user.uid = res.user.uid;
 
             localStorage.setItem("user", JSON.stringify(user));
 

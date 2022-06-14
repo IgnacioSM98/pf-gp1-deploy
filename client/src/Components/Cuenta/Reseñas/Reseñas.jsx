@@ -153,24 +153,31 @@ export default function Reseñas({ setComponente }) {
       <H1>Mis reseñas</H1>
       <BotonCerrar onClick={handleClick}>X</BotonCerrar>
       <ContenedorReseñas>
-        {reseñas?.map((review) => {
-          return (
-            <StyledLink key={review.id} to={`/productos/${review.productoId}`}>
-              <Review>
-                <Stars rating={review.puntaje} />
-                <TituloReview>{review.titulo}</TituloReview>
-                <ComentarioReview>{review.comentario}</ComentarioReview>
-                <Boton
-                  onClick={(e) => {
-                    handleDelete(e, review.id);
-                  }}
-                >
-                  Eliminar
-                </Boton>
-              </Review>
-            </StyledLink>
-          );
-        })}
+        {reseñas.length > 0 ? (
+          reseñas.map((review) => {
+            return (
+              <StyledLink
+                key={review.id}
+                to={`/productos/${review.productoId}`}
+              >
+                <Review>
+                  <Stars rating={review.puntaje} />
+                  <TituloReview>{review.titulo}</TituloReview>
+                  <ComentarioReview>{review.comentario}</ComentarioReview>
+                  <Boton
+                    onClick={(e) => {
+                      handleDelete(e, review.id);
+                    }}
+                  >
+                    Eliminar
+                  </Boton>
+                </Review>
+              </StyledLink>
+            );
+          })
+        ) : (
+          <p>No tienes reseñas creadas</p>
+        )}
       </ContenedorReseñas>
     </Contenedor>
   );
