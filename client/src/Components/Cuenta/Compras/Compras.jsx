@@ -96,15 +96,15 @@ export default function Compras({ setComponente }) {
         X
       </Cerrar>
 
-      <Container>
-        {pedidos[0] ? (
-          pedidos.map((pedido) => (
+      {pedidos[0] ? (
+        <Container>
+          {pedidos.map((pedido) => (
             <Pedido width={"100%"} key={pedido.id} producto={pedido} />
-          ))
-        ) : (
-          <p>Aún no tienes compras realizadas</p>
-        )}
-      </Container>
+          ))}
+        </Container>
+      ) : (
+        <p>Aún no tienes compras realizadas</p>
+      )}
     </Contenedor>
   );
 }

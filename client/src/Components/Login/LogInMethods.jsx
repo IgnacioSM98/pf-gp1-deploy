@@ -384,7 +384,12 @@ export default function Login({ setUser }) {
           </div>
 
           <div className="barra-login">
-            <p onClick={handleForgotPass}>Forgot Password?</p>
+            <p
+              style={{ cursor: "pointer", margin: "5px" }}
+              onClick={handleForgotPass}
+            >
+              Forgot Password?
+            </p>
           </div>
         </Form>
       </SignIn>

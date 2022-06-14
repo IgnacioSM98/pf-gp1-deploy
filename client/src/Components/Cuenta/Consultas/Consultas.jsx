@@ -208,7 +208,7 @@ export default function Consultas({ setComponente }) {
               style={{ textAlign: "center" }}
               className="input-create"
               type="mail"
-              value={user.email}
+              value={user?.email}
               disabled
               name="mail"
               onChange={(e) => handleInputChange(e)}
