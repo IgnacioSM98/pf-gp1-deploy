@@ -80,11 +80,11 @@ export default function rootReducer(state = initialState, action) {
         usuarios: action.payload,
       };
 
-        case "GET_PEDIDOS":
-          return {
-            ...state,
-            pedidos: action.payload,
-          };
+    case "GET_PEDIDOS":
+      return {
+        ...state,
+        pedidos: action.payload,
+      };
 
     //     case "DELETE_CATEGORIA":
     //       return {
@@ -174,16 +174,16 @@ export default function rootReducer(state = initialState, action) {
     //         reviews: [...state.reviews, action.payload],
     //       };
 
-    //     case "GET_REVIEWS":
-    //       return {
-    //         ...state,
-    //         reviews: action.payload,
-    //       };
-    //     case "GET_ALL_REVIEWS":
-    //       return {
-    //         ...state,
-    //         reviews: action.payload,
-    //       };
+    case "GET_REVIEWS":
+      return {
+        ...state,
+        reviews: action.payload,
+      };
+    // case "GET_ALL_REVIEWS":
+    //   return {
+    //     ...state,
+    //     reviews: action.payload,
+    //   };
 
         case "GET_PRODUCT_REVIEWS":
           return {
