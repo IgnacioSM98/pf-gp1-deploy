@@ -8,7 +8,6 @@ import { useIsFocused } from "@react-navigation/native";
 import styled from "styled-components/native";
 import { setProductosFiltrados } from "../../../redux/actions";
 
-
 const Container = styled.View`
   position: relative;
   // justify-content: flex-start;
@@ -62,7 +61,7 @@ const styles = StyleSheet.create({
   },
 });
 
-export default function NavBar({ titulo, screen, mostrar, setMostrar}) {
+export default function NavBar({ titulo, screen, mostrar, setMostrar, flag }) {
   const dispatch = useDispatch();
   const navigation = useNavigation();
   const productos = useSelector((state) => state.productos);
@@ -75,8 +74,6 @@ export default function NavBar({ titulo, screen, mostrar, setMostrar}) {
   }, [screen]);
 
   const handleSearch = (text) => {
-    screen === "Inicio" && navigation.navigate("Tienda");
-
     dispatch(
       setProductosFiltrados(
         productos.filter((producto) =>
@@ -87,22 +84,28 @@ export default function NavBar({ titulo, screen, mostrar, setMostrar}) {
     );
   };
 
-  
-
+  const handleOnFocus = () => {
+    screen === "Inicio" && navigation.navigate("Tienda");
+  };
   return (
     <Container>
       <>
-      <Filter onPress={()=> setMostrar(!mostrar)}>
-      <Foundation name="filter" size={26} color="black" style={{ alignItems: "center", justifyContent: "center" }} />
-      </Filter>
-      <Button onPress={() => navigation.navigate("Carrito")}>
-        <MaterialCommunityIcons
-          name="cart"
-          size={26}
-          color="black"
-          style={{ alignItems: "center", justifyContent: "center" }}
-        />
-      </Button>
+        <Filter onPress={() => setMostrar(!mostrar)}>
+          <Foundation
+            name="filter"
+            size={26}
+            color="black"
+            style={{ alignItems: "center", justifyContent: "center" }}
+          />
+        </Filter>
+        <Button onPress={() => navigation.navigate("Carrito")}>
+          <MaterialCommunityIcons
+            name="cart"
+            size={26}
+            color="black"
+            style={{ alignItems: "center", justifyContent: "center" }}
+          />
+        </Button>
       </>
 
       {titulo ? (
@@ -112,8 +115,10 @@ export default function NavBar({ titulo, screen, mostrar, setMostrar}) {
           placeholder="Buscar producto..."
           style={styles.buscador}
           onChangeText={(text) => handleSearch(text)}
-          value={searchValue.length && screen === "Tienda" ? true : false}
-          autoFocus={true}
+          onFocus={handleOnFocus}
+          value={searchValue}
+          autoFocus={flag}
+          showSoftInputOnFocus={flag}
           inputStyle={{
             fontFamily: "PoppinsM",
             fontSize: 15,
