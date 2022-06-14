@@ -1,4 +1,10 @@
-import React, { useEffect, useState } from "react";
+import React, {
+  useEffect,
+  useState,
+  createRef,
+  useCallback,
+  useRef,
+} from "react";
 import {
   Image,
   View,
@@ -9,6 +15,8 @@ import {
   Dimensions,
   SafeAreaView,
   Animated,
+  UIManager,
+  LayoutAnimation,
 } from "react-native";
 import { imagenes } from "./Data";
 
@@ -38,30 +46,31 @@ const styles = StyleSheet.create({
 });
 
 const { width, height } = Dimensions.get("window");
-let flatList;
-
-function infiniteScroll(dataList) {
-  const numberOfData = dataList && dataList.length;
-  let scrollValue = 0,
-    scrolled = 0;
-
-  setInterval(function () {
-    scrolled++;
-    if (scrolled < numberOfData) scrollValue = scrollValue + width;
-    else {
-      scrollValue = 0;
-      scrolled = 0;
-    }
-    flatList &&
-      flatList.scrollToOffset({ animated: true, offset: scrollValue });
-  }, 3000);
-}
 
 export default function Carrousel() {
-  const scrollX = new Animated.Value(0.01);
+  const scrollX = new Animated.Value(0);
   const position = Animated.divide(scrollX, width);
-  const [dataList, setDataList] = useState();
+  const [dataList, setDataList] = useState(imagenes);
+  const [currentIndex, setCurrentIndex] = useState(0);
 
+  let flatList;
+
+  function infiniteScroll(dataList) {
+    const numberOfData = dataList.length;
+    let scrollValue = 0,
+      scrolled = 0;
+
+    setInterval(function () {
+      scrolled++;
+      if (scrolled < numberOfData) scrollValue = scrollValue + width;
+      else {
+        scrollValue = 0;
+        scrolled = 0;
+      }
+      flatList &&
+        flatList.scrollToOffset({ animated: true, offset: scrollValue });
+    }, 3000);
+  }
   useEffect(() => {
     setDataList(imagenes);
     infiniteScroll(dataList);
@@ -77,10 +86,13 @@ export default function Carrousel() {
         style={{ borderRadius: 10, marginTop: 2, marginHorizontal: 3 }}
         keyExtractor={(item) => item}
         horizontal
-        showsHorizontalScrollIndicator={false}
-        decelerationRate={0}
-        snapToInterval={ANCHO_CONTENEDOR}
+        pagingEnabled
+        scrollEnabled
+        snapToAlignment="center"
         scrollEventThrottle={16}
+        decelerationRate={"fast"}
+        showsHorizontalScrollIndicator={false}
+        snapToInterval={ANCHO_CONTENEDOR}
         renderItem={({ item, index }) => {
           return (
             <View
