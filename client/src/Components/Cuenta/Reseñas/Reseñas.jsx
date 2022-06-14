@@ -6,8 +6,10 @@ import Stars from "../../Stars/Stars";
 import styled from "styled-components";
 
 const Contenedor = styled.div`
-  min-height: 100vh;
+  height: 85vh;
   background-color: white;
+  margin-left: 2%;
+
   @media screen and (max-width: 560px) {
     display: absolute;
     z-index: 1;
@@ -15,12 +17,19 @@ const Contenedor = styled.div`
   }
 `;
 const ContenedorReseñas = styled.div`
-  padding-top: 25px;
+  display: flex;
+  flex-wrap: wrap;
+  // padding-top: 25px;
 `;
 
 const StyledLink = styled(Link)`
-  text-decoration: none,
-  color: black,
+  width: 230px;
+  text-decoration: none;
+  color: black;
+
+  @media screen and (max-width: 560px) {
+    width: 186px;
+  }
 `;
 
 const BotonCerrar = styled.button`
@@ -49,11 +58,15 @@ const Review = styled.div`
   justify-content: space-evenly;
   text-align: start;
   padding: 0px 17px;
-  margin: 0px 1% 20px;
+  margin-bottom: 10px;
   height: 140px;
-  width: 31%;
+  width: 90%;
   background-color: #80808038;
   border-radius: 5px;
+
+  @media screen and (max-width: 560px) {
+    margin-bottom: 10px;
+  }
 `;
 
 const TituloReview = styled.span`
@@ -85,6 +98,14 @@ const Boton = styled.button`
   cursor: pointer;
 `;
 
+const H1 = styled.h1`
+  font-size: 20px;
+  font-family: Poppins;
+  font-weight: 600;
+  text-align: start;
+  margin: 1%;
+`;
+
 export default function Reseñas() {
   const user = useSelector((state) => state.userInfo);
   const id = user.uid;
@@ -102,12 +123,13 @@ export default function Reseñas() {
 
   return (
     <Contenedor style={{ display: show ? "block" : "none" }}>
+      <H1>Mis reseñas</H1>
       <BotonCerrar onClick={handleClick}>X</BotonCerrar>
       <ContenedorReseñas>
         {reseñas?.map((review) => {
           return (
-            <StyledLink to={`/productos/${review.productoId}`}>
-              <Review key={review.id}>
+            <StyledLink key={review.id} to={`/productos/${review.productoId}`}>
+              <Review>
                 <Stars rating={review.puntaje} />
                 <TituloReview>{review.titulo}</TituloReview>
                 <ComentarioReview>{review.comentario}</ComentarioReview>

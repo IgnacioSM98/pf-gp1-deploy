@@ -30,14 +30,17 @@ const Boton = styled.button`
 `;
 
 const Form = styled.form`
-  margin-top: 20px;
-  min-height: 100vh;
+  margin-left: 20px;
+  height: 85vh;
+  width: 100%;
   display: flex;
   position: relative;
   flex-direction: column;
+  justify-content: flex-start;
   background-color: white;
   border-radius: 10px;
   box-shadow: 0 0 6px 0 rgba(255, 255, 255, 0.8);
+
   @media screen and (max-width: 1100px) {
       width: 50%;
   }
@@ -57,6 +60,7 @@ const Form = styled.form`
   }
   @media screen and (max-width: 560px) {
       width: 100vw;
+      margin-left: 0px;
     }
     p {
       font-weight: 300;
@@ -64,7 +68,7 @@ const Form = styled.form`
     }
   }
   @media screen and (max-width: 300px) {
-      width: 100vw;
+      width: 100vh;
   }
     p {
       font-weight: 300;
@@ -94,20 +98,25 @@ const P = styled.p`
   }
 `;
 
+const H1 = styled.h1`
+  font-size: 20px;
+  font-family: Poppins;
+  font-weight: 600;
+  text-align: start;
+`;
+
 export default function Notificaciones() {
   const [show, setShow] = useState(true);
 
-  function handleClick() {
+  function handleClick(e) {
+    e.preventDefault();
     setShow((current) => !current);
   }
 
   return (
     <Form style={{ display: show ? "absolute" : "none" }}>
-      <Boton onClick={handleClick}>X</Boton>
-
-      <div>
-        <P>NOFICICACIONES POR MAIL</P>
-      </div>
+      <H1>Configuracion de Notificaciones</H1>
+      <Boton onClick={(e) => handleClick(e)}>X</Boton>
 
       <div className="grupo-notificaciones">
         <label className="label-notificaciones">Compras confirmadas</label>

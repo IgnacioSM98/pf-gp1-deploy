@@ -7,14 +7,20 @@ import styled from "styled-components";
 
 const Container = styled.div`
   background-color: white;
+  position: relative;
+
   @media screen and (max-width: 560px) {
-    display: absolute;
+    // display: absolute;
+    height: 93vh;
+    display: flex;
+    justify-content: space-around;
     z-index: 1;
   }
 `;
 
-const Boton = styled.button`
+const Cerrar = styled.button`
   position: absolute;
+  top: 0;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -23,34 +29,57 @@ const Boton = styled.button`
   height: 25px;
   background: #36885ed1;
   color: white;
+  border: none;
   border-radius: 4px;
   font-size: 13px;
   cursor: pointer;
+
   @media screen and (min-width: 560px) {
     display: none;
   }
 `;
 
+const Button = styled.button`
+  // position: absolute;
+  // bottom: 0;
+  margin: 5px;
+  width: 100px;
+  height: 35px;
+  font-size: 10px;
+  font-family: Poppins;
+  background-color: #222;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+`;
+
+const H1 = styled.h1`
+  width: 100%;
+  font-size: 20px;
+  font-family: Poppins;
+  font-weight: 600;
+  text-align: start;
+  margin-left: 10%;
+
+  @media screen and (max-width: 560px) {
+    margin-left: 2%;
+  }
+`;
+
 export default function Perfil() {
+  const dispatch = useDispatch();
+
   const user = useSelector((state) => state.userInfo);
   const mail = user?.email;
 
   const usuarios = useSelector((state) => state.usuarios);
   const [usuario, setUsuario] = useState({});
-  const dispatch = useDispatch();
   const [inputs, setInputs] = useState({});
   const [show, setShow] = useState(true);
 
-  useEffect(() => {
-    dispatch(getUsuarios());
-  }, [dispatch]);
-
-  useEffect(() => {
-    setUsuario(usuarios.find((u) => u.mail === mail));
-  }, [usuarios, mail]);
-
-  useEffect(() => {
-    if (usuario) {
+  const usuarioInputs = (usuario) => {
+    usuario?.id &&
       setInputs({
         id: usuario.id,
         nombre: usuario.nombre,
@@ -61,7 +90,18 @@ export default function Perfil() {
         contraseña: usuario.contraseña,
         telefono: usuario.telefono,
       });
-    }
+  };
+
+  useEffect(() => {
+    dispatch(getUsuarios());
+  }, [dispatch]);
+
+  useEffect(() => {
+    setUsuario(usuarios.find((u) => u.mail === mail));
+  }, [usuarios, mail]);
+
+  useEffect(() => {
+    usuarioInputs(usuario);
   }, [usuario]);
 
   const handleInputs = (e) => {
@@ -79,25 +119,15 @@ export default function Perfil() {
   }
 
   return (
-    <Container
-      className="contenedor-perfil"
-      style={{ display: show ? "absolute" : "none" }}
-    >
-      <h1
-        style={{
-          fontSize: "20px",
-          fontFamily: "Poppins",
-          fontWeight: 600,
-          paddingBottom: "20px",
-          marginTop: "15px",
-        }}
+    <>
+      <Container
+        className="contenedor-perfil"
+        style={{ display: show ? "absolute" : "none" }}
       >
-        Editar
-      </h1>
+        <H1>Editar</H1>
+        <Cerrar onClick={handleClick}>X</Cerrar>
 
-      <Boton onClick={handleClick}>X</Boton>
-
-      <div>
+        {/* <div> */}
         <div>
           <div className="grupo-perfil">
             <input
@@ -189,14 +219,20 @@ export default function Perfil() {
             <span className="barra-perfil"></span>
             <label className="label-perfil">Telefono</label>
           </div>
-
-          <div>
-            <button onClick={(e) => handleSubmit(e)}>Cancelar</button>
-
-            <button onClick={(e) => handleSubmit(e)}>Confirmar</button>
-          </div>
         </div>
-      </div>
-    </Container>
+        <div>
+          <Button
+            onClick={() => {
+              usuarioInputs(usuario);
+            }}
+          >
+            Cancelar
+          </Button>
+
+          <Button onClick={(e) => handleSubmit(e)}>Confirmar</Button>
+        </div>
+        {/* </div> */}
+      </Container>
+    </>
   );
 }
