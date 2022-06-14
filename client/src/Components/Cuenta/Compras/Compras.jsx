@@ -66,7 +66,7 @@ const H1 = styled.h1`
   margin-left: 1%;
 `;
 
-export default function Compras() {
+export default function Compras({ setComponente }) {
   const dispatch = useDispatch();
 
   const userInfo = useSelector((state) => state.userInfo);
@@ -80,6 +80,8 @@ export default function Compras() {
   function handleClick(e) {
     e.preventDefault();
     setShow((current) => !current);
+
+    setComponente("");
   }
 
   return (

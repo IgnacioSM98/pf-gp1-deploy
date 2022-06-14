@@ -4,11 +4,13 @@ import { deleteReview, getReviews } from "../../../Redux/actions";
 import { Link } from "react-router-dom";
 import Stars from "../../Stars/Stars";
 import styled from "styled-components";
+import Swal from "sweetalert2";
 
 const Contenedor = styled.div`
   height: 85vh;
   background-color: white;
   margin-left: 2%;
+  position: relative;
 
   @media screen and (max-width: 560px) {
     display: absolute;
@@ -19,7 +21,10 @@ const Contenedor = styled.div`
 const ContenedorReseñas = styled.div`
   display: flex;
   flex-wrap: wrap;
-  // padding-top: 25px;
+
+  @media screen and (max-width: 560px) {
+    justify-content: center;
+  }
 `;
 
 const StyledLink = styled(Link)`
@@ -34,18 +39,22 @@ const StyledLink = styled(Link)`
 
 const BotonCerrar = styled.button`
   position: absolute;
+  top: 0;
+
+  z-index: 2;
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-top: 10px;
   right: 20px;
   width: 25px;
   height: 25px;
-  background: #36885ed1;
+  background: #599b79;
   color: white;
+  border: none;
   border-radius: 4px;
   font-size: 13px;
   cursor: pointer;
+
   @media screen and (min-width: 560px) {
     display: none;
   }
@@ -59,13 +68,15 @@ const Review = styled.div`
   text-align: start;
   padding: 0px 17px;
   margin-bottom: 10px;
+
   height: 140px;
-  width: 90%;
+  width: 98%;
   background-color: #80808038;
   border-radius: 5px;
 
   @media screen and (max-width: 560px) {
     margin-bottom: 10px;
+    margin: 1%;
   }
 `;
 
@@ -106,7 +117,7 @@ const H1 = styled.h1`
   margin: 1%;
 `;
 
-export default function Reseñas() {
+export default function Reseñas({ setComponente }) {
   const user = useSelector((state) => state.userInfo);
   const id = user.uid;
   const reseñas = useSelector((state) => state.reviews);
@@ -119,6 +130,22 @@ export default function Reseñas() {
 
   function handleClick() {
     setShow((current) => !current);
+    setComponente("");
+  }
+
+  function handleDelete(e, id) {
+    e.preventDefault();
+    dispatch(deleteReview(id));
+
+    Swal.fire({
+      title: "Eliminada con exito",
+      text: "Tu reseña se eliminó correctamente",
+      icon: "success",
+      iconColor: "green",
+      color: "#222",
+      confirmButtonColor: "grey",
+      confirmButtonText: "Aceptar",
+    });
   }
 
   return (
@@ -135,8 +162,7 @@ export default function Reseñas() {
                 <ComentarioReview>{review.comentario}</ComentarioReview>
                 <Boton
                   onClick={(e) => {
-                    e.preventDefault();
-                    dispatch(deleteReview(review.id));
+                    handleDelete(e, review.id);
                   }}
                 >
                   Eliminar

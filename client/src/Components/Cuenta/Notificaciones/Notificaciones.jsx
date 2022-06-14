@@ -4,28 +4,24 @@ import styled from "styled-components";
 
 const Boton = styled.button`
   position: absolute;
+  top: 0;
+
+  z-index: 2;
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-top: 15px;
-  right: 20px;
+  right: 15px;
   width: 25px;
   height: 25px;
-  background: #36885ed1;
+  background: #599b79;
   color: white;
+  border: none;
   border-radius: 4px;
   font-size: 13px;
   cursor: pointer;
+
   @media screen and (min-width: 560px) {
     display: none;
-  }
-  @media screen and (max-width: 450px) {
-    width: 20px;
-    height: 20px;
-  }
-  @media screen and (max-width: 380px) {
-    width: 17px;
-    height: 17px;
   }
 `;
 
@@ -105,12 +101,14 @@ const H1 = styled.h1`
   text-align: start;
 `;
 
-export default function Notificaciones() {
+export default function Notificaciones({ setComponente }) {
   const [show, setShow] = useState(true);
 
   function handleClick(e) {
     e.preventDefault();
     setShow((current) => !current);
+
+    setComponente("");
   }
 
   return (
@@ -125,7 +123,7 @@ export default function Notificaciones() {
 
       <div className="grupo-notificaciones">
         <label className="label-notificaciones">
-          Cambio de Estado del Pedido
+          Cambio de estado de los pedidos
         </label>
         <input className="input-notificaciones" type="checkbox"></input>
       </div>
@@ -136,7 +134,9 @@ export default function Notificaciones() {
       </div>
 
       <div className="grupo-notificaciones">
-        <label className="label-notificaciones">Te Extrañamos</label>
+        <label className="label-notificaciones">
+          Mensajes de cuando extrañamos
+        </label>
         <input className="input-notificaciones" type="checkbox"></input>
       </div>
     </Form>

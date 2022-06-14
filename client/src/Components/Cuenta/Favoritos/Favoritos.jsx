@@ -77,7 +77,7 @@ const H1 = styled.h1`
   margin-left: 1%;
 `;
 
-export default function Favoritos() {
+export default function Favoritos({ setComponente }) {
   const fav = useSelector((state) => state.favoritos);
   const userInfo = useSelector((state) => state.userInfo);
   const dispatch = useDispatch();
@@ -85,6 +85,7 @@ export default function Favoritos() {
 
   function handleClick() {
     setShow((current) => !current);
+    setComponente("");
   }
 
   useEffect(() => {

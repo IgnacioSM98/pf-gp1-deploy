@@ -4,6 +4,7 @@ import { getUsuarios } from "../../../Redux/actions";
 import "./Perfil.css";
 import putPerfil from "./putPerfil";
 import styled from "styled-components";
+import Swal from "sweetalert2";
 
 const Container = styled.div`
   background-color: white;
@@ -67,7 +68,7 @@ const H1 = styled.h1`
   }
 `;
 
-export default function Perfil() {
+export default function Perfil({ setComponente }) {
   const dispatch = useDispatch();
 
   const user = useSelector((state) => state.userInfo);
@@ -111,11 +112,36 @@ export default function Perfil() {
   function handleSubmit(e) {
     e.preventDefault();
 
+    Swal.fire({
+      title: "Perfil Actualizado",
+      text: "Todos los datos se guardaron correctamente",
+      icon: "success",
+      iconColor: "green",
+      color: "#222",
+      confirmButtonColor: "grey",
+      confirmButtonText: "Aceptar",
+    });
+
     dispatch(putPerfil(inputs));
+  }
+
+  function handleCancel() {
+    Swal.fire({
+      title: "Cambios descartados",
+      text: "Los cambios no se guardarán",
+      icon: "warning",
+      iconColor: "grey",
+      color: "#222",
+      confirmButtonColor: "grey",
+      confirmButtonText: "Aceptar",
+    });
+
+    usuarioInputs(usuario);
   }
 
   function handleClick() {
     setShow((current) => !current);
+    setComponente("");
   }
 
   return (
@@ -221,13 +247,7 @@ export default function Perfil() {
           </div>
         </div>
         <div>
-          <Button
-            onClick={() => {
-              usuarioInputs(usuario);
-            }}
-          >
-            Cancelar
-          </Button>
+          <Button onClick={() => handleCancel()}>Cancelar</Button>
 
           <Button onClick={(e) => handleSubmit(e)}>Confirmar</Button>
         </div>

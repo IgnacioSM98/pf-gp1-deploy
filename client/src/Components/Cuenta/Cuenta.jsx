@@ -195,7 +195,9 @@ export default function Cuenta() {
       </Options>
 
       <Informacion>
-        <Categoria>{componente && <ComponenteDinamico />}</Categoria>
+        <Categoria>
+          {componente && <ComponenteDinamico setComponente={setComponente} />}
+        </Categoria>
       </Informacion>
     </Container>
   );
