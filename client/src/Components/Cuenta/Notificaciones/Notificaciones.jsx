@@ -4,40 +4,39 @@ import styled from "styled-components";
 
 const Boton = styled.button`
   position: absolute;
+  top: 0;
+
+  z-index: 2;
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-top: 15px;
-  right: 20px;
+  right: 15px;
   width: 25px;
   height: 25px;
-  background: #36885ed1;
+  background: #599b79;
   color: white;
+  border: none;
   border-radius: 4px;
   font-size: 13px;
   cursor: pointer;
+
   @media screen and (min-width: 560px) {
     display: none;
-  }
-  @media screen and (max-width: 450px) {
-    width: 20px;
-    height: 20px;
-  }
-  @media screen and (max-width: 380px) {
-    width: 17px;
-    height: 17px;
   }
 `;
 
 const Form = styled.form`
-  margin-top: 20px;
-  min-height: 100vh;
+  margin-left: 20px;
+  height: 85vh;
+  width: 100%;
   display: flex;
   position: relative;
   flex-direction: column;
+  justify-content: flex-start;
   background-color: white;
   border-radius: 10px;
   box-shadow: 0 0 6px 0 rgba(255, 255, 255, 0.8);
+
   @media screen and (max-width: 1100px) {
       width: 50%;
   }
@@ -57,6 +56,7 @@ const Form = styled.form`
   }
   @media screen and (max-width: 560px) {
       width: 100vw;
+      margin-left: 0px;
     }
     p {
       font-weight: 300;
@@ -64,7 +64,7 @@ const Form = styled.form`
     }
   }
   @media screen and (max-width: 300px) {
-      width: 100vw;
+      width: 100vh;
   }
     p {
       font-weight: 300;
@@ -94,20 +94,27 @@ const P = styled.p`
   }
 `;
 
-export default function Notificaciones() {
+const H1 = styled.h1`
+  font-size: 20px;
+  font-family: Poppins;
+  font-weight: 600;
+  text-align: start;
+`;
+
+export default function Notificaciones({ setComponente }) {
   const [show, setShow] = useState(true);
 
-  function handleClick() {
+  function handleClick(e) {
+    e.preventDefault();
     setShow((current) => !current);
+
+    setComponente("");
   }
 
   return (
     <Form style={{ display: show ? "absolute" : "none" }}>
-      <Boton onClick={handleClick}>X</Boton>
-
-      <div>
-        <P>NOFICICACIONES POR MAIL</P>
-      </div>
+      <H1>Configuracion de Notificaciones</H1>
+      <Boton onClick={(e) => handleClick(e)}>X</Boton>
 
       <div className="grupo-notificaciones">
         <label className="label-notificaciones">Compras confirmadas</label>
@@ -116,7 +123,7 @@ export default function Notificaciones() {
 
       <div className="grupo-notificaciones">
         <label className="label-notificaciones">
-          Cambio de Estado del Pedido
+          Cambio de estado de los pedidos
         </label>
         <input className="input-notificaciones" type="checkbox"></input>
       </div>
@@ -127,7 +134,9 @@ export default function Notificaciones() {
       </div>
 
       <div className="grupo-notificaciones">
-        <label className="label-notificaciones">Te Extrañamos</label>
+        <label className="label-notificaciones">
+          Mensajes de cuando extrañamos
+        </label>
         <input className="input-notificaciones" type="checkbox"></input>
       </div>
     </Form>

@@ -12,22 +12,29 @@ import {
 
 const Container = styled.div`
   display: flex;
-  height: 100vh;
+  height: 95%;
   width: 100%;
-  padding-top: 8%;
+  padding-top: 5%;
   background-color: white;
   justify-content: center;
+
+  @media screen and (max-width: 1400px) {
+    padding-top: 8%;
+  }
+
   @media screen and (max-width: 560px) {
+    padding-top: 15%;
     height: auto;
     display: flex;
     flex-direction: column;
-    postition: relative;
+    position: relative;
   }
 `;
 
 const Informacion = styled.div`
   width: 60%;
-  height: 100vh;
+  height: 95%;
+
   @media screen and (max-width: 960px) {
     width: 100%;
   }
@@ -37,18 +44,22 @@ const Options = styled.div`
   display: flex;
   flex-direction: column;
   width: 25%;
-  height: 100%;
+  height: 90%;
+
   background-color: white;
   border-radius: 10px;
   border: 2px solid black;
-  margin-right: 3rem;
+  // margin-right: 3rem;
   position: relative;
+
   @media screen and (max-width: 960px) {
     width: 60%;
   }
+
   @media screen and (max-width: 560px) {
     width: 100%;
     position: absolute;
+    border: none;
   }
 `;
 
@@ -108,16 +119,11 @@ const Sesion = styled.button`
   color: white;
   border: none;
   border-radius: 0px 0px 8px 8px;
-`;
 
-// const Categorias = styled.div`
-//   display: flex;
-//   flex-direction: column;
-//   justify-content: space-between;
-//   min-height: 70vh;
-//   max-height: fit-content;
-//   width: 100%;
-// `;
+  @media screen and (max-width: 560px) {
+    display: none;
+  }
+`;
 
 const Categoria = styled.div`
   display: flex;
@@ -176,12 +182,12 @@ export default function Cuenta() {
             Notificaciones
           </Boton>
 
-          <Boton onClick={handleOnClick} value="seguridad">
+          {/* <Boton onClick={handleOnClick} value="seguridad">
             Seguridad
-          </Boton>
+          </Boton> */}
 
           <Boton onClick={handleOnClick} value="consultas">
-            Consultanos!
+            Contactanos
           </Boton>
         </Botones>
 
@@ -189,7 +195,9 @@ export default function Cuenta() {
       </Options>
 
       <Informacion>
-        <Categoria>{componente && <ComponenteDinamico />}</Categoria>
+        <Categoria>
+          {componente && <ComponenteDinamico setComponente={setComponente} />}
+        </Categoria>
       </Informacion>
     </Container>
   );
