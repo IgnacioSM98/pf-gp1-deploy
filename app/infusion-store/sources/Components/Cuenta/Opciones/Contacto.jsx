@@ -61,7 +61,7 @@ export default function Contacto({ setOption }) {
         style={[styles.input, styles.textarea]}
         onChangeText={(text) => handleChange(text, "consulta")}
       />
-      <Text stye={styles.error}>{errors.consulta}</Text>
+      <Text style={styles.error}>{errors.consulta}</Text>
       <TouchableHighlight style={styles.button} onPress={() => handleSubmit()}>
         <Text styles={styles.textButton}>ENVIAR</Text>
       </TouchableHighlight>
