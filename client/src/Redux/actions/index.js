@@ -239,6 +239,7 @@ export function getUsuarios() {
 
 export function postUsuario(body) {
   return function (dispatch) {
+    console.log("ksdkgahsd", body);
     axios
       .post(`${urlBase}crear`, body)
       .then((res) => dispatch({ type: "POST_USUARIO", payload: res.data }));

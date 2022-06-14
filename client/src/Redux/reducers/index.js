@@ -418,6 +418,7 @@ export default function rootReducer(state = initialState, action) {
         favorites.data.find((fav) => fav.id === state.productos.id)
       ) {
       } else {
+        console.log("uwu");
         axios.post(
           "https://proyecto-final-gp1.herokuapp.com/favoritos/wishlist",
           {
