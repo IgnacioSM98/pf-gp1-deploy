@@ -111,8 +111,12 @@ const Header = styled.div`
   }
 `;
 
+const filterStock = (producto) => {
+  if (producto.stock > 0) return producto;
+};
+
 export default function Home({ contacto }) {
-  const productos = useSelector((state) => state.productos);
+  const productos = useSelector((state) => state.productos.filter(filterStock));
   const dispatch = useDispatch();
   const location = useLocation();
   const [destacados, setDestacados] = useState();
