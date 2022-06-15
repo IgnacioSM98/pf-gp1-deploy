@@ -35,9 +35,11 @@ const styles = StyleSheet.create({
     fontFamily: "PoppinsM",
     color: "#222",
     fontWeight: "700",
-    marginTop: 4,
+    marginTop: 40,
     marginBottom: 10,
     marginLeft: 10,
+    width: "90%",
+    textAlign: "left",
   },
 
   containerProductos: {
@@ -121,6 +123,7 @@ export default function Home({ navigation }) {
             <Carrousel />
 
             <Text style={styles.productosTitulo}>Productos Destacados</Text>
+
             <Animated.FlatList
               onScroll={Animated.event(
                 [{ nativeEvent: { contentOffset: { x: scrollX } } }],
@@ -168,8 +171,8 @@ export default function Home({ navigation }) {
                         width: 4,
                         height: 0,
                       },
-                      shadowOpacity: 0.2,
-                      shadowRadius: 8,
+                      shadowOpacity: 0.1,
+                      shadowRadius: 3,
                       transform: [{ translateY }],
                     }}
                   >

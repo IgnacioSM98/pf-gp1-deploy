@@ -16,16 +16,18 @@ import {
   agregarCarrito,
   eliminarDeFavoritos,
   añadirAFavoritos,
-  getProductReviews
+  getProductReviews,
 } from "../../../redux/actions";
-import {StarRating} from "../index"
+import { StarRating } from "../index";
 
 const styles = StyleSheet.create({
   contProd: {
     width: "100%",
+    height: "100%",
     paddingTop: 45,
     position: "relative",
   },
+
   nombre: {
     fontWeight: "600",
     color: "white",
@@ -33,6 +35,7 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     fontSize: 30,
   },
+
   descripcion: {
     color: "white",
     marginTop: 15,
@@ -54,22 +57,26 @@ const styles = StyleSheet.create({
     marginTop: 30,
     resizeMode: "contain",
   },
+
   contDatos: {
     width: "100%",
     height: 550,
     backgroundColor: "#333334",
     borderRadius: 40,
+    paddingTop: "5%",
     display: "flex",
     position: "absolute",
     top: 450,
   },
+
   volver: {
     position: "absolute",
     fontSize: 30,
-    top: 70,
+    top: 60,
     left: 30,
-    zIndex: 999,
+    zIndex: 9,
   },
+
   favoritos: {
     position: "absolute",
     fontSize: 30,
@@ -77,6 +84,7 @@ const styles = StyleSheet.create({
     right: 30,
     zIndex: 999,
   },
+
   numeros: {
     fontWeight: "bold",
     color: "white",
@@ -84,6 +92,10 @@ const styles = StyleSheet.create({
     fontSize: 30,
   },
   botones: {
+    position: "absolute",
+    bottom: "20%",
+    left: 0,
+    width: "100%",
     display: "flex",
     flexDirection: "row",
     marginTop: 40,
@@ -94,7 +106,9 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
   },
-  boton: {
+
+  pressable: {
+    position: "relative",
     color: "white",
     fontSize: 40,
     textAlign: "center",
@@ -102,27 +116,39 @@ const styles = StyleSheet.create({
     width: 60,
     height: 60,
     borderRadius: 15,
-    paddingBottom: 10,
+    // paddingBottom: 10,
     shadowColor: "#000",
     shadowOffset: {
       width: 0,
       height: 8,
     },
+
     shadowOpacity: 0.46,
     shadowRadius: 11.14,
-
     elevation: 17,
   },
+
+  boton: {
+    position: "absolute",
+    left: "10%",
+    top: "10%",
+    height: "80%",
+    width: "80%",
+    color: "white",
+    fontSize: 40,
+    textAlign: "center",
+    backgroundColor: "#414345",
+  },
+
   agregar: {
-    // color: "white",
-    // fontSize: 30,
-    // backgroundColor: "#414345",
-    marginLeft: 35,
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    marginLeft: 25,
     width: 180,
     height: 68,
     borderRadius: 25,
-    textAlign: "center",
-    paddingTop: 10,
+
     shadowColor: "#000",
     shadowOffset: {
       width: 0,
@@ -133,27 +159,31 @@ const styles = StyleSheet.create({
 
     elevation: 17,
   },
+
   letraBoton: {
     color: "white",
     fontSize: 30,
   },
+
   num: {
     color: "white",
     fontSize: 30,
     margin: 10,
   },
+
   promedio: {
     marginLeft: 30,
     display: "flex",
     flexDirection: "row",
     alignItems: "center",
   },
-  review:{
-    paddingTop: 8,
-    fontSize:14,
-    marginLeft: 10,
-    color: "white"
-  }
+
+  review: {
+    // paddingTop: 8,
+    fontSize: 14,
+    marginLeft: 8,
+    color: "white",
+  },
 });
 
 const DetalleProducto = ({ route }) => {
@@ -209,10 +239,10 @@ const DetalleProducto = ({ route }) => {
   function handleFav() {
     if (favoritos.find((fav) => fav.id == id)) {
       dispatch(eliminarDeFavoritos(id));
-      alert("producto eliminado");
+      alert("Producto eliminado de favoritos");
     } else {
       dispatch(añadirAFavoritos(data));
-      alert("producto agregado");
+      alert("Producto agregado a la lista de favoritos");
     }
   }
 
@@ -253,18 +283,28 @@ const DetalleProducto = ({ route }) => {
 
       <View style={styles.contDatos}>
         <Text style={styles.nombre}>{data.nombre}</Text>
-        <View style= {styles.promedio}>
-        <StarRating rating={rating ? rating : 1} />
-        <Text style={styles.review} >({reviews.length} Reviews)</Text>
+
+        <View style={styles.promedio}>
+          <StarRating rating={rating ? rating : 1} />
+          <Text style={styles.review}>({reviews.length} Reviews)</Text>
         </View>
+
         <Text style={styles.descripcion}>{data.descripcion}</Text>
         <Text style={styles.numeros}>${data.precio}</Text>
+
         <View style={styles.botones}>
           <View style={styles.cantidad}>
-            <Text style={styles.boton}>+</Text>
+            <Pressable style={styles.pressable}>
+              <Text style={styles.boton}>-</Text>
+            </Pressable>
+
             <Text style={styles.num}>01</Text>
-            <Text style={styles.boton}>-</Text>
+
+            <Pressable style={styles.pressable}>
+              <Text style={styles.boton}>+</Text>
+            </Pressable>
           </View>
+
           <Pressable
             onPress={(e) => {
               addToCarrito(e);
