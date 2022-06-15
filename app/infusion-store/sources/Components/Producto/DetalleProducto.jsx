@@ -15,9 +15,11 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   addCarrito,
   agregarCarrito,
+  restarCarrito,
   eliminarDeFavoritos,
   añadirAFavoritos,
   getProductReviews,
+  quitarItem,
 } from "../../../redux/actions";
 import { StarRating, Reviews } from "../index";
 
@@ -256,17 +258,47 @@ const DetalleProducto = ({ route }) => {
   const favoritos = useSelector((state) => state.favoritos);
   const reviews = useSelector((state) => state.reviews);
   const [stateReview, setStateReview] = useState(false);
+  const carrito = useSelector((state) => state.carrito);
+  const [cantidad, setCantidad] = useState(1);
   const [loading, setLoading] = useState(true);
 
-  // useEffect(() => {
-  //   console.log("hola");
-  // }, []);
+  const cantidadCarrito = useSelector(
+    (state) => state.carrito?.filter((item) => item.id === id)[0]
+  );
+
+  // function check(id) {
+  //   const isInCart = carrito.filter((producto) => producto.id == data.id);
+  //   if (isInCart) {
+  //     return true;
+  //   } else {
+  //     return false;
+  //   }
+  // }
+
+  const sumarCarrito = () => {
+    if (cantidad < data.stock) {
+      setCantidad(cantidad + 1);
+      dispatch(agregarCarrito(id, cantidad + 1));
+    }
+  };
+
+  const restaCarrito = () => {
+    if (cantidad > 1) {
+      setCantidad(cantidad - 1);
+      dispatch(restarCarrito(id, cantidad - 1));
+    }
+  };
 
   function addToCarrito(e) {
     if (data.stock > 0) {
       dispatch(agregarCarrito(id, 1));
+      setCantidad(cantidad + 1);
     }
   }
+
+  // useEffect(() => {
+  //   console.log("hola");
+  // }, []);
 
   //reviews de producto
   useEffect(() => {
@@ -301,6 +333,10 @@ const DetalleProducto = ({ route }) => {
         setLoading(false);
       });
   }, [id]);
+
+  useEffect(() => {
+    setCantidad(cantidadCarrito?.cantidad ? cantidadCarrito.cantidad : 1);
+  }, [cantidadCarrito]);
 
   function handleFav() {
     if (favoritos.find((fav) => fav.id == id)) {
@@ -361,35 +397,36 @@ const DetalleProducto = ({ route }) => {
         <Text style={styles.numeros}>${data.precio}</Text>
 
         {data.stock > 0 ? (
-          <View style={styles.botones}>
-            <View style={styles.cantidad}>
-              <Pressable style={styles.pressable}>
-                <Text style={styles.boton}>-</Text>
-              </Pressable>
+        <View style={styles.botones}>
+          <View style={styles.cantidad}>
+            <Pressable style={styles.pressable} onPress={restaCarrito}>
+              <Text style={styles.boton}>-</Text>
+            </Pressable>
 
-              <Text style={styles.num}>01</Text>
+            <Text style={styles.num}>{cantidad}</Text>
 
-              <Pressable style={styles.pressable}>
-                <Text style={styles.boton}>+</Text>
-              </Pressable>
-            </View>
-
-            <Pressable
-              onPress={(e) => {
-                addToCarrito(e);
-              }}
-              style={({ pressed }) => [
-                {
-                  backgroundColor: pressed
-                    ? "rgba(194, 194, 194, 0.69)"
-                    : "#414345",
-                },
-                styles.agregar,
-              ]}
-            >
-              <Text style={styles.letraBoton}>Agregar</Text>
+            <Pressable style={styles.pressable} onPress={sumarCarrito}>
+              <Text style={styles.boton}>+</Text>
             </Pressable>
           </View>
+
+          <Pressable
+            onPress={(e) => {
+              addToCarrito(e);
+            }}
+            style={({ pressed }) => [
+              {
+                backgroundColor: pressed
+                  ? "rgba(194, 194, 194, 0.69)"
+                  : "#414345",
+              },
+              styles.agregar,
+            ]}
+            // disabled={carrito.filter((producto) => producto.id == data.id)}
+          >
+            <Text style={styles.letraBoton}>Agregar</Text>
+          </Pressable>
+        </View>
         ) : (
           <View style={styles.botones}>
             <View style={styles.botonSinStock}>
