@@ -20,6 +20,16 @@
   color: rgb(94, 93, 93);
 }
 
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+input[type="number"] {
+  -moz-appearance: textfield;
+}
+
 .input-checkout:focus ~ .label-checkout {
   position: absolute;
   top: -14px;
@@ -63,4 +73,3 @@
   transition: 0.3s ease all;
   left: 0%;
 }
-

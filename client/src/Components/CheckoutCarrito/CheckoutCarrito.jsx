@@ -20,6 +20,11 @@ const Contenedor = styled.div`
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center;
+
+  @media screen and (max-width: 560px) {
+    height: 90vh;
+    padding-top: 0;
+  }
 `;
 
 const Formulario = styled.form`
@@ -34,6 +39,11 @@ const Formulario = styled.form`
   background-color: rgba(219, 219, 219, 0.75);
   border-radius: 8px;
   backdrop-filter: blur(10px);
+
+  @media screen and (max-width: 560px) {
+    margin-top: 50px;
+    margin-bottom: 0;
+  }
 `;
 
 const Titulo = styled.h2`
@@ -65,11 +75,13 @@ const ContenedorDiv = styled.div`
   margin: 0 10px 30px 10px;
   align-items: flex-start;
   position: relative;
+
   @media screen and (max-width: 1300px) {
     margin: 0px;
   }
   @media screen and (max-width: 560px) {
     margin: 0 5px 5px 5px;
+    border-bottom: 0.1px solid black;
   }
 `;
 
@@ -78,6 +90,7 @@ const ContenedorDireccion = styled.div`
   flex-direction: row;
   justify-content: space-between;
   margin: 20px;
+
   @media screen and (max-width: 1400px) {
     margin: 5px;
     position: relative;
@@ -85,7 +98,9 @@ const ContenedorDireccion = styled.div`
   }
   @media screen and (max-width: 560px) {
     flex-direction: column;
-    width: 50px;
+    height: 100%;
+    width: 33%;
+    margin: 0;
   }
 `;
 
@@ -94,13 +109,18 @@ const ContenedorCiudad = styled.div`
   flex-direction: row;
   justify-content: space-between;
   margin: 20px;
+
   @media screen and (max-width: 1400px) {
     margin: 5px;
     position: relative;
   }
+
   @media screen and (max-width: 560px) {
     position: relative;
     flex-direction: column;
+    height: 100%;
+    width: 33%;
+    margin: 0;
   }
 `;
 
@@ -113,13 +133,12 @@ const Input = styled.input`
     font-size: 15px;
   }
   @media screen and (max-width: 560px) {
-    width: 50px;
+    width: 100%;
     font-size: 8px;
     margin-bottom: 9px;
+    border-bottom: none;
   }
 `;
-
-// const ContenedorInput = styled.div``;
 
 const Label = styled.label``;
 
@@ -132,6 +151,7 @@ const Boton = styled.input`
   color: white;
   background-color: #36885ed1;
   cursor: pointer;
+
   @media screen and (max-width: 1300px) {
     height: 30px;
     padding: 0px;
@@ -143,11 +163,15 @@ const ContenedorVarios = styled.div`
   display: flex;
   position: relative;
   height: 60vh;
+
   @media screen and (max-width: 1400px) {
     flex-direction: column;
   }
   @media screen and (max-width: 1300px) {
     flex-direction: column;
+    justify-content: space-evenly;
+    width: 100%;
+    height: 64vh;
   }
 `;
 
@@ -218,7 +242,7 @@ const Productos = styled.div`
     width: auto;
     height: 30vh;
     position: relative;
-    margin-top: 7px;
+    margin-top: 0;
   }
 `;
 
@@ -303,6 +327,8 @@ function Checkout({ contacto }) {
 
   useEffect(() => {
     dispatch(getUsuarios());
+
+    window.scrollTo(0, 0);
   }, []);
 
   useEffect(() => {
@@ -379,8 +405,8 @@ function Checkout({ contacto }) {
             Antes de continuar, necesitamos que completes estos datos
           </Titulo>
 
+          <Subtitulo>Informacion de entrega</Subtitulo>
           <ContenedorVarios>
-            <Subtitulo>Informacion de entrega</Subtitulo>
             <ContenedorSubUno>
               <ContenedorDireccion>
                 <ContenedorDiv className="grupo-checkout">
@@ -483,9 +509,10 @@ function Checkout({ contacto }) {
                     id="emailAddress"
                     type="email"
                     disabled
+                    style={{ cursor: "not-allowed" }}
                     value={input.mail}
                     onChange={(e) => handleChange(e)}
-                    required
+                    // required
                   />
                   <span className="barra-checkout"></span>
                   <Label className="label-checkout">E-Mail</Label>
