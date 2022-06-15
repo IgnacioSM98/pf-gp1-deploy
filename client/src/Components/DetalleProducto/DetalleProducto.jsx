@@ -95,6 +95,7 @@ const Image = styled.img`
   @media screen and (max-width: 600px) {
     height: 30vh;
     width: 36%;
+    margin-top: 6vh;
   }
 `;
 

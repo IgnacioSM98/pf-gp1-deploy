@@ -11,7 +11,7 @@
   position: relative;
   box-shadow: 0 2px 2px 0 darkgray, 2px 2px 2px 2px darkgray;
 }
-@media screen and (max-width: 910px) {
+/* @media screen and (max-width: 910px) {
   .container-producto {
     width: 300px;
     margin: 5px;
@@ -67,7 +67,7 @@
     width: 250px;
     left: 10px;
   }
-}
+} */
 .container-producto:hover {
   color: #36885ed1;
   background-color: #f9f9f9;
