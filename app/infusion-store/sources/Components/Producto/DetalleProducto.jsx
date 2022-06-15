@@ -16,23 +16,30 @@ import {
   agregarCarrito,
   eliminarDeFavoritos,
   añadirAFavoritos,
+  getProductReviews,
 } from "../../../redux/actions";
+import { StarRating, Reviews } from "../index";
 
 const styles = StyleSheet.create({
   contProd: {
     width: "100%",
+    height: "100%",
     paddingTop: 45,
     position: "relative",
   },
+
   nombre: {
     fontWeight: "600",
     color: "white",
-    margin: 30,
+    marginLeft: 30,
+    marginBottom: 10,
+    marginTop: 30,
     fontSize: 30,
   },
+
   descripcion: {
     color: "white",
-    marginTop: 30,
+    marginTop: 15,
     marginLeft: 30,
     marginRight: 30,
     fontSize: 18,
@@ -51,22 +58,26 @@ const styles = StyleSheet.create({
     marginTop: 30,
     resizeMode: "contain",
   },
+
   contDatos: {
     width: "100%",
     height: 550,
     backgroundColor: "#333334",
     borderRadius: 40,
+    paddingTop: "5%",
     display: "flex",
     position: "absolute",
     top: 450,
   },
+
   volver: {
     position: "absolute",
     fontSize: 30,
-    top: 70,
+    top: 60,
     left: 30,
-    zIndex: 999,
+    zIndex: 9,
   },
+
   favoritos: {
     position: "absolute",
     fontSize: 30,
@@ -74,6 +85,7 @@ const styles = StyleSheet.create({
     right: 30,
     zIndex: 999,
   },
+
   numeros: {
     fontWeight: "bold",
     color: "white",
@@ -81,17 +93,25 @@ const styles = StyleSheet.create({
     fontSize: 30,
   },
   botones: {
+    position: "absolute",
+    bottom: "20%",
+    left: 0,
+    width: "100%",
     display: "flex",
     flexDirection: "row",
+    justifyContent: "center",
     marginTop: 40,
-    margin: 30,
+    marginBottom: 30,
   },
+
   cantidad: {
     display: "flex",
     flexDirection: "row",
     alignItems: "center",
   },
-  boton: {
+
+  pressable: {
+    position: "relative",
     color: "white",
     fontSize: 40,
     textAlign: "center",
@@ -99,27 +119,39 @@ const styles = StyleSheet.create({
     width: 60,
     height: 60,
     borderRadius: 15,
-    paddingBottom: 10,
+    // paddingBottom: 10,
     shadowColor: "#000",
     shadowOffset: {
       width: 0,
       height: 8,
     },
+
     shadowOpacity: 0.46,
     shadowRadius: 11.14,
-
     elevation: 17,
   },
-  agregar: {
-    // color: "white",
-    // fontSize: 30,
-    // backgroundColor: "#414345",
-    marginLeft: 35,
-    width: 180,
-    height: 68,
-    borderRadius: 25,
+
+  boton: {
+    position: "absolute",
+    left: "10%",
+    top: "10%",
+    height: "80%",
+    width: "80%",
+    color: "white",
+    fontSize: 40,
     textAlign: "center",
-    paddingTop: 10,
+    backgroundColor: "#414345",
+  },
+
+  agregar: {
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    marginLeft: 15,
+    width: 180,
+    height: 58,
+    borderRadius: 15,
+
     shadowColor: "#000",
     shadowOffset: {
       width: 0,
@@ -130,14 +162,32 @@ const styles = StyleSheet.create({
 
     elevation: 17,
   },
+
   letraBoton: {
     color: "white",
     fontSize: 30,
+    textAlign: "center",
   },
+
   num: {
     color: "white",
     fontSize: 30,
     margin: 10,
+  },
+
+  promedio: {
+    marginLeft: 30,
+    display: "flex",
+    flexDirection: "row",
+    alignItems: "center",
+  },
+
+  review: {
+    paddingTop: 8,
+    fontSize: 14,
+    marginLeft: 10,
+    color: "white",
+    textDecorationLine: "underline",
   },
 });
 
@@ -148,6 +198,8 @@ const DetalleProducto = ({ route }) => {
   const dispatch = useDispatch();
   const user = useSelector((state) => state.userInfo);
   const favoritos = useSelector((state) => state.favoritos);
+  const reviews = useSelector((state) => state.reviews);
+  const [stateReview, setStateReview] = useState(false);
 
   // useEffect(() => {
   //   console.log("hola");
@@ -158,6 +210,28 @@ const DetalleProducto = ({ route }) => {
       dispatch(agregarCarrito(id, 1));
     }
   }
+
+  //reviews de producto
+  useEffect(() => {
+    dispatch(getProductReviews(id));
+  }, []);
+
+  // Creamos la variable a utilizar
+  var rating = 0;
+
+  // Sumarizamos la cantidad de estrellas entre todas las reviews
+  reviews[0]
+    ? reviews.map((reviews) => (rating += reviews.puntaje))
+    : (rating = 1);
+
+  // Dividimos la suma de estrellas por cantidad de review para saber el promedio
+  if (reviews.length) {
+    rating = rating / reviews.length;
+  } else {
+    rating = rating / 1;
+  }
+  // Redondeamos el promedio de estrellas
+  rating = Math.round(rating);
 
   useEffect(() => {
     fetch(`https://proyecto-final-gp1.herokuapp.com/producto/${id}`)
@@ -171,10 +245,10 @@ const DetalleProducto = ({ route }) => {
   function handleFav() {
     if (favoritos.find((fav) => fav.id == id)) {
       dispatch(eliminarDeFavoritos(id));
-      alert("producto eliminado");
+      alert("Producto eliminado de favoritos");
     } else {
       dispatch(añadirAFavoritos(data));
-      alert("producto agregado");
+      alert("Producto agregado a la lista de favoritos");
     }
   }
 
@@ -215,14 +289,30 @@ const DetalleProducto = ({ route }) => {
 
       <View style={styles.contDatos}>
         <Text style={styles.nombre}>{data.nombre}</Text>
+
+        <View style={styles.promedio}>
+          <StarRating rating={rating ? rating : 1} />
+          <TouchableOpacity onPress={() => setStateReview(!stateReview)}>
+            <Text style={styles.review}>({reviews.length} Reviews)</Text>
+          </TouchableOpacity>
+        </View>
+
         <Text style={styles.descripcion}>{data.descripcion}</Text>
         <Text style={styles.numeros}>${data.precio}</Text>
+
         <View style={styles.botones}>
           <View style={styles.cantidad}>
-            <Text style={styles.boton}>+</Text>
+            <Pressable style={styles.pressable}>
+              <Text style={styles.boton}>-</Text>
+            </Pressable>
+
             <Text style={styles.num}>01</Text>
-            <Text style={styles.boton}>-</Text>
+
+            <Pressable style={styles.pressable}>
+              <Text style={styles.boton}>+</Text>
+            </Pressable>
           </View>
+
           <Pressable
             onPress={(e) => {
               addToCarrito(e);
@@ -240,6 +330,18 @@ const DetalleProducto = ({ route }) => {
           </Pressable>
         </View>
       </View>
+      {reviews?.map((review) => (
+        <Reviews
+          key={review.id}
+          state={stateReview}
+          setState={setStateReview}
+          id={review.id}
+          puntaje={review.puntaje}
+          titulo={review.titulo}
+          comentario={review.comentario}
+          fecha={review.updatedAt ? review.updatedAt.slice(0, 10) : "Ahora"}
+        />
+      ))}
     </View>
   );
 };

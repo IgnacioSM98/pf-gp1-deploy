@@ -15,7 +15,7 @@ import {
   Checkout,
   PreLogin,
 } from "./sources/Components/index.js";
-import { StatusBar } from "react-native";
+import { StatusBar, TouchableWithoutFeedback, Keyboard } from "react-native";
 import { useState, useEffect } from "react";
 
 // ICONOS - Libreria: https://icons.expo.fyi
@@ -29,6 +29,14 @@ import {
 import * as LocalAuthentication from "expo-local-authentication";
 import { setData, getData } from "./sources/Functions/localStorage";
 import * as Font from "expo-font";
+
+const DismissKeyboard = ({ children }) => {
+  return (
+    <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
+      {children}
+    </TouchableWithoutFeedback>
+  );
+};
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
@@ -57,7 +65,7 @@ export default function App() {
 
       const user = await getData("user");
 
-      if (Object.keys(user).length > 0) {
+      if (user && Object.keys(user).length > 0) {
         setFlag(true);
       }
     })();
@@ -131,6 +139,7 @@ export default function App() {
 
   return (
     <Provider store={store}>
+      <DismissKeyboard>
       {isAuthenticated ? (
         <NavigationContainer>
           <Stack.Navigator screenOptions={{ headerShown: false }}>
@@ -166,7 +175,8 @@ export default function App() {
             />
           </Stack.Navigator>
         </NavigationContainer>
-      )}
+      )}  
+      </DismissKeyboard>
     </Provider>
   );
 }

@@ -14,6 +14,8 @@ import Filtros from "./Filtros/Filtros";
 import SignUp from "./Login/SignUp";
 import Checkout from "./Carrito/Checkout";
 import PreLogin from "./Login/PreLogin";
+import StarRating from "./Stars/Stars";
+import Reviews from "./Reviews/Reviews";
 
 export {
   NavBar,
@@ -32,4 +34,6 @@ export {
   SignUp,
   Checkout,
   PreLogin,
+  StarRating,
+  Reviews
 };
