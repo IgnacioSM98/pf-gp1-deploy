@@ -5,6 +5,7 @@ import {
   TouchableOpacity,
   StyleSheet,
   KeyboardAvoidingView,
+  Pressable,
 } from "react-native";
 import { TextInput } from "react-native-paper";
 import { useDispatch } from "react-redux";
@@ -18,6 +19,7 @@ import { app, authentication } from "../../../firebase";
 import { setData } from "../../Functions/localStorage";
 import { FontAwesome } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
+import { AntDesign } from "@expo/vector-icons";
 
 const styles = StyleSheet.create({
   // btn: {
@@ -44,55 +46,119 @@ const styles = StyleSheet.create({
 
   container: {
     flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
+    // justifyContent: "center",
+    // alignItems: "center",
+  },
+
+  volver: {
+    position: "absolute",
+    fontSize: 30,
+    top: 50,
+    left: 30,
+    zIndex: 999,
+  },
+
+  bienvenido: {
+    top: "10%",
+    left: "23%",
+    position: "absolute",
+    fontSize: 35,
+    fontFamily: "PoppinsM",
+    color: "rgba(67, 67, 67, 1)",
+    // textShadowColor: "grey",
+    // textShadowOffset: { width: 2, height: 3 },
+    // textShadowRadius: 3,
+  },
+  saludo2: {
+    position: "absolute",
+    top: "15%",
+    left: "12%",
+    fontSize: 22,
+    fontFamily: "PoppinsR",
+    color: "rgba(67, 67, 67, 1)",
+    marginTop: 20,
   },
 
   inputContainer: {
-    width: "80%",
+    top: "30%",
+    left: "5%",
+    width: "90%",
   },
 
   input: {
     backgroundColor: "white",
-    paddingHorizontal: 15,
-    paddingVertical: 10,
-    borderRadius: 10,
-    marginTop: 5,
+
+    paddingLeft: 10,
+    paddingRight: 10,
+    marginBottom: 20,
+    borderBottomLeftRadius: 15,
+    borderBottomRightRadius: 15,
+    borderTopRightRadius: 15,
+    borderTopLeftRadius: 15,
+    fontFamily: "Poppins",
+    fontSize: 18,
+    // color: "#222",
+  },
+
+  botonOlvidar: {
+    top: "30%",
+    alignItems: "flex-end",
+    marginRight: 10,
   },
 
   buttonContainer: {
-    width: "60%",
-    justifyContent: "center",
-    alignItems: "center",
-    marginTop: 40,
+    width: "90%",
+    top: "38%",
+    left: "10%",
   },
 
   button: {
-    backgroundColor: "#0782F9",
-    width: "100%",
+    width: "90%",
     padding: 15,
     borderRadius: 10,
     alignItems: "center",
+    backgroundColor: "black",
   },
 
-  buttonOutline: {
-    backgroundColor: "white",
-    marginTop: 5,
-    borderColor: "#0782F9",
-    borderWidth: 2,
+  // buttonOutline: {
+  //   backgroundColor: "white",
+  //   marginTop: 5,
+  //   borderColor: "#0782F9",
+  //   borderWidth: 2,
+  // },
+
+  textGoogle: {
+    position: "absolute",
+    bottom: "22%",
+    right: "35%",
+    fontSize: 15,
+    fontFamily: "PoppinsM",
+    color: "grey",
+  },
+  contenedorRegistro: {
+    position: "absolute",
+    flexDirection: "row",
+    width: "100%",
+    bottom: 10,
+    left: "8%",
+  },
+  textRegistro2: {
+    fontFamily: "PoppinsR",
+    fontSize: 15,
+    color: "black",
+    marginRight: 10,
+  },
+  textRegistro: {
+    fontFamily: "PoppinsM",
+    fontSize: 15,
+    color: "darkgrey",
   },
 
-  buttonText: {
-    color: "white",
-    fontWeight: "700",
-    fontSize: 16,
-  },
-
-  buttonOutlineText: {
-    color: "#0782F9",
-    fontWeight: "700",
-    fontSize: 16,
-  },
+  // buttonOutlineText: {
+  //   color: "#0782F9",
+  //   fontWeight: "700",
+  //   fontSize: 16,
+  // },
 });
 
 export default function Login({ flag, onAuth, setIsAuthenticated }) {
@@ -186,6 +252,19 @@ export default function Login({ flag, onAuth, setIsAuthenticated }) {
     //   </TouchableOpacity>
     // </View>
     <KeyboardAvoidingView style={styles.container} behavior="height">
+      <AntDesign
+        style={styles.volver}
+        name="arrowleft"
+        size={24}
+        color="black"
+        onPress={() => {
+          navigation.goBack();
+        }}
+      />
+
+      <Text style={styles.bienvenido}>¡Bienvenido!</Text>
+      <Text style={styles.saludo2}>Nos alegra verte de nuevo</Text>
+
       <View style={styles.inputContainer}>
         {/* <TextInput
           style={styles.input}
@@ -203,17 +282,21 @@ export default function Login({ flag, onAuth, setIsAuthenticated }) {
 
         <TextInput
           style={styles.input}
-          placeholder="Email"
+          placeholder="Ingrese e-mail"
           value={email}
           onChangeText={(text) => setEmail(text)}
+          underlineColor="transparent"
+          theme={{ colors: { text: "#222", primary: "transparent" } }}
         />
 
         <TextInput
           style={styles.input}
-          placeholder="Password"
+          placeholder="Ingrese contraseña"
           value={password}
           onChangeText={(text) => setPassword(text)}
           secureTextEntry={passwordVisible}
+          underlineColor="transparent"
+          theme={{ colors: { text: "#222", primary: "transparent" } }}
           right={
             <TextInput.Icon
               name={passwordVisible ? "eye" : "eye-off"}
@@ -223,28 +306,42 @@ export default function Login({ flag, onAuth, setIsAuthenticated }) {
         />
       </View>
 
+      <Pressable style={styles.botonOlvidar} onPress={handleForgotPass}>
+        <Text
+          style={{
+            fontFamily: "PoppinsR",
+            fontSize: 15,
+            color: "rgba(115, 115, 115, 1)",
+          }}
+        >
+          ¿Olvidaste la contraseña?
+        </Text>
+      </Pressable>
+
       <View style={styles.buttonContainer}>
         <TouchableOpacity style={styles.button} onPress={logIn}>
-          <Text style={styles.buttonText}>Login</Text>
+          <Text
+            style={{ fontFamily: "PoppinsM", fontSize: 20, color: "white" }}
+          >
+            Iniciar sesion
+          </Text>
         </TouchableOpacity>
+      </View>
 
-        <TouchableOpacity style={styles.button} onPress={handleForgotPass}>
-          <Text style={styles.buttonText}>Olvidaste la contraseña?</Text>
-        </TouchableOpacity>
+      <Text style={styles.textGoogle}>O ingresa con</Text>
 
-        {/* <FontAwesome
+      {/* <FontAwesome
           name="google"
           size={24}
           color="black"
           onPress={googleSignIn}
         /> */}
 
-        <TouchableOpacity
-          style={[styles.button, styles.buttonOutline]}
-          onPress={registrar}
-        >
-          <Text style={styles.buttonOutlineText}>Registrate aca</Text>
-        </TouchableOpacity>
+      <View style={styles.contenedorRegistro}>
+        <Text style={styles.textRegistro2}>¿No tenés una cuenta aún?</Text>
+        <Pressable onPress={registrar}>
+          <Text style={styles.textRegistro}>Registrate acá</Text>
+        </Pressable>
       </View>
     </KeyboardAvoidingView>
   );

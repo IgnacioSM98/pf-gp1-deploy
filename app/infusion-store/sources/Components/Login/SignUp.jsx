@@ -5,6 +5,7 @@ import {
   TouchableOpacity,
   StyleSheet,
   KeyboardAvoidingView,
+  Pressable,
 } from "react-native";
 import { TextInput } from "react-native-paper";
 import { useDispatch } from "react-redux";
@@ -17,6 +18,8 @@ import {
 import { app, authentication } from "../../../firebase";
 import { setData } from "../../Functions/localStorage";
 import { FontAwesome } from "@expo/vector-icons";
+import { useNavigation } from "@react-navigation/native";
+import { AntDesign } from "@expo/vector-icons";
 
 const styles = StyleSheet.create({
   container: {
@@ -25,51 +28,109 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
 
+  volver: {
+    position: "absolute",
+    fontSize: 30,
+    top: 50,
+    left: 30,
+    zIndex: 999,
+  },
+
+  saludo: {
+    position: "absolute",
+    top: "10%",
+    left: "35%",
+    fontSize: 35,
+    fontFamily: "PoppinsM",
+    color: "rgba(67, 67, 67, 1)",
+  },
+  saludo2: {
+    position: "absolute",
+    top: "15%",
+    left: "16%",
+    fontSize: 22,
+    fontFamily: "PoppinsR",
+    color: "rgba(67, 67, 67, 1)",
+    marginTop: 20,
+  },
+
   inputContainer: {
     width: "80%",
   },
 
   input: {
     backgroundColor: "white",
-    paddingHorizontal: 15,
-    paddingVertical: 10,
-    borderRadius: 10,
-    marginTop: 5,
+    paddingLeft: 10,
+    paddingRight: 10,
+    marginBottom: 10,
+    borderBottomLeftRadius: 15,
+    borderBottomRightRadius: 15,
+    borderTopRightRadius: 15,
+    borderTopLeftRadius: 15,
+    fontFamily: "Poppins",
+    fontSize: 15,
+    color: "rgba(131, 145, 161, 1)",
   },
 
   buttonContainer: {
-    width: "60%",
-    justifyContent: "center",
-    alignItems: "center",
-    marginTop: 40,
+    width: "90%",
+    top: "3%",
+    left: "5%",
   },
 
   button: {
-    backgroundColor: "#0782F9",
-    width: "100%",
+    width: "90%",
     padding: 15,
     borderRadius: 10,
     alignItems: "center",
+    backgroundColor: "black",
+  },
+  textGoogle: {
+    position: "absolute",
+    bottom: "18%",
+    right: "35%",
+    fontSize: 15,
+    fontFamily: "PoppinsM",
+    color: "grey",
   },
 
-  buttonOutline: {
-    backgroundColor: "white",
-    marginTop: 5,
-    borderColor: "#0782F9",
-    borderWidth: 2,
+  contenedorRegistro: {
+    position: "absolute",
+    flexDirection: "row",
+    width: "100%",
+    bottom: 10,
+    left: "15%",
+  },
+  textRegistro2: {
+    fontFamily: "PoppinsR",
+    fontSize: 15,
+    color: "black",
+    marginRight: 10,
+  },
+  textRegistro: {
+    fontFamily: "PoppinsM",
+    fontSize: 15,
+    color: "darkgrey",
   },
 
-  buttonText: {
-    color: "white",
-    fontWeight: "700",
-    fontSize: 16,
-  },
+  // buttonOutline: {
+  //   backgroundColor: "white",
+  //   marginTop: 5,
+  //   borderColor: "#0782F9",
+  //   borderWidth: 2,
+  // },
 
-  buttonOutlineText: {
-    color: "#0782F9",
-    fontWeight: "700",
-    fontSize: 16,
-  },
+  // buttonText: {
+  //   color: "white",
+  //   fontWeight: "700",
+  //   fontSize: 16,
+  // },
+
+  // buttonOutlineText: {
+  //   color: "#0782F9",
+  //   fontWeight: "700",
+  //   fontSize: 16,
+  // },
 });
 
 export default function SignUp({ setIsAuthenticated }) {
@@ -79,6 +140,11 @@ export default function SignUp({ setIsAuthenticated }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [passwordVisible, setPasswordVisible] = useState(true);
+  const navigation = useNavigation();
+
+  const iniciarSesion = () => {
+    navigation.navigate("Login");
+  };
 
   const createUser = () => {
     app
@@ -117,12 +183,26 @@ export default function SignUp({ setIsAuthenticated }) {
 
   return (
     <KeyboardAvoidingView style={styles.container}>
+      <AntDesign
+        style={styles.volver}
+        name="arrowleft"
+        size={24}
+        color="black"
+        onPress={() => {
+          navigation.goBack();
+        }}
+      />
+      <Text style={styles.saludo}>¡Hola!</Text>
+      <Text style={styles.saludo2}>Registrate para empezar</Text>
+
       <View style={styles.inputContainer}>
         <TextInput
           style={styles.input}
           placeholder="Nombre"
           value={nombre}
           onChangeText={(text) => setNombre(text)}
+          underlineColor="transparent"
+          theme={{ colors: { text: "#222", primary: "transparent" } }}
         />
 
         <TextInput
@@ -130,21 +210,27 @@ export default function SignUp({ setIsAuthenticated }) {
           placeholder="Apellido"
           value={apellido}
           onChangeText={(text) => setApellido(text)}
+          underlineColor="transparent"
+          theme={{ colors: { text: "#222", primary: "transparent" } }}
         />
 
         <TextInput
           style={styles.input}
-          placeholder="Email"
+          placeholder="E-mail"
           value={email}
           onChangeText={(text) => setEmail(text)}
+          underlineColor="transparent"
+          theme={{ colors: { text: "#222", primary: "transparent" } }}
         />
 
         <TextInput
           style={styles.input}
-          placeholder="Password"
+          placeholder="Contraseña"
           value={password}
           onChangeText={(text) => setPassword(text)}
           secureTextEntry={passwordVisible}
+          underlineColor="transparent"
+          theme={{ colors: { text: "#222", primary: "transparent" } }}
           right={
             <TextInput.Icon
               name={passwordVisible ? "eye" : "eye-off"}
@@ -154,12 +240,24 @@ export default function SignUp({ setIsAuthenticated }) {
         />
       </View>
 
-      <TouchableOpacity
-        style={[styles.button, styles.buttonOutline]}
-        onPress={createUser}
-      >
-        <Text style={styles.buttonOutlineText}>Registrate</Text>
-      </TouchableOpacity>
+      <View style={styles.buttonContainer}>
+        <TouchableOpacity style={styles.button} onPress={createUser}>
+          <Text
+            style={{ fontFamily: "PoppinsM", fontSize: 20, color: "white" }}
+          >
+            Registrarse
+          </Text>
+        </TouchableOpacity>
+      </View>
+
+      <Text style={styles.textGoogle}>O registrate con</Text>
+
+      <View style={styles.contenedorRegistro}>
+        <Text style={styles.textRegistro2}>¿Ya tenés una cuenta?</Text>
+        <Pressable onPress={iniciarSesion}>
+          <Text style={styles.textRegistro}>Inicia sesion</Text>
+        </Pressable>
+      </View>
     </KeyboardAvoidingView>
   );
 }

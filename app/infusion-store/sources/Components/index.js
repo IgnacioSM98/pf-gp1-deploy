@@ -13,6 +13,7 @@ import Carrito from "./Carrito/Carrito";
 import Filtros from "./Filtros/Filtros";
 import SignUp from "./Login/SignUp";
 import Checkout from "./Carrito/Checkout";
+import PreLogin from "./Login/PreLogin";
 
 export {
   NavBar,
@@ -30,4 +31,5 @@ export {
   Filtros,
   SignUp,
   Checkout,
+  PreLogin,
 };

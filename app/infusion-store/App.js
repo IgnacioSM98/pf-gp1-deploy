@@ -13,6 +13,7 @@ import {
   DetalleProducto,
   Carrito,
   Checkout,
+  PreLogin,
 } from "./sources/Components/index.js";
 import { StatusBar } from "react-native";
 import { useState, useEffect } from "react";
@@ -36,6 +37,7 @@ const fetchFonts = async () => {
   await Font.loadAsync({
     Poppins: require("./assets/fonts/Poppins-Thin.ttf"),
     PoppinsM: require("./assets/fonts/Poppins-Medium.ttf"),
+    PoppinsR: require("./assets/fonts/Poppins-Regular.ttf"),
   });
 };
 
@@ -141,6 +143,7 @@ export default function App() {
       ) : (
         <NavigationContainer>
           <Stack.Navigator screenOptions={{ headerShown: false }}>
+            <Stack.Screen name="PreLogin" component={PreLogin} />
             <Stack.Screen
               name="Login"
               children={() => (
