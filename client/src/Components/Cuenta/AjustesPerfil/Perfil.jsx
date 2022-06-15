@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getUsuarios } from "../../../Redux/actions";
+import { getUsuarios, putPerfil } from "../../../Redux/actions";
 import "./Perfil.css";
-import putPerfil from "./putPerfil";
 import styled from "styled-components";
 import Swal from "sweetalert2";
 
@@ -109,7 +108,7 @@ export default function Perfil({ setComponente }) {
     setInputs({ ...inputs, [e.target.name]: e.target.value });
   };
 
-  function handleSubmit(e) {
+  const handleSubmit = (e) => {
     e.preventDefault();
 
     Swal.fire({
@@ -120,10 +119,12 @@ export default function Perfil({ setComponente }) {
       color: "#222",
       confirmButtonColor: "grey",
       confirmButtonText: "Aceptar",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        dispatch(putPerfil(usuario.id, inputs));
+      }
     });
-
-    dispatch(putPerfil(inputs));
-  }
+  };
 
   function handleCancel() {
     Swal.fire({

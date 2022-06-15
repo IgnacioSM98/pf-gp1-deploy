@@ -200,9 +200,12 @@ export default function rootReducer(state = initialState, action) {
         ...state,
         reviews: action.payload,
       };
+
     case "DELETE_REVIEW":
-      //tamos seguros? xd
-      return { ...state };
+      return {
+        ...state,
+        reviews: state.reviews.filter((r) => r.id !== action.payload),
+      };
 
     case "SET_CARRITO":
       return {
@@ -310,6 +313,17 @@ export default function rootReducer(state = initialState, action) {
         productosFiltrados: prodAux,
       };
 
+    case "PUT_PERFIL":
+      return {
+        ...state,
+        usuarios: state.usuarios.map((u) => {
+          if (u.id === action.payload.id) {
+            return action.payload;
+          }
+          return u;
+        }),
+      };
+
     case "PUT_PRODUCTO":
       const prods = [...state.productosFiltrados];
 
@@ -361,7 +375,9 @@ export default function rootReducer(state = initialState, action) {
 
       return {
         ...state,
-        productos: productosAux,
+        productos: state.productos.filter(
+          (producto) => producto.id !== action.payload
+        ),
         productosFiltrados: productosAux,
       };
 
