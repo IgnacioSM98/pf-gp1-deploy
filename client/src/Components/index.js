@@ -37,7 +37,6 @@ import Pedido from "./Pedidos/Pedido";
 import AdminProductos from "./Admin/AdminProductos";
 import Perfil from "./Cuenta/AjustesPerfil/Perfil.jsx";
 import Favoritos from "./Cuenta/Favoritos/Favoritos";
-import Notificaciones from "./Cuenta/Notificaciones/Notificaciones";
 import Seguridad from "./Cuenta/Seguridad/Seguridad";
 import AdminReseñas from "./Admin/AdminReseñas";
 import Consultas from "./Cuenta/Consultas/Consultas";
@@ -83,7 +82,6 @@ export {
   AdminProductos,
   Perfil,
   Favoritos,
-  Notificaciones,
   Seguridad,
   AdminReseñas,
   Consultas,

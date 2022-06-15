@@ -1,7 +1,6 @@
 .grupo-checkout {
   position: relative;
   margin: 45px 0px 0px 0px;
-  width: 320px;
 }
 
 .input-checkout {
@@ -65,26 +64,3 @@
   left: 0%;
 }
 
-/* @media screen and (max-width: 1100px) {
-    .form-checkout {
-      width: 50%;
-    }
-  }
-  
-  @media screen and (max-width: 600px) {
-    .form-checkout {
-      width: 60%;
-    }
-  }
-  
-  @media screen and (max-width: 450%) {
-    .form-checkout {
-      width: 80%;
-    }
-  }
-  
-  @media screen and (max-width: 300px) {
-    .form-checkout {
-      width: 90%;
-    }
-  } */

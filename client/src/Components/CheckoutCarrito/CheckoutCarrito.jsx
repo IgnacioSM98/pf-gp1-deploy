@@ -13,8 +13,8 @@ const Contenedor = styled.div`
   align-items: center;
   justify-content: center;
   width: 100%;
-
-  height: 90vh;
+  min-height: 90vh;
+  height: auto;
   padding-top: 5%;
   background-image: url("https://media.diepresse.com/images/uploads/8/7/c/5486716/QATAR-COFFEE-CULTURE_1535388239909509.jpg");
   background-size: cover;
@@ -34,7 +34,6 @@ const Formulario = styled.form`
   background-color: rgba(219, 219, 219, 0.75);
   border-radius: 8px;
   backdrop-filter: blur(10px);
-  // box-shadow: 0 2px 2px 0 #222, 2px 2px 2px 2px darkgray;
 `;
 
 const Titulo = styled.h2`
@@ -42,8 +41,9 @@ const Titulo = styled.h2`
   font-size: 28px;
   font-family: Poppins;
   color: black;
-  // filter: drop-shadow(0px 0px 5px #000);
-  // text-shadow: -3px 2px 2px black, 1px -1px 0 darkgrey;
+  @media screen and (max-width: 1300px) {
+    font-size: 20px;
+  }
 `;
 
 const Subtitulo = styled.p`
@@ -52,8 +52,11 @@ const Subtitulo = styled.p`
   font-weight: 600;
   margin-bottom: 1rem;
   color: #222;
-  // filter: drop-shadow(0px 0px 5px #000);
-  // text-shadow: -3px 2px 2px black, 1px -1px 0 darkgrey;
+  display: block;
+  @media screen and (max-width: 1300px) {
+    font-size: 18px;
+    margin-bottom: 0.3rem;
+  }
 `;
 
 const ContenedorDiv = styled.div`
@@ -62,6 +65,12 @@ const ContenedorDiv = styled.div`
   margin: 0 10px 30px 10px;
   align-items: flex-start;
   position: relative;
+  @media screen and (max-width: 1300px) {
+    margin: 0px;
+  }
+  @media screen and (max-width: 560px) {
+    margin: 0 5px 5px 5px;
+  }
 `;
 
 const ContenedorDireccion = styled.div`
@@ -69,6 +78,15 @@ const ContenedorDireccion = styled.div`
   flex-direction: row;
   justify-content: space-between;
   margin: 20px;
+  @media screen and (max-width: 1400px) {
+    margin: 5px;
+    position: relative;
+    width: 200px;
+  }
+  @media screen and (max-width: 560px) {
+    flex-direction: column;
+    width: 50px;
+  }
 `;
 
 const ContenedorCiudad = styled.div`
@@ -76,9 +94,30 @@ const ContenedorCiudad = styled.div`
   flex-direction: row;
   justify-content: space-between;
   margin: 20px;
+  @media screen and (max-width: 1400px) {
+    margin: 5px;
+    position: relative;
+  }
+  @media screen and (max-width: 560px) {
+    position: relative;
+    flex-direction: column;
+  }
 `;
 
-const Input = styled.input``;
+const Input = styled.input`
+  @media screen and (max-width: 1400px) {
+    width: 250px;
+    font-size: 15px;
+  }
+  @media screen and (max-width: 1300px) {
+    font-size: 15px;
+  }
+  @media screen and (max-width: 560px) {
+    width: 50px;
+    font-size: 8px;
+    margin-bottom: 9px;
+  }
+`;
 
 // const ContenedorInput = styled.div``;
 
@@ -87,20 +126,55 @@ const Label = styled.label``;
 const Boton = styled.input`
   width: 200px;
   padding: 10px;
-  margin: 1rem;
   font-size: 18px;
   font-family: Poppins;
   border-radius: 8px;
   color: white;
   background-color: #36885ed1;
   cursor: pointer;
+  @media screen and (max-width: 1300px) {
+    height: 30px;
+    padding: 0px;
+    width: 150px;
+  }
 `;
 
 const ContenedorVarios = styled.div`
   display: flex;
   position: relative;
-  // justify-content: space-evenly;
-  width: 100%;
+  height: 60vh;
+  @media screen and (max-width: 1400px) {
+    flex-direction: column;
+  }
+  @media screen and (max-width: 1300px) {
+    flex-direction: column;
+  }
+`;
+
+const ContenedorSubUno = styled.div`
+  display: flex;
+  position: relative;
+  flex-wrap: wrap;
+  @media screen and (max-width: 1400px) {
+    flex-direction: row;
+    width: 50%;
+    height: 30vh;
+  }
+  @media screen and (max-width: 1300px) {
+    flex-direction: column;
+    position: relative;
+    width: 100%;
+    height: 30vh;
+  }
+  @media screen and (max-width: 950px) {
+    height: 20vh;
+  }
+  @media screen and (max-width: 560px) {
+    flex-direction: column;
+    position: relative;
+    width: 100%;
+    height: 20vh;
+  }
 `;
 
 const Productos = styled.div`
@@ -109,8 +183,8 @@ const Productos = styled.div`
   position: absolute;
   right: 0;
   width: 400px;
-  height: 460px;
-  padding: 20px 0px;
+  height: 390px;
+  padding-top: 10px;
   background: rgb(255 255 255 / 46%);
   border-radius: 10px;
   border-radius: 10px;
@@ -121,8 +195,44 @@ const Productos = styled.div`
     font-weight: 500;
     margin-bottom: 1rem;
     color: #222;
-    // margin-bottom: 2rem;
-    // font-family: Poppins;
+  }
+  @media screen and (max-width: 1300px) {
+    width: auto;
+    height: 30vh;
+    position: relative;
+    margin-top: 7px;
+  }
+  @media screen and (max-width: 1000px) {
+    width: auto;
+    height: 30vh;
+    position: relative;
+    margin-top: 7px;
+  }
+  @media screen and (max-width: 950px) {
+    width: auto;
+    height: 30vh;
+    position: relative;
+    margin-top: 7px;
+  }
+  @media screen and (max-width: 560px) {
+    width: auto;
+    height: 30vh;
+    position: relative;
+    margin-top: 7px;
+  }
+`;
+
+const DivBoton = styled.div`
+  position: absolute;
+  left: 45%;
+  bottom: 0px;
+  @media screen and (max-width: 1300px) {
+    left: 40%;
+    bottom: -11.5%;
+  }
+  @media screen and (max-width: 560px) {
+    left: 30%;
+    bottom: -1%;
   }
 `;
 
@@ -144,7 +254,6 @@ const ContenedorProductos = styled.div`
   width: 100%;
   padding: 0px 20px;
   margin-top: 15px;
-  // background-color: red;
 `;
 
 const ContenedorProducto = styled.div`
@@ -158,6 +267,9 @@ const ContenedorProducto = styled.div`
     font-family: Poppins;
     font-size: 14px;
     margin: 0;
+  }
+  @media screen and (max-width: 1300px) {
+    margin-bottom: 5px;
   }
 `;
 
@@ -173,6 +285,9 @@ const Monto = styled.label`
   font-size: 22px;
   font-weight: 600;
   font-family: Poppins;
+  @media screen and (max-width: 1300px) {
+    font-size: 18px;
+  }
 `;
 
 function Checkout({ contacto }) {
@@ -265,8 +380,8 @@ function Checkout({ contacto }) {
           </Titulo>
 
           <ContenedorVarios>
-            <div style={{ width: "70%" }}>
-              <Subtitulo>Informacion de entrega</Subtitulo>
+            <Subtitulo>Informacion de entrega</Subtitulo>
+            <ContenedorSubUno>
               <ContenedorDireccion>
                 <ContenedorDiv className="grupo-checkout">
                   <Input
@@ -291,7 +406,7 @@ function Checkout({ contacto }) {
                     required
                   />
                   <span className="barra-checkout"></span>
-                  <Label className="label-checkout">Altura/Numero</Label>
+                  <Label className="label-checkout">Numero</Label>
                 </ContenedorDiv>
                 <ContenedorDiv className="grupo-checkout">
                   <Input
@@ -302,7 +417,7 @@ function Checkout({ contacto }) {
                     onChange={(e) => handleChange(e)}
                   />
                   <span className="barra-checkout"></span>
-                  <Label className="label-checkout">Piso/Depto/Casa</Label>
+                  <Label className="label-checkout">Piso/Dpto</Label>
                 </ContenedorDiv>
               </ContenedorDireccion>
 
@@ -316,6 +431,7 @@ function Checkout({ contacto }) {
                     onChange={(e) => handleChange(e)}
                     required
                   />
+                  <span className="barra-checkout"></span>
                   <Label className="label-checkout">Ciudad</Label>
                 </ContenedorDiv>
                 <ContenedorDiv className="grupo-checkout">
@@ -341,7 +457,7 @@ function Checkout({ contacto }) {
                     required
                   />
                   <span className="barra-checkout"></span>
-                  <Label className="label-checkout">Codigo Postal</Label>
+                  <Label className="label-checkout">C.P.</Label>
                 </ContenedorDiv>
               </ContenedorCiudad>
 
@@ -357,7 +473,7 @@ function Checkout({ contacto }) {
                     required
                   />
                   <span className="barra-checkout"></span>
-                  <Label className="label-checkout">Celular de contacto</Label>
+                  <Label className="label-checkout">Celular</Label>
                 </ContenedorDiv>
                 <ContenedorDiv className="grupo-checkout">
                   <Input
@@ -372,10 +488,10 @@ function Checkout({ contacto }) {
                     required
                   />
                   <span className="barra-checkout"></span>
-                  <Label className="label-checkout">E-Mail de contacto</Label>
+                  <Label className="label-checkout">E-Mail</Label>
                 </ContenedorDiv>
               </ContenedorCiudad>
-            </div>
+            </ContenedorSubUno>
 
             <Productos>
               <h3 style={{ fontWeight: 600 }}>Resumen de compra</h3>
@@ -405,14 +521,14 @@ function Checkout({ contacto }) {
                 <Monto right={0}>${precioTotal}</Monto>
               </ContenedorMonto>
             </Productos>
+            <DivBoton>
+              {!flag && <Boton type="submit" value="Continuar" />}
+
+              {flag && (
+                <MercadoPagoIntegracion carrito={carrito} input={input} />
+              )}
+            </DivBoton>
           </ContenedorVarios>
-
-          <div style={{ position: "absolute", bottom: "20%" }}>
-            {!flag && <Boton type="submit" value="Continuar" />}
-
-            {flag && <MercadoPagoIntegracion carrito={carrito} input={input} />}
-            {/* <QR /> */}
-          </div>
         </Formulario>
       </Contenedor>
       <Footer contacto={contacto} />
