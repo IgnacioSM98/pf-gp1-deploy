@@ -380,7 +380,7 @@ export default function rootReducer(state = initialState, action) {
       return {
         ...state,
         productos: state.productos.filter(
-          (producto) => producto.id !== action.payload
+          (producto) => producto.id !== Number(action.payload)
         ),
         productosFiltrados: productosAux,
       };
