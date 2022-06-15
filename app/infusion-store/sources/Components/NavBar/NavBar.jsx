@@ -53,8 +53,9 @@ const styles = StyleSheet.create({
     width: "65%",
     bottom: "5%",
     left: "5%",
+    shadowOpacity: "0",
     // padding: 10,
-    borderRadius: 12,
+    borderRadius: 14,
     backgroundColor: "rgba(194, 194, 194, 0.69)",
     color: "grey",
     fontFamily: "PoppinsM",
@@ -87,17 +88,23 @@ export default function NavBar({ titulo, screen, mostrar, setMostrar, flag }) {
   const handleOnFocus = () => {
     screen === "Inicio" && navigation.navigate("Tienda");
   };
+
   return (
     <Container>
       <>
-        <Filter onPress={() => setMostrar(!mostrar)}>
-          <Foundation
-            name="filter"
-            size={26}
-            color="black"
-            style={{ alignItems: "center", justifyContent: "center" }}
-          />
-        </Filter>
+        {screen === "Tienda" ? (
+          <Filter onPress={() => setMostrar(!mostrar)}>
+            <Foundation
+              name="filter"
+              size={26}
+              color="black"
+              style={{ alignItems: "center", justifyContent: "center" }}
+            />
+          </Filter>
+        ) : (
+          <></>
+        )}
+
         <Button onPress={() => navigation.navigate("Carrito")}>
           <MaterialCommunityIcons
             name="cart"
