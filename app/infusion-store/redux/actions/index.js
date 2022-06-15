@@ -275,13 +275,13 @@ export function getUsuarios() {
   };
 }
 
-// export function postUsuario(body) {
-//   return function (dispatch) {
-//     axios
-//       .post(`${urlBase}crear`, body)
-//       .then((res) => dispatch({ type: "POST_USUARIO", payload: res.data }));
-//   };
-// }
+export function postUsuario(body) {
+  return function (dispatch) {
+    axios
+      .post(`${urlBase}crear`, body)
+      .then((res) => dispatch({ type: "POST_USUARIO", payload: res.data }));
+  };
+}
 
 // export function changeUserMode(userInfo) {
 //   const user = { ...userInfo };
