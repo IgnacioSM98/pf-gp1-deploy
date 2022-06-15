@@ -25,8 +25,8 @@ const styles = StyleSheet.create({
 
 export default function Favoritos({ navigation }) {
   const dispatch = useDispatch();
-  const [favoritos, setFavoritos] = useState([]);
-  const fav = useSelector((state) => state.favoritos);
+  // const [favoritos, setFavoritos] = useState([]);
+  const favoritos = useSelector((state) => state.favoritos);
   const userInfo = useSelector((state) => state.userInfo);
 
   /* useEffect(() => {
@@ -38,6 +38,7 @@ export default function Favoritos({ navigation }) {
       });
     }
   }, []);*/
+
   useEffect(() => {
     dispatch(getFavoritos(userInfo.uid));
   }, [userInfo]);
@@ -46,13 +47,19 @@ export default function Favoritos({ navigation }) {
     <>
       <NavBar titulo="Favoritos" />
 
-      <FlatList
-        style={{ height: "100%", marginTop: "2%" }}
-        data={fav}
-        renderItem={({ item }) => (
-          <Favorito navigation={navigation} item={item} />
-        )}
-      />
+      {favoritos[0] ? (
+        <FlatList
+          style={{ height: "100%", marginTop: "2%" }}
+          data={favoritos}
+          renderItem={({ item }) => (
+            <Favorito navigation={navigation} item={item} />
+          )}
+        />
+      ) : (
+        <View style={{ marginTop: "20%", height: "50%" }}>
+          <Text>No hay favoritos aún</Text>
+        </View>
+      )}
     </>
   );
 }
