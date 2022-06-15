@@ -98,9 +98,11 @@ const styles = StyleSheet.create({
     width: "100%",
     display: "flex",
     flexDirection: "row",
+    justifyContent: "center",
     marginTop: 40,
-    margin: 30,
+    marginBottom: 30,
   },
+
   cantidad: {
     display: "flex",
     flexDirection: "row",
@@ -144,10 +146,10 @@ const styles = StyleSheet.create({
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
-    marginLeft: 25,
+    marginLeft: 15,
     width: 180,
-    height: 68,
-    borderRadius: 25,
+    height: 58,
+    borderRadius: 15,
 
     shadowColor: "#000",
     shadowOffset: {
