@@ -7,6 +7,7 @@ import {
   Image,
   TouchableOpacity,
   Pressable,
+  ScrollView,
 } from "react-native";
 import { AntDesign, Octicons } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
@@ -189,6 +190,38 @@ const styles = StyleSheet.create({
     color: "white",
     textDecorationLine: "underline",
   },
+  revBack: {
+    width: "100%",
+    height: "200%",
+    paddingTop: 200,
+    position: "absolute",
+    top: 0,
+    left: 0,
+    display: "flex",
+    alignItems: "center",
+    opacity: 0.98,
+    zIndex: 999,
+    backgroundColor: "grey",
+    overflowY: "scroll",
+  },
+  cerrarButton: {
+    position: "absolute",
+    top: 80,
+    left: "45%",
+  },
+  cerrar: {
+    fontSize: 26,
+    fontWeight: "bold",
+    borderColor: "black",
+    borderWidth: 3,
+    padding: 10,
+    borderRadius: 50,
+    textAlign: "center",
+  },
+  sinReseña:{
+    fontSize: 26,
+    fontWeight: "bold",
+  },
 });
 
 const DetalleProducto = ({ route }) => {
@@ -330,18 +363,36 @@ const DetalleProducto = ({ route }) => {
           </Pressable>
         </View>
       </View>
-      {reviews?.map((review) => (
-        <Reviews
-          key={review.id}
-          state={stateReview}
-          setState={setStateReview}
-          id={review.id}
-          puntaje={review.puntaje}
-          titulo={review.titulo}
-          comentario={review.comentario}
-          fecha={review.updatedAt ? review.updatedAt.slice(0, 10) : "Ahora"}
-        />
-      ))}
+      <>
+        {stateReview && (
+          <View style={styles.revBack}>
+            <TouchableOpacity
+              style={styles.cerrarButton}
+              onPress={() => setStateReview(!stateReview)}
+            >
+              <Text style={styles.cerrar}>X</Text>
+            </TouchableOpacity>
+            {reviews.length === 0 ? (
+              <Text style={styles.sinReseña}>Aún no hay reseñas</Text>
+            ) : (
+              reviews?.map((review) => (
+                <Reviews
+                  key={review.id}
+                  state={stateReview}
+                  setState={setStateReview}
+                  id={review.id}
+                  puntaje={review.puntaje}
+                  titulo={review.titulo}
+                  comentario={review.comentario}
+                  fecha={
+                    review.updatedAt ? review.updatedAt.slice(0, 10) : "Ahora"
+                  }
+                />
+              ))
+            )}
+          </View>
+        )}
+      </>
     </View>
   );
 };
