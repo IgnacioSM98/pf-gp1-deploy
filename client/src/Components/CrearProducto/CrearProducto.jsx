@@ -247,7 +247,6 @@ export default function CrearProducto({ contacto }) {
 
   useEffect(() => {
     setPost({
-      ...post,
       nombre: detalle.nombre,
       descripcion: detalle.descripcion,
       precio: detalle.precio,

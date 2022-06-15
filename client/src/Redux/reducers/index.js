@@ -347,6 +347,11 @@ export default function rootReducer(state = initialState, action) {
           if (action.payload.stock) {
             prod.stock = action.payload.stock;
           }
+
+          console.log(action.payload, prod, "sdag");
+          if (action.payload.categorias) {
+            prod.categoria = action.payload.categorias;
+          }
         }
       });
 
