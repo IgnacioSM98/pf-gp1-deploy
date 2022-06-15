@@ -63,7 +63,7 @@ export default function Contacto({ setOption }) {
       />
       <Text style={styles.error}>{errors.consulta}</Text>
       <TouchableHighlight style={styles.button} onPress={() => handleSubmit()}>
-        <Text styles={styles.textButton}>ENVIAR</Text>
+        <Text style={styles.textButton}>ENVIAR</Text>
       </TouchableHighlight>
     </View>
   );
@@ -107,7 +107,7 @@ const styles = StyleSheet.create({
     justifyContent: "start",
   },
   textButton: {
-    color: "#FFF",
+    color: "white",
     textAlign: "center",
     fontSize: 18,
     fontWeight: "bold",
