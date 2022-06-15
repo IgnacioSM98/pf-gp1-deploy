@@ -54,6 +54,7 @@ export default function Contacto({ setOption }) {
         name="mail"
         placeholder=" Mail"
         style={styles.input}
+        value={input.mail}
         onChangeText={(text) => handleChange(text, "mail")}
       />
       <Text style={styles.error}>{errors.mail}</Text>
@@ -64,6 +65,7 @@ export default function Contacto({ setOption }) {
         onValueChange={(value) => {
           handleChange(value);
         }}
+        value={input.subject}
         items={[
           { label: "Consulta", value: "Consulta" },
           { label: "Reclamo", value: "Reclamo" },
@@ -74,6 +76,7 @@ export default function Contacto({ setOption }) {
         miltiline
         name="text"
         placeholder="Texto"
+        value={input.text}
         style={[styles.input, styles.textarea]}
         onChangeText={(text) => handleChange(text, "text")}
       />
