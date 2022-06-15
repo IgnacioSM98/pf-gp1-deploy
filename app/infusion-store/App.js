@@ -140,42 +140,45 @@ export default function App() {
   return (
     <Provider store={store}>
       <DismissKeyboard>
-      {isAuthenticated ? (
-        <NavigationContainer>
-          <Stack.Navigator screenOptions={{ headerShown: false }}>
-            <Stack.Screen name="HomeTabs" component={HomeTabs} />
-            <Stack.Screen name="DetalleProducto" component={DetalleProducto} />
-            <Stack.Screen name="Carrito" component={Carrito} />
-            <Stack.Screen name="Checkout" component={Checkout} />
-          </Stack.Navigator>
-        </NavigationContainer>
-      ) : (
-        <NavigationContainer>
-          <Stack.Navigator screenOptions={{ headerShown: false }}>
-            <Stack.Screen name="PreLogin" component={PreLogin} />
-            <Stack.Screen
-              name="Login"
-              children={() => (
-                <Login
-                  flag={flag}
-                  onAuth={onAuth}
-                  setIsAuthenticated={setIsAuthenticated}
-                />
-              )}
-            />
+        {isAuthenticated ? (
+          <NavigationContainer>
+            <Stack.Navigator screenOptions={{ headerShown: false }}>
+              <Stack.Screen name="HomeTabs" component={HomeTabs} />
+              <Stack.Screen
+                name="DetalleProducto"
+                component={DetalleProducto}
+              />
+              <Stack.Screen name="Carrito" component={Carrito} />
+              <Stack.Screen name="Checkout" component={Checkout} />
+            </Stack.Navigator>
+          </NavigationContainer>
+        ) : (
+          <NavigationContainer>
+            <Stack.Navigator screenOptions={{ headerShown: false }}>
+              <Stack.Screen name="PreLogin" component={PreLogin} />
+              <Stack.Screen
+                name="Login"
+                children={() => (
+                  <Login
+                    flag={flag}
+                    onAuth={onAuth}
+                    setIsAuthenticated={setIsAuthenticated}
+                  />
+                )}
+              />
 
-            <Stack.Screen
-              name="SignUp"
-              children={() => (
-                <SignUp
-                  onAuth={onAuth}
-                  setIsAuthenticated={setIsAuthenticated}
-                />
-              )}
-            />
-          </Stack.Navigator>
-        </NavigationContainer>
-      )}  
+              <Stack.Screen
+                name="SignUp"
+                children={() => (
+                  <SignUp
+                    onAuth={onAuth}
+                    setIsAuthenticated={setIsAuthenticated}
+                  />
+                )}
+              />
+            </Stack.Navigator>
+          </NavigationContainer>
+        )}
       </DismissKeyboard>
     </Provider>
   );

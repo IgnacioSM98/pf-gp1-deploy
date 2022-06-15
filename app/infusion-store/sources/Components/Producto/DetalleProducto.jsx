@@ -144,6 +144,29 @@ const styles = StyleSheet.create({
     backgroundColor: "#414345",
   },
 
+  botonSinStock: {
+    position: "relative",
+    color: "white",
+    fontSize: 40,
+    textAlign: "center",
+    backgroundColor: "#414345",
+    width: "80%",
+    height: 60,
+    borderRadius: 15,
+    display: "flex",
+    justifyContent: "center",
+    // paddingBottom: 10,
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 8,
+    },
+
+    shadowOpacity: 0.46,
+    shadowRadius: 11.14,
+    elevation: 17,
+  },
+
   agregar: {
     display: "flex",
     justifyContent: "center",
@@ -218,7 +241,7 @@ const styles = StyleSheet.create({
     borderRadius: 50,
     textAlign: "center",
   },
-  sinReseña:{
+  sinReseña: {
     fontSize: 26,
     fontWeight: "bold",
   },
@@ -233,6 +256,7 @@ const DetalleProducto = ({ route }) => {
   const favoritos = useSelector((state) => state.favoritos);
   const reviews = useSelector((state) => state.reviews);
   const [stateReview, setStateReview] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   // useEffect(() => {
   //   console.log("hola");
@@ -272,7 +296,10 @@ const DetalleProducto = ({ route }) => {
       .then((response) => {
         setData(response);
       })
-      .catch((error) => console.error(error));
+      .catch((error) => console.error(error))
+      .finally(() => {
+        setLoading(false);
+      });
   }, [id]);
 
   function handleFav() {
@@ -285,7 +312,7 @@ const DetalleProducto = ({ route }) => {
     }
   }
 
-  return (
+  return !loading ? (
     <View style={styles.contProd}>
       <AntDesign
         style={styles.volver}
@@ -333,35 +360,43 @@ const DetalleProducto = ({ route }) => {
         <Text style={styles.descripcion}>{data.descripcion}</Text>
         <Text style={styles.numeros}>${data.precio}</Text>
 
-        <View style={styles.botones}>
-          <View style={styles.cantidad}>
-            <Pressable style={styles.pressable}>
-              <Text style={styles.boton}>-</Text>
-            </Pressable>
+        {data.stock > 0 ? (
+          <View style={styles.botones}>
+            <View style={styles.cantidad}>
+              <Pressable style={styles.pressable}>
+                <Text style={styles.boton}>-</Text>
+              </Pressable>
 
-            <Text style={styles.num}>01</Text>
+              <Text style={styles.num}>01</Text>
 
-            <Pressable style={styles.pressable}>
-              <Text style={styles.boton}>+</Text>
+              <Pressable style={styles.pressable}>
+                <Text style={styles.boton}>+</Text>
+              </Pressable>
+            </View>
+
+            <Pressable
+              onPress={(e) => {
+                addToCarrito(e);
+              }}
+              style={({ pressed }) => [
+                {
+                  backgroundColor: pressed
+                    ? "rgba(194, 194, 194, 0.69)"
+                    : "#414345",
+                },
+                styles.agregar,
+              ]}
+            >
+              <Text style={styles.letraBoton}>Agregar</Text>
             </Pressable>
           </View>
-
-          <Pressable
-            onPress={(e) => {
-              addToCarrito(e);
-            }}
-            style={({ pressed }) => [
-              {
-                backgroundColor: pressed
-                  ? "rgba(194, 194, 194, 0.69)"
-                  : "#414345",
-              },
-              styles.agregar,
-            ]}
-          >
-            <Text style={styles.letraBoton}>Agregar</Text>
-          </Pressable>
-        </View>
+        ) : (
+          <View style={styles.botones}>
+            <View style={styles.botonSinStock}>
+              <Text style={styles.letraBoton}>Sin Stock</Text>
+            </View>
+          </View>
+        )}
       </View>
       <>
         {stateReview && (
@@ -394,6 +429,8 @@ const DetalleProducto = ({ route }) => {
         )}
       </>
     </View>
+  ) : (
+    <></>
   );
 };
 
