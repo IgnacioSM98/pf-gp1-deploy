@@ -7,6 +7,7 @@ import {
   Image,
   TouchableOpacity,
   Pressable,
+  ScrollView,
 } from "react-native";
 import { AntDesign, Octicons } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
@@ -145,6 +146,29 @@ const styles = StyleSheet.create({
     backgroundColor: "#414345",
   },
 
+  botonSinStock: {
+    position: "relative",
+    color: "white",
+    fontSize: 40,
+    textAlign: "center",
+    backgroundColor: "#414345",
+    width: "80%",
+    height: 60,
+    borderRadius: 15,
+    display: "flex",
+    justifyContent: "center",
+    // paddingBottom: 10,
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 8,
+    },
+
+    shadowOpacity: 0.46,
+    shadowRadius: 11.14,
+    elevation: 17,
+  },
+
   agregar: {
     display: "flex",
     justifyContent: "center",
@@ -191,6 +215,38 @@ const styles = StyleSheet.create({
     color: "white",
     textDecorationLine: "underline",
   },
+  revBack: {
+    width: "100%",
+    height: "200%",
+    paddingTop: 200,
+    position: "absolute",
+    top: 0,
+    left: 0,
+    display: "flex",
+    alignItems: "center",
+    opacity: 0.98,
+    zIndex: 999,
+    backgroundColor: "grey",
+    overflowY: "scroll",
+  },
+  cerrarButton: {
+    position: "absolute",
+    top: 80,
+    left: "45%",
+  },
+  cerrar: {
+    fontSize: 26,
+    fontWeight: "bold",
+    borderColor: "black",
+    borderWidth: 3,
+    padding: 10,
+    borderRadius: 50,
+    textAlign: "center",
+  },
+  sinReseña: {
+    fontSize: 26,
+    fontWeight: "bold",
+  },
 });
 
 const DetalleProducto = ({ route }) => {
@@ -204,6 +260,7 @@ const DetalleProducto = ({ route }) => {
   const [stateReview, setStateReview] = useState(false);
   const carrito = useSelector((state) => state.carrito);
   const [cantidad, setCantidad] = useState(1);
+  const [loading, setLoading] = useState(true);
 
   const cantidadCarrito = useSelector(
     (state) => state.carrito?.filter((item) => item.id === id)[0]
@@ -271,7 +328,10 @@ const DetalleProducto = ({ route }) => {
       .then((response) => {
         setData(response);
       })
-      .catch((error) => console.error(error));
+      .catch((error) => console.error(error))
+      .finally(() => {
+        setLoading(false);
+      });
   }, [id]);
 
   useEffect(() => {
@@ -288,7 +348,7 @@ const DetalleProducto = ({ route }) => {
     }
   }
 
-  return (
+  return !loading ? (
     <View style={styles.contProd}>
       <AntDesign
         style={styles.volver}
@@ -336,6 +396,7 @@ const DetalleProducto = ({ route }) => {
         <Text style={styles.descripcion}>{data.descripcion}</Text>
         <Text style={styles.numeros}>${data.precio}</Text>
 
+        {data.stock > 0 ? (
         <View style={styles.botones}>
           <View style={styles.cantidad}>
             <Pressable style={styles.pressable} onPress={restaCarrito}>
@@ -366,20 +427,47 @@ const DetalleProducto = ({ route }) => {
             <Text style={styles.letraBoton}>Agregar</Text>
           </Pressable>
         </View>
+        ) : (
+          <View style={styles.botones}>
+            <View style={styles.botonSinStock}>
+              <Text style={styles.letraBoton}>Sin Stock</Text>
+            </View>
+          </View>
+        )}
       </View>
-      {reviews?.map((review) => (
-        <Reviews
-          key={review.id}
-          state={stateReview}
-          setState={setStateReview}
-          id={review.id}
-          puntaje={review.puntaje}
-          titulo={review.titulo}
-          comentario={review.comentario}
-          fecha={review.updatedAt ? review.updatedAt.slice(0, 10) : "Ahora"}
-        />
-      ))}
+      <>
+        {stateReview && (
+          <View style={styles.revBack}>
+            <TouchableOpacity
+              style={styles.cerrarButton}
+              onPress={() => setStateReview(!stateReview)}
+            >
+              <Text style={styles.cerrar}>X</Text>
+            </TouchableOpacity>
+            {reviews.length === 0 ? (
+              <Text style={styles.sinReseña}>Aún no hay reseñas</Text>
+            ) : (
+              reviews?.map((review) => (
+                <Reviews
+                  key={review.id}
+                  state={stateReview}
+                  setState={setStateReview}
+                  id={review.id}
+                  puntaje={review.puntaje}
+                  titulo={review.titulo}
+                  comentario={review.comentario}
+                  fecha={
+                    review.updatedAt ? review.updatedAt.slice(0, 10) : "Ahora"
+                  }
+                />
+              ))
+            )}
+          </View>
+        )}
+      </>
     </View>
+  ) : (
+    <></>
   );
 };
 

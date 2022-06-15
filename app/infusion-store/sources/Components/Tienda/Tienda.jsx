@@ -110,7 +110,7 @@ const Tienda = ({ navigation }) => {
           />
         ) : (
           <FlatList
-            data={data.slice(0, cantidad)}
+            data={data.filter((producto) => producto.stock).slice(0, cantidad)}
             onEndReachedThreshold={0.1}
             onEndReached={handleMore}
             ref={scrollRef}

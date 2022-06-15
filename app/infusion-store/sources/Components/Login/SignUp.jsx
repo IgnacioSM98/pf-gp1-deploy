@@ -10,7 +10,7 @@ import {
 } from "react-native";
 import { TextInput, HelperText } from "react-native-paper";
 import { useDispatch } from "react-redux";
-import { setUserInfo } from "../../../redux/actions";
+import { postUsuario, setUserInfo } from "../../../redux/actions";
 import {
   signInWithPopup,
   signInWithRedirect,
@@ -166,6 +166,16 @@ export default function SignUp({ setIsAuthenticated }) {
                 uid: res.user.uid,
                 photoURL: res.user.photoURL,
               });
+            
+            dispatch(
+              postUsuario({
+                id: res.user.uid,
+                nombre: res.user.displayName,
+                apellido: apellido,
+                mail: res.user.email,
+                contraseña: password,
+              })
+            );
 
               dispatch(
                 setUserInfo({
