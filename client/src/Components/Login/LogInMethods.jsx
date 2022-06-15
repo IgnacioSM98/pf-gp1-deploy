@@ -21,15 +21,19 @@ const Container = styled.div`
   background-repeat: no-repeat;
   background-position: center;
   font-family: Poppins;
-
+  margin-top: 10px;
   height: 92vh;
   display: flex;
   flex-direction: row;
   justify-content: center;
   align-items: center;
   background: cover;
+  @media screen and (max-width: 1000px) {
+    height: 70vh;
+  }
   @media screen and (max-width: 560px) {
     flex-direction: column;
+    margin-top: 5px;
   }
 `;
 
@@ -39,16 +43,24 @@ const SignIn = styled.div`
   align-items: center;
   justify-content: center;
   position: relative;
-
   background-color: #36885ed1;
   border-radius: 20px 0px 0px 20px;
   width: 35%;
   height: 75vh;
-
+  @media screen and (max-width: 1000px) {
+    justify-content: start;
+    height: 60vh;
+    border-radius: 20px 0px 0px 20px;
+  }
   @media screen and (max-width: 560px) {
-    margin-top: 5.5vh;
     width: 85%;
-    height: 30vh;
+    height: auto;
+    border-radius: 20px;
+    margin-top: 40px;
+  }
+  @media screen and (max-width: 350px) {
+    width: 85%;
+    height: auto;
     border-radius: 20px;
   }
 `;
@@ -59,15 +71,24 @@ const SignUp = styled.form`
   align-items: center;
   justify-content: center;
   position: relative;
-
   background-color: white;
   border-radius: 0px 20px 20px 0px;
   width: 45%;
   height: 75vh;
+  @media screen and (max-width: 1000px) {
+    justify-content: start;
+    height: 60vh;
+    border-radius: 0px 20px 20px 0px;
+  }
   @media screen and (max-width: 560px) {
-    margin: 0.5vh 0;
+    margin: 10px;
     width: 85%;
-    height: 55vh;
+    height: auto;
+    border-radius: 20px;
+  }
+  @media screen and (max-width: 350px) {
+    width: 85%;
+    height: auto;
     border-radius: 20px;
   }
 `;
@@ -81,9 +102,23 @@ const Titulo = styled.h1`
   font-weight: bold;
   color: ${(props) => props.color};
   margin: 2rem;
+  @media screen and (max-width: 1000px) {
+    position: relative;
+    font-size: 25px;
+    height: 10%;
+    top: 5px;
+    margin: 0rem;
+  }
   @media screen and (max-width: 560px) {
     position: relative;
     font-size: 15px;
+    height: 10%;
+    top: 5px;
+  }
+  @media screen and (max-width: 350px) {
+    position: relative;
+    font-size: 12px;
+    top: 5px;
     height: 10%;
   }
 `;
@@ -96,49 +131,64 @@ const Parrafo = styled.p`
 `;
 const ParrafoRegistro = styled.p`
   margin: 10px;
+  @media screen and (max-width: 1000px) {
+    margin: 7px;
+  }
   @media screen and (max-width: 560px) {
     margin: 4px;
+    font-size: 12px;
   }
 `;
 
 const Apps = styled.div`
-  // display: flex;
-  // margin-left: 3rem;
-  // margin-bottom: 1rem;
   width: 50%;
-  margin: 20px;
+  margin: 50px;
   @media screen and (max-width: 560px) {
     margin: 8px;
   }
 `;
 
 const BotonGoogle = styled.img`
-  // display: flex;
-  // margin-left: 3rem;
-  // margin-bottom: 1rem;
   width: 30px;
   cursor: pointer;
+  @media screen and (max-width: 1200px) {
+    width: 20px;
+  }
+  @media screen and (max-width: 560px) {
+    width: 20px;
+  }
 `;
 
 const Boton = styled.button`
   background-color: ${(props) => props.backgroundColor};
   width: 140px;
-  height: 40px;
+  height: 30px;
   border: none;
-  position: absolute;
-  bottom: 40px;
-
+  position: relative;
+  bottom: 10px;
   color: ${(props) => props.color};
   border-radius: 6px;
   font-size: 16px;
   margin: 10px 0px;
   cursor: pointer;
   font-family: Poppins;
+  @media screen and (max-width: 1000px) {
+    position: relative;
+    bottom: 0px;
+  }
   @media screen and (max-width: 560px) {
     position: relative;
     width: 130px;
     height: 25px;
     bottom: 0px;
+  }
+  @media screen and (max-width: 350px) {
+    postition: relative;
+    margin: 0px;
+    width: 130px;
+    height: 25px;
+    font-size: 13px;
+    margin-bottom: 5px;
   }
 `;
 

@@ -14,7 +14,7 @@ import {
   Carrito,
   Checkout,
 } from "./sources/Components/index.js";
-import { StatusBar } from "react-native";
+import { StatusBar, TouchableWithoutFeedback, Keyboard } from "react-native";
 import { useState, useEffect } from "react";
 
 // ICONOS - Libreria: https://icons.expo.fyi
@@ -28,6 +28,14 @@ import {
 import * as LocalAuthentication from "expo-local-authentication";
 import { setData, getData } from "./sources/Functions/localStorage";
 import * as Font from "expo-font";
+
+const DismissKeyboard = ({ children }) => {
+  return (
+    <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
+      {children}
+    </TouchableWithoutFeedback>
+  );
+};
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
@@ -129,41 +137,46 @@ export default function App() {
 
   return (
     <Provider store={store}>
-      {isAuthenticated ? (
-        <NavigationContainer>
-          <Stack.Navigator screenOptions={{ headerShown: false }}>
-            <Stack.Screen name="HomeTabs" component={HomeTabs} />
-            <Stack.Screen name="DetalleProducto" component={DetalleProducto} />
-            <Stack.Screen name="Carrito" component={Carrito} />
-            <Stack.Screen name="Checkout" component={Checkout} />
-          </Stack.Navigator>
-        </NavigationContainer>
-      ) : (
-        <NavigationContainer>
-          <Stack.Navigator screenOptions={{ headerShown: false }}>
-            <Stack.Screen
-              name="Login"
-              children={() => (
-                <Login
-                  flag={flag}
-                  onAuth={onAuth}
-                  setIsAuthenticated={setIsAuthenticated}
-                />
-              )}
-            />
+      <DismissKeyboard>
+        {isAuthenticated ? (
+          <NavigationContainer>
+            <Stack.Navigator screenOptions={{ headerShown: false }}>
+              <Stack.Screen name="HomeTabs" component={HomeTabs} />
+              <Stack.Screen
+                name="DetalleProducto"
+                component={DetalleProducto}
+              />
+              <Stack.Screen name="Carrito" component={Carrito} />
+              <Stack.Screen name="Checkout" component={Checkout} />
+            </Stack.Navigator>
+          </NavigationContainer>
+        ) : (
+          <NavigationContainer>
+            <Stack.Navigator screenOptions={{ headerShown: false }}>
+              <Stack.Screen
+                name="Login"
+                children={() => (
+                  <Login
+                    flag={flag}
+                    onAuth={onAuth}
+                    setIsAuthenticated={setIsAuthenticated}
+                  />
+                )}
+              />
 
-            <Stack.Screen
-              name="SignUp"
-              children={() => (
-                <SignUp
-                  onAuth={onAuth}
-                  setIsAuthenticated={setIsAuthenticated}
-                />
-              )}
-            />
-          </Stack.Navigator>
-        </NavigationContainer>
-      )}
+              <Stack.Screen
+                name="SignUp"
+                children={() => (
+                  <SignUp
+                    onAuth={onAuth}
+                    setIsAuthenticated={setIsAuthenticated}
+                  />
+                )}
+              />
+            </Stack.Navigator>
+          </NavigationContainer>
+        )}
+      </DismissKeyboard>
     </Provider>
   );
 }
