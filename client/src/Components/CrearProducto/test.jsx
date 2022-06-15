@@ -11,15 +11,9 @@ import {
 import "./CrearProducto.css";
 import styled from "styled-components";
 import validate from "./validaciones.js";
-import { useNavigate, useParams, useLocation } from "react-router-dom";
-import {
-  Loading,
-  AgregarCategorias,
-  Footer,
-  ScrollToTop,
-  UseOnScreen,
-} from "../index";
-import Swal from "sweetalert2";
+import { useParams } from "react-router-dom";
+import { Modal, Loading } from "../index";
+import AgregarCategorias from "../AgregarCategorias/AgregarCategorias";
 
 const Container = styled.div`
   // display: flex;
@@ -61,6 +55,7 @@ const Left = styled.div`
   flex-direction: column;
   width: 35%;
   height: 100%;
+  // justify-content: center;
   align-items: center;
   margin-top: 50px;
   border: 2px solid black;
@@ -82,6 +77,7 @@ const Right = styled.div`
   flex-direction: column;
   width: 30%;
   height: 100%;
+  // justify-content: center;
   align-items: center;
   margin-top: 50px;
   border: 2px solid black;
@@ -116,6 +112,7 @@ const Errors = styled.span`
   bottom: -20px;
   width: 100%;
   left: 0;
+  // white-space: nowrap;
   font-size: 12px;
   font-weight: 500;
   color: #951414d9;
@@ -129,6 +126,7 @@ const SelectorImagen = styled.input`
   margin: auto;
   position: absolute;
   color: transparent;
+  // background-color: red;
   z-index: 0;
   border-radius: 5px;
   @media screen and (max-width: 960px) {
@@ -148,10 +146,17 @@ const Imagen = styled.img`
 
 const Button = styled.button`
   position: absolute;
+  // top: 660px;
   bottom: 35px;
   width: 80%;
   background: #37563d;
+  // /* fallback for old browsers */
+  // background: -webkit-linear-gradient(to left, #190a05, #870000);
+  // /* Chrome 10-25, Safari 5.1-6 */
+  // background: linear-gradient(to left, #190a05, #870000);
+  // /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
   display: block;
+  // width: 300px;
   height: 40px;
   border: none;
   color: white;
@@ -169,12 +174,19 @@ const Button = styled.button`
   }
 `;
 
+const SelectCat = styled.select`
+  height: 30px;
+  border: 1px solid black;
+  border-radius: 6px;
+`;
+
 const CrearCat = styled.div`
   position: absolute;
   bottom: 15%;
   width: 80%;
   left: 10%;
   right: 10%;
+  // padding-bottom: 3em;
   @media screen and (max-width: 960px) {
     width: 100%;
   }
@@ -207,27 +219,44 @@ const ButtonCat = styled.button`
   cursor: pointer;
 `;
 
-export default function CrearProducto({ contacto }) {
-  const dispatch = useDispatch();
-  const location = useLocation();
-  const navigate = useNavigate();
+const ParrafoAlerta = styled.p`
+  font-size: 20px;
+  font-weight: bold;
+  color: red;
+`;
+const ParrafoOk = styled.p`
+  font-size: 20px;
+  font-weight: bold;
+`;
+const ParrafoCat = styled.p`
+  font-size: 20px;
+  font-weight: bold;
+`;
 
+export default function CrearProducto() {
+  const dispatch = useDispatch();
   const categorías = useSelector((state) => state.categorias);
   const { id } = useParams();
   const detalle = useSelector((state) => state.detalle);
-  const isVisible = UseOnScreen(contacto);
 
-  const [creado, setCreado] = useState(false);
+  const [stateModalProd, setStateModalProd] = useState(false);
+  const [stateModalCat, setStateModalCat] = useState(false);
+  const [stateModalPut, setStateModalPut] = useState(false);
+  const [stateModalImg, setStateModalImg] = useState(false);
+
   const [categorias, setCategorias] = useState([]),
     [errors, setErrors] = useState({}),
     [post, setPost] = useState({
       nombre: "",
       descripcion: "",
+      //precio: 0,
       imagen: "",
+      //stock: 0,
       categorias: [],
     }),
     [loading, setLoading] = useState(false),
     [categoria, setCategoria] = useState({ nombre: "" }),
+    // [cambio, setCambio] = useState(false),
     [imageSelected, setImageSelected] = useState();
 
   useEffect(() => {
@@ -243,7 +272,7 @@ export default function CrearProducto({ contacto }) {
         categorias: [],
       });
     }
-  }, [dispatch, id]);
+  }, []);
 
   useEffect(() => {
     setPost({
@@ -266,6 +295,11 @@ export default function CrearProducto({ contacto }) {
   useEffect(() => {
     setCategorias(categorías);
   }, [categorías]);
+
+  // function handleOpenCategoria(e) {
+  //   e.preventDefault();
+  //   cambio ? setCambio(false) : setCambio(true);
+  // }
 
   function handleInputCambio(e) {
     // Cada vez que escribo se actualiza el state de categoria
@@ -294,31 +328,8 @@ export default function CrearProducto({ contacto }) {
     const inputNewCat = document.getElementById("crear-categoria");
 
     if (inputNewCat.value) {
-      Swal.fire({
-        title: "Crear Categoría",
-        text: "¿Estas seguro crear una nueva categoría?",
-        icon: "warning",
-        iconColor: "grey",
-        color: "#222",
-        showCancelButton: true,
-        cancelButtonText: "No",
-        confirmButtonColor: "green",
-        cancelButtonColor: "darkgrey",
-        confirmButtonText: "Si",
-      }).then((result) => {
-        if (result.isConfirmed) {
-          Swal.fire({
-            text: "¡Categoría creada con éxito!",
-            icon: "success",
-            iconColor: "green",
-            color: "#222",
-            showConfirmButton: false,
-            timer: "1500",
-            toast: true,
-          });
-          dispatch(postCategoria(categoria));
-        }
-      });
+      dispatch(postCategoria(categoria));
+      setStateModalCat(!stateModalCat);
     } else {
       errors.crearCategoria = "Debe crear una categoria";
     }
@@ -365,6 +376,12 @@ export default function CrearProducto({ contacto }) {
     reader.readAsDataURL(changeEvent.target.files[0]);
   }
 
+  useEffect(() => {
+    if (imageSelected) {
+      uploadImagen();
+    }
+  }, [imageSelected]);
+
   function uploadImagen() {
     const formData = new FormData();
 
@@ -379,109 +396,33 @@ export default function CrearProducto({ contacto }) {
       })
       .catch((err) => {
         setLoading(false);
+        setStateModalImg(true);
         setImageSelected();
-
-        Swal.fire({
-          title: "Por favor intente nuevamente",
-          text: "Ocurrió un error al añadir la imagen",
-          icon: "warning",
-          iconColor: "red",
-          color: "#222",
-          confirmButtonColor: "grey",
-          cancelButtonColor: "darkgrey",
-          confirmButtonText: "Aceptar",
-        });
       });
   }
-
-  useEffect(() => {
-    if (imageSelected) {
-      uploadImagen();
-    }
-    // eslint-disable-next-line
-  }, [imageSelected]);
 
   useEffect(() => {
     // Eliminamos el error del state de errores
     setErrors(() => {
       const state = { ...errors };
-
       delete state.imagen;
       return state;
     });
-    // eslint-disable-next-line
   }, [post.imagen]);
 
   function handleSubmit(e) {
     e.preventDefault();
 
     if (id) {
-      Swal.fire({
-        title: `Editar Producto`,
-        text: `¿Estas seguro modificar el producto ${post.nombre}?`,
-        icon: "warning",
-        iconColor: "grey",
-        color: "#222",
-        showCancelButton: true,
-        cancelButtonText: "No",
-        confirmButtonColor: "green",
-        cancelButtonColor: "darkgrey",
-        confirmButtonText: "Si",
-      }).then((result) => {
-        if (result.isConfirmed) {
-          Swal.fire({
-            text: "¡Cambios realizados con éxito!",
-            icon: "success",
-            iconColor: "green",
-            color: "#222",
-            showConfirmButton: false,
-            timer: "1500",
-            toast: true,
-          });
+      dispatch(putProducto(id, post));
 
-          dispatch(putProducto(id, post));
-
-          // Definimos si vienen desde la pagina o si pegaron el Link
-          location.key === "default" ? navigate("/") : navigate(-1);
-        }
-      });
+      setStateModalPut(!stateModalPut);
     } else {
-      if (Object.values(errors).length > 0 || !post.nombre) {
-        Swal.fire({
-          title: "Completar todos los campos",
-          text: "Todos los campos son obligatorios",
-          icon: "warning",
-          iconColor: "red",
-          color: "#222",
-          confirmButtonColor: "grey",
-          cancelButtonColor: "darkgrey",
-          confirmButtonText: "Aceptar",
-        });
+      if (Object.values(errors).length > 0) {
+        setStateModalProd(!stateModalProd);
       } else {
-        Swal.fire({
-          title: "¡Producto creado con éxito!",
-          text: `Se ha creado el producto ${post.nombre}`,
-          icon: "success",
-          iconColor: "green",
-          color: "#222",
-          confirmButtonColor: "grey",
-          cancelButtonColor: "darkgrey",
-          confirmButtonText: "Aceptar",
-        });
-
         dispatch(postProducto(post));
-
-        setPost({
-          nombre: "",
-          descripcion: "",
-          precio: 0,
-          imagen: "",
-          stock: 0,
-          categorias: [],
-        });
-
-        setCreado(true);
-        setImageSelected();
+        setStateModalProd(!stateModalProd);
       }
     }
   }
@@ -507,7 +448,6 @@ export default function CrearProducto({ contacto }) {
           </p>
         )}
       </Encabezado>
-
       <Container>
         <Form onSubmit={(e) => handleSubmit(e)}>
           <Left>
@@ -534,7 +474,6 @@ export default function CrearProducto({ contacto }) {
                 placeholder=" "
                 onChange={(e) => handleInputChange(e)}
               />
-
               <span className="barra"></span>
               <label className="label">Descripción</label>
               {errors.descripcion && <Errors>{errors.descripcion}</Errors>}
@@ -550,7 +489,6 @@ export default function CrearProducto({ contacto }) {
                 placeholder=" "
                 onChange={(e) => handleInputChange(e)}
               />
-
               <span className="barra"></span>
               <label className="label">Precio</label>
               {errors.precio && <Errors>{errors.precio}</Errors>}
@@ -566,7 +504,6 @@ export default function CrearProducto({ contacto }) {
                 placeholder=" "
                 onChange={(e) => handleInputChange(e)}
               />
-
               <span className="barra"></span>
               <label className="label">Stock</label>
               {errors.stock && <Errors>{errors.stock}</Errors>}
@@ -578,9 +515,7 @@ export default function CrearProducto({ contacto }) {
                 setPost={setPost}
                 setErrors={setErrors}
                 detalle={detalle}
-                creado={creado}
               />
-
               {errors.categorias && <Errors>{errors.categorias}</Errors>}
             </Input>
           </Left>
@@ -643,10 +578,29 @@ export default function CrearProducto({ contacto }) {
             )}
           </Right>
         </Form>
-      </Container>
 
-      <Footer contacto={contacto} />
-      {isVisible && <ScrollToTop />}
+        <Modal state={stateModalProd} setStateModal={setStateModalProd}>
+          {Object.values(errors).length > 0 ? (
+            <ParrafoAlerta>Por favor rellenar todos los campos</ParrafoAlerta>
+          ) : (
+            <ParrafoOk>¡Producto creado con éxito!</ParrafoOk>
+          )}
+        </Modal>
+
+        <Modal state={stateModalCat} setStateModal={setStateModalCat}>
+          <ParrafoCat>¡Categoría creada con éxito!</ParrafoCat>
+        </Modal>
+
+        <Modal state={stateModalPut} setStateModal={setStateModalPut}>
+          <ParrafoOk>¡Cambios realizados con éxito!</ParrafoOk>
+        </Modal>
+
+        <Modal state={stateModalImg} setStateModal={setStateModalImg}>
+          <ParrafoOk>
+            Ocurrió un error al añadir la imagen, por favor intente nuevamente
+          </ParrafoOk>
+        </Modal>
+      </Container>
     </>
   );
 }
