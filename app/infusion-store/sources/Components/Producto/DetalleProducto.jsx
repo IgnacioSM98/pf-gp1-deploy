@@ -16,9 +16,9 @@ import {
   agregarCarrito,
   eliminarDeFavoritos,
   añadirAFavoritos,
-  getProductReviews
+  getProductReviews,
 } from "../../../redux/actions";
-import {StarRating} from "../index"
+import { StarRating, Reviews } from "../index";
 
 const styles = StyleSheet.create({
   contProd: {
@@ -31,6 +31,7 @@ const styles = StyleSheet.create({
     color: "white",
     marginLeft: 30,
     marginBottom: 10,
+    marginTop: 30,
     fontSize: 30,
   },
   descripcion: {
@@ -136,6 +137,7 @@ const styles = StyleSheet.create({
   letraBoton: {
     color: "white",
     fontSize: 30,
+    textAlign: "center",
   },
   num: {
     color: "white",
@@ -148,12 +150,13 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
   },
-  review:{
+  review: {
     paddingTop: 8,
-    fontSize:14,
+    fontSize: 14,
     marginLeft: 10,
-    color: "white"
-  }
+    color: "white",
+    textDecorationLine: "underline",
+  },
 });
 
 const DetalleProducto = ({ route }) => {
@@ -164,6 +167,7 @@ const DetalleProducto = ({ route }) => {
   const user = useSelector((state) => state.userInfo);
   const favoritos = useSelector((state) => state.favoritos);
   const reviews = useSelector((state) => state.reviews);
+  const [stateReview, setStateReview] = useState(false);
 
   // useEffect(() => {
   //   console.log("hola");
@@ -253,9 +257,11 @@ const DetalleProducto = ({ route }) => {
 
       <View style={styles.contDatos}>
         <Text style={styles.nombre}>{data.nombre}</Text>
-        <View style= {styles.promedio}>
-        <StarRating rating={rating ? rating : 1} />
-        <Text style={styles.review} >({reviews.length} Reviews)</Text>
+        <View style={styles.promedio}>
+          <StarRating rating={rating ? rating : 1} />
+          <TouchableOpacity onPress={() => setStateReview(!stateReview)}>
+            <Text style={styles.review}>({reviews.length} Reviews)</Text>
+          </TouchableOpacity>
         </View>
         <Text style={styles.descripcion}>{data.descripcion}</Text>
         <Text style={styles.numeros}>${data.precio}</Text>
@@ -282,6 +288,18 @@ const DetalleProducto = ({ route }) => {
           </Pressable>
         </View>
       </View>
+      {reviews?.map((review) => (
+        <Reviews
+          key={review.id}
+          state={stateReview}
+          setState={setStateReview}
+          id={review.id}
+          puntaje={review.puntaje}
+          titulo={review.titulo}
+          comentario={review.comentario}
+          fecha={review.updatedAt ? review.updatedAt.slice(0, 10) : "Ahora"}
+        />
+      ))}
     </View>
   );
 };
