@@ -14,9 +14,11 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   addCarrito,
   agregarCarrito,
+  restarCarrito,
   eliminarDeFavoritos,
   añadirAFavoritos,
   getProductReviews,
+  quitarItem,
 } from "../../../redux/actions";
 import { StarRating, Reviews } from "../index";
 
@@ -200,16 +202,46 @@ const DetalleProducto = ({ route }) => {
   const favoritos = useSelector((state) => state.favoritos);
   const reviews = useSelector((state) => state.reviews);
   const [stateReview, setStateReview] = useState(false);
+  const carrito = useSelector((state) => state.carrito);
+  const [cantidad, setCantidad] = useState(1);
 
-  // useEffect(() => {
-  //   console.log("hola");
-  // }, []);
+  const cantidadCarrito = useSelector(
+    (state) => state.carrito?.filter((item) => item.id === id)[0]
+  );
+
+  // function check(id) {
+  //   const isInCart = carrito.filter((producto) => producto.id == data.id);
+  //   if (isInCart) {
+  //     return true;
+  //   } else {
+  //     return false;
+  //   }
+  // }
+
+  const sumarCarrito = () => {
+    if (cantidad < data.stock) {
+      setCantidad(cantidad + 1);
+      dispatch(agregarCarrito(id, cantidad + 1));
+    }
+  };
+
+  const restaCarrito = () => {
+    if (cantidad > 1) {
+      setCantidad(cantidad - 1);
+      dispatch(restarCarrito(id, cantidad - 1));
+    }
+  };
 
   function addToCarrito(e) {
     if (data.stock > 0) {
       dispatch(agregarCarrito(id, 1));
+      setCantidad(cantidad + 1);
     }
   }
+
+  // useEffect(() => {
+  //   console.log("hola");
+  // }, []);
 
   //reviews de producto
   useEffect(() => {
@@ -241,6 +273,10 @@ const DetalleProducto = ({ route }) => {
       })
       .catch((error) => console.error(error));
   }, [id]);
+
+  useEffect(() => {
+    setCantidad(cantidadCarrito?.cantidad ? cantidadCarrito.cantidad : 1);
+  }, [cantidadCarrito]);
 
   function handleFav() {
     if (favoritos.find((fav) => fav.id == id)) {
@@ -302,13 +338,13 @@ const DetalleProducto = ({ route }) => {
 
         <View style={styles.botones}>
           <View style={styles.cantidad}>
-            <Pressable style={styles.pressable}>
+            <Pressable style={styles.pressable} onPress={restaCarrito}>
               <Text style={styles.boton}>-</Text>
             </Pressable>
 
-            <Text style={styles.num}>01</Text>
+            <Text style={styles.num}>{cantidad}</Text>
 
-            <Pressable style={styles.pressable}>
+            <Pressable style={styles.pressable} onPress={sumarCarrito}>
               <Text style={styles.boton}>+</Text>
             </Pressable>
           </View>
@@ -325,6 +361,7 @@ const DetalleProducto = ({ route }) => {
               },
               styles.agregar,
             ]}
+            // disabled={carrito.filter((producto) => producto.id == data.id)}
           >
             <Text style={styles.letraBoton}>Agregar</Text>
           </Pressable>

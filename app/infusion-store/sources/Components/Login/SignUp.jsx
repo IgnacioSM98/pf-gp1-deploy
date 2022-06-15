@@ -6,8 +6,9 @@ import {
   StyleSheet,
   KeyboardAvoidingView,
   Pressable,
+  Alert,
 } from "react-native";
-import { TextInput } from "react-native-paper";
+import { TextInput, HelperText } from "react-native-paper";
 import { useDispatch } from "react-redux";
 import { setUserInfo } from "../../../redux/actions";
 import {
@@ -147,39 +148,47 @@ export default function SignUp({ setIsAuthenticated }) {
   };
 
   const createUser = () => {
-    app
-      .auth()
-      .createUserWithEmailAndPassword(email, password)
-      .then((res) => {
-        res.user
-          .updateProfile({
-            displayName: nombre,
-          })
-          .then(() => {
-            setIsAuthenticated(true);
+    if (nombre && apellido && email && password > 0) {
+      app
+        .auth()
+        .createUserWithEmailAndPassword(email, password)
+        .then((res) => {
+          res.user
+            .updateProfile({
+              displayName: nombre,
+            })
+            .then(() => {
+              setIsAuthenticated(true);
 
-            setData("user", {
-              nombre: res.user.displayName,
-              email: res.user.email,
-              uid: res.user.uid,
-              photoURL: res.user.photoURL,
-            });
-
-            dispatch(
-              setUserInfo({
-                displayName: res.user.displayName,
+              setData("user", {
+                nombre: res.user.displayName,
                 email: res.user.email,
                 uid: res.user.uid,
                 photoURL: res.user.photoURL,
-              })
-            );
-          })
-          .catch((err) => console.log(err));
-      })
-      .catch((err) => {
-        console.log(err, "error al crear cuenta");
-      });
+              });
+
+              dispatch(
+                setUserInfo({
+                  displayName: res.user.displayName,
+                  email: res.user.email,
+                  uid: res.user.uid,
+                  photoURL: res.user.photoURL,
+                })
+              );
+            })
+            .catch((err) => console.log(err));
+        })
+        .catch((err) => {
+          console.log(err, "error al crear cuenta");
+        });
+    } else {
+      Alert.alert("Error de registro", "Alguno de los campos está vacío");
+    }
   };
+
+  // const hasErrors = () => {
+  //   return !email.includes("@");
+  // };
 
   return (
     <KeyboardAvoidingView style={styles.container}>
@@ -222,6 +231,14 @@ export default function SignUp({ setIsAuthenticated }) {
           underlineColor="transparent"
           theme={{ colors: { text: "#222", primary: "transparent" } }}
         />
+        {!!email.nameError && (
+          <Text style={{ color: "red", textAlign: "center" }}>
+            {email.nameError}
+          </Text>
+        )}
+        {/* <HelperText type="error" visible={(false, hasErrors)}>
+          E-mail no válido
+        </HelperText> */}
 
         <TextInput
           style={styles.input}
