@@ -18,7 +18,7 @@ import {
   añadirAFavoritos,
   getProductReviews,
 } from "../../../redux/actions";
-import { StarRating } from "../index";
+import { StarRating, Reviews } from "../index";
 
 const styles = StyleSheet.create({
   contProd: {
@@ -33,6 +33,7 @@ const styles = StyleSheet.create({
     color: "white",
     marginLeft: 30,
     marginBottom: 10,
+    marginTop: 30,
     fontSize: 30,
   },
 
@@ -165,6 +166,7 @@ const styles = StyleSheet.create({
   letraBoton: {
     color: "white",
     fontSize: 30,
+    textAlign: "center",
   },
 
   num: {
@@ -181,10 +183,11 @@ const styles = StyleSheet.create({
   },
 
   review: {
-    // paddingTop: 8,
+    paddingTop: 8,
     fontSize: 14,
-    marginLeft: 8,
+    marginLeft: 10,
     color: "white",
+    textDecorationLine: "underline",
   },
 });
 
@@ -196,6 +199,7 @@ const DetalleProducto = ({ route }) => {
   const user = useSelector((state) => state.userInfo);
   const favoritos = useSelector((state) => state.favoritos);
   const reviews = useSelector((state) => state.reviews);
+  const [stateReview, setStateReview] = useState(false);
 
   // useEffect(() => {
   //   console.log("hola");
@@ -288,7 +292,9 @@ const DetalleProducto = ({ route }) => {
 
         <View style={styles.promedio}>
           <StarRating rating={rating ? rating : 1} />
-          <Text style={styles.review}>({reviews.length} Reviews)</Text>
+          <TouchableOpacity onPress={() => setStateReview(!stateReview)}>
+            <Text style={styles.review}>({reviews.length} Reviews)</Text>
+          </TouchableOpacity>
         </View>
 
         <Text style={styles.descripcion}>{data.descripcion}</Text>
@@ -324,6 +330,18 @@ const DetalleProducto = ({ route }) => {
           </Pressable>
         </View>
       </View>
+      {reviews?.map((review) => (
+        <Reviews
+          key={review.id}
+          state={stateReview}
+          setState={setStateReview}
+          id={review.id}
+          puntaje={review.puntaje}
+          titulo={review.titulo}
+          comentario={review.comentario}
+          fecha={review.updatedAt ? review.updatedAt.slice(0, 10) : "Ahora"}
+        />
+      ))}
     </View>
   );
 };
