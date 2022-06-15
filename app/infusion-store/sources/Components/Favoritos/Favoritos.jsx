@@ -9,8 +9,9 @@ import {
   Image,
   FlatList,
 } from "react-native";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Favorito, NavBar } from "../index";
+import { getFavoritos } from "../../../redux/actions";
 
 const styles = StyleSheet.create({
   text: {
@@ -23,10 +24,12 @@ const styles = StyleSheet.create({
 });
 
 export default function Favoritos({ navigation }) {
+  const dispatch = useDispatch();
   const [favoritos, setFavoritos] = useState([]);
+  const fav = useSelector((state) => state.favoritos);
   const userInfo = useSelector((state) => state.userInfo);
 
-  useEffect(() => {
+  /* useEffect(() => {
     if (Object.keys(userInfo).length > 0) {
       axios(
         `https://proyecto-final-gp1.herokuapp.com/favoritos/wishlist/${userInfo.uid}`
@@ -34,20 +37,22 @@ export default function Favoritos({ navigation }) {
         setFavoritos(res.data);
       });
     }
-  }, []);
+  }, []);*/
+  useEffect(() => {
+    dispatch(getFavoritos(userInfo.uid));
+  }, [userInfo]);
 
   return (
     <>
       <NavBar titulo="Favoritos" />
-      <ScrollView>
-        <FlatList
-          style={{ height: "100%", marginTop: "2%" }}
-          data={favoritos}
-          renderItem={({ item }) => (
-            <Favorito navigation={navigation} item={item} />
-          )}
-        />
-      </ScrollView>
+
+      <FlatList
+        style={{ height: "100%", marginTop: "2%" }}
+        data={fav}
+        renderItem={({ item }) => (
+          <Favorito navigation={navigation} item={item} />
+        )}
+      />
     </>
   );
 }
