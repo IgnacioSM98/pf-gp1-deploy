@@ -1,7 +1,8 @@
 import React, { useState } from "react";
-import postUsuario from "./postUsuario";
-import putUsuario from "./putUsuario";
 import styled from "styled-components";
+import { useDispatch } from "react-redux";
+import { putPerfil, postUsuario } from "../../Redux/actions";
+import { app } from "../../firebase";
 
 const Container = styled.div`
   display: flex;
@@ -44,9 +45,33 @@ const Button = styled.button`
 
 export default function CrearUsuario({ setCrear, setEditar, editarUsuario }) {
   const [usuario, setUsuario] = useState(editarUsuario ? editarUsuario : {});
+  const dispatch = useDispatch();
 
   const handleInputs = (e) => {
     setUsuario({ ...usuario, [e.target.name]: e.target.value });
+  };
+
+  const handleEditarConfirmar = () => {
+    if (editarUsuario) {
+      dispatch(putPerfil(editarUsuario.id, usuario));
+    } else {
+      app
+        .auth()
+        .createUserWithEmailAndPassword(usuario.mail, usuario.contraseña)
+        .then((res) => {
+          res.user
+            .updateProfile({
+              displayName: usuario.nombre,
+            })
+            .then(() => {
+              usuario.id = res.user.uid;
+
+              dispatch(postUsuario(usuario));
+            });
+        });
+    }
+
+    editarUsuario ? setEditar(false) : setCrear(false);
   };
 
   return (
@@ -152,8 +177,7 @@ export default function CrearUsuario({ setCrear, setEditar, editarUsuario }) {
 
             <Button
               onClick={() => {
-                editarUsuario ? putUsuario(usuario) : postUsuario(usuario);
-                editarUsuario ? setEditar(false) : setCrear(false);
+                handleEditarConfirmar();
               }}
             >
               {editarUsuario ? "Editar" : "Confirmar"}

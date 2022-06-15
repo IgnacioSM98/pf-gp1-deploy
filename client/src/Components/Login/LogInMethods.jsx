@@ -26,6 +26,13 @@ const Container = styled.div`
   justify-content: center;
   align-items: center;
   background: cover;
+  @media screen and (max-width: 1000px) {
+    height: 70vh;
+  }
+  @media screen and (max-width: 560px) {
+    flex-direction: column;
+    margin-top: 5px;
+  }
 `;
 
 const SignIn = styled.div`
@@ -38,6 +45,22 @@ const SignIn = styled.div`
   border-radius: 20px 0px 0px 20px;
   width: 35%;
   height: 75vh;
+  @media screen and (max-width: 1000px) {
+    justify-content: start;
+    height: 60vh;
+    border-radius: 20px 0px 0px 20px;
+  }
+  @media screen and (max-width: 560px) {
+    width: 85%;
+    height: auto;
+    border-radius: 20px;
+    margin-top: 40px;
+  }
+  @media screen and (max-width: 350px) {
+    width: 85%;
+    height: auto;
+    border-radius: 20px;
+  }
 `;
 
 const SignUp = styled.form`
@@ -50,6 +73,22 @@ const SignUp = styled.form`
   border-radius: 0px 20px 20px 0px;
   width: 45%;
   height: 75vh;
+  @media screen and (max-width: 1000px) {
+    justify-content: start;
+    height: 60vh;
+    border-radius: 0px 20px 20px 0px;
+  }
+  @media screen and (max-width: 560px) {
+    margin: 10px;
+    width: 85%;
+    height: auto;
+    border-radius: 20px;
+  }
+  @media screen and (max-width: 350px) {
+    width: 85%;
+    height: auto;
+    border-radius: 20px;
+  }
 `;
 
 const Titulo = styled.h1`
@@ -61,16 +100,61 @@ const Titulo = styled.h1`
   font-weight: bold;
   color: ${(props) => props.color};
   margin: 2rem;
+  @media screen and (max-width: 1000px) {
+    position: relative;
+    font-size: 25px;
+    height: 10%;
+    top: 5px;
+    margin: 0rem;
+  }
+  @media screen and (max-width: 560px) {
+    position: relative;
+    font-size: 15px;
+    height: 10%;
+    top: 5px;
+  }
+  @media screen and (max-width: 350px) {
+    position: relative;
+    font-size: 12px;
+    top: 5px;
+    height: 10%;
+  }
+`;
+
+const Parrafo = styled.p`
+  margin: 20px;
+  @media screen and (max-width: 560px) {
+    display: none;
+  }
+`;
+const ParrafoRegistro = styled.p`
+  margin: 10px;
+  @media screen and (max-width: 1000px) {
+    margin: 7px;
+  }
+  @media screen and (max-width: 560px) {
+    margin: 4px;
+    font-size: 12px;
+  }
 `;
 
 const Apps = styled.div`
   width: 50%;
   margin: 20px;
+  @media screen and (max-width: 560px) {
+    margin: 8px;
+  }
 `;
 
 const BotonGoogle = styled.img`
   width: 30px;
   cursor: pointer;
+  @media screen and (max-width: 1200px) {
+    width: 20px;
+  }
+  @media screen and (max-width: 560px) {
+    width: 20px;
+  }
 `;
 
 const Boton = styled.button`
@@ -86,6 +170,24 @@ const Boton = styled.button`
   margin: 10px 0px;
   cursor: pointer;
   font-family: Poppins;
+  @media screen and (max-width: 1000px) {
+    position: relative;
+    bottom: 0px;
+  }
+  @media screen and (max-width: 560px) {
+    position: relative;
+    width: 130px;
+    height: 25px;
+    bottom: 0px;
+  }
+  @media screen and (max-width: 350px) {
+    postition: relative;
+    margin: 0px;
+    width: 130px;
+    height: 25px;
+    font-size: 13px;
+    margin-bottom: 5px;
+  }
 `;
 
 const Form = styled.form`
@@ -93,6 +195,16 @@ const Form = styled.form`
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  @media screen and (max-width: 560px) {
+    flex-direction: column;
+  }
+`;
+
+const NombreContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+  justifycontent: space-between;
+  width: 80%;
 `;
 
 const Error = styled.p`
@@ -297,6 +409,16 @@ export default function Login({ setUser }) {
     if (email) {
       sendPasswordResetEmail(authentication, email).then(() => {
         emailLRef.current.value = "";
+
+        Swal.fire({
+          title: "Mail enviado",
+          text: "Revisa tu correo para reestablecer la contraseña",
+          icon: "success",
+          iconColor: "green",
+          color: "#222",
+          confirmButtonColor: "grey",
+          confirmButtonText: "Aceptar",
+        });
       });
     } else {
       handleNoEmail();
@@ -336,9 +458,9 @@ export default function Login({ setUser }) {
         </Titulo>
 
         <Form onSubmit={handleSubmit}>
-          <p style={{ margin: "20px" }}>
+          <Parrafo>
             Para continuar conectado con nosotros ingresá con tu cuenta
-          </p>
+          </Parrafo>
 
           <Boton
             onClick={() => setIsSignUp(false)}
@@ -402,11 +524,11 @@ export default function Login({ setUser }) {
         <Apps>
           <BotonGoogle src={google} onClick={googleSignIn} />
         </Apps>
-        <p style={{ margin: "10px" }}>O registrate con tu correo</p>
+        <ParrafoRegistro>O registrate con tu correo</ParrafoRegistro>
 
-        <form style={{ margin: "0px 0px 40px 0px" }} onSubmit={handleSubmit}>
-          <div style={{ display: "flex", justifyContent: "space-between" }}>
-            <div className="grupo-login" style={{ width: "150px" }}>
+        <Form style={{ margin: "0px 0px 40px 0px" }} onSubmit={handleSubmit}>
+          <NombreContainer>
+            <div className="grupo-login" style={{ width: "50%" }}>
               <input
                 className="input-login"
                 type="text"
@@ -441,7 +563,7 @@ export default function Login({ setUser }) {
 
               {error.signUp.apellido && <Error>{error.signUp.apellido}</Error>}
             </div>
-          </div>
+          </NombreContainer>
 
           <div className="grupo-login">
             <input
@@ -480,7 +602,7 @@ export default function Login({ setUser }) {
               <Error>{error.signUp.contraseña}</Error>
             )}
           </div>
-        </form>
+        </Form>
 
         <Boton
           color="white"

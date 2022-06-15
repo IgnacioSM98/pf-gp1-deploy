@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import {
   Compras,
@@ -141,16 +141,12 @@ export default function Cuenta() {
     consultas: Consultas,
   };
 
-  const [componente, setComponente] = useState();
+  const [componente, setComponente] = useState("perfil");
   var ComponenteDinamico = componentes[componente];
 
   const handleOnClick = (e) => {
     setComponente(e.target.value);
   };
-
-  useEffect(() => {
-    setComponente("");
-  }, []);
 
   return (
     <Container>

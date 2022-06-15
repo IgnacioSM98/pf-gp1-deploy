@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { Footer, ScrollToTop, MercadoPagoIntegracion } from "../index";
 import { getUsuarios, postPedido } from "../../Redux/actions/index";
@@ -172,8 +172,6 @@ export default function Checkout({ contacto }) {
   const [precioTotal, setPrecioTotal] = useState(0);
   const [flag, setFlag] = useState(false);
   const [userId, setUserId] = useState();
-
-  const location = useLocation();
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -187,11 +185,10 @@ export default function Checkout({ contacto }) {
       );
 
       setUserId(usuario?.id);
-    } else {
-      // Definimos si vienen desde la pagina o si pegaron el Link
-      location.key === "default" ? navigate("/") : navigate(-1);
+      // } else {
+      //   // Definimos si vienen desde la pagina o si pegaron el Link
+      //   location.key === "default" ? navigate("/") : navigate(-1);
     }
-    //eslint-disable-next-line
   }, [usuarios, userInfo, navigate]);
 
   useEffect(() => {

@@ -7,6 +7,7 @@ const crear = "crear";
 const admin = "admin/";
 const ratings = "ratings/";
 const pedido = "pedido/";
+const usuario = "usuario/";
 
 export function getProductos() {
   return async function (dispatch) {
@@ -104,10 +105,7 @@ export function deleteReview(id) {
   //habria que actualizar el estado de los reviews
   return async function (dispatch) {
     await axios.delete(`${urlBase}ratings/${id}`);
-    dispatch(getAllReviews());
-    return dispatch({
-      type: "DELETE_REVIEW",
-    });
+    return dispatch({ type: "DELETE_REVIEW", payload: id });
   };
 }
 
@@ -136,6 +134,13 @@ export function putProducto(id, body) {
     axios.put(`${urlBase}${admin}${id}`, body).then((res) => {
       dispatch({ type: "PUT_PRODUCTO", payload: res.data });
     });
+  };
+}
+
+export function putPerfil(id, body) {
+  return async function (dispatch) {
+    await axios.put(`${urlBase}${admin}${usuario}${id}`, body);
+    dispatch({ type: "PUT_PERFIL", payload: body });
   };
 }
 
@@ -239,7 +244,6 @@ export function getUsuarios() {
 
 export function postUsuario(body) {
   return function (dispatch) {
-    console.log("ksdkgahsd", body);
     axios
       .post(`${urlBase}crear`, body)
       .then((res) => dispatch({ type: "POST_USUARIO", payload: res.data }));

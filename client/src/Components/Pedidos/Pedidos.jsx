@@ -32,24 +32,24 @@ const Select = styled.select`
 
 export default function Pedidos() {
   const dispatch = useDispatch();
-  const [selected, setSelected] = useState("");
+  const [selected, setSelected] = useState("default");
   const pedidos = useSelector((state) => state.pedidos);
 
   useEffect(() => {
     dispatch(getPedidos());
   }, [dispatch]);
 
-  const sortPedidos = (a, b) => {
-    if (selected === "ASC") {
-      if (a.Estado > b.Estado) return 1;
-      if (b.Estado > a.Estado) return -1;
-    } else {
-      if (a.Estado > b.Estado) return -1;
-      if (b.Estado > a.Estado) return 1;
+  const filtrarPedidos = (pedido) => {
+    if (selected) {
+      const estado = pedido.Estado.toLowerCase();
+
+      if (estado.includes(selected.toLowerCase())) {
+        return pedido;
+      }
     }
 
-    if (selected === "DEFAULT") {
-      return a;
+    if (selected === "default") {
+      return pedido;
     }
   };
 
@@ -68,10 +68,10 @@ export default function Pedidos() {
       </h1>
 
       <Select onChange={(e) => setSelected(e.target.value)}>
-        <option value="default">Ordenar por estado</option>
+        <option value="default">Filtrar por estado</option>
         <option value="todos">Todos</option>
         <option value="creado">Creado</option>
-        <option value="preparacion">En preparacion</option>
+        <option value="preparación">En preparacion</option>
         <option value="camino">En camino</option>
         <option value="correo">En punto de Entrega/Correo</option>
         <option value="entregado">Entregado</option>
@@ -80,7 +80,8 @@ export default function Pedidos() {
       <Container>
         {pedidos &&
           pedidos
-            ?.sort(sortPedidos)
+            ?.filter(filtrarPedidos)
+            // ?.sort(sortPedidos)
             .map((e) => <Pedido key={e.id} producto={e} />)}
       </Container>
     </>

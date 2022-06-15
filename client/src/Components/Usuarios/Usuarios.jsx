@@ -3,6 +3,8 @@ import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 import { deleteUsuario, getUsuarios } from "../../Redux/actions";
 import CrearUsuario from "../Admin/CrearUsuario";
+import Swal from "sweetalert2";
+import { app } from "../../firebase";
 
 const Container = styled.div`
   display: flex;
@@ -80,7 +82,9 @@ const Crear = styled.button`
 export default function Usuarios() {
   const [crearUsuario, setCrear] = useState(false);
   const [editarUsuario, setEditar] = useState("");
-  const usuarios = useSelector((state) => state.usuarios);
+  const usuarios = useSelector((state) =>
+    state.usuarios.sort((a, b) => a.createdAt > b.createdAt)
+  );
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -88,7 +92,24 @@ export default function Usuarios() {
   }, [dispatch]);
 
   const handleDeleteUsuario = (id) => {
-    dispatch(deleteUsuario(id));
+    Swal.fire({
+      title: "Eliminar usuario",
+      text: "¿Estas seguro de eliminar este usuario?",
+      icon: "warning",
+      iconColor: "red",
+      color: "#222",
+      showCancelButton: true,
+      cancelButtonText: "No",
+      confirmButtonColor: "red",
+      cancelButtonColor: "darkgrey",
+      confirmButtonText: "Si",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        dispatch(deleteUsuario(id));
+
+        app.auth().currentUser.delete();
+      }
+    });
   };
 
   return crearUsuario ? (

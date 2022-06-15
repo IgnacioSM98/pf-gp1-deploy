@@ -199,14 +199,6 @@ export default function Footer({ contacto }) {
               target="_blank"
               style={{ height: 25, width: 25, margin: 5 }}
             />
-
-            <Icon
-              url="https://twitter.com/jaketrent"
-              fgColor="black"
-              bgColor="white"
-              target="_blank"
-              style={{ height: 25, width: 25, margin: 5 }}
-            />
           </div>
         </CategoriaRedes>
       </Contacto>
