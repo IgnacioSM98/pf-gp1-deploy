@@ -1,7 +1,6 @@
 .grupo-checkout {
   position: relative;
   margin: 45px 0px 0px 0px;
-  width: 320px;
 }
 
 .input-checkout {
@@ -19,6 +18,16 @@
 .input-checkout:focus {
   outline: none;
   color: rgb(94, 93, 93);
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+input[type="number"] {
+  -moz-appearance: textfield;
 }
 
 .input-checkout:focus ~ .label-checkout {

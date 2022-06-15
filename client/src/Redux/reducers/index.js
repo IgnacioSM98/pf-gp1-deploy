@@ -347,6 +347,10 @@ export default function rootReducer(state = initialState, action) {
           if (action.payload.stock) {
             prod.stock = action.payload.stock;
           }
+
+          if (action.payload.categorias) {
+            prod.categoria = action.payload.categorias;
+          }
         }
       });
 

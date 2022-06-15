@@ -7,8 +7,9 @@ const Container = s.div`
     display: flex;
     flex-direction: inherit;
     justify-content: end;
-    width: 100%;
-    height: 100%;
+     width: 100%;
+     height: 100%;
+    // margin: 0px 4px;
     border-radius: 7px 7px 7px 7px;
     border: none;
     background-color: lightgrey;
@@ -25,14 +26,18 @@ const Button = s.button`
 `;
 
 const Select = s.select`
+    // width: 310px;
     margin: 2px 4px;
     border-radius: 3px 3px 3px 3px;
     border-width: 0;
 `;
 
 const Option = s.option`
+    // width: 310px;
      margin: 2px 2px;
      padding: 0px 4px;
+    //  border-radius: 5px 5px 5px 5px;
+    // border-width: 0;
 `;
 
 export default function AgregarCategorias({
@@ -40,31 +45,19 @@ export default function AgregarCategorias({
   post,
   setErrors,
   detalle,
-  creado,
 }) {
   const [selectedValue, setSelectedValue] = useState([]);
 
   useEffect(() => {
-    if (detalle.categoria) setSelectedValue(detalle.categoria);
+    setSelectedValue(detalle.categoria);
   }, [detalle]);
-
   useEffect(() => {
     setPost({ ...post, probando: true });
-    // eslint-disable-next-line
   }, []);
-
-  // useEffect(() => {
-  //   if (creado) {
-  //     console.log("xd?", selectedValue);
-  //     setSelectedValue([]);
-  //   }
-  // }, [creado]);
 
   var categorias = useSelector((state) => state.categorias);
 
   useEffect(() => {
-    //supuestameente esto no funca
-    // eslint-disable-next-line
     categorias = categorias.sort(function (a, b) {
       var x = a.nombre.toLowerCase();
       var y = b.nombre.toLowerCase();
@@ -73,10 +66,9 @@ export default function AgregarCategorias({
     });
   }, [categorias]);
 
-  // useEffect(() => {
-  //   setErrors(validate({ ...post, categorias: selectedValue }));
-  //   // eslint-disable-next-line
-  // }, [selectedValue]);
+  useEffect(() => {
+    setErrors(validate({ ...post, categorias: selectedValue }));
+  }, [selectedValue]);
 
   const handleChange = ({ target }) => {
     const categoria = categorias?.filter(
@@ -90,8 +82,6 @@ export default function AgregarCategorias({
 
       setPost({ ...post, categorias: [...selectedValue, categoria] });
     }
-
-    setErrors(validate({ ...post, categorias: selectedValue }));
   };
 
   const handleDelete = (e) => {
