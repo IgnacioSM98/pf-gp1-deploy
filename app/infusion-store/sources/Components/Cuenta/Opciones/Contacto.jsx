@@ -8,12 +8,13 @@ import {
   TouchableHighlight,
   StyleSheet,
 } from "react-native";
+import RNPickerSelect from "react-native-picker-select";
 import { enviarConsulta } from "../../../../redux/actions";
 
 export default function Contacto({ setOption }) {
   const dispatch = useDispatch();
-  const [input, setInput] = useState({ mail: "", consulta: "" });
-  const [errors, setErrors] = useState({ mail: "", consulta: "" });
+  const [input, setInput] = useState({ mail: "", subject: "", text: "" });
+  const [errors, setErrors] = useState({ mail: "", text: "" });
 
   function validate(input) {
     let error = {};
@@ -23,11 +24,11 @@ export default function Contacto({ setOption }) {
     if (!/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/.test(input.mail)) {
       error.mail = "Debe ingresar un mail valido";
     }
-    if (input.consulta.length === 0) {
-      error.consulta = "Debe completar el campo consulta";
+    if (input.text.length === 0) {
+      error.text = "Debe completar el campo consulta";
     }
-    if (input.consulta.length < 20) {
-      error.consulta = "La consulta debe ser más específica";
+    if (input.text.length < 20) {
+      error.text = "La consulta debe ser más específica";
     }
     return error;
   }
@@ -38,8 +39,11 @@ export default function Contacto({ setOption }) {
   };
 
   function handleSubmit() {
-    dispatch(enviarConsulta(input));
-    setErrors({ mail: "", consulta: "" });
+    if (input !== undefined) {
+      dispatch(enviarConsulta(input));
+      setErrors({ mail: "", consulta: "" });
+      setInput({ mail: "", text: "" });
+    }
   }
 
   return (
@@ -53,13 +57,25 @@ export default function Contacto({ setOption }) {
         onChangeText={(text) => handleChange(text, "mail")}
       />
       <Text style={styles.error}>{errors.mail}</Text>
+      <RNPickerSelect
+        name="subject"
+        id="subject"
+        defaultValue="DEFAULT"
+        onValueChange={(value) => {
+          handleChange(value);
+        }}
+        items={[
+          { label: "Consulta", value: "Consulta" },
+          { label: "Reclamo", value: "Reclamo" },
+        ]}
+      />
       <Text style={styles.title}>Consulta-Reclamo:</Text>
       <TextInput
         miltiline
-        name="consulta"
-        placeholder=" Consulta"
+        name="text"
+        placeholder="Texto"
         style={[styles.input, styles.textarea]}
-        onChangeText={(text) => handleChange(text, "consulta")}
+        onChangeText={(text) => handleChange(text, "text")}
       />
       <Text style={styles.error}>{errors.consulta}</Text>
       <TouchableHighlight style={styles.button} onPress={() => handleSubmit()}>
@@ -103,8 +119,8 @@ const styles = StyleSheet.create({
   },
   textarea: {
     height: 70,
-    textAlign: "start",
-    justifyContent: "start",
+    textAlign: "center",
+    justifyContent: "center",
   },
   textButton: {
     color: "#FFF",
