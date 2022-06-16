@@ -31,20 +31,22 @@ const styles = StyleSheet.create({
     borderBottomColor: "grey",
     paddingBottom: 3,
     marginTop: 10,
-    marginLeft: 15,
+    marginLeft: 5,
     marginRight: 15,
   },
 
   titulo: {
-    marginLeft: 10,
+    marginLeft: 5,
     marginTop: 15,
     fontSize: 16,
     fontWeight: "bold",
   },
   dato: {
+    textAlign: "center",
     fontWeight: "bold",
   },
   estado: {
+    textAlign: "center",
     fontWeight: "bold",
     color: "green",
   },

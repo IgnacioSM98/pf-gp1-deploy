@@ -6,7 +6,9 @@ import { getReviews } from "../../../../redux/actions";
 import { useNavigation } from "@react-navigation/native";
 
 const styles = StyleSheet.create({
-  container: {},
+  container: {
+    height: "92%",
+  },
   cerrar: {
     marginBottom: 60,
   },
@@ -23,9 +25,10 @@ const styles = StyleSheet.create({
     elevation: 5,
     backgroundColor: "white",
   },
+
   producto: {
-    marginLeft: 15,
-    marginTop: 15,
+    // marginLeft: 15,
+    marginBottom: 15,
     fontSize: 16,
     fontWeight: "bold",
     textDecorationColor: "currentcolor",
@@ -33,7 +36,8 @@ const styles = StyleSheet.create({
     textDecorationLine: "underline",
   },
   dato: {
-    fontWeight: "bold",
+    marginLeft: 3,
+    fontWeight: "500",
   },
 });
 
@@ -43,6 +47,8 @@ export default function Reseñas({ setOption }) {
   const userInfo = useSelector((state) => state.userInfo);
   const idUser = userInfo.uid;
   const reseñas = useSelector((state) => state.reviews);
+  const productos = useSelector((state) => state.productos);
+
   useEffect(() => {
     dispatch(getReviews(idUser));
   }, [dispatch]);
@@ -53,10 +59,7 @@ export default function Reseñas({ setOption }) {
         {reseñas ? (
           reseñas.map((reseña) => (
             <View style={styles.compra}>
-              <Text style={styles.dato}>{`Reseña: ${reseña.id}`}</Text>
-              <Text style={styles.dato}>Puntaje: {reseña.puntaje}</Text>
-              <Text style={styles.dato}>Titulo: {reseña.titulo}</Text>
-              <Text style={styles.dato}>Comentario: {reseña.comentario}</Text>
+              {/* <Text style={styles.dato}>{`Reseña: ${reseña.id}`}</Text> */}
               <Pressable
                 onPress={() =>
                   navigation.navigate("DetalleProducto", {
@@ -65,9 +68,21 @@ export default function Reseñas({ setOption }) {
                 }
               >
                 <Text style={styles.producto}>
-                  ID de Producto: {reseña.productoId}
+                  Producto:{" "}
+                  {
+                    productos.filter(
+                      (producto) => producto.id === reseña.productoId
+                    )[0].nombre
+                  }
                 </Text>
               </Pressable>
+              <Text style={styles.dato}>
+                {reseña.puntaje !== 1
+                  ? `Puntaje: ${reseña.puntaje} estrellas`
+                  : `Puntaje: 1 estrella`}
+              </Text>
+              <Text style={styles.dato}>Titulo: {reseña.titulo}</Text>
+              <Text style={styles.dato}>Comentario: {reseña.comentario}</Text>
             </View>
           ))
         ) : (

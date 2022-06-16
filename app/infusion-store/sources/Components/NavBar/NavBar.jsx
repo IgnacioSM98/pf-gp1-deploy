@@ -12,7 +12,7 @@ import { setProductosFiltrados } from "../../../redux/actions";
 const Container = styled.View`
   position: relative;
   // justify-content: flex-start;
-  align-items: start;
+  align-items: flex-start;
   width: 100%;
   height: 10%;
   top: 5%;

@@ -25,13 +25,12 @@ const styles = StyleSheet.create({
     height: "100%",
     display: "flex",
     flexDirection: "column",
-    // backgroundColor: "white",
   },
 
   volver: {
     position: "absolute",
     fontSize: 30,
-    top: 50,
+    top: 65,
     left: 30,
     zIndex: 999,
   },
@@ -42,10 +41,11 @@ const styles = StyleSheet.create({
     position: "absolute",
     fontSize: 25,
     fontFamily: "PoppinsM",
-    top: 50,
+    top: 65,
     left: "20%",
     // marginBottom: "20%",
   },
+
   flatlist: {
     position: "relative",
     top: "12%",
@@ -70,11 +70,12 @@ const styles = StyleSheet.create({
     height: 20,
     alignItems: "center",
   },
+
   textoCarrito: {
-    fontSize: 20,
+    fontSize: 18,
     fontFamily: "PoppinsM",
     position: "absolute",
-    top: "30%",
+    top: "40%",
     margin: 20,
     textAlign: "center",
   },
@@ -169,9 +170,6 @@ export default function Carrito() {
   }, [carrito, setPrecioTotal]);
 
   const handleOnPress = () => {
-    //kinda
-    // Linking.openURL("https://pf-gp1-deploy.vercel.app/checkout");
-
     navigation.navigate("Checkout");
   };
 
@@ -189,11 +187,7 @@ export default function Carrito() {
       <View>
         <Text style={styles.titulo}>Mi Carrito</Text>
       </View>
-      {/* {carrito?.map((el) => (
-        <View key={el.id}>
-          <CarritoItem key={el.id} producto={el} />
-        </View>
-      ))} */}
+
       <FlatList
         data={carrito}
         keyExtractor={({ id }, index) => id}
@@ -246,7 +240,7 @@ export default function Carrito() {
         </View>
       ) : (
         <Text style={styles.textoCarrito}>
-          ¡Arrancá añadiendo productos a tu carrito!{" "}
+          ¡Arrancá añadiendo productos a tu carrito!
         </Text>
       )}
     </View>
