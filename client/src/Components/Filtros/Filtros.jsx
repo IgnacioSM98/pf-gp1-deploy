@@ -18,7 +18,7 @@ const Select = styled.select`
   overflow: hidden;
 `;
 
-export default function Filtros({ setSelected }) {
+export default function Filtros({ setSelected, setPageSelected }) {
   const dispatch = useDispatch();
   const categorias = useSelector((state) => state.categorias);
 
@@ -30,6 +30,7 @@ export default function Filtros({ setSelected }) {
 
   const handleOnChange = (e) => {
     dispatch(setSort(e.target.value));
+    setPageSelected(1);
   };
 
   return (
