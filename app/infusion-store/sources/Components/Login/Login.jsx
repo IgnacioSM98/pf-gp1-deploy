@@ -72,7 +72,7 @@ const styles = StyleSheet.create({
   saludo2: {
     position: "absolute",
     top: "15%",
-    left: "12%",
+    left: "15%",
     fontSize: 22,
     fontFamily: "PoppinsR",
     color: "rgba(67, 67, 67, 1)",

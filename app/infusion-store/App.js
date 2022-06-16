@@ -15,7 +15,12 @@ import {
   Checkout,
   PreLogin,
 } from "./sources/Components/index.js";
-import { StatusBar, TouchableWithoutFeedback, Keyboard } from "react-native";
+import {
+  StatusBar,
+  TouchableWithoutFeedback,
+  Keyboard,
+  LogBox,
+} from "react-native";
 import { useState, useEffect } from "react";
 
 // ICONOS - Libreria: https://icons.expo.fyi
@@ -29,6 +34,11 @@ import {
 import * as LocalAuthentication from "expo-local-authentication";
 import { setData, getData } from "./sources/Functions/localStorage";
 import * as Font from "expo-font";
+
+// Ignore log notification by message
+LogBox.ignoreLogs(["Warning: ..."]);
+//Ignore all log notifications
+LogBox.ignoreAllLogs();
 
 const DismissKeyboard = ({ children }) => {
   return (
