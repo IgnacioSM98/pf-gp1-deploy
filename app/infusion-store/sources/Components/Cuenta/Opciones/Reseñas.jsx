@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { View, ScrollView, StyleSheet, Text, Pressable } from "react-native";
-import Cerrar from "../Cerrar";
+// import Cerrar from "../Cerrar";
 import { useDispatch, useSelector } from "react-redux";
 import { getReviews } from "../../../../redux/actions";
 import { useNavigation } from "@react-navigation/native";
@@ -49,30 +49,32 @@ export default function Reseñas({ setOption }) {
 
   return (
     <View style={styles.container}>
-      <Pressable style={styles.cerrar} onPress={() => setOption(false)}>
-        <Cerrar />
-      </Pressable>
-
       <ScrollView>
-        {reseñas?.map((reseña) => (
-          <View style={styles.compra}>
-            <Text style={styles.dato}>{`Reseña: ${reseña.id}`}</Text>
-            <Text style={styles.dato}>Puntaje: {reseña.puntaje}</Text>
-            <Text style={styles.dato}>Titulo: {reseña.titulo}</Text>
-            <Text style={styles.dato}>Comentario: {reseña.comentario}</Text>
-            <Pressable
-              onPress={() =>
-                navigation.navigate("DetalleProducto", {
-                  id: reseña.productoId,
-                })
-              }
-            >
-              <Text style={styles.producto}>
-                ID de Producto: {reseña.productoId}
-              </Text>
-            </Pressable>
+        {reseñas ? (
+          reseñas.map((reseña) => (
+            <View style={styles.compra}>
+              <Text style={styles.dato}>{`Reseña: ${reseña.id}`}</Text>
+              <Text style={styles.dato}>Puntaje: {reseña.puntaje}</Text>
+              <Text style={styles.dato}>Titulo: {reseña.titulo}</Text>
+              <Text style={styles.dato}>Comentario: {reseña.comentario}</Text>
+              <Pressable
+                onPress={() =>
+                  navigation.navigate("DetalleProducto", {
+                    id: reseña.productoId,
+                  })
+                }
+              >
+                <Text style={styles.producto}>
+                  ID de Producto: {reseña.productoId}
+                </Text>
+              </Pressable>
+            </View>
+          ))
+        ) : (
+          <View style={{ marginTop: "20%", height: "50%" }}>
+            <Text>Aún no has hecho reseñas</Text>
           </View>
-        ))}
+        )}
       </ScrollView>
     </View>
   );

@@ -27,12 +27,12 @@ const Button = styled.Pressable`
 `;
 
 export default function Cuenta({ setIsAuthenticated }) {
-  const [option, setOption] = useState(null);
+  const [option, setOption] = useState("Cuenta");
   const user = useSelector((state) => state.userInfo);
 
   useFocusEffect(
     useCallback(() => {
-      const unsubscribe = () => setOption(null);
+      const unsubscribe = () => setOption("Cuenta");
 
       return () => unsubscribe();
     }, [])
@@ -40,31 +40,23 @@ export default function Cuenta({ setIsAuthenticated }) {
 
   return (
     <>
-      <NavBar titulo="Cuenta" />
+      <NavBar titulo={option} setOption={setOption} />
       <Container>
-        {!option && (
+        {option === "Cuenta" && (
           <View>
-            <Button onPress={() => setOption("ajustes")}>
+            <Button onPress={() => setOption("Ajustes")}>
               <Text>Ajustes de Perfil</Text>
             </Button>
 
-            <Button onPress={() => setOption("historial")}>
+            <Button onPress={() => setOption("Historial")}>
               <Text>Historial de Compras</Text>
             </Button>
 
-            <Button onPress={() => setOption("reseñas")}>
+            <Button onPress={() => setOption("Reseñas")}>
               <Text>Mis Reseñas</Text>
             </Button>
 
-            {/* <Button onPress={() => setOption("notificaciones")}>
-              <Text>Notificaciones</Text>
-            </Button>
-
-            <Button onPress={() => setOption("seguridad")}>
-              <Text>Seguridad</Text>
-            </Button> */}
-
-            <Button onPress={() => setOption("contacto")}>
+            <Button onPress={() => setOption("Contacto")}>
               <Text>Contacto</Text>
             </Button>
 
@@ -74,14 +66,14 @@ export default function Cuenta({ setIsAuthenticated }) {
           </View>
         )}
 
-        {option === "ajustes" && <Ajustes setOption={setOption} />}
-        {option === "historial" && <Historial setOption={setOption} />}
-        {option === "reseñas" && <Reseñas setOption={setOption} />}
-        {option === "notificaciones" && (
+        {option === "Ajustes" && <Ajustes setOption={setOption} />}
+        {option === "Historial" && <Historial setOption={setOption} />}
+        {option === "Reseñas" && <Reseñas setOption={setOption} />}
+        {/* {option === "Notificaciones" && (
           <Notificaciones setOption={setOption} />
-        )}
+        )} */}
         {/* {option === "seguridad" && <Seguridad setOption={setOption} />} */}
-        {option === "contacto" && <Contacto setOption={setOption} />}
+        {option === "Contacto" && <Contacto setOption={setOption} />}
       </Container>
     </>
   );
