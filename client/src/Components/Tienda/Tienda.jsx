@@ -31,6 +31,9 @@ const ContenedorFiltrosPro = styled.div`
   margin-right: 2rem;
   margin-bottom: 2rem;
   max-width: 1300px;
+  @media screen and (max-width: 1350px) {
+    width: 100%;
+  }
   @media screen and (max-width: 960px) {
     max-width: none;
     flex-direction: column;
@@ -45,6 +48,10 @@ const FiltrosCont = styled.div`
   border-radius: 15px;
   margin-top: 2rem;
   // box-shadow: 0px 2px 2px 0 #222, 0 2px 2px 0 #222;
+  @media screen and (max-width: 1350px) {
+    width: 100%;
+    padding: 1rem;
+  }
   @media screen and (max-width: 960px) {
     width: auto;
     height: auto;
@@ -88,6 +95,7 @@ const ProductosTienda = styled.div`
     flex-wrap: wrap;
     margin: 0;
     margin-top: 20px;
+    justify-content: center;
   }
   @media screen and (max-width: 560px) {
     display: flex;
@@ -101,6 +109,10 @@ const Linea = styled.hr`
   height: 0px;
   background-color: rgba(4, 4, 4, 1);
   // margin-top: 1.5rem;
+  @media screen and (max-width: 1350px) {
+    width: 90%;
+    min-width: 0;
+  }
 
   @media screen and (max-width: 400px) {
     display: none;
@@ -148,7 +160,12 @@ const Header = styled.div`
   position: relative;
   margin: auto;
   margin-top: 4rem;
-
+  @media screen and (max-width: 960px) {
+    width: 80%;
+  }
+  @media screen and (max-width: 560px) {
+    width: 90%;
+  }
   @media screen and (max-width: 400px) {
     color: white;
     height: 108px;
@@ -176,6 +193,9 @@ const TextoInfusion = styled.div`
   left: 35px;
   font-family: Poppins;
   font-size: 25px;
+  @media screen and (max-width: 560px) {
+    color: white;
+  }
 `;
 
 const Buscador = styled.input`
@@ -227,6 +247,17 @@ const Crear = styled.button`
   }
 `;
 
+const ContenedorProd = styled.div`
+  @media screen and (max-width: 1350px) {
+    position: relative;
+    width: 75%;
+  }
+  @media screen and (max-width: 960px) {
+    position: relative;
+    width: 95%;
+  }
+`;
+
 const filterStock = (producto) => {
   if (producto.stock > 0) return producto;
 };
@@ -269,7 +300,6 @@ function Shop({ contacto }) {
   useEffect(() => {
     setPages(Math.ceil(productos.length / 9));
   }, [productos.length]);
-
 
   useEffect(() => {
     setPageSelected(1);
@@ -366,7 +396,7 @@ function Shop({ contacto }) {
             <Filtros setSelected={setSelected} />
           </CuadradoFiltro>
         </FiltrosCont>
-        <div>
+        <ContenedorProd>
           <ProductosTienda>
             {flag &&
               (productosFiltrados.length === 0 ||
@@ -404,7 +434,7 @@ function Shop({ contacto }) {
               pageSelected={pageSelected}
             />
           ) : null}
-        </div>
+        </ContenedorProd>
       </ContenedorFiltrosPro>
 
       <Footer contacto={contacto} />

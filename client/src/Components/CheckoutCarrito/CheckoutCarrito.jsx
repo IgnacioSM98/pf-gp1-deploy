@@ -317,7 +317,7 @@ const Monto = styled.label`
 export default function Checkout({ contacto }) {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const [searchParams, setSearchParams] = useSearchParams();
+  const [searchParams] = useSearchParams();
 
   const carrito = useSelector((state) => state.carrito);
   const usuarios = useSelector((state) => state.usuarios);
@@ -351,6 +351,7 @@ export default function Checkout({ contacto }) {
             })
           );
 
+          //eslint-disable-next-line
           productos.split(".").map((producto) => {
             let carrito = producto.split(",");
 
@@ -370,11 +371,9 @@ export default function Checkout({ contacto }) {
         );
 
         setUserId(usuario?.id);
-        // } else {
-        //   // Definimos si vienen desde la pagina o si pegaron el Link
-        //   location.key === "default" ? navigate("/") : navigate(-1);
       }
     }
+    //eslint-disable-next-line
   }, [usuarios, userInfo, navigate]);
 
   useEffect(() => {
