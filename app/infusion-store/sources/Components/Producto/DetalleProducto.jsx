@@ -23,6 +23,8 @@ import {
 } from "../../../redux/actions";
 import { StarRating, Reviews } from "../index";
 
+import Toast from "react-native-toast-message";
+
 const styles = StyleSheet.create({
   contProd: {
     width: "100%",
@@ -285,6 +287,17 @@ const DetalleProducto = ({ route }) => {
   function addToCarrito(e) {
     if (data.stock > 0) {
       dispatch(agregarCarrito(id, cantidad));
+      Toast.show({
+        position: "top",
+        visibilityTime: 1500,
+        autoHide: true,
+        type: "success",
+        text1: "Producto agregado al carrito",
+        topOffset: 100,
+        bottomOffset: 20,
+        onShow: () => {},
+        onHide: () => {},
+      });
     }
   }
 
@@ -329,10 +342,32 @@ const DetalleProducto = ({ route }) => {
   function handleFav() {
     if (favoritos.find((fav) => fav.id == id)) {
       dispatch(eliminarDeFavoritos(id));
-      alert("Producto eliminado de favoritos");
+
+      Toast.show({
+        position: "top",
+        visibilityTime: 1500,
+        autoHide: true,
+        type: "error",
+        text1: "Producto eliminado de favoritos",
+        topOffset: 100,
+        bottomOffset: 0,
+        onShow: () => {},
+        onHide: () => {},
+      });
     } else {
       dispatch(añadirAFavoritos(data));
-      alert("Producto agregado a la lista de favoritos");
+
+      Toast.show({
+        position: "top",
+        visibilityTime: 1500,
+        autoHide: true,
+        type: "success",
+        text1: "Producto agregado a favoritos",
+        topOffset: 100,
+        bottomOffset: 0,
+        onShow: () => {},
+        onHide: () => {},
+      });
     }
   }
 
@@ -371,6 +406,7 @@ const DetalleProducto = ({ route }) => {
         <Image source={{ uri: data.imagen }} style={styles.img} />
       </View>
 
+      <Toast />
       <View style={styles.contDatos}>
         <Text style={styles.nombre}>{data.nombre}</Text>
 
