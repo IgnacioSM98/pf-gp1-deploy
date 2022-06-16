@@ -1,11 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useLocation, useNavigate } from "react-router-dom";
-import {
-  getFavoritos,
-  getProductosFiltrados,
-  setSort,
-} from "../../Redux/actions/index";
+import { getFavoritos, getProductosFiltrados } from "../../Redux/actions/index";
 import {
   Producto,
   Paginado,
@@ -413,7 +409,7 @@ function Shop({ contacto }) {
         <FiltrosCont>
           <ButtonReset
             onClick={() => {
-              // dispatch(getProductosFiltrados(productos));
+              dispatch(getProductosFiltrados(productos));
               setSelected("");
 
               document.getElementById("sort").value = "DEFAULT";
@@ -425,7 +421,10 @@ function Shop({ contacto }) {
           </ButtonReset>
           <CuadradoFiltro>
             <LetraFiltro>Filtros</LetraFiltro>
-            <Filtros setSelected={setSelected} />
+            <Filtros
+              setSelected={setSelected}
+              setPageSelected={setPageSelected}
+            />
           </CuadradoFiltro>
         </FiltrosCont>
         <ContenedorProd>
