@@ -98,9 +98,17 @@ export default function Compras({ setComponente }) {
 
       {pedidos[0] ? (
         <Container>
-          {pedidos.map((pedido) => (
-            <Pedido width={"100%"} key={pedido.id} producto={pedido} />
-          ))}
+          {pedidos
+            .sort((a, b) => {
+              return Number(a.id) < Number(b.id)
+                ? 1
+                : Number(b.id) < Number(a.id)
+                ? -1
+                : 0;
+            })
+            .map((pedido) => (
+              <Pedido width={"100%"} key={pedido.id} producto={pedido} />
+            ))}
         </Container>
       ) : (
         <p>Aún no tienes compras realizadas</p>

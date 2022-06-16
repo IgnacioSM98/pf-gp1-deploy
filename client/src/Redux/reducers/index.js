@@ -39,9 +39,17 @@ export default function rootReducer(state = initialState, action) {
         // eslint-disable-next-line
         filteredAux.sort((a, b) => {
           if (action.payload === "A-Z")
-            return a.nombre > b.nombre ? 1 : b.nombre > a.nombre ? -1 : 0;
+            return a.nombre.toLowerCase() > b.nombre.toLowerCase()
+              ? 1
+              : b.nombre.toLowerCase() > a.nombre.toLowerCase()
+              ? -1
+              : 0;
           if (action.payload === "Z-A")
-            return a.nombre < b.nombre ? 1 : b.nombre < a.nombre ? -1 : 0;
+            return a.nombre.toLowerCase() < b.nombre.toLowerCase()
+              ? 1
+              : b.nombre.toLowerCase() < a.nombre.toLowerCase()
+              ? -1
+              : 0;
           if (action.payload === "Highest SpoonScore") {
             return Number(a.precio) < Number(b.precio)
               ? 1

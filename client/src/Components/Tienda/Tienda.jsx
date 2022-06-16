@@ -1,7 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useLocation, useNavigate } from "react-router-dom";
-import { getFavoritos, getProductosFiltrados } from "../../Redux/actions/index";
+import {
+  getFavoritos,
+  getProductosFiltrados,
+  setSort,
+} from "../../Redux/actions/index";
 import {
   Producto,
   Paginado,
@@ -47,6 +51,7 @@ const FiltrosCont = styled.div`
   padding: 1.5rem;
   border-radius: 15px;
   margin-top: 2rem;
+  position: relative;
   // box-shadow: 0px 2px 2px 0 #222, 0 2px 2px 0 #222;
   @media screen and (max-width: 1350px) {
     width: 100%;
@@ -258,6 +263,21 @@ const ContenedorProd = styled.div`
   }
 `;
 
+const ButtonReset = styled.button`
+  position: absolute;
+  top: 5%;
+  right: 10%;
+
+  height: 5%;
+  width: 20%;
+
+  border: none;
+  border-radius: 5px;
+  background-color: #36885e;
+
+  cursor: pointer;
+`;
+
 const filterStock = (producto) => {
   if (producto.stock > 0) return producto;
 };
@@ -391,6 +411,18 @@ function Shop({ contacto }) {
 
       <ContenedorFiltrosPro>
         <FiltrosCont>
+          <ButtonReset
+            onClick={() => {
+              // dispatch(getProductosFiltrados(productos));
+              setSelected("");
+
+              document.getElementById("sort").value = "DEFAULT";
+              document.getElementById("diets").value = "DEFAULT";
+              document.getElementById("points").value = "DEFAULT";
+            }}
+          >
+            Reset
+          </ButtonReset>
           <CuadradoFiltro>
             <LetraFiltro>Filtros</LetraFiltro>
             <Filtros setSelected={setSelected} />

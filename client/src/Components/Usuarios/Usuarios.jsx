@@ -142,7 +142,11 @@ export default function Usuarios() {
           <Nombre>{usuario.nombre}</Nombre>
           <Apellido>{usuario.apellido}</Apellido>
           <Correo>{usuario.mail}</Correo>
-          <Telefono>{usuario.telefono}</Telefono>
+          {usuario.telefono ? (
+            <Telefono>+549{usuario.telefono}</Telefono>
+          ) : (
+            <Telefono>Sin telefono</Telefono>
+          )}
           <Button
             onClick={() => {
               setEditar(usuario);
