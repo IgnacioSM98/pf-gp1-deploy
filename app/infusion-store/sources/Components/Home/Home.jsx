@@ -112,7 +112,11 @@ export default function Home({ navigation }) {
       <NavBar screen={isFocused ? "Inicio" : ""} flag={false} />
       <View style={styles.container}>
         {loading ? (
-          <ActivityIndicator style={styles.loading} size="large" color="red" />
+          <ActivityIndicator
+            style={styles.loading}
+            size="large"
+            color="brown"
+          />
         ) : (
           <View
             style={{

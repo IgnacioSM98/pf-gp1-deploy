@@ -106,7 +106,7 @@ const Tienda = ({ navigation }) => {
           <ActivityIndicator
             style={styles.loading}
             size="large"
-            color="#00ff00"
+            color="brown"
           />
         ) : (
           <FlatList

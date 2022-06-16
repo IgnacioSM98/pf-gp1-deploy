@@ -10,7 +10,6 @@ import {
   View,
   StyleSheet,
   Text,
-  ActivityIndicator,
   FlatList,
   Dimensions,
   SafeAreaView,
