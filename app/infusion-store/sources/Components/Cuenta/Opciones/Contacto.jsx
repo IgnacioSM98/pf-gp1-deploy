@@ -10,6 +10,7 @@ import {
 } from "react-native";
 import RNPickerSelect from "react-native-picker-select";
 import { enviarConsulta } from "../../../../redux/actions";
+import Cerrar from "../Cerrar";
 
 export default function Contacto({ setOption }) {
   const dispatch = useDispatch();
@@ -47,7 +48,12 @@ export default function Contacto({ setOption }) {
   }
 
   return (
+    <>
+    <Pressable style={styles.cerrar} onPress={() => setOption(false)}>
+        <Cerrar />
+      </Pressable>
     <View style={styles.container}>
+      
       <Pressable onPress={() => setOption(false)}></Pressable>
       <Text style={styles.title}>Mail:</Text>
       <TextInput
@@ -85,6 +91,7 @@ export default function Contacto({ setOption }) {
         <Text style={styles.textButton}>ENVIAR</Text>
       </TouchableHighlight>
     </View>
+    </>
   );
 }
 
@@ -130,5 +137,8 @@ const styles = StyleSheet.create({
     textAlign: "center",
     fontSize: 18,
     fontWeight: "bold",
+  },
+  cerrar: {
+    marginBottom: 60,
   },
 });
