@@ -168,8 +168,6 @@ export default function NavBar({ contacto, setUser }) {
   const userInfo = useSelector((state) => state.userInfo);
   const [searchParams] = useSearchParams();
 
-  const [searchParams, setSearchParams] = useSearchParams();
-
   const logOut = () => {
     localStorage.removeItem("user");
     app.auth().signOut();
