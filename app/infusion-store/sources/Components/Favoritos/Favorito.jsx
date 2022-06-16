@@ -1,8 +1,10 @@
 import React from "react";
-import { Text, View, StyleSheet, Image, Pressable } from "react-native";
+import { Text, View, StyleSheet, Image, Pressable, Alert } from "react-native";
 import { AntDesign, Octicons } from "@expo/vector-icons";
 import { useDispatch, useSelector } from "react-redux";
 import { eliminarDeFavoritos, añadirAFavoritos } from "../../../redux/actions";
+
+import Toast from "react-native-toast-message";
 
 const styles = StyleSheet.create({
   contProd: {
@@ -65,14 +67,46 @@ export default function Favorito({ navigation, item }) {
 
   function handleFav() {
     if (favoritos.find((fav) => fav.id == item.id)) {
-      dispatch(eliminarDeFavoritos(item.id));
-      alert("Producto eliminado de favoritos");
+      // dispatch(eliminarDeFavoritos(item.id));
+      // alert("Producto eliminado de favoritos");
+      Alert.alert(
+        "Eliminar producto",
+        "¿Estas seguro de eliminar este producto de tus favoritos?",
+        [
+          {
+            text: "Si",
+            style: "destructive",
+            onPress: () => {
+              dispatch(eliminarDeFavoritos(item.id));
+              // Alert.alert(" ", "Producto eliminado de favoritos");
+            },
+          },
+          {
+            text: "No",
+            style: "cancel",
+          },
+        ],
+        { cancelable: false }
+      );
+      // Toast.show({
+      //   position: "top",
+      //   visibilityTime: 2000,
+      //   autoHide: true,
+      //   type: "error",
+      //   text1: "Producto eliminado de favoritos",
+      //   topOffset: 10,
+      //   bottomOffset: 0,
+      //   onShow: () => {},
+      //   onHide: () => {},
+      // });
     } else {
       dispatch(añadirAFavoritos(item));
       alert("Producto agregado a la lista de favoritos");
     }
   }
   return (
+    // <Toast />
+
     <Pressable
       onPress={() => navigation.navigate("DetalleProducto", { id: item.id })}
     >

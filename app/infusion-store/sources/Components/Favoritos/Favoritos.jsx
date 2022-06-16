@@ -18,6 +18,13 @@ const styles = StyleSheet.create({
     display: "flex",
     justifyContent: "center",
   },
+  favoritos: {
+    position: "absolute",
+    fontSize: 30,
+    top: 10,
+    right: 20,
+    zIndex: 999,
+  },
 });
 
 export default function Favoritos({ navigation }) {
