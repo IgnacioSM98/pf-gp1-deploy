@@ -7,7 +7,16 @@ import "./Home.css";
 import { getProductos, getFavoritos } from "../../Redux/actions";
 
 const Container = styled.div`
-  height: 100vh;
+  height: auto;
+  width: 100vw;
+  align-items: center;
+  @media screen and (max-width: 960px) {
+    width: 100vw;
+    height: auto;
+  }
+  @media screen and (max-width: 560px) {
+    heigth: auto;
+  }
 `;
 
 const Categoria = styled.div`
@@ -26,7 +35,7 @@ const Productos = styled.div`
 `;
 
 const Image = styled.img`
-  width: 100%;
+  width: 100vw;
   height: 500px;
   object-fit: cover;
   opacity: 0.5;

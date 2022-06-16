@@ -23,6 +23,12 @@ import {
 } from "./Components/index";
 import { Routes, Route } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
+import styled from "styled-components";
+
+const DivApp = styled.div`
+  width: 100vw;
+  min-height: 100vh;
+`;
 
 function App() {
   const dispatch = useDispatch();
@@ -42,7 +48,7 @@ function App() {
   }, [dispatch]);
 
   return (
-    <div>
+    <DivApp>
       <NavBar contacto={contacto} user={user} setUser={setUser} />
       <div className="App">
         <Routes>
@@ -109,7 +115,7 @@ function App() {
         <Route exact path="/admin/cambiar/:id" element={"change something"} />*/}
         </Routes>
       </div>
-    </div>
+    </DivApp>
   );
 }
 

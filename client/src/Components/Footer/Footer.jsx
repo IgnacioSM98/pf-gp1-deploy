@@ -11,7 +11,8 @@ const Container = styled.div`
   width: 100%;
   height: 220px;
   @media screen and (max-width: 560px) {
-    heigth: 120px;
+    heigth: 130px;
+    justify-content: space-evenly;
   }
 `;
 
@@ -22,13 +23,18 @@ const Contacto = styled.div`
   max-width: 1800px;
   justify-content: space-around;
   @media screen and (max-width: 960px) {
-    top: 70px;
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     align-items: center;
+  }
+  @media screen and (max-width: 870px) {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
   }
   @media screen and (max-width: 560px) {
     display: flex;
+    flex-direction: row;
     justify-content: space-around;
 `;
 

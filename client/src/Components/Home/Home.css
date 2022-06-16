@@ -1,5 +1,5 @@
 .div-productos {
-  width: 100%;
+  width: 100vw;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -10,6 +10,6 @@
   flex-direction: row;
   flex-wrap: nowrap;
   justify-content: space-around;
-  width: auto;
+  width: 100vw;
   height: 420px;
 }
