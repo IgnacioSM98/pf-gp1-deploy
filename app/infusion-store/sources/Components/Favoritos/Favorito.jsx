@@ -1,6 +1,8 @@
 import React from "react";
 import { Text, View, StyleSheet, Image, Pressable } from "react-native";
-import { Octicons } from "@expo/vector-icons";
+import { AntDesign, Octicons } from "@expo/vector-icons";
+import { useDispatch, useSelector } from "react-redux";
+import { eliminarDeFavoritos, añadirAFavoritos } from "../../../redux/actions";
 
 const styles = StyleSheet.create({
   // view: {
@@ -86,9 +88,28 @@ const styles = StyleSheet.create({
     // marginTop: 5,
     fontWeight: "bold",
   },
+  favoritos: {
+    position: "absolute",
+    fontSize: 30,
+    top: 70,
+    right: 30,
+    zIndex: 999,
+  },
 });
 
 export default function Favorito({ navigation, item }) {
+  const favoritos = useSelector((state) => state.favoritos);
+  const dispatch = useDispatch();
+
+  function handleFav() {
+    if (favoritos.find((fav) => fav.id == item.id)) {
+      dispatch(eliminarDeFavoritos(item.id));
+      alert("Producto eliminado de favoritos");
+    } else {
+      dispatch(añadirAFavoritos(item));
+      alert("Producto agregado a la lista de favoritos");
+    }
+  }
   return (
     <Pressable
       onPress={() => navigation.navigate("DetalleProducto", { id: item.id })}
@@ -100,6 +121,24 @@ export default function Favorito({ navigation, item }) {
         <View style={styles.contDatos}>
           <Text style={styles.nombre}>{item.nombre}</Text>
           <Text style={styles.precio}>${item.precio}</Text>
+        </View>
+
+        <View style={styles.favoritos}>
+          {favoritos.find((fav) => fav.id == item.id) ? (
+            <AntDesign
+              onPress={handleFav}
+              name="heart"
+              size={24}
+              color="black"
+            />
+          ) : (
+            <Octicons
+              onPress={handleFav}
+              name="heart"
+              size={24}
+              color="black"
+            />
+          )}
         </View>
       </View>
     </Pressable>
