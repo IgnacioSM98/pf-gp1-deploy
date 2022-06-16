@@ -66,7 +66,7 @@ function Producto(props) {
           <Text>Stock: {props.stock}</Text>
           <Text>{props.descripcion.slice(0, 100)}</Text>
           <Text style={styles.precio}>
-            {props.precio.toLocaleString("es-ES")}
+            ${props.precio.toLocaleString("es-ES")}
           </Text>
         </View>
       </View>
