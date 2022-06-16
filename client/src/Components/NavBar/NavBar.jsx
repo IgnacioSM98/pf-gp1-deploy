@@ -168,6 +168,8 @@ export default function NavBar({ contacto, setUser }) {
   const userInfo = useSelector((state) => state.userInfo);
   const [searchParams] = useSearchParams();
 
+  const [searchParams, setSearchParams] = useSearchParams();
+
   const logOut = () => {
     localStorage.removeItem("user");
     app.auth().signOut();
@@ -201,6 +203,7 @@ export default function NavBar({ contacto, setUser }) {
       );
     }
   }, [dispatch, searchParams]);
+
 
   useEffect(() => {
     // Cada vez que se actualice el carrito lo guardamos en caché

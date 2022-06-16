@@ -325,6 +325,7 @@ export default function Checkout({ contacto }) {
   const [precioTotal, setPrecioTotal] = useState(0);
   const [flag, setFlag] = useState(false);
   const [userId, setUserId] = useState();
+
   const id = searchParams.get("id");
   const productos = searchParams.get("carrito");
 
@@ -333,6 +334,7 @@ export default function Checkout({ contacto }) {
   }, [dispatch]);
 
   useEffect(() => {
+    // Si encontró por parametros el ID entonces viene desde la APP
     if (id) {
       setUserId(id);
 
