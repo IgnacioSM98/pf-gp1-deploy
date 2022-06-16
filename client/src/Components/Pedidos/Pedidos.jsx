@@ -69,7 +69,7 @@ export default function Pedidos() {
 
       <Select onChange={(e) => setSelected(e.target.value)}>
         <option value="default">Filtrar por estado</option>
-        <option value="todos">Todos</option>
+        <option value="default">Todos</option>
         <option value="creado">Creado</option>
         <option value="preparación">En preparacion</option>
         <option value="camino">En camino</option>
