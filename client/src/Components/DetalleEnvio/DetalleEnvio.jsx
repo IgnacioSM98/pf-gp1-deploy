@@ -346,7 +346,7 @@ export default function DetalleEnvio({ contacto }) {
   return detalle.id ? (
     <>
       <Container>
-        {user === "admin" && <H1>{`Pedido numero: #2022${detalle.id}`}</H1>}
+        {user && <H1>{`Pedido numero: #2022${detalle.id}`}</H1>}
 
         {user === "admin" && (
           <ModificarEstados onChange={handleInputChange}>
