@@ -11,7 +11,7 @@ const Container = styled.div`
   width: 100%;
   align-items: center;
   @media screen and (max-width: 960px) {
-    width: 100vw;
+    width: 100%;
     height: auto;
   }
   @media screen and (max-width: 560px) {
