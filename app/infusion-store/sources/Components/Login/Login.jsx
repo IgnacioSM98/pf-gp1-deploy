@@ -60,7 +60,9 @@ const styles = StyleSheet.create({
 
   bienvenido: {
     top: "10%",
-    left: "23%",
+    width: "100%",
+    textAlign: "center",
+    // left: "23%",
     position: "absolute",
     fontSize: 35,
     fontFamily: "PoppinsM",
@@ -72,7 +74,9 @@ const styles = StyleSheet.create({
   saludo2: {
     position: "absolute",
     top: "15%",
-    left: "15%",
+    textAlign: "center",
+    width: "100%",
+    // left: "15%",
     fontSize: 22,
     fontFamily: "PoppinsR",
     color: "rgba(67, 67, 67, 1)",
@@ -103,7 +107,7 @@ const styles = StyleSheet.create({
   botonOlvidar: {
     top: "30%",
     alignItems: "flex-end",
-    marginRight: 10,
+    marginRight: 20,
   },
 
   buttonContainer: {
@@ -137,10 +141,13 @@ const styles = StyleSheet.create({
   },
   contenedorRegistro: {
     position: "absolute",
+    display: "flex",
     flexDirection: "row",
+
     width: "100%",
-    bottom: 10,
-    left: "8%",
+
+    bottom: "5%",
+    left: "12%",
   },
   textRegistro2: {
     fontFamily: "PoppinsR",
@@ -148,17 +155,12 @@ const styles = StyleSheet.create({
     color: "black",
     marginRight: 10,
   },
+
   textRegistro: {
     fontFamily: "PoppinsM",
     fontSize: 15,
     color: "darkgrey",
   },
-
-  // buttonOutlineText: {
-  //   color: "#0782F9",
-  //   fontWeight: "700",
-  //   fontSize: 16,
-  // },
 });
 
 export default function Login({ flag, onAuth, setIsAuthenticated }) {
@@ -180,17 +182,6 @@ export default function Login({ flag, onAuth, setIsAuthenticated }) {
     const provider = new GoogleAuthProvider();
 
     console.log(GoogleAuthProvider, provider, "xd?");
-    // signInWithPopup(authentication, provider)
-    //   .then(async (res) => {
-    //     const user = { ...res.user };
-
-    //     setData("user", user);
-
-    //     console.log(user, "ubuntu");
-    //   })
-    //   .catch((error) => {
-    //     console.log(error);
-    //   });
   };
 
   const registrar = () => {
@@ -328,7 +319,7 @@ export default function Login({ flag, onAuth, setIsAuthenticated }) {
         </TouchableOpacity>
       </View>
 
-      <Text style={styles.textGoogle}>O ingresa con</Text>
+      {/* <Text style={styles.textGoogle}>O ingresa con</Text> */}
 
       {/* <FontAwesome
           name="google"

@@ -7,6 +7,7 @@ import {
   KeyboardAvoidingView,
   Pressable,
   Alert,
+  StatusBar,
 } from "react-native";
 import { TextInput, HelperText } from "react-native-paper";
 import { useDispatch } from "react-redux";
@@ -40,7 +41,9 @@ const styles = StyleSheet.create({
   saludo: {
     position: "absolute",
     top: "10%",
-    left: "35%",
+    width: "100%",
+    textAlign: "center",
+    // left: "35%",
     fontSize: 35,
     fontFamily: "PoppinsM",
     color: "rgba(67, 67, 67, 1)",
@@ -48,7 +51,8 @@ const styles = StyleSheet.create({
   saludo2: {
     position: "absolute",
     top: "15%",
-    left: "16%",
+    width: "100%",
+    textAlign: "center",
     fontSize: 22,
     fontFamily: "PoppinsR",
     color: "rgba(67, 67, 67, 1)",
@@ -99,8 +103,8 @@ const styles = StyleSheet.create({
     position: "absolute",
     flexDirection: "row",
     width: "100%",
-    bottom: 10,
-    left: "15%",
+    bottom: 30,
+    left: "20%",
   },
   textRegistro2: {
     fontFamily: "PoppinsR",
@@ -113,25 +117,6 @@ const styles = StyleSheet.create({
     fontSize: 15,
     color: "darkgrey",
   },
-
-  // buttonOutline: {
-  //   backgroundColor: "white",
-  //   marginTop: 5,
-  //   borderColor: "#0782F9",
-  //   borderWidth: 2,
-  // },
-
-  // buttonText: {
-  //   color: "white",
-  //   fontWeight: "700",
-  //   fontSize: 16,
-  // },
-
-  // buttonOutlineText: {
-  //   color: "#0782F9",
-  //   fontWeight: "700",
-  //   fontSize: 16,
-  // },
 });
 
 export default function SignUp({ setIsAuthenticated }) {
@@ -166,16 +151,16 @@ export default function SignUp({ setIsAuthenticated }) {
                 uid: res.user.uid,
                 photoURL: res.user.photoURL,
               });
-            
-            dispatch(
-              postUsuario({
-                id: res.user.uid,
-                nombre: res.user.displayName,
-                apellido: apellido,
-                mail: res.user.email,
-                contraseña: password,
-              })
-            );
+
+              dispatch(
+                postUsuario({
+                  id: res.user.uid,
+                  nombre: res.user.displayName,
+                  apellido: apellido,
+                  mail: res.user.email,
+                  contraseña: password,
+                })
+              );
 
               dispatch(
                 setUserInfo({
@@ -195,10 +180,6 @@ export default function SignUp({ setIsAuthenticated }) {
       Alert.alert("Error de registro", "Alguno de los campos está vacío");
     }
   };
-
-  // const hasErrors = () => {
-  //   return !email.includes("@");
-  // };
 
   return (
     <KeyboardAvoidingView style={styles.container}>
@@ -277,7 +258,7 @@ export default function SignUp({ setIsAuthenticated }) {
         </TouchableOpacity>
       </View>
 
-      <Text style={styles.textGoogle}>O registrate con</Text>
+      {/* <Text style={styles.textGoogle}>O registrate con</Text> */}
 
       <View style={styles.contenedorRegistro}>
         <Text style={styles.textRegistro2}>¿Ya tenés una cuenta?</Text>
