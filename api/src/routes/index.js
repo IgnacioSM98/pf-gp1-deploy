@@ -841,7 +841,7 @@ router.post("/usuario/confirmacion", async (req, res) => {
       },
     });
     var mailOptions = {
-      from: '"Henry Grupo 1 👻" <henrypfg1@gmail.com>',
+      from: '"Henry Grupo 1 ☕" <henrypfg1@gmail.com>',
       to: usuario.mail,
       subject: "Hello ✔",
       text: "Compra confirmada",
@@ -872,7 +872,7 @@ router.post("/admin/despachar", async (req, res) => {
       },
     });
     var mailOptions = {
-      from: '"Henry Grupo 1 👻" <henrypfg1@gmail.com>',
+      from: '"Henry Grupo 1 ☕" <henrypfg1@gmail.com>',
       to: usuario.mail,
       subject: "Hello ✔",
       text: "Producto siendo despachado!",
@@ -902,7 +902,7 @@ router.post("/admin/correo", async (req, res) => {
       },
     });
     var mailOptions = {
-      from: '"Henry Grupo 1 👻" <henrypfg1@gmail.com>',
+      from: '"Henry Grupo 1 ☕" <henrypfg1@gmail.com>',
       to: usuario.mail,
       subject: "Hello ✔",
       text: "El producto se encuentra en el punto de entrega!",
@@ -932,7 +932,7 @@ router.post("/admin/entrega", async (req, res) => {
       },
     });
     var mailOptions = {
-      from: '"Henry Grupo 1 👻" <henrypfg1@gmail.com>',
+      from: '"Henry Grupo 1 ☕" <henrypfg1@gmail.com>',
       to: usuario.mail,
       subject: "Hello ✔",
       text: "El producto fue entregado por favor deja tu opinión del producto!",

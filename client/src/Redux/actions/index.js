@@ -337,18 +337,18 @@ export function orderByStock(payload) {
   return { type: "ORDER_BY_STOCK", payload };
 }
 
-export function mailAdmin(userId, { estado }) {
+export function mailAdmin(userId, { newEstado }) {
   return async function (dispatch) {
-    if (estado === "En preparación") {
+    if (newEstado === "En preparación") {
       await axios.post(`${urlBase}usuario/confirmacion`, { userId: userId });
     }
-    if (estado === "En camino") {
+    if (newEstado === "En camino") {
       await axios.post(`${urlBase}${admin}despachar`, { userId: userId });
     }
-    if (estado === "En punto de entrega/poder del correo") {
+    if (newEstado === "En punto de entrega/poder del correo") {
       await axios.post(`${urlBase}${admin}correo`, { userId: userId });
     }
-    if (estado === "Entregado") {
+    if (newEstado === "Entregado") {
       await axios.post(`${urlBase}${admin}entrega`, { userId: userId });
     }
 
