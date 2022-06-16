@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import {
   Compras,
@@ -145,8 +145,13 @@ export default function Cuenta() {
 
   var ComponenteDinamico = componentes[componente];
 
+  useEffect(() => {
+    setComponente(localStorage.getItem("cuenta"));
+  }, []);
+
   const handleOnClick = (e) => {
     setComponente(e.target.value);
+    localStorage.setItem("cuenta", e.target.value);
   };
 
   return (

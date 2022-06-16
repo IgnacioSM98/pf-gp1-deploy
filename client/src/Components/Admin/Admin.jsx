@@ -150,6 +150,10 @@ function Cuenta() {
   const dispatch = useDispatch();
 
   useEffect(() => {
+    setDetalle(localStorage.getItem("admin"));
+  }, []);
+
+  useEffect(() => {
     dispatch(getPedidos());
   }, [dispatch]);
 
@@ -169,6 +173,7 @@ function Cuenta() {
             }
             onClick={() => {
               setDetalle("usuarios");
+              localStorage.setItem("admin", "usuarios");
             }}
           >
             Usuarios
@@ -182,6 +187,7 @@ function Cuenta() {
             }
             onClick={() => {
               setDetalle("categorias");
+              localStorage.setItem("admin", "categorias");
             }}
           >
             Categorias
@@ -195,6 +201,7 @@ function Cuenta() {
             }
             onClick={() => {
               setDetalle("productos");
+              localStorage.setItem("admin", "productos");
             }}
           >
             Productos
@@ -208,6 +215,7 @@ function Cuenta() {
             }
             onClick={() => {
               setDetalle("pedidos");
+              localStorage.setItem("admin", "pedidos");
             }}
           >
             Pedidos
@@ -221,6 +229,7 @@ function Cuenta() {
             }
             onClick={() => {
               setDetalle("reseñas");
+              localStorage.setItem("admin", "reseñas");
             }}
           >
             Reseñas

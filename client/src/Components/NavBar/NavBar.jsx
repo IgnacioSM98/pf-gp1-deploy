@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Link, useSearchParams } from "react-router-dom";
+import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import styled from "styled-components";
 import { FaBars } from "react-icons/fa";
 import Usuario from "../Usuario/Usuario";
@@ -155,6 +155,7 @@ const MobileIcon = styled.div`
 
 export default function NavBar({ contacto, setUser }) {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const carrito = useSelector((state) => state.carrito);
 
@@ -201,7 +202,6 @@ export default function NavBar({ contacto, setUser }) {
       );
     }
   }, [dispatch, searchParams]);
-
 
   useEffect(() => {
     // Cada vez que se actualice el carrito lo guardamos en caché
@@ -325,6 +325,9 @@ export default function NavBar({ contacto, setUser }) {
               e.preventDefault();
               logOut();
               setMenu(!userMenu);
+              localStorage.removeItem("admin");
+              localStorage.removeItem("cuenta");
+              navigate("/");
             }}
           >
             Cerrar Sesion
