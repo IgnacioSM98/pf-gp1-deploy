@@ -1,9 +1,14 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import styled from "styled-components";
 import { Footer, ScrollToTop, MercadoPagoIntegracion } from "../index";
-import { getUsuarios, postPedido } from "../../Redux/actions/index";
+import {
+  agregarCarrito,
+  getUsuarios,
+  postPedido,
+  setUserInfo,
+} from "../../Redux/actions/index";
 import "./CheckoutCarrito.css";
 
 const Contenedor = styled.div`
@@ -310,29 +315,65 @@ const Monto = styled.label`
 `;
 
 export default function Checkout({ contacto }) {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const [searchParams, setSearchParams] = useSearchParams();
+
   const carrito = useSelector((state) => state.carrito);
   const usuarios = useSelector((state) => state.usuarios);
   const userInfo = useSelector((state) => state.userInfo);
-  const dispatch = useDispatch();
   const [precioTotal, setPrecioTotal] = useState(0);
   const [flag, setFlag] = useState(false);
   const [userId, setUserId] = useState();
-  const navigate = useNavigate();
+
+  const id = searchParams.get("id");
+  const productos = searchParams.get("carrito");
 
   useEffect(() => {
     dispatch(getUsuarios());
   }, [dispatch]);
 
   useEffect(() => {
-    if (usuarios.length > 0 && userInfo) {
-      const usuario = usuarios.find(
-        (usuario) => usuario.mail === userInfo.email
-      );
+    // Si encontró por parametros el ID entonces viene desde la APP
+    if (id) {
+      setUserId(id);
 
-      setUserId(usuario?.id);
-      // } else {
-      //   // Definimos si vienen desde la pagina o si pegaron el Link
-      //   location.key === "default" ? navigate("/") : navigate(-1);
+      if (usuarios.length) {
+        const user = usuarios.find((usuario) => usuario.id === id);
+
+        if (id !== userInfo?.id) {
+          dispatch(
+            setUserInfo({
+              id: id,
+              nombre: user.nombre,
+              apellido: user.apellido,
+              email: user.mail,
+            })
+          );
+
+          productos.split(".").map((producto) => {
+            let carrito = producto.split(",");
+
+            dispatch(agregarCarrito(Number(carrito[0]), Number(carrito[1])));
+          });
+        } else {
+          setInput({
+            ...input,
+            mail: userInfo.email,
+          });
+        }
+      }
+    } else {
+      if (usuarios.length > 0 && userInfo) {
+        const usuario = usuarios.find(
+          (usuario) => usuario.mail === userInfo.email
+        );
+
+        setUserId(usuario?.id);
+        // } else {
+        //   // Definimos si vienen desde la pagina o si pegaron el Link
+        //   location.key === "default" ? navigate("/") : navigate(-1);
+      }
     }
   }, [usuarios, userInfo, navigate]);
 
