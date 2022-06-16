@@ -4,6 +4,7 @@ import { useNavigate, useSearchParams } from "react-router-dom";
 import styled from "styled-components";
 import { Footer, ScrollToTop, MercadoPagoIntegracion } from "../index";
 import {
+  agregarCarrito,
   getUsuarios,
   postPedido,
   setUserInfo,
@@ -324,7 +325,9 @@ export default function Checkout({ contacto }) {
   const [precioTotal, setPrecioTotal] = useState(0);
   const [flag, setFlag] = useState(false);
   const [userId, setUserId] = useState();
+
   const id = searchParams.get("id");
+  const productos = searchParams.get("carrito");
 
   useEffect(() => {
     dispatch(getUsuarios());
@@ -347,6 +350,12 @@ export default function Checkout({ contacto }) {
               email: user.mail,
             })
           );
+
+          productos.split(".").map((producto) => {
+            let carrito = producto.split(",");
+
+            dispatch(agregarCarrito(Number(carrito[0]), Number(carrito[1])));
+          });
         } else {
           setInput({
             ...input,
