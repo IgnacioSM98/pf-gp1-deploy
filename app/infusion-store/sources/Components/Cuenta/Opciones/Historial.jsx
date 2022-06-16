@@ -1,12 +1,14 @@
 import React, { useEffect } from "react";
 import { View, ScrollView, StyleSheet, Text, Pressable } from "react-native";
-import Cerrar from "../Cerrar";
+// import Cerrar from "../Cerrar";
 import { useDispatch, useSelector } from "react-redux";
 import { getPedidos } from "../../../../redux/actions";
 import { useNavigation } from "@react-navigation/native";
 
 const styles = StyleSheet.create({
-  container: {},
+  container: {
+    height: "92%",
+  },
   cerrar: {
     marginBottom: 60,
   },
@@ -18,19 +20,23 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     padding: 15,
     margin: "3%",
-    marginTop: 20,
+    // marginTop: 20,
     borderRadius: 20,
     elevation: 5,
     backgroundColor: "white",
   },
+
   prod: {
-    borderBottomWidth: 1,
-    borderBottomColor: "black",
+    borderBottomWidth: 0.3,
+    borderBottomColor: "grey",
+    paddingBottom: 3,
     marginTop: 10,
     marginLeft: 15,
+    marginRight: 15,
   },
+
   titulo: {
-    marginLeft: 15,
+    marginLeft: 10,
     marginTop: 15,
     fontSize: 16,
     fontWeight: "bold",
@@ -59,9 +65,9 @@ export default function Historial({ setOption }) {
   };
   return (
     <View style={styles.container}>
-      <Pressable style={styles.cerrar} onPress={() => setOption(false)}>
+      {/* <Pressable style={styles.cerrar} onPress={() => setOption("Cuenta")}>
         <Cerrar />
-      </Pressable>
+      </Pressable> */}
 
       <ScrollView>
         {pedidos?.filter(filterByUser).map((pedido) => (
@@ -76,7 +82,9 @@ export default function Historial({ setOption }) {
               return (
                 <Pressable
                   onPress={() =>
-                    navigation.navigate("DetalleProducto", { id: el.compra.productoId })
+                    navigation.navigate("DetalleProducto", {
+                      id: el.compra.productoId,
+                    })
                   }
                 >
                   <View style={styles.prod}>

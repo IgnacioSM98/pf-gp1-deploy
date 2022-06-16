@@ -129,7 +129,9 @@ export default function Home({ navigation }) {
                 [{ nativeEvent: { contentOffset: { x: scrollX } } }],
                 { useNativeDriver: false }
               )}
-              data={productos.filter((producto) => producto.stock).slice(0, 8)}
+              data={productos
+                .filter((producto) => producto.stock > 0)
+                .slice(0, 8)}
               keyExtractor={({ id }, index) => id}
               showsHorizontalScrollIndicator={false}
               contentContainerStyle={{

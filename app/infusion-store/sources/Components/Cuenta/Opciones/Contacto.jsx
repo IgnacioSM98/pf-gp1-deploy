@@ -10,7 +10,7 @@ import {
 } from "react-native";
 import RNPickerSelect from "react-native-picker-select";
 import { enviarConsulta } from "../../../../redux/actions";
-import Cerrar from "../Cerrar";
+// import Cerrar from "../Cerrar";
 
 export default function Contacto({ setOption }) {
   const dispatch = useDispatch();
@@ -49,48 +49,50 @@ export default function Contacto({ setOption }) {
 
   return (
     <>
-    <Pressable style={styles.cerrar} onPress={() => setOption(false)}>
+      {/* <Pressable style={styles.cerrar} onPress={() => setOption("Cuenta")}>
         <Cerrar />
-      </Pressable>
-    <View style={styles.container}>
-      
-      <Pressable onPress={() => setOption(false)}></Pressable>
-      <Text style={styles.title}>Mail:</Text>
-      <TextInput
-        name="mail"
-        placeholder=" Mail"
-        style={styles.input}
-        value={input.mail}
-        onChangeText={(text) => handleChange(text, "mail")}
-      />
-      <Text style={styles.error}>{errors.mail}</Text>
-      <RNPickerSelect
-        name="subject"
-        id="subject"
-        defaultValue="DEFAULT"
-        onValueChange={(value) => {
-          handleChange(value);
-        }}
-        value={input.subject}
-        items={[
-          { label: "Consulta", value: "Consulta" },
-          { label: "Reclamo", value: "Reclamo" },
-        ]}
-      />
-      <Text style={styles.title}>Consulta-Reclamo:</Text>
-      <TextInput
-        miltiline
-        name="text"
-        placeholder="Texto"
-        value={input.text}
-        style={[styles.input, styles.textarea]}
-        onChangeText={(text) => handleChange(text, "text")}
-      />
-      <Text style={styles.error}>{errors.consulta}</Text>
-      <TouchableHighlight style={styles.button} onPress={() => handleSubmit()}>
-        <Text style={styles.textButton}>ENVIAR</Text>
-      </TouchableHighlight>
-    </View>
+      </Pressable> */}
+      <View style={styles.container}>
+        <Pressable onPress={() => setOption("Cuenta")}></Pressable>
+        <Text style={styles.title}>Mail:</Text>
+        <TextInput
+          name="mail"
+          placeholder=" Mail"
+          style={styles.input}
+          value={input.mail}
+          onChangeText={(text) => handleChange(text, "mail")}
+        />
+        <Text style={styles.error}>{errors.mail}</Text>
+        <RNPickerSelect
+          name="subject"
+          id="subject"
+          defaultValue="DEFAULT"
+          onValueChange={(value) => {
+            handleChange(value);
+          }}
+          value={input.subject}
+          items={[
+            { label: "Consulta", value: "Consulta" },
+            { label: "Reclamo", value: "Reclamo" },
+          ]}
+        />
+        <Text style={styles.title}>Consulta-Reclamo:</Text>
+        <TextInput
+          miltiline
+          name="text"
+          placeholder="Texto"
+          value={input.text}
+          style={[styles.input, styles.textarea]}
+          onChangeText={(text) => handleChange(text, "text")}
+        />
+        <Text style={styles.error}>{errors.consulta}</Text>
+        <TouchableHighlight
+          style={styles.button}
+          onPress={() => handleSubmit()}
+        >
+          <Text style={styles.textButton}>ENVIAR</Text>
+        </TouchableHighlight>
+      </View>
     </>
   );
 }

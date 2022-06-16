@@ -7,7 +7,7 @@ import {
   Keyboard,
   TouchableWithoutFeedback,
 } from "react-native";
-import Cerrar from "../Cerrar";
+// import Cerrar from "../Cerrar";
 import { useSelector } from "react-redux";
 import axios from "axios";
 import styled from "styled-components/native";
@@ -99,9 +99,9 @@ export default function Ajustes({ setOption }) {
   return (
     userDB && (
       <Container>
-        <Pressable onPress={() => setOption(false)}>
+        {/* <Pressable onPress={() => setOption("Cuenta")}>
           <Cerrar />
-        </Pressable>
+        </Pressable> */}
 
         <Cabecera>
           <Image

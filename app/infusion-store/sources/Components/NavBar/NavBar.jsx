@@ -1,17 +1,18 @@
 import React, { useEffect, useState } from "react";
-import { StyleSheet, Keyboard } from "react-native";
+import { StyleSheet, Keyboard, View } from "react-native";
 import { MaterialCommunityIcons, Foundation } from "@expo/vector-icons";
 import { Searchbar } from "react-native-paper";
 import { useNavigation } from "@react-navigation/native";
 import { useDispatch, useSelector } from "react-redux";
 import { useIsFocused } from "@react-navigation/native";
+import { AntDesign } from "@expo/vector-icons";
 import styled from "styled-components/native";
 import { setProductosFiltrados } from "../../../redux/actions";
 
 const Container = styled.View`
   position: relative;
   // justify-content: flex-start;
-  align-items: center;
+  align-items: start;
   width: 100%;
   height: 10%;
   top: 5%;
@@ -41,7 +42,7 @@ const Filter = styled.Pressable`
 const Titulo = styled.Text`
   position: absolute;
   top: 50%;
-  left: 8%;
+  left: 9%;
   font-size: 20;
   font-weight: 600;
 `;
@@ -62,7 +63,14 @@ const styles = StyleSheet.create({
   },
 });
 
-export default function NavBar({ titulo, screen, mostrar, setMostrar, flag }) {
+export default function NavBar({
+  titulo,
+  setOption,
+  screen,
+  mostrar,
+  setMostrar,
+  flag,
+}) {
   const dispatch = useDispatch();
   const navigation = useNavigation();
   const productos = useSelector((state) => state.productos);
@@ -116,7 +124,36 @@ export default function NavBar({ titulo, screen, mostrar, setMostrar, flag }) {
       </>
 
       {titulo ? (
-        <Titulo>{titulo}</Titulo>
+        <View
+          style={
+            titulo === "Cuenta" || titulo === "Favoritos"
+              ? {
+                  height: "100%",
+                  width: "80%",
+                }
+              : {
+                  display: "flex",
+                  // justifyContent: "flex-end",
+                  height: "100%",
+                  width: "80%",
+                  marginLeft: "5%",
+                }
+          }
+        >
+          {titulo !== "Cuenta" && titulo !== "Favoritos" && (
+            <AntDesign
+              style={{ marginTop: "12%" }}
+              name="arrowleft"
+              size={24}
+              color="black"
+              onPress={() => {
+                setOption("Cuenta");
+              }}
+            />
+          )}
+
+          <Titulo>{titulo}</Titulo>
+        </View>
       ) : (
         <Searchbar
           placeholder="Buscar producto..."
