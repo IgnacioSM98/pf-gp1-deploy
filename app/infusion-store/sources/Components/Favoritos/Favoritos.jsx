@@ -6,11 +6,17 @@ import { getFavoritos } from "../../../redux/actions";
 
 const styles = StyleSheet.create({
   text: {
-    left: "35%",
+    textAlign: "center",
     fontSize: 20,
+    fontWeight: "bold",
+    marginTop: 40,
   },
   espacio: {
     marginTop: 45,
+  },
+  cartel: {
+    display: "flex",
+    justifyContent: "center",
   },
 });
 
@@ -28,7 +34,7 @@ export default function Favoritos({ navigation }) {
     <>
       <NavBar titulo="Favoritos" />
 
-      {favoritos[0] ? (
+      {favoritos.length !== 0 ? (
         <FlatList
           style={{ height: "100%", marginTop: "2%" }}
           data={favoritos}
@@ -37,8 +43,8 @@ export default function Favoritos({ navigation }) {
           )}
         />
       ) : (
-        <View style={{ marginTop: "20%", height: "50%" }}>
-          <Text>No hay favoritos aún</Text>
+        <View style={styles.cartel}>
+          <Text style={styles.text}>No hay favoritos aún</Text>
         </View>
       )}
     </>

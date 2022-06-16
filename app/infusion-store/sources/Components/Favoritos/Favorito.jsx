@@ -12,18 +12,9 @@ const styles = StyleSheet.create({
     borderColor: "#c8c8c8",
     borderWidth: 1,
     margin: "2%",
-
     borderRadius: 20,
     elevation: 5,
     backgroundColor: "#c8c8c8",
-  },
-
-  favoritos: {
-    position: "absolute",
-    fontSize: 20,
-    top: 22,
-    right: 22,
-    zIndex: 999,
   },
 
   contFoto: {
@@ -62,8 +53,8 @@ const styles = StyleSheet.create({
   favoritos: {
     position: "absolute",
     fontSize: 30,
-    top: 70,
-    right: 30,
+    top: 10,
+    right: 20,
     zIndex: 999,
   },
 });
@@ -95,15 +86,8 @@ export default function Favorito({ navigation, item }) {
         </View>
 
         <View style={styles.favoritos}>
-          {favoritos.find((fav) => fav.id == item.id) ? (
+          {favoritos.find((fav) => fav.id == item.id) && (
             <AntDesign
-              onPress={handleFav}
-              name="heart"
-              size={24}
-              color="black"
-            />
-          ) : (
-            <Octicons
               onPress={handleFav}
               name="heart"
               size={24}
