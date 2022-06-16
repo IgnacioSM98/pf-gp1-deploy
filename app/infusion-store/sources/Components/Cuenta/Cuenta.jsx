@@ -56,13 +56,13 @@ export default function Cuenta({ setIsAuthenticated }) {
               <Text>Mis Reseñas</Text>
             </Button>
 
-            <Button onPress={() => setOption("notificaciones")}>
+            {/* <Button onPress={() => setOption("notificaciones")}>
               <Text>Notificaciones</Text>
             </Button>
 
             <Button onPress={() => setOption("seguridad")}>
               <Text>Seguridad</Text>
-            </Button>
+            </Button> */}
 
             <Button onPress={() => setOption("contacto")}>
               <Text>Contacto</Text>
@@ -80,7 +80,7 @@ export default function Cuenta({ setIsAuthenticated }) {
         {option === "notificaciones" && (
           <Notificaciones setOption={setOption} />
         )}
-        {option === "seguridad" && <Seguridad setOption={setOption} />}
+        {/* {option === "seguridad" && <Seguridad setOption={setOption} />} */}
         {option === "contacto" && <Contacto setOption={setOption} />}
       </Container>
     </>
