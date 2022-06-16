@@ -34,14 +34,22 @@ export default function rootReducer(state = initialState, action) {
       };
 
     case "SET_SORT":
-      if (action.payload !== "DEFAULT") {
+      if (action.payload !== null) {
         const filteredAux = [...state.productosFiltrados];
 
         filteredAux.sort((a, b) => {
           if (action.payload === "A-Z")
-            return a.nombre > b.nombre ? 1 : b.nombre > a.nombre ? -1 : 0;
+            return a.nombre.toLowerCase() > b.nombre.toLowerCase()
+              ? 1
+              : b.nombre.toLowerCase() > a.nombre.toLowerCase()
+              ? -1
+              : 0;
           if (action.payload === "Z-A")
-            return a.nombre < b.nombre ? 1 : b.nombre < a.nombre ? -1 : 0;
+            return a.nombre.toLowerCase() < b.nombre.toLowerCase()
+              ? 1
+              : b.nombre.toLowerCase() < a.nombre.toLowerCase()
+              ? -1
+              : 0;
           if (action.payload === "Highest SpoonScore") {
             return Number(a.precio) < Number(b.precio)
               ? 1
@@ -185,11 +193,11 @@ export default function rootReducer(state = initialState, action) {
     //     reviews: action.payload,
     //   };
 
-        case "GET_PRODUCT_REVIEWS":
-          return {
-            ...state,
-            reviews: action.payload,
-          };
+    case "GET_PRODUCT_REVIEWS":
+      return {
+        ...state,
+        reviews: action.payload,
+      };
     //     case "DELETE_REVIEW":
     //       return { ...state };
 

@@ -3,43 +3,14 @@ import { Text, View, StyleSheet, Image, Pressable } from "react-native";
 import { Octicons } from "@expo/vector-icons";
 
 const styles = StyleSheet.create({
-  // view: {
-  //   marginTop: 50,
-  // },
-
-  // text: {
-  //   left: "35%",
-  //   fontSize: 20,
-  // },
-
-  // img: {
-  //   width: "10%",
-  //   height: "10%",
-  //   borderRadius: 10,
-  //   resizeMode: "contain",
-  // },
-
-  // btn: {
-  //   display: "flex",
-  //   width: "90%",
-  //   alignItems: "center",
-  //   justifyContent: "center",
-  //   alignSelf: "center",
-  //   backgroundColor: "grey",
-  //   padding: 10,
-  //   borderRadius: 5,
-  // },
-  espacio: {
-    marginTop: 40,
-  },
-
   contProd: {
-    width: "98%",
+    width: "96%",
     display: "flex",
     flexDirection: "row",
     borderColor: "#c8c8c8",
     borderWidth: 1,
-    margin: "1%",
+    margin: "2%",
+
     borderRadius: 20,
     elevation: 5,
     backgroundColor: "#c8c8c8",
@@ -54,8 +25,8 @@ const styles = StyleSheet.create({
   },
 
   contFoto: {
-    width: 120,
-    height: 120,
+    width: 100,
+    height: 100,
     backgroundColor: "white",
     borderRadius: 10,
     margin: 10,

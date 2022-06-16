@@ -37,7 +37,7 @@ const styles = StyleSheet.create({
     marginLeft: 30,
     marginBottom: 10,
     marginTop: 30,
-    fontSize: 30,
+    fontSize: 25,
   },
 
   descripcion: {
@@ -95,6 +95,7 @@ const styles = StyleSheet.create({
     margin: 30,
     fontSize: 30,
   },
+
   botones: {
     position: "absolute",
     bottom: "20%",
@@ -209,12 +210,13 @@ const styles = StyleSheet.create({
   },
 
   review: {
-    paddingTop: 8,
+    paddingTop: 1,
     fontSize: 14,
-    marginLeft: 10,
+    marginLeft: 5,
     color: "white",
     textDecorationLine: "underline",
   },
+
   revBack: {
     width: "100%",
     height: "200%",
@@ -266,15 +268,6 @@ const DetalleProducto = ({ route }) => {
     (state) => state.carrito?.filter((item) => item.id === id)[0]
   );
 
-  // function check(id) {
-  //   const isInCart = carrito.filter((producto) => producto.id == data.id);
-  //   if (isInCart) {
-  //     return true;
-  //   } else {
-  //     return false;
-  //   }
-  // }
-
   const sumarCarrito = () => {
     if (cantidad < data.stock) {
       setCantidad(cantidad + 1);
@@ -294,10 +287,6 @@ const DetalleProducto = ({ route }) => {
       dispatch(agregarCarrito(id, cantidad));
     }
   }
-
-  // useEffect(() => {
-  //   console.log("hola");
-  // }, []);
 
   //reviews de producto
   useEffect(() => {
@@ -396,36 +385,35 @@ const DetalleProducto = ({ route }) => {
         <Text style={styles.numeros}>${data.precio}</Text>
 
         {data.stock > 0 ? (
-        <View style={styles.botones}>
-          <View style={styles.cantidad}>
-            <Pressable style={styles.pressable} onPress={restaCarrito}>
-              <Text style={styles.boton}>-</Text>
-            </Pressable>
+          <View style={styles.botones}>
+            <View style={styles.cantidad}>
+              <Pressable style={styles.pressable} onPress={restaCarrito}>
+                <Text style={styles.boton}>-</Text>
+              </Pressable>
 
-            <Text style={styles.num}>{cantidad}</Text>
+              <Text style={styles.num}>{cantidad}</Text>
 
-            <Pressable style={styles.pressable} onPress={sumarCarrito}>
-              <Text style={styles.boton}>+</Text>
+              <Pressable style={styles.pressable} onPress={sumarCarrito}>
+                <Text style={styles.boton}>+</Text>
+              </Pressable>
+            </View>
+
+            <Pressable
+              onPress={(e) => {
+                addToCarrito(e);
+              }}
+              style={({ pressed }) => [
+                {
+                  backgroundColor: pressed
+                    ? "rgba(194, 194, 194, 0.69)"
+                    : "#414345",
+                },
+                styles.agregar,
+              ]}
+            >
+              <Text style={styles.letraBoton}>Agregar</Text>
             </Pressable>
           </View>
-
-          <Pressable
-            onPress={(e) => {
-              addToCarrito(e);
-            }}
-            style={({ pressed }) => [
-              {
-                backgroundColor: pressed
-                  ? "rgba(194, 194, 194, 0.69)"
-                  : "#414345",
-              },
-              styles.agregar,
-            ]}
-            // disabled={carrito.filter((producto) => producto.id == data.id)}
-          >
-            <Text style={styles.letraBoton}>Agregar</Text>
-          </Pressable>
-        </View>
         ) : (
           <View style={styles.botones}>
             <View style={styles.botonSinStock}>
