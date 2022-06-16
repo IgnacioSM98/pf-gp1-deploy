@@ -141,7 +141,8 @@ export default function Cuenta() {
     consultas: Consultas,
   };
 
-  const [componente, setComponente] = useState("perfil");
+  const [componente, setComponente] = useState("");
+
   var ComponenteDinamico = componentes[componente];
 
   const handleOnClick = (e) => {
