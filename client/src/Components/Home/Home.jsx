@@ -8,7 +8,7 @@ import { getProductos, getFavoritos } from "../../Redux/actions";
 
 const Container = styled.div`
   height: auto;
-  width: 100vw;
+  width: 100vh;
   align-items: center;
   @media screen and (max-width: 960px) {
     width: 100vw;
@@ -35,7 +35,7 @@ const Productos = styled.div`
 `;
 
 const Image = styled.img`
-  width: 100vw;
+  width: 100vh;
   height: 500px;
   object-fit: cover;
   opacity: 0.5;
