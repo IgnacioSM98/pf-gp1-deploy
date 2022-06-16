@@ -26,7 +26,7 @@ import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 
 const DivApp = styled.div`
-  width: 100vw;
+  width: 100%;
   min-height: 100vh;
 `;
 
