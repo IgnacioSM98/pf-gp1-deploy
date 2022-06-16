@@ -336,7 +336,7 @@ export default function CrearProducto() {
       errors.crearCategoria = "Debe crear una categoria";
     }
   }
-
+  //comentario para que m deje pushear
   function handleInputChange(e) {
     if (e.target.name === "precio" || e.target.name === "stock") {
       setPost({
