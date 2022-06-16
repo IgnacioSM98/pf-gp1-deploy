@@ -6,6 +6,8 @@ import {
   getDetail,
   getProductReviews,
   agregarCarrito,
+  eliminarDeFavoritos,
+  añadirAFavoritos,
 } from "../../Redux/actions";
 import {
   CrearReview,
@@ -285,6 +287,23 @@ const Relacionados = styled.div`
   // font-size: 20px;
   // font-weight: 600;
 `;
+const ContenedorFav = styled.div`
+  display: flex;
+  position: absolute;
+  left: 100%;
+  top: 2%;
+  p {
+    color: #5a9d7b;
+    font-size: 25px;
+    margin-top: 5px;
+  }
+  label {
+    color: #5a9d7b;
+    font-weight: bold;
+    font-size: 25px;
+    margin-top: 5px;
+  }
+`;
 
 export default function DetalleProducto({ contacto }) {
   const { id } = useParams();
@@ -293,7 +312,7 @@ export default function DetalleProducto({ contacto }) {
 
   // Recuperamos el tipo de visualización/permiso del usuario
   const user = useSelector((state) => state.userInfo?.visualizacion);
-
+  const favoritos = useSelector((state) => state.favoritos);
   const isVisible = UseOnScreen(contacto);
 
   // Validamos si hay sesion iniciada
@@ -408,6 +427,14 @@ export default function DetalleProducto({ contacto }) {
       }
     }
   };
+  function handleFav(e) {
+    e.preventDefault();
+    if (favoritos.find((fav) => fav.id === detalle.id)) {
+      dispatch(eliminarDeFavoritos(detalle.id));
+    } else {
+      dispatch(añadirAFavoritos(detalle));
+    }
+  }
 
   return detalle && Object.keys(detalle)[0] ? (
     <Container>
@@ -415,6 +442,15 @@ export default function DetalleProducto({ contacto }) {
         <Image src={detalle.imagen} alt={`Imagen ${detalle.nombre}`} />
         <Body>
           <Nombre>{detalle.nombre}</Nombre>
+          {user && (
+            <ContenedorFav>
+              {favoritos.find((fav) => fav.id === detalle.id) ? (
+                <label onClick={(e) => handleFav(e)}>♥</label>
+              ) : (
+                <label onClick={(e) => handleFav(e)}>♡</label>
+              )}
+            </ContenedorFav>
+          )}
           <Valoracion>
             <Stars rating={rating ? rating : 1} />
 
