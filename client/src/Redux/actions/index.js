@@ -124,7 +124,9 @@ export function postProducto(payload) {
 export function postPedido(body) {
   return function (dispatch) {
     axios.post(`${urlBase}${pedido}${crear}`, body).then((res) => {
-      dispatch({ type: "POST_PRODUCTO", payload: res.data });
+      console.log(res.data, "scariamos id aca");
+      // dispatch({ type: "POST_PRODUCTO", payload: res.data });
+      dispatch({ type: "POST_PEDIDO", payload: res.data });
     });
   };
 }
