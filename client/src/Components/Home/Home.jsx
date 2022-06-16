@@ -190,6 +190,67 @@ export default function Home({ contacto }) {
           </Productos>
         </div>
 
+        <div
+          id="carouselExampleControls"
+          className="carousel slide"
+          data-bs-ride="carousel"
+        >
+          <div className="carousel-inner">
+            {productos[0] && (
+              <div className="carousel-item active" id="active">
+                <Producto
+                  className="box-producto"
+                  key={productos[0].id}
+                  id={productos[0].id}
+                  imagen={productos[0].imagen}
+                  nombre={productos[0].nombre}
+                  precio={productos[0].precio}
+                  stock={productos[0].stock}
+                  descripcion={productos[0].descripcion}
+                  location={location}
+                  producto={productos[0]}
+                />
+              </div>
+            )}
+            {productos?.slice(1, 6)?.map((producto) => {
+              return (
+                <div className="carousel-item" id="activeDos">
+                  <Producto
+                    className="box-producto"
+                    key={producto.id}
+                    id={producto.id}
+                    imagen={producto.imagen}
+                    nombre={producto.nombre}
+                    precio={producto.precio}
+                    stock={producto.stock}
+                    descripcion={producto.descripcion}
+                    location={location}
+                    producto={producto}
+                  />
+                </div>
+              );
+            })}
+          </div>
+          <button
+            class="carousel-control-prev"
+            type="button"
+            data-bs-target="#carouselExampleControls"
+            data-bs-slide="prev"
+          >
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+          </button>
+          <button
+            class="carousel-control-next"
+            type="button"
+            data-bs-target="#carouselExampleControls"
+            data-bs-slide="next"
+          >
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+          </button>
+        </div>
+
         <Link to="/tienda">
           <Boton texto="Mas productos" />
         </Link>
