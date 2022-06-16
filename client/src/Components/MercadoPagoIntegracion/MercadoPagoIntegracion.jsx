@@ -3,7 +3,7 @@ import React, { useCallback, useEffect } from "react";
 
 const FORM_ID = "payment-form";
 
-export default function MercadoPagoIntegracion({ carrito, input }) {
+export default function MercadoPagoIntegracion({ carrito, input, idPedido }) {
   const obtenerPreference = useCallback(async () => {
     const datos = {
       items: carrito?.map((item) => {
@@ -20,6 +20,8 @@ export default function MercadoPagoIntegracion({ carrito, input }) {
         surname: "sanchez",
         email: input.mail,
       },
+
+      id: idPedido,
     };
 
     const res = await axios.post(

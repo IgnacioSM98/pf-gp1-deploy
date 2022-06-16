@@ -15,6 +15,7 @@ const initialState = {
   usuarios: [],
   detalleEnvio: {},
   favoritos: [],
+  idPedido: 0,
 };
 
 export default function rootReducer(state = initialState, action) {
@@ -485,6 +486,7 @@ export default function rootReducer(state = initialState, action) {
       return {
         ...state,
         pedidos: pedidosAux,
+        idPedido: action.payload.id,
       };
 
     case "ORDER_BY_STOCK": {

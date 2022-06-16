@@ -325,6 +325,7 @@ export default function Checkout({ contacto }) {
   const [precioTotal, setPrecioTotal] = useState(0);
   const [flag, setFlag] = useState(false);
   const [userId, setUserId] = useState();
+  const idPedido = useSelector((state) => state.idPedido);
 
   const id = searchParams.get("id");
   const productos = searchParams.get("carrito");
@@ -591,8 +592,12 @@ export default function Checkout({ contacto }) {
             <DivBoton>
               {!flag && <Boton type="submit" value="Continuar" />}
 
-              {flag && (
-                <MercadoPagoIntegracion carrito={carrito} input={input} />
+              {flag && idPedido && (
+                <MercadoPagoIntegracion
+                  carrito={carrito}
+                  input={input}
+                  idPedido={idPedido}
+                />
               )}
             </DivBoton>
           </ContenedorVarios>
