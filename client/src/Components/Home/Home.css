@@ -3,7 +3,6 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  
 }
 
 .contenedor-productos {
@@ -14,28 +13,3 @@
   width: 100%;
   height: 420px;
 }
-
-.carouselExampleControls {
-  color: #fff;
-}
-
-#active {
-  background-color: #fff;
-}
-
-#activeDos {
-  background-color: #fff;
-}
-
-@media screen and (max-width: 450px) {
-  .div-productos {
-  display: none;
-  }
-}
-
-@media screen and (min-width: 450px) {
-  #carouselExampleControls {
-  display: none;
-  }
-}
-
