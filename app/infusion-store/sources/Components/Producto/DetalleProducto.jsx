@@ -291,8 +291,7 @@ const DetalleProducto = ({ route }) => {
 
   function addToCarrito(e) {
     if (data.stock > 0) {
-      dispatch(agregarCarrito(id, 1));
-      setCantidad(cantidad + 1);
+      dispatch(agregarCarrito(id, cantidad));
     }
   }
 
