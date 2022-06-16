@@ -10,6 +10,6 @@
   flex-direction: row;
   flex-wrap: nowrap;
   justify-content: space-around;
-  width: auto;
+  width: 100%;
   height: 420px;
 }
