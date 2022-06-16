@@ -255,12 +255,21 @@ function Cuenta() {
               <ContainerPedidos>
                 {pedidos &&
                   pedidos
+                    .sort((a, b) => {
+                      return Number(a.id) > Number(b.id)
+                        ? 1
+                        : Number(b.id) > Number(a.id)
+                        ? -1
+                        : 0;
+                    })
                     .filter(
                       (pedido) =>
                         pedido.Estado === "Creado" ||
                         pedido.Estado === "En preparación"
                     )
-                    ?.map((e) => <Pedido key={e.id} producto={e} />)}
+                    ?.map((e) => (
+                      <Pedido width={"100%"} key={e.id} producto={e} />
+                    ))}
               </ContainerPedidos>
             </Categoria>
           </Categorias>

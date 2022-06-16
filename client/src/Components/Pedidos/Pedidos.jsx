@@ -81,7 +81,13 @@ export default function Pedidos() {
         {pedidos &&
           pedidos
             ?.filter(filtrarPedidos)
-            // ?.sort(sortPedidos)
+            .sort((a, b) => {
+              return Number(a.id) > Number(b.id)
+                ? 1
+                : Number(b.id) > Number(a.id)
+                ? -1
+                : 0;
+            })
             .map((e) => <Pedido key={e.id} producto={e} />)}
       </Container>
     </>
