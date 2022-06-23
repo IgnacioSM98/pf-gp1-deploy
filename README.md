@@ -30,10 +30,10 @@ La App cuenta con las siguientes caracteristicas:
 - Dejar consultas o reclamos a la pagina
 
 Tecnologías utilizadas: 
-App: React Native, Expo CLI
-Front-End: React JS, Redux, Styled Components, Vercel
-Back-End: NodeJS, Express, Sequelize, Heroku
-Base de datos: PostgreSql, Heroku
-Micro Servicios: Mercado Pago, NodeMailer, Firebase, Cloudinary
-Metodología Ágil: Scrum, Kanban, Trello
-Diseño: Figma
+- App: React Native, Expo CLI
+- Front-End: React JS, Redux, Styled Components, Vercel 
+- Back-End: NodeJS, Express, Sequelize, Heroku
+- Base de datos: PostgreSql, Heroku
+- Micro Servicios: Mercado Pago, NodeMailer, Firebase, Cloudinary
+- Metodología Ágil: Scrum, Kanban, Trello
+- Diseño: Figma
